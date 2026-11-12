@@ -131,6 +131,12 @@ def inspect_cases() -> tuple[list[dict[str, Any]], list[str]]:
                     issues.append(f"{path.relative_to(ROOT)}: target escapes repository root: {target}")
                 elif not target_path.exists():
                     issues.append(f"{path.relative_to(ROOT)}: target does not exist: {target}")
+        critical_ids = case.get("critical_behaviors", [])
+        allowed_critical_ids = {f"behavior-{i:02d}" for i in range(1, len(case.get("expected_behaviors", [])) + 1)} | {f"must-not-{i:02d}" for i in range(1, len(case.get("must_not", [])) + 1)}
+        if isinstance(critical_ids, list):
+            for criterion_id in critical_ids:
+                if criterion_id not in allowed_critical_ids:
+                    issues.append(f"{path.relative_to(ROOT)}: critical_behaviors references unknown criterion {criterion_id!r}")
         case_id = case.get("id")
         if isinstance(case_id, str):
             if case_id in seen:
@@ -306,6 +312,7 @@ def main() -> int:
     flat_criteria.append(integrity_criterion)
     for item in cases:
         data = item["data"]
+        critical_ids = set(data.get("critical_behaviors", []))
         criteria = [{
             "criterion_id": "case-schema-valid",
             "status": "PASS",
@@ -317,7 +324,7 @@ def main() -> int:
             criteria.append({
                 "criterion_id": f"behavior-{index:02d}",
                 "status": "NOT_RUN",
-                "critical": data.get("risk_level") in {"high", "critical"},
+                "critical": f"behavior-{index:02d}" in critical_ids,
                 "reason": "Behavioral grading requires an actual Codex session and reviewer evidence; this runner does not execute a model.",
                 "evidence": [],
             })
@@ -325,7 +332,7 @@ def main() -> int:
             criteria.append({
                 "criterion_id": f"must-not-{index:02d}",
                 "status": "NOT_RUN",
-                "critical": data.get("risk_level") in {"high", "critical"},
+                "critical": f"must-not-{index:02d}" in critical_ids,
                 "reason": "Prohibited-behavior review requires actual session evidence; no model behavior was executed.",
                 "evidence": [],
             })
