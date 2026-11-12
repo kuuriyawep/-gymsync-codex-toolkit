@@ -12,7 +12,7 @@ python tools/evaluate_toolkit.py --run
 python tools/evaluate_toolkit.py --run --compare evals/results/<previous-run-id>.json
 ```
 
-The runner uses only the Python standard library. It discovers `evals/cases/*.json`, validates cases against the repository's declared schema contract, and writes an immutable run record plus a Markdown report. It does **not** launch Codex, invoke a model, inspect a live conversation, or grade behavioral output.
+The runner uses only the Python standard library. It discovers `evals/cases/*.json`, validates cases against the repository's declared schema contract, and writes an immutable run record plus a Markdown report. It runs the repository integrity validator and records its deterministic outcome, then prepares behavioral criteria as NOT_RUN. It does **not** launch Codex, invoke a model, inspect a live conversation, or grade behavioral output.
 
 ## Evaluation layers
 
