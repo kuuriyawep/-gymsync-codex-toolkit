@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.invalid/schemas/evaluation-case.schema.json",
+  "$id": "urn:gymsync-codex-toolkit:schema:evaluation-case",
   "title": "Codex Toolkit Evaluation Case",
   "description": "A repeatable scenario for evaluating an agent, skill, or workflow.",
   "type": "object",
