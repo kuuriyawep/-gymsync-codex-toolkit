@@ -46,7 +46,7 @@ def parse_frontmatter(path: Path) -> tuple[str, dict[str, str]]:
         return text, {}
     metadata: dict[str, str] = {}
     for line in parts[1].splitlines():
-        match = re.match(r"^([A-Za-z][A-Za-z0-9_-]*):\\s*(.*?)\\s*$", line)
+        match = re.match(r"^([A-Za-z][A-Za-z0-9_-]*):\s*(.*?)\s*$", line)
         if match:
             metadata[match.group(1)] = match.group(2).strip().strip('"').strip("'")
     return parts[2].lstrip("\n"), metadata
