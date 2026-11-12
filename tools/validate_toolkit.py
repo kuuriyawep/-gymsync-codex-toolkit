@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the repository's Codex skills, agents, workflows, and evaluation cases.
+"""Validate Codex skills, agents, workflows, and the hybrid evaluation framework.
 
 Uses only the Python standard library. Run from any working directory:
     python tools/validate_toolkit.py
@@ -12,6 +12,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+from evaluate_toolkit import inspect_cases  # noqa: E402
+
 ERRORS: list[str] = []
 WARNINGS: list[str] = []
 
@@ -43,7 +46,7 @@ def parse_frontmatter(path: Path) -> tuple[str, dict[str, str]]:
         return text, {}
     metadata: dict[str, str] = {}
     for line in parts[1].splitlines():
-        match = re.match(r"^([A-Za-z][A-Za-z0-9_-]*):\s*(.*?)\s*$", line)
+        match = re.match(r"^([A-Za-z][A-Za-z0-9_-]*):\\s*(.*?)\\s*$", line)
         if match:
             metadata[match.group(1)] = match.group(2).strip().strip('"').strip("'")
     return parts[2].lstrip("\n"), metadata
@@ -108,7 +111,6 @@ def validate_workflows() -> None:
     required = ("## Stop conditions", "## Required output")
     for path in sorted(directory.glob("*.md")):
         content = read_text(path)
-        # Security audit uses a more specific heading for its procedure section.
         if "## Workflow" not in content and "## Audit workflow" not in content:
             fail(f"{path.relative_to(ROOT)}: missing section '## Workflow' (or '## Audit workflow')")
         for heading in required:
@@ -116,29 +118,47 @@ def validate_workflows() -> None:
                 fail(f"{path.relative_to(ROOT)}: missing section '{heading}'")
 
 
-def validate_eval_cases() -> None:
-    directory = ROOT / "evals" / "cases"
-    if not directory.exists():
-        warn("evals/cases directory does not exist yet")
-        return
-    for path in sorted(directory.glob("*.json")):
-        try:
-            data = json.loads(read_text(path))
-        except json.JSONDecodeError as exc:
-            fail(f"{path.relative_to(ROOT)}: invalid JSON ({exc})")
-            continue
-        for key in ("id", "title", "prompt", "expected_behaviors"):
-            if key not in data:
-                fail(f"{path.relative_to(ROOT)}: missing '{key}'")
-        if not isinstance(data.get("expected_behaviors", []), list):
-            fail(f"{path.relative_to(ROOT)}: expected_behaviors must be an array")
+def validate_evaluation_framework() -> None:
+    required_files = (
+        "evals/README.md",
+        "evals/taxonomy.md",
+        "evals/rubrics/deterministic.md",
+        "evals/rubrics/behavioral.md",
+        "schemas/evaluation-case.schema.json",
+        "schemas/evaluation-result.schema.json",
+        "schemas/evaluation-rubric.schema.json",
+        "tools/evaluate_toolkit.py",
+        "templates/evaluation-report.md",
+    )
+    for relative in required_files:
+        if not (ROOT / relative).is_file():
+            fail(f"required evaluation framework file is missing: {relative}")
+    for relative in (
+        "schemas/evaluation-case.schema.json",
+        "schemas/evaluation-result.schema.json",
+        "schemas/evaluation-rubric.schema.json",
+    ):
+        path = ROOT / relative
+        if path.is_file():
+            try:
+                json.loads(read_text(path))
+            except json.JSONDecodeError as exc:
+                fail(f"{relative}: invalid JSON ({exc})")
+    cases, issues = inspect_cases()
+    for issue in issues:
+        fail(issue)
+    ids = [item["data"].get("id") for item in cases]
+    if len(ids) != len(set(ids)):
+        fail("evaluation case IDs must be unique")
+    if not cases:
+        warn("no evaluation cases discovered under evals/cases")
 
 
 def main() -> int:
     validate_skills()
     validate_agents()
     validate_workflows()
-    validate_eval_cases()
+    validate_evaluation_framework()
     for message in WARNINGS:
         print(f"WARNING: {message}")
     for message in ERRORS:
@@ -146,7 +166,7 @@ def main() -> int:
     if ERRORS:
         print(f"\nValidation failed: {len(ERRORS)} error(s), {len(WARNINGS)} warning(s).")
         return 1
-    print(f"Validation passed: structure and metadata checks completed ({len(WARNINGS)} warning(s)).")
+    print(f"Validation passed: toolkit and evaluation framework checks completed ({len(WARNINGS)} warning(s)).")
     return 0
 
 
