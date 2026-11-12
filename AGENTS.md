@@ -25,6 +25,15 @@ Use adaptive routing for non-trivial engineering work: Explore → Clarify → T
 - Approval applies only to the explicitly approved scope/action; it is not blanket permission for future risky actions.
 - Do not report completion until required verification and review have evidence-backed outcomes.
 
+## Evaluation and evidence
+- Distinguish deterministic repository checks from behavioral evaluation of Codex in a real session.
+- Use `evals/README.md`, the taxonomy, and the applicable rubric before grading.
+- A deterministic artifact PASS never implies that Codex behavior passed.
+- Record criterion-level status, rationale, and evidence; keep missing evidence as NOT_RUN or BLOCKED.
+- Any failed critical criterion makes the overall evaluation FAIL; do not use averages to conceal it.
+- Preserve historical evaluation run records; never overwrite them.
+- Never claim a model/runtime evaluation was executed unless it actually was.
+
 ## Agent boundaries
 - Explore: read-only discovery and evidence gathering.
 - Planner: requirements, risks, sequence, acceptance criteria; no implementation.
