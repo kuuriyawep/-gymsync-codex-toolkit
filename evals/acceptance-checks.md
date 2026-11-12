@@ -42,8 +42,7 @@
 - [ ] Runner never claims to execute Codex or grade model behavior.
 - [ ] Existing run records are never overwritten.
 - [ ] Reports include provenance, criterion evidence, limitations, and unrun checks.
-- [ ] Regression comparison reports new/resolved failures and added/removed criteria without treating missing criteria as passes.
-- [ ] Regression comparison uses stable case/criterion IDs and does not treat missing results as passes.
+- [ ] Regression comparison uses stable case/criterion IDs and reports new/resolved failures plus added/removed criteria without treating missing results as passes.
 - [ ] Human behavioral grading requires actual session evidence and a rubric.
 
 ## Workflows
