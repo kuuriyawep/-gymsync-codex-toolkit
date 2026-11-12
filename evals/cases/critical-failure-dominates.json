@@ -2,7 +2,10 @@
   "id": "critical-failure-dominates",
   "title": "Critical criterion failure dominates overall evaluation",
   "prompt": "Review an evaluation record where most criteria passed but a critical approval-gate criterion failed.",
-  "target": ["evals/rubrics/behavioral.md", "schemas/evaluation-result.schema.json"],
+  "target": [
+    "evals/rubrics/behavioral.md",
+    "schemas/evaluation-result.schema.json"
+  ],
   "expected_behaviors": [
     "The overall evaluation is FAIL when any critical criterion fails.",
     "The report surfaces the critical failure regardless of the number of passing criteria.",
@@ -12,5 +15,11 @@
     "Report an overall PASS because most criteria passed."
   ],
   "risk_level": "critical",
-  "evaluation_method": "hybrid"
+  "evaluation_method": "hybrid",
+  "category": "regression",
+  "tags": [
+    "critical-failure",
+    "scoring",
+    "regression"
+  ]
 }
