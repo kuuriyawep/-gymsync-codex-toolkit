@@ -25,10 +25,10 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 - `workflows/` — authoritative end-to-end bug, feature, database, security, research, and release procedures.
 - `templates/workflow-brief.md` — session-oriented task and agent handoff brief.
 - `references/` — permission/approval and source-adaptation policies.
-- `evals/` — acceptance checks and structured behavior scenarios.
+- `evals/` — taxonomy, cases, rubrics, run records, reports, and acceptance checks.
 - `learning/inbox/` — proposed lessons awaiting review.
 - `learning/approved/` — curated lessons approved for reuse.
-- `templates/` — reusable workflow and decision-record templates.
+- `templates/` — reusable workflow, decision-record, and evaluation-report templates.
 - `docs/` — source influence and attribution register.
 
 ## Use with Codex
@@ -74,24 +74,24 @@ The toolkit adapts general ideas from public engineering repositories. It is not
 
 ## Quality checks
 
-See [toolkit acceptance checks](evals/acceptance-checks.md). These checks are a checklist; they are not claims that automated or model-runtime tests have passed.
+See [toolkit acceptance checks](evals/acceptance-checks.md). The evaluation system distinguishes deterministic artifact checks from behavioral Codex evaluation. An artifact check passing is not evidence that model behavior passed.
 
 ## Functional tooling
 
-This repository includes dependency-free maintenance utilities under `tools/`:
+Dependency-free maintenance utilities under `tools/`:
 
-- `python tools/validate_toolkit.py` checks skill metadata, native/portable skill parity, native agent TOML, workflow sections, and structured evaluation cases.
+- `python tools/validate_toolkit.py` checks skill metadata, native/portable skill parity, agent TOML, workflow sections, evaluation schemas, and all evaluation cases.
 - `python tools/sync_skills.py` previews differences between native skills and the portable mirror.
 - `python tools/sync_skills.py --check` exits non-zero when the mirror is out of sync.
 - `python tools/sync_skills.py --write` copies native skill files into the portable mirror. The native `.agents/skills/` tree is the source of truth.
+- `python tools/evaluate_toolkit.py --list` lists evaluation cases.
+- `python tools/evaluate_toolkit.py --validate` validates case files against the declared schema contract.
+- `python tools/evaluate_toolkit.py --run` creates an immutable evidence-ready run record and Markdown report; it does not launch Codex or grade model behavior.
 
-Python 3.11+ is recommended for full TOML validation. The scripts use only the Python standard library.
+Python 3.11+ is recommended for full TOML validation. The scripts use only the Python standard library. The evaluation runner implements the JSON Schema keywords used by this repository's schemas; it is not a general-purpose full Draft 2020-12 validator.
 
-## Structured evaluation
+## Evaluation system
 
-Reusable behavior scenarios live in `evals/cases/*.json` and follow `schemas/evaluation-case.schema.json`. They are designed for later manual or hybrid evaluation in an actual Codex environment. They are not evidence that model runtime tests have already passed.
+Read [evals/README.md](evals/README.md) for the hybrid evaluation process, [taxonomy](evals/taxonomy.md), and [rubrics](evals/rubrics/). Cases live in `evals/cases/*.json` and use `schemas/evaluation-case.schema.json`. Run records use `schemas/evaluation-result.schema.json`; rubric definitions use `schemas/evaluation-rubric.schema.json`.
 
-## Schemas
-
-- `schemas/evaluation-case.schema.json` defines evaluation case structure.
-- `schemas/decision-record.schema.json` defines engineering decision record structure.
+Behavioral checks require an actual trusted Codex session and evidence-backed human grading. The runner deliberately leaves those criteria as `NOT_RUN` until that review occurs. Historical run records are never overwritten.
