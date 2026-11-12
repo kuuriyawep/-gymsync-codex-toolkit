@@ -105,9 +105,12 @@ def validate_agents() -> None:
 
 def validate_workflows() -> None:
     directory = ROOT / "workflows"
-    required = ("## Workflow", "## Stop conditions", "## Required output")
+    required = ("## Stop conditions", "## Required output")
     for path in sorted(directory.glob("*.md")):
         content = read_text(path)
+        # Security audit uses a more specific heading for its procedure section.
+        if "## Workflow" not in content and "## Audit workflow" not in content:
+            fail(f"{path.relative_to(ROOT)}: missing section '## Workflow' (or '## Audit workflow')")
         for heading in required:
             if heading not in content:
                 fail(f"{path.relative_to(ROOT)}: missing section '{heading}'")
