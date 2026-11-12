@@ -203,6 +203,49 @@ def overall_status(criteria: list[dict[str, Any]]) -> str:
     return "PASS"
 
 
+def validate_result_record(record: Any) -> list[str]:
+    """Validate the result schema and cross-field consistency rules."""
+    if not isinstance(record, dict):
+        return ["$: evaluation result must be an object"]
+    errors = validate_instance(record, load_json(RESULT_SCHEMA))
+    if errors:
+        return errors
+
+    seen_cases: set[str] = set()
+    all_criteria: list[dict[str, Any]] = []
+    counts = {key: 0 for key in ("pass", "fail", "blocked", "not_run", "not_applicable")}
+    for case_index, case in enumerate(record["case_results"]):
+        case_id = case["case_id"]
+        if case_id in seen_cases:
+            errors.append(f"$.case_results[{case_index}]: duplicate case_id {case_id!r}")
+        seen_cases.add(case_id)
+        criterion_ids: set[str] = set()
+        for criterion in case["criteria"]:
+            criterion_id = criterion["criterion_id"]
+            if criterion_id in criterion_ids:
+                errors.append(
+                    f"$.case_results[{case_index}]: duplicate criterion_id {criterion_id!r}"
+                )
+            criterion_ids.add(criterion_id)
+            all_criteria.append(criterion)
+            counts[criterion["status"].lower()] += 1
+        expected_case_status = overall_status(case["criteria"])
+        if case["case_status"] != expected_case_status:
+            errors.append(
+                f"$.case_results[{case_index}].case_status: expected "
+                f"{expected_case_status}, got {case['case_status']}"
+            )
+
+    if record["summary"] != counts:
+        errors.append(f"$.summary: counts do not match criterion results (expected {counts})")
+    expected_overall = overall_status(all_criteria)
+    if record["overall_status"] != expected_overall:
+        errors.append(
+            f"$.overall_status: expected {expected_overall}, got {record['overall_status']}"
+        )
+    return errors
+
+
 def resolve_repo_path(path: Path, label: str = "output") -> Path:
     """Resolve an artifact path and reject paths outside this repository."""
     resolved = path.resolve()
@@ -277,12 +320,32 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--list", action="store_true", help="list discovered evaluation cases")
     parser.add_argument("--validate", action="store_true", help="validate all evaluation case files")
+    parser.add_argument("--validate-result", metavar="PATH", help="validate a saved evaluation result JSON file")
     parser.add_argument("--run", action="store_true", help="prepare an evidence-ready evaluation run")
     parser.add_argument("--run-id", help="explicit unique run identifier")
     parser.add_argument("--revision", help="target commit SHA or version label")
     parser.add_argument("--output", help="output JSON path; defaults to evals/results/<run-id>.json")
     parser.add_argument("--compare", help="previous run JSON file for regression comparison")
     args = parser.parse_args()
+    if args.validate_result:
+        if args.run or args.validate or args.list or args.compare:
+            parser.error("--validate-result cannot be combined with other operation flags")
+        result_path = Path(args.validate_result)
+        if not result_path.is_absolute():
+            result_path = ROOT / result_path
+        try:
+            result_record = load_json(result_path)
+        except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+            print(f"ERROR: cannot read evaluation result ({exc})")
+            return 2
+        result_errors = validate_result_record(result_record)
+        for issue in result_errors:
+            print(f"ERROR: {issue}")
+        if result_errors:
+            return 1
+        print(f"Evaluation result is valid: {result_path}")
+        return 0
+
     previous_run = None
     if args.compare:
         previous_path = Path(args.compare)
@@ -292,7 +355,7 @@ def main() -> int:
             previous_run = load_json(previous_path)
             if not isinstance(previous_run, dict) or not isinstance(previous_run.get("case_results"), list):
                 raise ValueError("previous run must contain a case_results array")
-            previous_errors = validate_instance(previous_run, load_json(RESULT_SCHEMA))
+            previous_errors = validate_result_record(previous_run)
             if previous_errors:
                 raise ValueError("previous run does not match the result schema: " + "; ".join(previous_errors[:5]))
         except (OSError, UnicodeError, json.JSONDecodeError, ValueError) as exc:
@@ -421,7 +484,7 @@ def main() -> int:
         "regression": regression,
     }
     result_schema = load_json(RESULT_SCHEMA)
-    result_errors = validate_instance(record, result_schema)
+    result_errors = validate_result_record(record)
     if result_errors:
         for issue in result_errors:
             print(f"ERROR: generated result: {issue}")
