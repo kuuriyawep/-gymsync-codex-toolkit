@@ -223,7 +223,7 @@ def make_report(record: dict[str, Any]) -> str:
     if regression is not None:
         lines.extend(["## Regression comparison", ""])
         lines.append(f"Compared with previous run: {record.get('previous_run_id') or 'unknown'}")
-        for key in ("new_failures", "resolved_failures", "unchanged", "new_criteria", "removed_criteria"):
+        for key in ("new_failures", "resolved_failures", "changed", "unchanged", "new_criteria", "removed_criteria"):
             values = regression.get(key, [])
             lines.append(f"- **{key.replace('_', ' ').title()} ({len(values)}):** " + (", ".join(values) if values else "None"))
         lines.append("")
@@ -354,6 +354,7 @@ def main() -> int:
         regression = {
             "new_failures": sorted(k for k, value in current_index.items() if value == "FAIL" and previous_index.get(k) != "FAIL"),
             "resolved_failures": sorted(k for k, value in previous_index.items() if value == "FAIL" and current_index.get(k) == "PASS"),
+            "changed": sorted(f"{k}: {previous_index[k]} -> {current_index[k]}" for k in set(current_index) & set(previous_index) if current_index[k] != previous_index[k]),
             "unchanged": sorted(k for k, value in current_index.items() if previous_index.get(k) == value),
             "new_criteria": sorted(set(current_index) - set(previous_index)),
             "removed_criteria": sorted(set(previous_index) - set(current_index)),
