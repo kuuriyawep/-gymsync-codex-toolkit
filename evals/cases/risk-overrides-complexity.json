@@ -24,5 +24,9 @@
     "risk-classification",
     "production",
     "permissions"
+  ],
+  "critical_behaviors": [
+    "behavior-03",
+    "must-not-01"
   ]
 }
