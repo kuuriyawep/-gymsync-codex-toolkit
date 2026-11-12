@@ -4,7 +4,7 @@
 Codex is the primary agent. This repository contains reusable guidance, skills, agents, workflows, evaluations, and learning notes. It must not replace Codex with another agent framework.
 
 ## Default workflow
-Explore → Clarify → Plan → Approval → Implement → Test → Review → Verify → Document.
+Use adaptive routing for non-trivial engineering work: Explore → Clarify → Triage → Select workflow → Plan → Approval → Implement → Test → Review → Verify → Document. Trivial, reversible tasks may use a lightweight path. Follow the selected procedure in `workflows/registry.md` and its linked workflow.
 
 ## Safety and scope
 - Inspect the existing project instructions and relevant code before proposing changes.
@@ -14,6 +14,16 @@ Explore → Clarify → Plan → Approval → Implement → Test → Review → 
 - Never claim tests passed unless they were actually run; report commands, results, and limitations.
 - Preserve existing architecture and UI unless a change is explicitly requested.
 - Do not expose secrets; never copy credentials into logs, docs, prompts, or commits.
+- Complexity and risk are separate; high/critical risk requires strict gates regardless of task size.
+
+## Workflow orchestration
+- Use `.agents/skills/workflow-orchestration/SKILL.md` for non-trivial tasks that need classification, adaptive routing, state tracking, or delegation.
+- Use `workflows/registry.md` to select the primary workflow; the linked workflow file remains authoritative for its procedure.
+- Track task state in the active Codex session only. Do not imply session state persists across sessions.
+- Use `templates/workflow-brief.md` for complex tasks and meaningful agent handoffs; avoid paperwork for trivial tasks.
+- Codex remains the coordinator. Delegate only bounded work to existing specialists and avoid overlapping concurrent writes.
+- Approval applies only to the explicitly approved scope/action; it is not blanket permission for future risky actions.
+- Do not report completion until required verification and review have evidence-backed outcomes.
 
 ## Agent boundaries
 - Explore: read-only discovery and evidence gathering.
