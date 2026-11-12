@@ -30,7 +30,8 @@
       "items": {
         "type": "string"
       },
-      "default": []
+      "default": [],
+      "description": "Evaluation target identifiers (such as skill/workflow names) or repository-relative file paths. Path-like entries are checked for repository containment and existence."
     },
     "category": {
       "type": "string",
