@@ -11,6 +11,7 @@ import argparse
 import datetime as dt
 import json
 import re
+import subprocess
 import sys
 import uuid
 from pathlib import Path
@@ -232,6 +233,20 @@ def main() -> int:
 
     case_results: list[dict[str, Any]] = []
     flat_criteria: list[dict[str, Any]] = []
+    integrity = subprocess.run(
+        [sys.executable, str(ROOT / "tools" / "validate_toolkit.py")],
+        cwd=ROOT, text=True, capture_output=True, check=False,
+    )
+    integrity_output = (integrity.stdout + integrity.stderr).strip()
+    integrity_criterion = {
+        "criterion_id": "toolkit-integrity",
+        "status": "PASS" if integrity.returncode == 0 else "FAIL",
+        "critical": True,
+        "reason": "Full toolkit validator completed successfully." if integrity.returncode == 0 else "Full toolkit validator reported one or more integrity errors.",
+        "evidence": [f"python tools/validate_toolkit.py (exit {integrity.returncode})", integrity_output or "No validator output."],
+    }
+    case_results.append({"case_id": "__toolkit__", "case_status": integrity_criterion["status"], "criteria": [integrity_criterion]})
+    flat_criteria.append(integrity_criterion)
     for item in cases:
         data = item["data"]
         criteria = [{
