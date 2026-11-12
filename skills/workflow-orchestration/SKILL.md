@@ -76,7 +76,13 @@ Use the registry's role boundaries:
 
 If no agent fits, Codex should perform the work itself or explain why a suitable role is unavailable. Do not invent capabilities or imply that Markdown role briefs are executable agents.
 
-### 5. Prepare bounded handoffs
+### 5. Discover and plan
+
+Read the selected workflow and every skill whose description matches the task before applying their procedures. Inspect relevant repository instructions and implementation evidence.
+
+For non-trivial work, define intended behavior, acceptance criteria, in-scope/out-of-scope changes, likely files, dependencies, ordered steps, complexity/risk assumptions, mitigations, verification, and rollback/recovery notes where relevant. Use `templates/workflow-brief.md` for complex tasks, multi-agent handoffs, or a useful session checkpoint; do not create paperwork for trivial work.
+
+### 6. Prepare bounded handoffs
 
 For non-trivial delegation, use `templates/agent-handoff.md`. Include objective, recipient, scope, non-goals, context/evidence, assumptions, exact approval status, constraints, expected output, dependencies, and parallelization status.
 
@@ -89,13 +95,13 @@ For non-trivial delegation, use `templates/agent-handoff.md`. Include objective,
 
 The parent remains responsible for task coordination, validating agent output, and final reporting.
 
-### 6. Approval gate
+### 7. Approval gate
 
 Check whether the exact action is already within the user's explicit approval and repository policy. Stop and request approval before destructive/irreversible operations, production writes, migrations, permission/RLS changes, deployment, external side effects, material scope expansion, or actions with unclear ownership or unacceptable blast radius.
 
 Approval applies only to the described scope and action. Do not treat approval for one task as blanket approval for future tasks. If approval is absent, mark `AWAITING_APPROVAL`; continue only safe read-only discovery/planning.
 
-### 7. Coordinate work and resolve conflicts
+### 8. Coordinate work and resolve conflicts
 
 Track each delegated task as pending, active, completed, blocked, or failed in the active session. Record its owner, output, dependencies, and evidence.
 
@@ -106,7 +112,7 @@ Track each delegated task as pending, active, completed, blocked, or failed in t
 - If disagreement remains unresolved, preserve both positions and mark the issue unresolved; the parent Codex coordinator makes the final engineering recommendation and escalates material product/scope decisions to the user.
 - Never silently discard a security finding or suppress a minority finding without documenting the evidence-based reason.
 
-### 8. Track state in the active session
+### 9. Track state in the active session
 
 Maintain a concise record of current state, workflow, classification, scope, acceptance criteria, decisions, approval, completed work, evidence, owners, blockers, and next action.
 
@@ -114,11 +120,23 @@ Primary states:
 
 `INTAKE` → `TRIAGE` → `DISCOVERY` → `PLANNING` → `APPROVAL` → `EXECUTION` → `VALIDATION` → `REVIEW` → `COMPLETION`
 
-Additional states: `NEEDS_CLARIFICATION`, `AWAITING_APPROVAL`, `BLOCKED`, `FAILED`.
+Additional states:
+- `NEEDS_CLARIFICATION`: a material ambiguity prevents safe or correct progress.
+- `AWAITING_APPROVAL`: the next gated action is not approved; continue only safe read-only work.
+- `BLOCKED`: a prerequisite is unavailable; name the blocker and owner.
+- `FAILED`: an attempted step failed and needs diagnosis or recovery.
+
+State transition rules:
+- Move to `NEEDS_CLARIFICATION` when a material ambiguity prevents safe or correct progress.
+- Move to `AWAITING_APPROVAL` before any unapproved gated action.
+- Move to `BLOCKED` when a prerequisite cannot be satisfied; state the blocker and owner.
+- After a failed check, return to diagnosis/planning as appropriate; do not advance as if it passed.
+- Reassess scope and risk when new evidence materially changes the task.
+- Enter `COMPLETION` only after proportionate validation and review are complete, or clearly report a partial/blocked outcome instead.
 
 Session state is not a persistent database. Use `templates/workflow-brief.md` for complex tasks or durable handoffs when useful.
 
-### 9. Independent review
+### 10. Independent review
 
 For complex, security-sensitive, or high-impact changes, request a reviewer who did not implement the change whenever available. Give the reviewer the approved scope, acceptance criteria, diff/revision, and relevant test evidence, but do not tell them what conclusion to reach.
 
@@ -126,7 +144,7 @@ Use `templates/agent-review-report.md`. Require findings to identify severity, s
 
 A clean review means no findings were identified within the stated scope; it is not proof that the whole system is defect-free.
 
-### 10. Validate and report
+### 11. Validate and report
 
 Follow the selected workflow's verification requirements. Report each check as `passed`, `failed`, `skipped`, or `not run`, with exact command/evidence. Do not infer a test passed because code looks correct. Inspect the final diff and ensure changes remain within approved scope.
 
