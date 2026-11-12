@@ -20,6 +20,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 CASE_DIR = ROOT / "evals" / "cases"
 CASE_SCHEMA = ROOT / "schemas" / "evaluation-case.schema.json"
+RUBRIC_DIR = ROOT / "evals" / "rubrics"
+RUBRIC_SCHEMA = ROOT / "schemas" / "evaluation-rubric.schema.json"
 RESULT_SCHEMA = ROOT / "schemas" / "evaluation-result.schema.json"
 VALID_STATUSES = {"PASS", "FAIL", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"}
 
@@ -108,6 +110,12 @@ def inspect_cases() -> tuple[list[dict[str, Any]], list[str]]:
             continue
         errors = validate_instance(case, schema)
         issues.extend(f"{path.relative_to(ROOT)}: {error}" for error in errors)
+        for target in case.get("target", []):
+            target_path = (ROOT / target).resolve()
+            if ROOT.resolve() not in target_path.parents and target_path != ROOT.resolve():
+                issues.append(f"{path.relative_to(ROOT)}: target escapes repository root: {target}")
+            elif not target_path.exists():
+                issues.append(f"{path.relative_to(ROOT)}: target does not exist: {target}")
         case_id = case.get("id")
         if isinstance(case_id, str):
             if case_id in seen:
@@ -118,6 +126,36 @@ def inspect_cases() -> tuple[list[dict[str, Any]], list[str]]:
         issues.append("No evaluation cases discovered under evals/cases/*.json")
     return cases, issues
 
+
+
+def inspect_rubrics() -> list[str]:
+    issues: list[str] = []
+    if not RUBRIC_SCHEMA.is_file():
+        return ["Missing schema: schemas/evaluation-rubric.schema.json"]
+    if not RUBRIC_DIR.is_dir():
+        return ["Missing rubric directory: evals/rubrics"]
+    schema = load_json(RUBRIC_SCHEMA)
+    rubric_paths = sorted(RUBRIC_DIR.glob("*.json"))
+    if not rubric_paths:
+        return ["No structured rubric definitions found under evals/rubrics"]
+    seen: set[str] = set()
+    for path in rubric_paths:
+        try:
+            rubric = load_json(path)
+        except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+            issues.append(f"{path.relative_to(ROOT)}: cannot parse JSON ({exc})")
+            continue
+        if not isinstance(rubric, dict):
+            issues.append(f"{path.relative_to(ROOT)}: root must be an object")
+            continue
+        for error in validate_instance(rubric, schema):
+            issues.append(f"{path.relative_to(ROOT)}: {error}")
+        rubric_id = rubric.get("id")
+        if isinstance(rubric_id, str):
+            if rubric_id in seen:
+                issues.append(f"{path.relative_to(ROOT)}: duplicate rubric id {rubric_id!r}")
+            seen.add(rubric_id)
+    return issues
 
 def print_case_list(cases: list[dict[str, Any]]) -> None:
     for item in cases:
@@ -203,6 +241,7 @@ def main() -> int:
             print(f"ERROR: cannot read comparison run ({exc})")
             return 2
     cases, issues = inspect_cases()
+    issues.extend(inspect_rubrics())
     if args.list:
         print_case_list(cases)
         return 0
