@@ -5,36 +5,99 @@
   "description": "A repeatable scenario for evaluating an agent, skill, or workflow.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "title", "prompt", "expected_behaviors", "risk_level"],
+  "required": [
+    "id",
+    "title",
+    "prompt",
+    "expected_behaviors",
+    "risk_level"
+  ],
   "properties": {
     "id": {
       "type": "string",
       "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
     },
-    "title": { "type": "string", "minLength": 3 },
-    "prompt": { "type": "string", "minLength": 5 },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "prompt": {
+      "type": "string",
+      "minLength": 5
+    },
     "target": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "skill-correctness",
+        "skill-triggering",
+        "workflow-compliance",
+        "agent-role-compliance",
+        "safety-approval",
+        "tooling-verification",
+        "output-quality",
+        "regression"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true,
+      "default": []
+    },
+    "preconditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
       "default": []
     },
     "expected_behaviors": {
       "type": "array",
       "minItems": 1,
-      "items": { "type": "string", "minLength": 3 }
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
     },
     "must_not": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "expected_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
       "default": []
     },
     "risk_level": {
       "type": "string",
-      "enum": ["low", "medium", "high", "critical"]
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
     },
     "evaluation_method": {
       "type": "string",
-      "enum": ["human-review", "deterministic-check", "hybrid"],
+      "enum": [
+        "human-review",
+        "deterministic-check",
+        "hybrid"
+      ],
       "default": "human-review"
     }
   }
