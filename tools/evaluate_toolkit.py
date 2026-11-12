@@ -163,6 +163,14 @@ def make_report(record: dict[str, Any]) -> str:
             for evidence in criterion["evidence"]:
                 lines.append(f"  - Evidence: {evidence}")
         lines.append("")
+    regression = record.get("regression")
+    if regression is not None:
+        lines.extend(["## Regression comparison", ""])
+        lines.append(f"Compared with previous run: {record.get('previous_run_id') or 'unknown'}")
+        for key in ("new_failures", "resolved_failures", "unchanged", "new_criteria", "removed_criteria"):
+            values = regression.get(key, [])
+            lines.append(f"- **{key.replace('_', ' ').title()} ({len(values)}):** " + (", ".join(values) if values else "None"))
+        lines.append("")
     lines.extend(["## Limitations", ""])
     lines.extend([f"- {item}" for item in record["limitations"]] or ["- None recorded."])
     lines.append("")
@@ -176,10 +184,21 @@ def main() -> int:
     parser.add_argument("--run", action="store_true", help="prepare an evidence-ready evaluation run")
     parser.add_argument("--run-id", help="explicit unique run identifier")
     parser.add_argument("--revision", help="target commit SHA or version label")
-    parser.add_argument("--grader", choices=["deterministic-runner", "human-review", "hybrid"],
-                        default="hybrid")
     parser.add_argument("--output", help="output JSON path; defaults to evals/results/<run-id>.json")
+    parser.add_argument("--compare", help="previous run JSON file for regression comparison")
     args = parser.parse_args()
+    previous_run = None
+    if args.compare:
+        previous_path = Path(args.compare)
+        if not previous_path.is_absolute():
+            previous_path = ROOT / previous_path
+        try:
+            previous_run = load_json(previous_path)
+            if not isinstance(previous_run, dict) or not isinstance(previous_run.get("case_results"), list):
+                raise ValueError("previous run must contain a case_results array")
+        except (OSError, UnicodeError, json.JSONDecodeError, ValueError) as exc:
+            print(f"ERROR: cannot read comparison run ({exc})")
+            return 2
     cases, issues = inspect_cases()
     if args.list:
         print_case_list(cases)
@@ -244,12 +263,32 @@ def main() -> int:
         key = criterion["status"].lower()
         counts[key] += 1
     status = overall_status(flat_criteria)
+    current_index = {
+        f"{case['case_id']}/{criterion['criterion_id']}": criterion["status"]
+        for case in case_results for criterion in case["criteria"]
+    }
+    previous_index = {}
+    if previous_run:
+        previous_index = {
+            f"{case.get('case_id')}/{criterion.get('criterion_id')}": criterion.get("status")
+            for case in previous_run.get("case_results", [])
+            for criterion in case.get("criteria", [])
+        }
+    regression = None
+    if previous_run:
+        regression = {
+            "new_failures": sorted(k for k, value in current_index.items() if value == "FAIL" and previous_index.get(k) != "FAIL"),
+            "resolved_failures": sorted(k for k, value in previous_index.items() if value == "FAIL" and current_index.get(k) == "PASS"),
+            "unchanged": sorted(k for k, value in current_index.items() if previous_index.get(k) == value),
+            "new_criteria": sorted(set(current_index) - set(previous_index)),
+            "removed_criteria": sorted(set(previous_index) - set(current_index)),
+        }
     record = {
         "schema_version": "1.0",
         "run_id": run_id,
         "created_at": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"),
         "target": {"repository": "kuuriyawep/-gymsync-codex-toolkit", "revision": args.revision},
-        "grader": args.grader,
+        "grader": "deterministic-runner",
         "overall_status": status,
         "case_results": case_results,
         "summary": counts,
@@ -258,7 +297,8 @@ def main() -> int:
             "All behavioral criteria remain NOT_RUN until reviewed against a real Codex session and evidence.",
             "The runner implements the JSON Schema keywords used by this repository's schemas, not the entire JSON Schema specification.",
         ],
-        "previous_run_id": None,
+        "previous_run_id": previous_run.get("run_id") if previous_run else None,
+        "regression": regression,
     }
     output.parent.mkdir(parents=True, exist_ok=True)
     report_path = report_dir / f"{run_id}.md"
