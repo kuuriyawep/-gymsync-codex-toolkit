@@ -9,7 +9,10 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 
 ## Repository layout
 - `AGENTS.md` — repository-wide operating contract and safety rules.
-- `agents/` — read-only exploration, planning, implementation, review, and security roles.
+- `.codex/agents/` — native project-scoped Codex subagents (TOML definitions).
+- `agents/` — readable role briefs and portable reference prompts.
+- `.agents/skills/` — the 11 Codex-discoverable project skills.
+- `skills/` — matching portable Markdown skill catalog for browsing and reuse.
 - `skills/` — reusable task procedures with Codex-friendly instructions.
 - `workflows/` — end-to-end bug, feature, database, security, research, and release processes.
 - `references/` — permission/approval and source-adaptation policies.
