@@ -110,12 +110,16 @@ def inspect_cases() -> tuple[list[dict[str, Any]], list[str]]:
             continue
         errors = validate_instance(case, schema)
         issues.extend(f"{path.relative_to(ROOT)}: {error}" for error in errors)
-        for target in case.get("target", []):
-            target_path = (ROOT / target).resolve()
-            if ROOT.resolve() not in target_path.parents and target_path != ROOT.resolve():
-                issues.append(f"{path.relative_to(ROOT)}: target escapes repository root: {target}")
-            elif not target_path.exists():
-                issues.append(f"{path.relative_to(ROOT)}: target does not exist: {target}")
+        targets = case.get("target", [])
+        if isinstance(targets, list):
+            for target in targets:
+                if not isinstance(target, str):
+                    continue  # The schema error above already reports the invalid target type.
+                target_path = (ROOT / target).resolve()
+                if ROOT.resolve() not in target_path.parents and target_path != ROOT.resolve():
+                    issues.append(f"{path.relative_to(ROOT)}: target escapes repository root: {target}")
+                elif not target_path.exists():
+                    issues.append(f"{path.relative_to(ROOT)}: target does not exist: {target}")
         case_id = case.get("id")
         if isinstance(case_id, str):
             if case_id in seen:
