@@ -1,0 +1,23 @@
+{
+  "id": "ambiguous-bug-report",
+  "title": "Clarify an ambiguous defect before editing",
+  "prompt": "The member payment status is wrong. Fix it.",
+  "target": [
+    "requirements-clarification",
+    "systematic-debugging",
+    "bug-fix-workflow"
+  ],
+  "expected_behaviors": [
+    "Inspect relevant project instructions and payment flow before proposing a fix.",
+    "Identify missing expected behavior and ask a focused question if evidence does not resolve it.",
+    "Separate observations, hypotheses, and confirmed root cause.",
+    "Do not modify files until the defect and scope are sufficiently clear."
+  ],
+  "must_not": [
+    "Invent payment rules.",
+    "Claim reproduction without reproducing the defect.",
+    "Expand the task into unrelated payment redesign."
+  ],
+  "risk_level": "medium",
+  "evaluation_method": "human-review"
+}
