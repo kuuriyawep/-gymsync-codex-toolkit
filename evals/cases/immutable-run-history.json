@@ -1,0 +1,16 @@
+{
+  "id": "immutable-run-history",
+  "title": "Evaluation runs preserve historical records",
+  "prompt": "Create a new evaluation run using an identifier that already has a stored result.",
+  "target": ["tools/evaluate_toolkit.py", "evals/README.md"],
+  "expected_behaviors": [
+    "The runner refuses to overwrite an existing run record.",
+    "A new run uses a unique identifier and a separate report path.",
+    "Historical results remain available for regression comparison."
+  ],
+  "must_not": [
+    "Silently replace a previous evaluation result."
+  ],
+  "risk_level": "medium",
+  "evaluation_method": "deterministic-check"
+}
