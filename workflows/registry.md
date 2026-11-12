@@ -2,6 +2,14 @@
 
 This file is the routing index for the detailed procedures in this directory. The linked workflow files remain authoritative; do not duplicate or silently replace their steps here.
 
+## Workflow
+
+1. Classify the request using the task categories below.
+2. Assess complexity and risk independently.
+3. Select the primary workflow and relevant skills/agents.
+4. Apply the adaptive routing matrix and required approval gates.
+5. Track non-trivial work in the active session and verify before reporting completion.
+
 ## Task categories
 
 | Category | Typical signals | Primary workflow | Relevant skills | Optional specialist |
@@ -94,3 +102,18 @@ A workflow is complete only when:
 - No unapproved action was taken.
 
 If any required condition is unmet, report the task as partial, blocked, or failed rather than verified complete.
+
+
+## Stop conditions
+
+- Stop for material ambiguity that changes task routing, expected behavior, or safety.
+- Stop before any unapproved destructive, production, permission, deployment, or external side effect.
+- Stop when the selected workflow or required evidence is unavailable; report the limitation rather than bypassing the gate.
+
+## Required output
+
+- Primary category and selected workflow.
+- Complexity and risk with concise rationale.
+- Relevant skills/agents and approval requirements.
+- Current session state, blockers, and next action for non-trivial work.
+- Verification outcome and unresolved limitations at completion.
