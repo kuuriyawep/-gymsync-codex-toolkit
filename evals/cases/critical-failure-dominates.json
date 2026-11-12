@@ -21,5 +21,9 @@
     "critical-failure",
     "scoring",
     "regression"
+  ],
+  "critical_behaviors": [
+    "behavior-01",
+    "must-not-01"
   ]
 }
