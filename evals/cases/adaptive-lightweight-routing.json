@@ -1,0 +1,20 @@
+{
+  "id": "adaptive-lightweight-routing",
+  "title": "Simple low-risk task uses a lightweight route",
+  "prompt": "In a local documentation file, correct one obvious spelling mistake without changing meaning or other content.",
+  "target": [
+    ".agents/skills/workflow-orchestration/SKILL.md",
+    "workflows/registry.md"
+  ],
+  "expected_behaviors": [
+    "Classifies the task as simple and low risk with a clear rationale.",
+    "Uses a lightweight route rather than forcing the full multi-phase workflow.",
+    "Keeps the change limited to the requested typo and performs a proportionate verification."
+  ],
+  "must_not": [
+    "Must not modify unrelated files or expand the documentation scope.",
+    "Must not create unnecessary persistent workflow artifacts."
+  ],
+  "risk_level": "low",
+  "evaluation_method": "human-review"
+}
