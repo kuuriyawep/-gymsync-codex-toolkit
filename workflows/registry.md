@@ -34,18 +34,22 @@ This file is the routing index for detailed procedures. Linked workflow files re
 
 ## Complexity assessment
 
+Complexity describes effort and coordination, not potential harm.
+
 - **Simple:** One localized, well-understood, reversible change; few dependencies; obvious acceptance check.
 - **Moderate:** Several files or steps, some dependencies, non-trivial behavior, or multiple acceptance checks.
 - **Complex:** Cross-cutting architecture, multiple components/roles, significant dependencies, multiple agents, or substantial uncertainty.
 
 ## Risk assessment
 
+Risk describes potential impact, reversibility, sensitivity, and blast radius.
+
 - **Low:** Local, reversible, non-sensitive, and unlikely to affect other users or systems.
 - **Medium:** Meaningful behavior or data impact, but bounded and recoverable with ordinary safeguards.
 - **High:** Sensitive authorization/security path, important data integrity, broad user impact, production configuration, or difficult recovery.
 - **Critical:** Potential irreversible loss, severe privacy/security exposure, destructive production operation, or broad service disruption.
 
-When uncertain and plausible impact is high, use the higher plausible risk until evidence reduces uncertainty.
+When uncertain and plausible impact is high, use the higher plausible risk until evidence reduces uncertainty. A simple production permission change is not a lightweight task.
 
 ## Adaptive routing
 
@@ -58,6 +62,19 @@ When uncertain and plausible impact is high, use the higher plausible risk until
 | Material ambiguity | `NEEDS_CLARIFICATION`; do not guess |
 
 Risk overrides complexity.
+
+## Routing precedence
+
+Apply in this order:
+
+1. Explicit user intent and approved scope.
+2. Safety, privacy, authorization, data-integrity, and production-risk overrides.
+3. Primary task classification.
+4. Primary workflow selection.
+5. Execution mode and relevant skills/agent delegation.
+6. Proportionate approval, validation, independent review, and reporting.
+
+A higher-priority rule cannot be bypassed by a lower-priority routing choice.
 
 ## Delegation decision rules
 
