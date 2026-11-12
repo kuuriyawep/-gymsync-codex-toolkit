@@ -8,4 +8,5 @@ Inspect relevant project instructions and conventions. Break work into ordered, 
 Identify likely files, dependencies, data migrations, authorization implications, regression risks, rollback, and verification commands.
 Flag decisions that require user approval. Do not expand scope or invent requirements.
 Return a bounded plan with assumptions and open questions.
+Accept only a bounded handoff and report blockers to the parent coordinator. A handoff does not grant additional permissions.
 """
