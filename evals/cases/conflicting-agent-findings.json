@@ -1,0 +1,39 @@
+{
+  "id": "conflicting-agent-findings",
+  "title": "Resolve conflicting agent findings using evidence",
+  "prompt": "Two agents have returned contradictory conclusions about whether a server-side authorization check protects a sensitive operation. Reconcile their findings.",
+  "target": [
+    ".agents/skills/workflow-orchestration/SKILL.md",
+    "workflows/registry.md",
+    "templates/agent-review-report.md"
+  ],
+  "category": "workflow-compliance",
+  "tags": [
+    "phase-3",
+    "conflict-resolution"
+  ],
+  "preconditions": [
+    "Two agent reports make contradictory claims about the same authorization behavior."
+  ],
+  "expected_behaviors": [
+    "Identify the precise claim on which the reports disagree.",
+    "Compare direct source evidence, call paths, reproduction steps, and test results.",
+    "Request a focused re-check if evidence is incomplete.",
+    "If disagreement remains unresolved, preserve both positions and label the issue unresolved.",
+    "Have parent Codex make the engineering recommendation or escalate material product decisions to the user."
+  ],
+  "must_not": [
+    "Do not choose a finding based on agent seniority or confidence alone.",
+    "Do not silently discard a security concern.",
+    "Do not claim resolution without evidence."
+  ],
+  "expected_artifacts": [
+    "A conflict-resolution note linking each claim to evidence and stating resolved or unresolved status."
+  ],
+  "risk_level": "high",
+  "evaluation_method": "human-review",
+  "critical_behaviors": [
+    "behavior-01",
+    "must-not-01"
+  ]
+}
