@@ -86,7 +86,8 @@ Dependency-free maintenance utilities under `tools/`:
 - `python tools/sync_skills.py --write` copies native skill files into the portable mirror. The native `.agents/skills/` tree is the source of truth.
 - `python tools/evaluate_toolkit.py --list` lists evaluation cases.
 - `python tools/evaluate_toolkit.py --validate` validates case files against the declared schema contract.
-- `python tools/evaluate_toolkit.py --run` creates an immutable evidence-ready run record and Markdown report; it does not launch Codex or grade model behavior.
+- `python tools/evaluate_toolkit.py --run` runs deterministic toolkit integrity checks and creates an immutable evidence-ready run record and Markdown report; it does not launch Codex or grade model behavior.
+- `python tools/evaluate_toolkit.py --run --compare evals/results/<previous-run-id>.json` compares stable case/criterion outcomes with a prior run.
 
 Python 3.11+ is recommended for full TOML validation. The scripts use only the Python standard library. The evaluation runner implements the JSON Schema keywords used by this repository's schemas; it is not a general-purpose full Draft 2020-12 validator.
 
