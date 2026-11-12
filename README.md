@@ -13,7 +13,6 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 - `agents/` — readable role briefs and portable reference prompts.
 - `.agents/skills/` — the 11 Codex-discoverable project skills.
 - `skills/` — matching portable Markdown skill catalog for browsing and reuse.
-- `skills/` — reusable task procedures with Codex-friendly instructions.
 - `workflows/` — end-to-end bug, feature, database, security, research, and release processes.
 - `references/` — permission/approval and source-adaptation policies.
 - `evals/` — acceptance checks for toolkit quality.
@@ -25,9 +24,11 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 ## Use with Codex
 1. Clone this repository or copy the relevant files into the target project's working directory.
 2. Keep `AGENTS.md` at the project root if you want its instructions to apply to that project.
-3. Use a skill by opening its `SKILL.md` and following its procedure when the task matches its description.
-4. Use agent role files as role prompts only where your Codex environment supports the corresponding agent workflow; they do not install agents automatically.
-5. Review all instructions against the target project's own rules before use.
+3. Trust the project in Codex if prompted; project-scoped instructions, skills, and agents require a trusted project.
+4. Start or refresh the Codex session so project-scoped configuration can be discovered.
+5. Skills under `.agents/skills/` are the native discovery path; Codex can select relevant skills from their descriptions, and you can also invoke one explicitly when supported.
+6. Custom subagents under `.codex/agents/` are native project-scoped agents. The Markdown files under `agents/` are reference briefs only.
+7. Review all instructions against the target project's own rules before use.
 
 ## Safety model
 - Read-only investigation before implementation.
