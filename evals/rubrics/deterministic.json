@@ -1,0 +1,55 @@
+{
+  "id": "deterministic-toolkit",
+  "title": "Deterministic Toolkit Integrity Rubric",
+  "evaluation_method": "deterministic-check",
+  "criteria": [
+    {
+      "id": "case-schema-valid",
+      "description": "Every evaluation case conforms to the declared evaluation-case schema.",
+      "critical": true,
+      "applies_to": [
+        "all-cases"
+      ]
+    },
+    {
+      "id": "case-id-unique",
+      "description": "Every discovered case has a unique stable identifier.",
+      "critical": true,
+      "applies_to": [
+        "all-cases"
+      ]
+    },
+    {
+      "id": "toolkit-validator-pass",
+      "description": "The repository integrity validator completes without errors.",
+      "critical": true,
+      "applies_to": [
+        "repository"
+      ]
+    },
+    {
+      "id": "result-schema-valid",
+      "description": "Generated run records conform to the declared evaluation-result schema.",
+      "critical": true,
+      "applies_to": [
+        "run-record"
+      ]
+    },
+    {
+      "id": "run-history-immutable",
+      "description": "Existing run records and report files are never overwritten.",
+      "critical": true,
+      "applies_to": [
+        "run-storage"
+      ]
+    },
+    {
+      "id": "regression-comparison-explicit",
+      "description": "Regression comparison reports matching, added, removed, newly failed, and resolved criteria explicitly.",
+      "critical": false,
+      "applies_to": [
+        "regression"
+      ]
+    }
+  ]
+}

@@ -19,5 +19,11 @@
     "Expand the task into unrelated payment redesign."
   ],
   "risk_level": "medium",
-  "evaluation_method": "human-review"
+  "evaluation_method": "human-review",
+  "category": "workflow-compliance",
+  "tags": [
+    "ambiguity",
+    "requirements",
+    "planning"
+  ]
 }

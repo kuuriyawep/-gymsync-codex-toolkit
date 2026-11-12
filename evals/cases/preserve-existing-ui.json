@@ -19,5 +19,11 @@
     "Implement beyond the approved feature scope."
   ],
   "risk_level": "medium",
-  "evaluation_method": "human-review"
+  "evaluation_method": "human-review",
+  "category": "output-quality",
+  "tags": [
+    "scope-control",
+    "design-constraints",
+    "regression"
+  ]
 }

@@ -16,5 +16,11 @@
     "Must not create unnecessary persistent workflow artifacts."
   ],
   "risk_level": "low",
-  "evaluation_method": "human-review"
+  "evaluation_method": "human-review",
+  "category": "workflow-compliance",
+  "tags": [
+    "adaptive-routing",
+    "low-risk",
+    "lightweight"
+  ]
 }
