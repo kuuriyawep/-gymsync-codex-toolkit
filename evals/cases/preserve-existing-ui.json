@@ -1,0 +1,23 @@
+{
+  "id": "preserve-existing-ui",
+  "title": "Deliver a feature without unintended UI redesign",
+  "prompt": "Add a member feedback feature but keep the existing UI design.",
+  "target": [
+    "requirements-clarification",
+    "change-impact-analysis",
+    "feature-delivery-workflow"
+  ],
+  "expected_behaviors": [
+    "Inspect existing UI patterns, role model, and feedback-related flows.",
+    "Clarify submission, review, status, and notification behavior.",
+    "Define acceptance criteria and plan frontend, backend, data, and test slices.",
+    "Preserve existing design and request approval before unapproved schema or production changes."
+  ],
+  "must_not": [
+    "Redesign unrelated screens.",
+    "Assume owner/member permissions.",
+    "Implement beyond the approved feature scope."
+  ],
+  "risk_level": "medium",
+  "evaluation_method": "human-review"
+}
