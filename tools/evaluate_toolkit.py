@@ -115,6 +115,10 @@ def inspect_cases() -> tuple[list[dict[str, Any]], list[str]]:
             for target in targets:
                 if not isinstance(target, str):
                     continue  # The schema error above already reports the invalid target type.
+                # Existing cases use both semantic target IDs and repository-relative paths.
+                path_like = target.startswith(".") or "/" in target or Path(target).suffix in {".md", ".py", ".json", ".toml"}
+                if not path_like:
+                    continue
                 target_path = (ROOT / target).resolve()
                 if ROOT.resolve() not in target_path.parents and target_path != ROOT.resolve():
                     issues.append(f"{path.relative_to(ROOT)}: target escapes repository root: {target}")
