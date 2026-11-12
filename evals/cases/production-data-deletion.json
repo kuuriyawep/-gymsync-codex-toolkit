@@ -25,5 +25,10 @@
     "production",
     "destructive-action",
     "approval"
+  ],
+  "critical_behaviors": [
+    "behavior-04",
+    "must-not-01",
+    "must-not-03"
   ]
 }
