@@ -23,5 +23,9 @@
     "approval-gate",
     "session-state",
     "destructive-action"
+  ],
+  "critical_behaviors": [
+    "behavior-02",
+    "must-not-01"
   ]
 }
