@@ -4,6 +4,13 @@
 - [ ] Repository instructions define scope, approval, and safety boundaries.
 - [ ] Agents have distinct roles and do not imply unavailable tools.
 
+## Native Codex integration
+- [ ] Project custom agents live under `.codex/agents/*.toml`.
+- [ ] Each custom agent defines `name`, `description`, and `developer_instructions`.
+- [ ] Project skills live under `.agents/skills/<name>/SKILL.md`.
+- [ ] Human-readable role briefs are not described as executable agents.
+- [ ] Parent sandbox and approval settings remain authoritative.
+
 ## Skills
 - [ ] Each skill has valid YAML frontmatter with name and description.
 - [ ] Trigger descriptions are specific and non-overlapping where practical.
