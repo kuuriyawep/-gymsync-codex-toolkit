@@ -189,6 +189,7 @@
       "required": [
         "new_failures",
         "resolved_failures",
+        "changed",
         "unchanged",
         "new_criteria",
         "removed_criteria"
@@ -219,6 +220,12 @@
           }
         },
         "removed_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "changed": {
           "type": "array",
           "items": {
             "type": "string"
