@@ -33,7 +33,7 @@
 ## Evaluation framework
 - [ ] Taxonomy covers skills, triggering, workflows, agent roles, safety, tools, output quality, and regression.
 - [ ] Existing evaluation cases remain backward-compatible with the expanded case schema.
-- [ ] Cases are validated against the declared schema contract, including required fields, enums, patterns, and nested properties.
+- [ ] Cases and structured rubric definitions are validated against their declared schema contracts, including required fields, enums, patterns, and nested properties.
 - [ ] Deterministic and behavioral evaluation are separate and clearly labeled.
 - [ ] PASS, FAIL, BLOCKED, NOT_RUN, and NOT_APPLICABLE are distinct criterion outcomes.
 - [ ] A failed critical criterion forces overall FAIL.
