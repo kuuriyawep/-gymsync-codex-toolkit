@@ -8,6 +8,8 @@ The toolkit uses a **hybrid, criteria-based evaluation process**. Deterministic 
 python tools/evaluate_toolkit.py --list
 python tools/evaluate_toolkit.py --validate
 python tools/evaluate_toolkit.py --run
+# Compare with a previous immutable run record
+python tools/evaluate_toolkit.py --run --compare evals/results/<previous-run-id>.json
 ```
 
 The runner uses only the Python standard library. It discovers `evals/cases/*.json`, validates cases against the repository's declared schema contract, and writes an immutable run record plus a Markdown report. It does **not** launch Codex, invoke a model, inspect a live conversation, or grade behavioral output.
