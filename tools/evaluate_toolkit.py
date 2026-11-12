@@ -237,6 +237,9 @@ def main() -> int:
             previous_run = load_json(previous_path)
             if not isinstance(previous_run, dict) or not isinstance(previous_run.get("case_results"), list):
                 raise ValueError("previous run must contain a case_results array")
+            previous_errors = validate_instance(previous_run, load_json(RESULT_SCHEMA))
+            if previous_errors:
+                raise ValueError("previous run does not match the result schema: " + "; ".join(previous_errors[:5]))
         except (OSError, UnicodeError, json.JSONDecodeError, ValueError) as exc:
             print(f"ERROR: cannot read comparison run ({exc})")
             return 2
