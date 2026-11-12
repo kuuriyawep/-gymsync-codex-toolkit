@@ -221,9 +221,9 @@ def write_new_artifacts(output: Path, report_path: Path, record_text: str, repor
     try:
         for path, content in ((report_path, report_text), (output, record_text)):
             path.parent.mkdir(parents=True, exist_ok=True)
-            with path.open("x", encoding="utf-8", newline="\\n") as handle:
+            with path.open("x", encoding="utf-8", newline="\n") as handle:
+                created.append(path)
                 handle.write(content)
-            created.append(path)
     except (FileExistsError, OSError):
         for path in reversed(created):
             try:
