@@ -170,13 +170,13 @@ def print_case_list(cases: list[dict[str, Any]]) -> None:
 def overall_status(criteria: list[dict[str, Any]]) -> str:
     if any(c["critical"] and c["status"] == "FAIL" for c in criteria):
         return "FAIL"
+    if any(c["status"] == "FAIL" for c in criteria):
+        return "FAIL"
     if any(c["status"] == "BLOCKED" for c in criteria):
         return "BLOCKED"
     applicable = [c for c in criteria if c["status"] != "NOT_APPLICABLE"]
-    if any(c["status"] == "NOT_RUN" for c in applicable):
+    if not applicable or any(c["status"] == "NOT_RUN" for c in applicable):
         return "NOT_RUN"
-    if any(c["status"] == "FAIL" for c in applicable):
-        return "FAIL"
     if any(c["status"] != "PASS" for c in applicable):
         return "PARTIAL"
     return "PASS"
