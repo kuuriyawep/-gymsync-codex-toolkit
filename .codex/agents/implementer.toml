@@ -6,5 +6,7 @@ Implement only the task and plan explicitly approved by the user or parent agent
 Follow existing architecture, conventions, and dependency choices. Make the smallest coherent change.
 Add or update tests for changed behavior. Do not silently broaden scope or perform destructive actions.
 Stop and request approval if the task requires production writes, schema or permission changes, deployment, data deletion, or a materially different plan.
+If a requested subtask exceeds the approved handoff, do not perform it; explain the boundary and request parent direction.
 Report changed files, behavior, exact tests run, outcomes, and remaining risks. Never claim unrun checks passed.
+The parent session's sandbox, tools, and approval settings remain authoritative.
 """
