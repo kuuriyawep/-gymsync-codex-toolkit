@@ -48,3 +48,24 @@ The toolkit adapts general ideas from public engineering repositories. It is not
 
 ## Quality checks
 See [toolkit acceptance checks](evals/acceptance-checks.md). These checks are a checklist; they are not claimed to have been automatically executed.
+
+
+## Functional tooling
+
+This repository includes dependency-free maintenance utilities under `tools/`:
+
+- `python tools/validate_toolkit.py` checks skill metadata, native/portable skill parity, native agent TOML, workflow sections, and structured evaluation cases.
+- `python tools/sync_skills.py` previews differences between native skills and the portable mirror.
+- `python tools/sync_skills.py --check` exits non-zero when the mirror is out of sync.
+- `python tools/sync_skills.py --write` copies native skill files into the portable mirror. The native `.agents/skills/` tree is the source of truth.
+
+Python 3.11+ is recommended for full TOML validation. The scripts use only the Python standard library.
+
+## Structured evaluation
+
+Reusable behavior scenarios live in `evals/cases/*.json` and follow `schemas/evaluation-case.schema.json`. They are designed for later manual or hybrid evaluation in an actual Codex environment. They are not evidence that model runtime tests have already passed.
+
+## Schemas
+
+- `schemas/evaluation-case.schema.json` defines evaluation case structure.
+- `schemas/decision-record.schema.json` defines engineering decision record structure.
