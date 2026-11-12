@@ -62,6 +62,13 @@ def validate_instance(value: Any, schema: dict[str, Any], path: str = "$") -> li
             errors.append(f"{path}: shorter than minLength")
         if "pattern" in schema and not re.search(schema["pattern"], value):
             errors.append(f"{path}: does not match required pattern")
+        if schema.get("format") == "date-time":
+            try:
+                parsed = dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
+                if parsed.tzinfo is None:
+                    raise ValueError("timezone is required")
+            except ValueError:
+                errors.append(f"{path}: expected an ISO 8601 date-time with timezone")
     if isinstance(value, (int, float)) and not isinstance(value, bool):
         if value < schema.get("minimum", float("-inf")):
             errors.append(f"{path}: below minimum")
