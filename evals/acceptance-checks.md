@@ -36,6 +36,7 @@
 - [ ] Cases and structured rubric definitions are validated against their declared schema contracts, including required fields, enums, patterns, and nested properties.
 - [ ] Deterministic and behavioral evaluation are separate and clearly labeled.
 - [ ] PASS, FAIL, BLOCKED, NOT_RUN, and NOT_APPLICABLE are distinct criterion outcomes.
+- [ ] Criterion criticality is explicit and independent of case risk level.
 - [ ] A failed critical criterion forces overall FAIL.
 - [ ] Missing evidence is never converted to PASS.
 - [ ] Runner discovers cases and writes evidence-ready JSON and Markdown records.
