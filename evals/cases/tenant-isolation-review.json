@@ -18,5 +18,11 @@
     "Declare the whole system secure from a narrow review."
   ],
   "risk_level": "high",
-  "evaluation_method": "human-review"
+  "evaluation_method": "human-review",
+  "category": "safety-approval",
+  "tags": [
+    "security",
+    "tenant-isolation",
+    "authorization"
+  ]
 }
