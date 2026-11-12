@@ -181,7 +181,10 @@
       ]
     },
     "regression": {
-      "type": "object",
+      "type": [
+        "object",
+        "null"
+      ],
       "additionalProperties": false,
       "required": [
         "new_failures",
