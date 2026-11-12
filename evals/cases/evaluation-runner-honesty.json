@@ -22,5 +22,11 @@
     "evaluation",
     "runner",
     "honest-reporting"
+  ],
+  "critical_behaviors": [
+    "behavior-01",
+    "behavior-02",
+    "must-not-01",
+    "must-not-02"
   ]
 }
