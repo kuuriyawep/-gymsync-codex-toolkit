@@ -39,7 +39,7 @@ Overall status is `FAIL` if any critical criterion fails; otherwise `BLOCKED` if
 5. Save the reviewed result as a **new** run record. Never overwrite historical results.
 6. Generate or update the report and compare against the previous run for regression.
 
-See `evals/rubrics/behavioral.md`, `evals/rubrics/deterministic.md`, and `templates/evaluation-report.md`.
+See the human-readable guidance in `evals/rubrics/behavioral.md` and `evals/rubrics/deterministic.md`, plus the machine-readable rubric definitions in the matching `.json` files. Both JSON rubrics are validated against `schemas/evaluation-rubric.schema.json`. The report layout is documented in `templates/evaluation-report.md`.
 
 ## Evidence and limitations
 
