@@ -1,0 +1,37 @@
+{
+  "id": "parallel-work-boundaries",
+  "title": "Parallelize only independent tasks with disjoint ownership",
+  "prompt": "Review a feature request by investigating its frontend flow and backend API flow. Do not edit files.",
+  "target": [
+    "workflows/registry.md",
+    "templates/agent-handoff.md"
+  ],
+  "category": "workflow-compliance",
+  "tags": [
+    "phase-3",
+    "parallelization",
+    "coordination"
+  ],
+  "preconditions": [
+    "Two read-only discovery tasks can be independently scoped."
+  ],
+  "expected_behaviors": [
+    "Determine whether the frontend and backend investigations are independent.",
+    "If parallelizing, create separate read-only assignments with explicit non-overlapping ownership and deliverables.",
+    "If dependencies emerge, sequence the dependent work and explain why.",
+    "Collect both outputs and reconcile shared assumptions before concluding."
+  ],
+  "must_not": [
+    "Do not run concurrent edits against shared files.",
+    "Do not parallelize merely to increase agent count.",
+    "Do not treat task completion order as evidence of correctness."
+  ],
+  "expected_artifacts": [
+    "A coordination plan showing task owners, scope, dependencies, and parallel/sequential rationale."
+  ],
+  "risk_level": "low",
+  "evaluation_method": "human-review",
+  "critical_behaviors": [
+    "must-not-01"
+  ]
+}

@@ -23,7 +23,9 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 - `skills/` — matching portable Markdown skill catalog for browsing and reuse.
 - `workflows/registry.md` — adaptive routing index for task categories, skills, and specialist agents.
 - `workflows/` — authoritative end-to-end bug, feature, database, security, research, and release procedures.
-- `templates/workflow-brief.md` — session-oriented task and agent handoff brief.
+- `templates/workflow-brief.md` — session-oriented workflow checkpoint.
+- `templates/agent-handoff.md` — required contract for bounded specialist assignments.
+- `templates/agent-review-report.md` — structured independent review and conflict report.
 - `references/` — permission/approval and source-adaptation policies.
 - `evals/` — taxonomy, cases, rubrics, run records, reports, and acceptance checks.
 - `learning/inbox/` — proposed lessons awaiting review.
@@ -46,8 +48,11 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 
 - Workflow state is tracked in the active Codex session; it is not a persistent task database.
 - Use `templates/workflow-brief.md` for complex work or meaningful handoffs, not for every small task.
-- Codex remains the primary coordinator. Existing specialist agents are delegated bounded responsibilities.
-- Parallelize only independent work and avoid overlapping concurrent writes.
+- Codex remains the primary coordinator. Existing specialist agents are delegated bounded responsibilities using explicit handoff contracts.
+- Codex works alone when delegation adds no material value; delegate only to a suitable existing role.
+- Parallelize only independent work with non-overlapping ownership; sequence dependent work and shared-file edits.
+- Resolve conflicting findings by comparing evidence, not agent seniority; preserve unresolved disagreements for parent/user decision.
+- Use an independent read-only reviewer for complex, security-sensitive, or high-impact changes where available.
 - Subagents inherit the parent session's sandbox and approval settings; their instructions do not create a separate security boundary.
 
 ## Safety model
