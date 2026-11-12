@@ -113,6 +113,8 @@ def inspect_cases() -> tuple[list[dict[str, Any]], list[str]]:
                 issues.append(f"{path.relative_to(ROOT)}: duplicate case id {case_id!r}")
             seen.add(case_id)
         cases.append({"path": path, "data": case, "valid": not errors})
+    if not cases:
+        issues.append("No evaluation cases discovered under evals/cases/*.json")
     return cases, issues
 
 
@@ -223,8 +225,9 @@ def main() -> int:
     if not output.is_absolute():
         output = ROOT / output
     report_dir = ROOT / "evals" / "reports"
-    if output.exists():
-        print(f"ERROR: refusing to overwrite existing run record: {output}")
+    report_path = report_dir / f"{run_id}.md"
+    if output.exists() or report_path.exists():
+        print(f"ERROR: refusing to overwrite existing run artifacts: {output} or {report_path}")
         return 2
 
     case_results: list[dict[str, Any]] = []
@@ -300,12 +303,18 @@ def main() -> int:
         "previous_run_id": previous_run.get("run_id") if previous_run else None,
         "regression": regression,
     }
+    result_schema = load_json(RESULT_SCHEMA)
+    result_errors = validate_instance(record, result_schema)
+    if result_errors:
+        for issue in result_errors:
+            print(f"ERROR: generated result: {issue}")
+        print("Run artifacts were not written because the generated record failed its schema.")
+        return 1
     output.parent.mkdir(parents=True, exist_ok=True)
-    report_path = report_dir / f"{run_id}.md"
     report_dir.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(record, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     report_path.write_text(make_report(record), encoding="utf-8")
-    print(f"Run record: {output.relative_to(ROOT)}")
+    print(f"Run record: {output}")
     print(f"Report: {report_path.relative_to(ROOT)}")
     print(f"Overall status: {status} (behavioral checks are NOT_RUN)")
     return 0
