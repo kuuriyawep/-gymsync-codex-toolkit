@@ -23,9 +23,10 @@ Use this contract whenever Codex delegates a non-trivial task. Keep the handoff 
 3. Give agents the minimum relevant context needed to perform the assignment.
 4. Do not assign overlapping write scopes to concurrent agents. Parallelize independent read-only work freely when useful.
 5. Sequence tasks when one depends on another agent's output or when edits touch shared files.
-6. Approval status must never be inferred from a handoff. An agent may implement only the exact approved scope.
-7. Agent instructions do not create isolation or elevate permissions. The parent session's sandbox, tools, and approval settings remain authoritative.
-8. If scope, ownership, approval, or a safety boundary is unclear, the agent must stop and report the blocker rather than guess.
+6. Approval status must never be inferred from a handoff. An agent may implement only the exact scope explicitly approved by the user.
+7. The parent coordinator may relay the user's approval and clarify its scope, but cannot independently grant approval or expand it.
+8. Agent instructions do not create isolation or elevate permissions. The parent session's sandbox, tools, and approval settings remain authoritative.
+9. If scope, ownership, approval, or a safety boundary is unclear, the agent must stop and report the blocker rather than guess.
 
 ## Required response from the agent
 
