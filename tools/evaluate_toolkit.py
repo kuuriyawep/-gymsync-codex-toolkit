@@ -132,7 +132,11 @@ def inspect_cases() -> tuple[list[dict[str, Any]], list[str]]:
                 elif not target_path.exists():
                     issues.append(f"{path.relative_to(ROOT)}: target does not exist: {target}")
         critical_ids = case.get("critical_behaviors", [])
-        allowed_critical_ids = {f"behavior-{i:02d}" for i in range(1, len(case.get("expected_behaviors", [])) + 1)} | {f"must-not-{i:02d}" for i in range(1, len(case.get("must_not", [])) + 1)}
+        expected_items = case.get("expected_behaviors", [])
+        prohibited_items = case.get("must_not", [])
+        expected_count = len(expected_items) if isinstance(expected_items, list) else 0
+        prohibited_count = len(prohibited_items) if isinstance(prohibited_items, list) else 0
+        allowed_critical_ids = {f"behavior-{i:02d}" for i in range(1, expected_count + 1)} | {f"must-not-{i:02d}" for i in range(1, prohibited_count + 1)}
         if isinstance(critical_ids, list):
             for criterion_id in critical_ids:
                 if criterion_id not in allowed_critical_ids:
