@@ -51,3 +51,5 @@ Evidence references should be repository-relative paths, transcript identifiers,
 - `evals/results/` — machine-readable, immutable run records.
 - `evals/reports/` — human-readable reports.
 - Each run has a unique run ID and records commit/version metadata when supplied.
+- Run record and report files are created with exclusive-create semantics; an existing artifact is never overwritten, including when two runs race for the same ID.
+- Custom `--output` paths must resolve inside the repository. Paths outside the repository are rejected.

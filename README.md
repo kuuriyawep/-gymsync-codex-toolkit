@@ -96,6 +96,12 @@ Dependency-free maintenance utilities under `tools/`:
 
 Python 3.11+ is recommended for full TOML validation. The scripts use only the Python standard library. The evaluation runner implements the JSON Schema keywords used by this repository's schemas; it is not a general-purpose full Draft 2020-12 validator.
 
+## Continuous quality gates
+
+GitHub Actions runs the dependency-free quality pipeline on pushes and pull requests targeting `main`. It executes unit tests, native/portable skill parity checks, the repository validator, evaluation-case validation, and a deterministic evaluation-run smoke test. The workflow has read-only repository permissions and does not merge, deploy, or modify repository settings.
+
+See [quality gates](docs/quality-gates.md) for local commands, CI behavior, and limitations.
+
 ## Evaluation system
 
 Read [evals/README.md](evals/README.md) for the hybrid evaluation process, [taxonomy](evals/taxonomy.md), and [rubrics](evals/rubrics/). Cases live in `evals/cases/*.json` and use `schemas/evaluation-case.schema.json`. Run records use `schemas/evaluation-result.schema.json`; rubric definitions use `schemas/evaluation-rubric.schema.json`. The existing `schemas/decision-record.schema.json` remains the engineering decision-record contract.

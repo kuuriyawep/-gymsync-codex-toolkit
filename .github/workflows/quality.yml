@@ -1,0 +1,47 @@
+name: Toolkit Quality Gates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: toolkit-quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Python 3.11 quality gates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: false
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Check native and portable skills
+        run: python tools/sync_skills.py --check
+
+      - name: Validate toolkit
+        run: python tools/validate_toolkit.py
+
+      - name: Validate evaluation cases
+        run: python tools/evaluate_toolkit.py --validate
+
+      - name: Generate deterministic evaluation record
+        run: >-
+          python tools/evaluate_toolkit.py --run
+          --run-id ci-${{ github.run_id }}-${{ github.run_attempt }}
+          --revision ${{ github.sha }}
+          --output evals/results/ci-${{ github.run_id }}-${{ github.run_attempt }}.json

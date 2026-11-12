@@ -203,6 +203,36 @@ def overall_status(criteria: list[dict[str, Any]]) -> str:
     return "PASS"
 
 
+def resolve_repo_path(path: Path, label: str = "output") -> Path:
+    """Resolve an artifact path and reject paths outside this repository."""
+    resolved = path.resolve()
+    try:
+        resolved.relative_to(ROOT)
+    except ValueError as exc:
+        raise ValueError(f"{label} must stay within the repository root") from exc
+    if resolved == ROOT:
+        raise ValueError(f"{label} must name a file inside the repository")
+    return resolved
+
+
+def write_new_artifacts(output: Path, report_path: Path, record_text: str, report_text: str) -> None:
+    """Create both run artifacts exclusively; never overwrite existing files."""
+    created: list[Path] = []
+    try:
+        for path, content in ((report_path, report_text), (output, record_text)):
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with path.open("x", encoding="utf-8", newline="\\n") as handle:
+                handle.write(content)
+            created.append(path)
+    except (FileExistsError, OSError):
+        for path in reversed(created):
+            try:
+                path.unlink(missing_ok=True)
+            except OSError:
+                pass
+        raise
+
+
 def make_report(record: dict[str, Any]) -> str:
     summary = record["summary"]
     lines = [
@@ -294,8 +324,11 @@ def main() -> int:
         output = ROOT / output
     report_dir = ROOT / "evals" / "reports"
     report_path = report_dir / f"{run_id}.md"
-    if output.exists() or report_path.exists():
-        print(f"ERROR: refusing to overwrite existing run artifacts: {output} or {report_path}")
+    try:
+        output = resolve_repo_path(output, "run record path")
+        report_path = resolve_repo_path(report_path, "report path")
+    except ValueError as exc:
+        print(f"ERROR: {exc}")
         return 2
 
     case_results: list[dict[str, Any]] = []
@@ -394,10 +427,19 @@ def main() -> int:
             print(f"ERROR: generated result: {issue}")
         print("Run artifacts were not written because the generated record failed its schema.")
         return 1
-    output.parent.mkdir(parents=True, exist_ok=True)
-    report_dir.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(record, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    report_path.write_text(make_report(record), encoding="utf-8")
+    try:
+        write_new_artifacts(
+            output,
+            report_path,
+            json.dumps(record, indent=2, ensure_ascii=False) + "\n",
+            make_report(record),
+        )
+    except FileExistsError:
+        print(f"ERROR: refusing to overwrite existing run artifacts: {output} or {report_path}")
+        return 2
+    except OSError as exc:
+        print(f"ERROR: could not safely create run artifacts ({exc})")
+        return 2
     print(f"Run record: {output}")
     print(f"Report: {report_path.relative_to(ROOT)}")
     print(f"Overall status: {status} (behavioral checks are NOT_RUN)")
