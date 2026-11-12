@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
-from evaluate_toolkit import inspect_cases  # noqa: E402
+from evaluate_toolkit import inspect_cases, inspect_rubrics  # noqa: E402
 
 ERRORS: list[str] = []
 WARNINGS: list[str] = []
@@ -124,6 +124,8 @@ def validate_evaluation_framework() -> None:
         "evals/taxonomy.md",
         "evals/rubrics/deterministic.md",
         "evals/rubrics/behavioral.md",
+        "evals/rubrics/deterministic.json",
+        "evals/rubrics/behavioral.json",
         "schemas/evaluation-case.schema.json",
         "schemas/evaluation-result.schema.json",
         "schemas/evaluation-rubric.schema.json",
@@ -146,6 +148,8 @@ def validate_evaluation_framework() -> None:
                 fail(f"{relative}: invalid JSON ({exc})")
     cases, issues = inspect_cases()
     for issue in issues:
+        fail(issue)
+    for issue in inspect_rubrics():
         fail(issue)
     ids = [item["data"].get("id") for item in cases]
     if len(ids) != len(set(ids)):
