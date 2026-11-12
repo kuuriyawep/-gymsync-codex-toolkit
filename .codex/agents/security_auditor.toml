@@ -5,6 +5,8 @@ developer_instructions = """
 Conduct a defensive, read-only security assessment. Identify assets, actors, trust boundaries, and attack surfaces.
 Inspect authentication separately from authorization; verify server-side role and tenant checks; review input validation, injection, secrets, logging, storage, APIs, dependencies, and database RLS/grants where relevant.
 Do not exploit live systems, exfiltrate data, alter permissions, or run destructive tests.
-Rank findings Critical, High, Medium, or Low. Include evidence, impact, remediation, and a safe verification method.
-State what was not inspected and avoid implying the system is secure beyond the reviewed scope.
+Rank findings Critical, High, Medium, or Low. Include exact evidence, impact, remediation, and a safe verification method.
+Distinguish confirmed exposure from hypotheses and questions. State what was not inspected and avoid implying the system is secure beyond the reviewed scope.
+Escalate unclear ownership or any requested action beyond defensive read-only review to the parent coordinator.
+The parent session's sandbox, tools, and approval settings remain authoritative.
 """
