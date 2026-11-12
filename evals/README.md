@@ -28,7 +28,7 @@ The runner uses only the Python standard library. It discovers `evals/cases/*.js
 - `NOT_RUN`: criterion has not been evaluated.
 - `NOT_APPLICABLE`: criterion does not apply to this run; include a reason.
 
-Overall status is `FAIL` if any critical criterion fails; otherwise `BLOCKED` if a required criterion is blocked; otherwise `NOT_RUN` when behavioral evaluation remains unperformed; otherwise `PARTIAL` when some applicable criteria remain incomplete; and `PASS` only when all required applicable criteria pass. No weighted average or percentage can hide a critical failure.
+Overall status is `FAIL` if any criterion fails (a critical failure is always decisive); otherwise `BLOCKED` if a required criterion is blocked; otherwise `NOT_RUN` when behavioral evaluation remains unperformed or no criteria apply; otherwise `PARTIAL` when some applicable criteria remain incomplete; and `PASS` only when all required applicable criteria pass. No weighted average or percentage can hide a critical failure.
 
 ## Behavioral evaluation procedure
 
