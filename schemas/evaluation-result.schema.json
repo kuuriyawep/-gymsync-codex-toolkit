@@ -4,43 +4,131 @@
   "title": "Codex Toolkit Evaluation Run Result",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "run_id", "created_at", "target", "grader", "overall_status", "case_results", "summary", "limitations"],
+  "required": [
+    "schema_version",
+    "run_id",
+    "created_at",
+    "target",
+    "grader",
+    "overall_status",
+    "case_results",
+    "summary",
+    "limitations"
+  ],
   "properties": {
-    "schema_version": { "type": "string", "const": "1.0" },
-    "run_id": { "type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$" },
-    "created_at": { "type": "string", "format": "date-time" },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
     "target": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["repository", "revision"],
+      "required": [
+        "repository",
+        "revision"
+      ],
       "properties": {
-        "repository": { "type": "string", "minLength": 1 },
-        "revision": { "type": ["string", "null"] }
+        "repository": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
       }
     },
-    "grader": { "type": "string", "enum": ["deterministic-runner", "human-review", "hybrid"] },
-    "overall_status": { "type": "string", "enum": ["PASS", "FAIL", "BLOCKED", "NOT_RUN", "PARTIAL"] },
+    "grader": {
+      "type": "string",
+      "enum": [
+        "deterministic-runner",
+        "human-review",
+        "hybrid"
+      ]
+    },
+    "overall_status": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "FAIL",
+        "BLOCKED",
+        "NOT_RUN",
+        "PARTIAL"
+      ]
+    },
     "case_results": {
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["case_id", "case_status", "criteria"],
+        "required": [
+          "case_id",
+          "case_status",
+          "criteria"
+        ],
         "properties": {
-          "case_id": { "type": "string" },
-          "case_status": { "type": "string", "enum": ["PASS", "FAIL", "BLOCKED", "NOT_RUN", "PARTIAL"] },
+          "case_id": {
+            "type": "string"
+          },
+          "case_status": {
+            "type": "string",
+            "enum": [
+              "PASS",
+              "FAIL",
+              "BLOCKED",
+              "NOT_RUN",
+              "PARTIAL"
+            ]
+          },
           "criteria": {
             "type": "array",
             "items": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["criterion_id", "status", "critical", "reason", "evidence"],
+              "required": [
+                "criterion_id",
+                "status",
+                "critical",
+                "reason",
+                "evidence"
+              ],
               "properties": {
-                "criterion_id": { "type": "string" },
-                "status": { "type": "string", "enum": ["PASS", "FAIL", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"] },
-                "critical": { "type": "boolean" },
-                "reason": { "type": "string", "minLength": 1 },
-                "evidence": { "type": "array", "items": { "type": "string" } }
+                "criterion_id": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "PASS",
+                    "FAIL",
+                    "BLOCKED",
+                    "NOT_RUN",
+                    "NOT_APPLICABLE"
+                  ]
+                },
+                "critical": {
+                  "type": "boolean"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
@@ -50,16 +138,90 @@
     "summary": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["pass", "fail", "blocked", "not_run", "not_applicable"],
+      "required": [
+        "pass",
+        "fail",
+        "blocked",
+        "not_run",
+        "not_applicable"
+      ],
       "properties": {
-        "pass": { "type": "integer", "minimum": 0 },
-        "fail": { "type": "integer", "minimum": 0 },
-        "blocked": { "type": "integer", "minimum": 0 },
-        "not_run": { "type": "integer", "minimum": 0 },
-        "not_applicable": { "type": "integer", "minimum": 0 }
+        "pass": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fail": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "blocked": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "not_run": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "not_applicable": {
+          "type": "integer",
+          "minimum": 0
+        }
       }
     },
-    "limitations": { "type": "array", "items": { "type": "string" } },
-    "previous_run_id": { "type": ["string", "null"] }
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "previous_run_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "regression": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "new_failures",
+        "resolved_failures",
+        "unchanged",
+        "new_criteria",
+        "removed_criteria"
+      ],
+      "properties": {
+        "new_failures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "resolved_failures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "unchanged": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "new_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "removed_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
   }
 }
