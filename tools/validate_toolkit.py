@@ -118,6 +118,35 @@ def validate_workflows() -> None:
                 fail(f"{path.relative_to(ROOT)}: missing section '{heading}'")
 
 
+
+def validate_skill_case_coverage(cases: list[dict], rubric: dict) -> list[str]:
+    """Enforce the case mix declared by a structured skill-quality rubric."""
+    requirement = rubric.get("coverage_requirements")
+    if not isinstance(requirement, dict):
+        return []
+    target_skill = requirement.get("target_skill")
+    minimums = requirement.get("minimums", {})
+    if not isinstance(target_skill, str) or not isinstance(minimums, dict):
+        return ["skill-quality rubric: invalid coverage_requirements contract"]
+    counts = {"in-scope": 0, "near-miss": 0, "edge": 0}
+    unlabeled: list[str] = []
+    for item in cases:
+        data = item.get("data", {})
+        targets = data.get("target", [])
+        if target_skill not in targets:
+            continue
+        coverage = data.get("coverage")
+        if coverage not in counts:
+            unlabeled.append(str(item.get("path", "<unknown>")))
+        else:
+            counts[coverage] += 1
+    errors = [f"{target_skill}: evaluation case missing valid coverage label: {path}" for path in unlabeled]
+    for category, minimum in minimums.items():
+        if counts.get(category, 0) < minimum:
+            errors.append(f"{target_skill}: {category} coverage requires at least {minimum} case(s), found {counts.get(category, 0)}")
+    return errors
+
+
 def validate_evaluation_framework() -> None:
     required_files = (
         "evals/README.md",
@@ -151,6 +180,14 @@ def validate_evaluation_framework() -> None:
         fail(issue)
     for issue in inspect_rubrics():
         fail(issue)
+    skill_rubric_path = ROOT / "evals" / "rubrics" / "skill-quality.json"
+    if skill_rubric_path.is_file():
+        try:
+            skill_rubric = json.loads(read_text(skill_rubric_path))
+            for issue in validate_skill_case_coverage(cases, skill_rubric):
+                fail(issue)
+        except json.JSONDecodeError as exc:
+            fail(f"evals/rubrics/skill-quality.json: invalid JSON ({exc})")
     ids = [item["data"].get("id") for item in cases]
     if len(ids) != len(set(ids)):
         fail("evaluation case IDs must be unique")
