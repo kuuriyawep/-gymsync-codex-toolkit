@@ -27,12 +27,9 @@ Keep the file concise. Omit sections that genuinely do not apply, but make the b
 2. Inspect repository-wide instructions, existing workflows, related skills, and naming conventions. Reuse existing procedures; do not create overlapping skills without a demonstrated gap.
 3. Define the skill's unique responsibility and boundaries against adjacent skills/workflows.
 4. Draft the skill contract above. Use concrete actions, evidence requirements, and decision/stop conditions.
-5. Design evaluation cases before declaring the skill ready:
-   - At least 3 representative in-scope prompts across typical use and meaningful variation.
-   - At least 2 near-miss or out-of-scope prompts to test false-positive triggering.
-   - At least 1 edge, ambiguity, failure, or stop-condition prompt.
+5. Design evaluation cases before declaring the skill ready. Label every case with `coverage`: `in-scope`, `near-miss`, or `edge`. The `skill-quality.json` coverage gate enforces at least 3 in-scope prompts, 2 near-miss/out-of-scope prompts, and 1 edge/ambiguity/failure/stop-condition prompt for this skill. A case without a coverage label does not count.
    - Each case must state observable expected behaviors and prohibited behaviors; mark critical behaviors explicitly where safety or integrity is at stake.
-6. Score the skill using `evals/rubrics/skill-quality.md`. A static review is not a behavioral test.
+6. Score the skill using the six matching criteria in `evals/rubrics/skill-quality.md` and `evals/rubrics/skill-quality.json`; use the same 0–2 scale and record evidence for each dimension. The JSON definition is the machine-readable contract, not a separate alternative rubric. A static review is not a behavioral test.
 7. Validate case JSON, target references, unique IDs, native/portable parity, and repository quality gates. Preserve cases as versioned eval artifacts.
 8. When the target runtime is available, run the cases in a trusted Codex session, capture transcript and supporting artifacts, grade each criterion, and revise only against observed failures.
 
@@ -69,3 +66,13 @@ Stop and clarify if target runtime or intended skill behavior materially changes
 - A deterministic validator proves only the artifact properties it checks.
 - Behavioral PASS requires an actual target-runtime session and reviewable evidence.
 - Never fabricate transcripts, outputs, command results, or scores.
+
+## Evaluation contract
+
+- Static score: six dimensions × 0–2, maximum 12.
+- Static `PASS`: at least 10/12, no dimension below 1, and no hard-fail condition.
+- Static `REVISE`: 7–9/12 or any zero without a hard-fail.
+- Static `FAIL`: 0–6/12 or any hard-fail; hard-fail always overrides the numeric score.
+- Record reviewer, target revision, per-dimension rationale, evidence references, total, and static disposition.
+- Keep runtime behavioral status separate: `NOT_RUN`, `BLOCKED`, `PASS`, or `FAIL` only as supported by target-runtime evidence.
+- The repository validator enforces the coverage counts declared in the structured rubric. It does not evaluate model behavior.

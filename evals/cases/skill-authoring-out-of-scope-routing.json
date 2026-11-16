@@ -22,5 +22,6 @@
     "Expand the task into toolkit maintenance."
   ],
   "risk_level": "low",
-  "evaluation_method": "human-review"
+  "evaluation_method": "human-review",
+  "coverage": "near-miss"
 }

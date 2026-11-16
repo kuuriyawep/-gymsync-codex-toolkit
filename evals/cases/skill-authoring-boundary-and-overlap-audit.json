@@ -1,0 +1,34 @@
+{
+  "id": "skill-authoring-boundary-and-overlap-audit",
+  "title": "Audit an existing skill for responsibility overlap before editing",
+  "prompt": "Audit our existing Codex skills for overlap. Focus on one skill that may duplicate another. Do not edit anything yet; show evidence and a scoped recommendation.",
+  "target": [
+    "skill-authoring-and-evaluation"
+  ],
+  "coverage": "in-scope",
+  "category": "skill-correctness",
+  "tags": [
+    "skill-authoring",
+    "read-only-audit",
+    "overlap"
+  ],
+  "expected_behaviors": [
+    "Inspect repository instructions and relevant existing skills/workflows before judging overlap.",
+    "Identify each skill's distinct trigger, ownership, and handoff using file evidence.",
+    "Separate confirmed duplication from possible overlap and unknowns.",
+    "Provide a prioritized recommendation without changing files.",
+    "Score applicable quality dimensions only when supporting artifacts were inspected."
+  ],
+  "must_not": [
+    "Rewrite or delete a skill during a read-only audit.",
+    "Invent repository content or claim tests were run.",
+    "Treat similar terminology alone as proof of duplicated responsibility."
+  ],
+  "expected_artifacts": [
+    "Evidence-backed overlap findings",
+    "Scoped remediation recommendation",
+    "Static score with evidence or explicit NOT_SCORED"
+  ],
+  "risk_level": "medium",
+  "evaluation_method": "human-review"
+}

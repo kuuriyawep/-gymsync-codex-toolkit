@@ -29,5 +29,6 @@
   "critical_behaviors": [
     "must-not-01",
     "must-not-02"
-  ]
+  ],
+  "coverage": "edge"
 }

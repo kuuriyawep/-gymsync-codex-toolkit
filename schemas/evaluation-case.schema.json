@@ -33,6 +33,11 @@
       "default": [],
       "description": "Evaluation target identifiers (such as skill/workflow names) or repository-relative file paths. Path-like entries are checked for repository containment and existence."
     },
+    "coverage": {
+      "type": "string",
+      "enum": ["in-scope", "near-miss", "edge"],
+      "description": "Optional coverage role used by rubric-specific minimum coverage gates."
+    },
     "category": {
       "type": "string",
       "enum": [
