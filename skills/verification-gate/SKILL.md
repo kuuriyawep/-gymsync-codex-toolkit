@@ -15,7 +15,7 @@ This is the final verification procedure. It does not diagnose an unknown defect
 - Tests/checks already run and their actual outputs.
 - Relevant project instructions and risk constraints.
 
-If acceptance criteria are missing, derive only what is directly supported by the approved request and existing specifications. Mark gaps as unresolved; do not invent acceptance criteria.
+If acceptance criteria are missing, derive only what is directly supported by the approved request and existing specifications. Mark gaps as unresolved; do not invent acceptance criteria. If prior test evidence is incomplete, rerun safe relevant checks where possible; otherwise preserve the gap as `NOT_RUN` or `BLOCKED`.
 
 ## Procedure
 1. Map each acceptance criterion to one or more concrete checks and identify the changed surfaces those checks cover.
@@ -28,17 +28,18 @@ If acceptance criteria are missing, derive only what is directly supported by th
 8. Compare results against acceptance criteria. Report partial or blocked completion when required checks are missing or failing.
 
 ## Required output
-- Acceptance criteria and corresponding evidence.
-- Diff/scope inspection result.
-- Checks run: exact command/procedure and outcome.
-- Checks skipped or not run: reason and impact.
-- Review/security evidence required by the task and any gaps.
-- Remaining defects, risks, limitations, and release blockers.
-- Overall disposition: `PASS`, `FAIL`, or `BLOCKED/PARTIAL`, with rationale.
+- **Acceptance map:** each criterion and its corresponding evidence.
+- **Scope review:** diff/artifact inspection and any unintended-change findings.
+- **Checks run:** exact command/procedure, environment where relevant, and outcome.
+- **Checks skipped or not run:** reason and impact.
+- **Risk evidence:** required security/review evidence and any gaps.
+- **Residual issues:** remaining defects, risks, and release blockers.
+- **Disposition:** `PASS`, `FAIL`, or `BLOCKED/PARTIAL`, with rationale.
 
 ## Boundaries and stop conditions
 - Verification owns final acceptance evidence and honest reporting; it does not implement fixes or convert an unrun check into a pass.
 - A passing subset of checks does not establish whole-system correctness or production security.
+- Do not redo root-cause diagnosis or redesign the implementation; return material defects to the appropriate workflow owner.
 - Stop and report a blocker if required tooling, test data, permissions, or environment is unavailable.
 - Do not run destructive, production, deployment, or external side-effect checks without explicit approval.
 - Never claim success based only on code inspection, expected behavior, or another agent's unsupported assertion.
