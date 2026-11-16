@@ -4,9 +4,8 @@
   "prompt": "The security auditor says a route is tenant-isolated; the repository explorer says a query can return another tenant's records. Resolve the disagreement.",
   "target": [
     "workflows/registry.md",
-    "agents/security_auditor.md",
-    "agents/repo_explorer.md",
-    ".agents/skills/workflow-orchestration/SKILL.md"
+    ".agents/skills/workflow-orchestration/SKILL.md",
+    "templates/agent-review-report.md"
   ],
   "category": "workflow-compliance",
   "tags": [
