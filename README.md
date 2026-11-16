@@ -98,7 +98,7 @@ See [toolkit acceptance checks](evals/acceptance-checks.md). The evaluation syst
 
 Dependency-free maintenance utilities under `tools/`:
 
-- `python tools/validate_toolkit.py` checks skill metadata, native/portable skill parity, agent TOML, workflow sections, evaluation schemas, and all evaluation cases.
+- `python tools/validate_toolkit.py` checks skill metadata, native/portable skill parity, agent TOML, workflow sections, evaluation schemas, all evaluation cases, and the skill-quality rubric's Markdown/JSON alignment plus declared trigger-coverage minimums.
 - `python tools/sync_skills.py` previews differences between native skills and the portable mirror.
 - `python tools/sync_skills.py --check` exits non-zero when the mirror is out of sync.
 - `python tools/sync_skills.py --write` copies native skill files into the portable mirror. The native `.agents/skills/` tree is the source of truth.
