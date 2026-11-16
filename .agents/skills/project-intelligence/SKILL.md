@@ -1,3 +1,8 @@
+---
+name: project-intelligence
+description: Build, retrieve, verify, and maintain evidence-backed project knowledge for Codex across sessions. Use for repository onboarding, targeted architecture discovery, task resumption, decision recall, and memory freshness checks.
+---
+
 # Project Intelligence
 
 Use this skill to maintain a compact, evidence-backed project knowledge layer for Codex across sessions. Codex remains the primary coordinator.
