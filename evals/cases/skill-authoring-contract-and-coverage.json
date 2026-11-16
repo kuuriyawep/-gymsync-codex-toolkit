@@ -43,5 +43,6 @@
   "critical_behaviors": [
     "must-not-01",
     "must-not-03"
-  ]
+  ],
+  "coverage": "in-scope"
 }
