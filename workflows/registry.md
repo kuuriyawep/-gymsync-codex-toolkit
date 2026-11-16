@@ -14,7 +14,7 @@ This file is the routing index for detailed procedures. Linked workflow files re
 
 | Category | Typical signals | Primary workflow | Relevant skills | Optional specialist |
 |---|---|---|---|---|
-| Bug | Existing behavior is broken, inconsistent, or regressed | [Bug Investigation and Fix](bug-fix.md) | `systematic-debugging`, `risk-aware-tdd`, `verification-gate` | `repo_explorer`, then `implementer` and `reviewer` as needed |
+| Bug | Existing behavior is broken, inconsistent, or regressed | [Bug Investigation and Fix](bug-fix.md) | `systematic-debugging` → `risk-aware-tdd` → `verification-gate` (skip diagnosis only when root cause is already established with evidence) | `repo_explorer`, then `implementer` and `reviewer` as needed |
 | Feature | New user-facing or system capability | [Feature Delivery](feature-delivery.md) | `requirements-clarification`, `implementation-planning`, `change-impact-analysis`, `verification-gate` | `planner`, `implementer`, `reviewer` |
 | Database/backend | Schema, persistence, API, authorization, RLS, migrations, data integrity | [Database and Backend Change](database-backend-change.md) | `change-impact-analysis`, `security-review`, `risk-aware-tdd`, `verification-gate` | `repo_explorer`, `security_auditor`, `reviewer` |
 | Security | Threat modeling, vulnerability assessment, access control, tenant isolation | [Security Audit](security-audit.md) | `security-review`, `change-impact-analysis` | `security_auditor`, with `reviewer` for independent review |
