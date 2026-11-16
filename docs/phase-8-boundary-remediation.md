@@ -1,6 +1,6 @@
 # Phase 8 — Skill Boundary Remediation
 
-**Status:** Static remediation applied; deterministic validation and Codex behavioral evaluation pending  
+**Status:** Static remediation applied; deterministic CI passed; Codex behavioral evaluation deferred  
 **Branch:** `main`  
 **Scope:** Debugging, test-driven implementation, final verification, and the bug-fix route
 
@@ -42,11 +42,11 @@ These cases are authored evaluation scenarios, not executed behavioral results. 
 | Check | Status | Evidence |
 |---|---|---|
 | GitHub file updates | PASS | Updates returned commit SHAs on `main` |
-| Native/portable parity | NOT_RUN | Must run `python tools/sync_skills.py --check` |
-| Toolkit unit tests | NOT_RUN | Local repository runtime not attached to this session |
-| Toolkit validator | NOT_RUN | Local repository runtime not attached to this session |
-| Evaluation schema validation | NOT_RUN | New cases have not yet been run through the repository validator |
-| GitHub Actions CI | PENDING | Wait for workflow run triggered by the commits |
+| Native/portable parity | PASS | All 13 skill pairs match; CI `python tools/sync_skills.py --check` passed |
+| Toolkit unit tests | PASS | GitHub Actions run #43880479161 |
+| Toolkit validator | PASS | GitHub Actions run #43880479161 |
+| Evaluation schema validation | PASS | GitHub Actions run #43880479161 validated cases and generated result |
+| GitHub Actions CI | PASS | [Run #43880479161](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43880479161) — all steps passed |
 | Codex behavioral evaluation | NOT_RUN — CODEX_REQUIRED | Requires a real Codex session and transcript evidence |
 
 ## Scope and safety
