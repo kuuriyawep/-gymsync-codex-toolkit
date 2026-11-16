@@ -1,6 +1,6 @@
 # Phase 8 — Skill Quality Audit
 
-**Status:** Static audit completed; remediation not yet applied  
+**Status:** Static audit completed; 13-skill static remediation applied; final deterministic CI verification pending  
 **Branch:** `main`  
 **Scope:** 13 canonical skills under `.agents/skills/`, checked against `AGENTS.md` and `workflows/registry.md`  
 **Method:** Read-only content review  
@@ -83,6 +83,12 @@ Not every skill needs a long document. Each should, however, make these elements
 - Codex behavioral tests remain `NOT_RUN — CODEX_REQUIRED`.
 - The safe selective-adoption trial remains pending.
 
-## Exit recommendation
+## Remediation outcome
 
-Proceed with targeted remediation in the order above. Do not add new skills until the existing skill boundaries and contracts are consistent. Keep Phase 8 open until edits pass static quality gates and the eventual Codex behavioral evaluation is completed when Codex becomes available.
+The audit recommendations were applied across all 13 canonical skills and their portable mirrors. The highest-priority debugging/TDD/verification boundary was made explicit; the skill-authoring/evaluation contract now includes a measurable static rubric and required evaluation-case mix; remaining skills received proportionate trigger, input, output, evidence, safety, and stop-condition improvements; and workflow orchestration now defers routing authority to the registry rather than duplicating it.
+
+See [Phase 8 Completion Report](phase-8-completion-report.md) for the exact changed areas and verification status.
+
+## Exit status
+
+Static remediation is complete. Phase 8 is not behaviorally complete until deterministic CI passes and the prepared scenarios are executed in a trusted Codex session. The Codex runtime evaluation remains NOT_RUN — CODEX_REQUIRED.
