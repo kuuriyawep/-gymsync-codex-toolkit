@@ -9,6 +9,7 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 - [Toolkit Quickstart](docs/quickstart.md) — first-use sequence, adoption modes, safe task intake, and verification commands.
 - [Toolkit Integration Map](docs/toolkit-integration.md) — component architecture, authority order, lifecycle, and integration invariants.
 - [End-to-End Example](docs/end-to-end-example.md) — an illustrative request-to-completion workflow (not a runtime test).
+- [Selective Adoption Test](docs/selective-adoption-test.md) — non-destructive preflight, acceptance criteria, and rollback checklist.
 - [Installation in Codex](docs/installation.md) — how to adopt the skills and agents in a target project.
 
 ## Adaptive delivery loop
