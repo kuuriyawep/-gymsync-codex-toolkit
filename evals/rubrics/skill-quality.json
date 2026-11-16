@@ -1,0 +1,68 @@
+{
+  "id": "skill-quality",
+  "title": "Static Skill Quality Rubric",
+  "evaluation_method": "human-review",
+  "criteria": [
+    {
+      "id": "trigger-boundary",
+      "description": "The skill explicitly defines intended triggers and important non-triggers, reducing false-positive routing.",
+      "critical": true,
+      "applies_to": [
+        "skill-correctness",
+        "skill-triggering"
+      ]
+    },
+    {
+      "id": "inputs-prerequisites",
+      "description": "Required context, assumptions, tools, access, and approval prerequisites are explicit.",
+      "critical": false,
+      "applies_to": [
+        "skill-correctness"
+      ]
+    },
+    {
+      "id": "procedure-executability",
+      "description": "The procedure uses ordered actionable steps, decision points, and observable evidence expectations.",
+      "critical": false,
+      "applies_to": [
+        "skill-correctness"
+      ]
+    },
+    {
+      "id": "output-contract",
+      "description": "The skill defines a concrete output contract with verifiable required fields or artifacts.",
+      "critical": false,
+      "applies_to": [
+        "skill-correctness",
+        "output-quality"
+      ]
+    },
+    {
+      "id": "safety-failure-handling",
+      "description": "Scope boundaries, stop conditions, uncertainty handling, and unavailable-tool behavior are explicit and safe.",
+      "critical": true,
+      "applies_to": [
+        "skill-correctness",
+        "safety-approval"
+      ]
+    },
+    {
+      "id": "evaluation-coverage",
+      "description": "Evaluation artifacts cover at least three in-scope prompts, two near-miss or out-of-scope prompts, and one edge or stop-condition prompt.",
+      "critical": false,
+      "applies_to": [
+        "skill-correctness",
+        "skill-triggering"
+      ]
+    },
+    {
+      "id": "evaluation-honesty",
+      "description": "Static checks and runtime behavioral evaluation are kept separate; runtime claims require target-session evidence.",
+      "critical": true,
+      "applies_to": [
+        "tooling-verification",
+        "output-quality"
+      ]
+    }
+  ]
+}
