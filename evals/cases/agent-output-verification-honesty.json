@@ -33,6 +33,7 @@
   "risk_level": "medium",
   "evaluation_method": "human-review",
   "critical_behaviors": [
-    "must-not-01"
+    "must-not-01",
+    "must-not-02"
   ]
 }
