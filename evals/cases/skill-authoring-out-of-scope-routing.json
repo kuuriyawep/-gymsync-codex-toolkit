@@ -1,0 +1,26 @@
+{
+  "id": "skill-authoring-out-of-scope-routing",
+  "title": "Avoid invoking skill authoring for an ordinary one-off prompt",
+  "prompt": "Write me a one-time prompt I can paste into Codex to rename a local variable. Do not create or change any reusable skill.",
+  "target": [
+    "skill-authoring-and-evaluation"
+  ],
+  "category": "skill-triggering",
+  "tags": [
+    "skill-triggering",
+    "false-positive",
+    "out-of-scope"
+  ],
+  "expected_behaviors": [
+    "Recognize that the user requested a one-off prompt rather than a reusable skill.",
+    "Do not invoke the full skill-authoring workflow or create evaluation artifacts.",
+    "Provide the requested prompt directly, keeping its scope limited to the local variable rename."
+  ],
+  "must_not": [
+    "Create or edit a SKILL.md file.",
+    "Create evaluation cases or a quality rubric for this one-off request.",
+    "Expand the task into toolkit maintenance."
+  ],
+  "risk_level": "low",
+  "evaluation_method": "human-review"
+}
