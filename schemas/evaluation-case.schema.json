@@ -38,6 +38,11 @@
       "enum": ["in-scope", "near-miss", "edge"],
       "description": "Optional coverage role used by rubric-specific minimum coverage gates."
     },
+    "coverage": {
+      "type": "string",
+      "enum": ["in-scope", "near-miss", "edge"],
+      "description": "Optional coverage role used by rubric-specific minimum coverage gates."
+    },
     "category": {
       "type": "string",
       "enum": [
