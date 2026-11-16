@@ -11,8 +11,8 @@
 
 **Document status:** ACTIVE — canonical project checkpoint and operating manual  
 **Last full audit:** 2026-11-16  
-**Last verified repository commit:** `cfcc19f6e633c8989d3c20c3293510d8d9575a0b`  
-**Latest CI:** PASS — run [#43920500428](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43920500428) on commit `cfcc19f6e633c8989d3c20c3293510d8d9575a0b`  
+**Last full source-audit baseline:** `b8aafe780a181f0f49acaed3dc23791ed9146d7c`  
+**CI policy:** Always inspect the latest GitHub Actions run for the current HEAD; a prior commit's PASS does not automatically apply to a later commit.  
 **Repository:** `kuuriyawep/-gymsync-codex-toolkit`  
 **Default branch:** `main`  
 **Repository visibility:** Public (user-selected; do not change without explicit instruction)  
@@ -770,15 +770,13 @@ Do not assume old feature branches or closed PRs represent current main-branch s
 - Previous checkpoint commit `b8aafe780a181f0f49acaed3dc23791ed9146d7c`: PASS, run [#43918625052](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43918625052).
 - Expanded checkpoint commit `253710c93ae4795ccb5dbf405e39a2516b20c9c3`: CI run [#43920439162](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43920439162) was IN_PROGRESS when this checkpoint was authored. Re-check the run before marking this documentation task fully verified.
 
-The audit-baseline run was:
-- Workflow: Toolkit Quality Gates.
-- Run ID: `43918625052`.
-- Commit: `b8aafe780a181f0f49acaed3dc23791ed9146d7c`.
-- Result: SUCCESS.
+Recent successful CI evidence for the checkpoint work:
+- Run [#43918625052](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43918625052) passed on audit-baseline commit `b8aafe780a181f0f49acaed3dc23791ed9146d7c`.
+- Run [#43920439162](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43920439162) passed on expanded checkpoint commit `253710c93ae4795ccb5dbf405e39a2516b20c9c3`.
+- Run [#43920500428](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43920500428) passed on checkpoint update commit `cfcc19f6e633c8989d3c20c3293510d8d9575a0b`.
+- Run [#43920585918](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43920585918) passed on checkpoint update commit `1c59fea06c5ee1260d913813406a4d50246f663d`.
 
-After expanding this document, CI also passed on the expanded checkpoint commit `253710c93ae4795ccb5dbf405e39a2516b20c9c3` in run [#43920439162](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43920439162), and on the subsequent checkpoint update commit `cfcc19f6e633c8989d3c20c3293510d8d9575a0b` in run [#43920500428](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43920500428). All substantive quality-gate steps completed successfully on the latest commit.
-
-This proves the checked repository-quality steps passed on the latest commit. It does not prove Codex runtime or behavioral evaluation.
+All substantive quality-gate steps passed on those recorded revisions. For any later commit, inspect its own Actions run before claiming CI PASS. CI does not prove Codex runtime or behavioral evaluation.
 
 Earlier Phase 8 evidence remains useful historical context: CI run #109 passed on code-bearing commit `fb7967a4ce7b54a6a4731b92af221f8833be9e2c` with 38 unit tests, 41 cases validated, and zero validator warnings. The latest run above supersedes that run as the newest CI evidence for the current main commit.
 
