@@ -28,6 +28,8 @@ Copying only the discoverable skills and agent definitions is sufficient for bas
 
 Do not copy the toolkit's sample evaluation results into another project's evaluation history as if they were results from that project. Keep each target project's memory and evaluation records separate. If a referenced companion file is not copied, treat that step as unavailable and do not claim it ran.
 
+For a non-destructive adoption checklist with acceptance criteria and rollback rules, see the [Selective Adoption Usability Test](selective-adoption-test.md).
+
 ## Important distinctions
 - `agents/*.md` are human-readable role briefs, not executable Codex agent definitions.
 - `.codex/agents/*.toml` are the actual project-scoped custom subagent definitions.
