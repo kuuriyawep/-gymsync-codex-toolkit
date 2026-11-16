@@ -49,3 +49,10 @@ New lessons go to learning/inbox with evidence and provenance. Promote to learni
 
 ## Communication
 Be concise but sufficiently detailed. Separate facts, assumptions, risks, and recommendations. Explain uncertainty plainly.
+
+## Mandatory cross-session checkpoint
+- Before any work in this repository, read `PROJECT_STATE.md` in full. This is mandatory for every new session, including research-only sessions.
+- Treat it as the current cross-session task/status index; verify relevant claims against current source and the latest commit before acting.
+- If the checkpoint is missing, contradictory, or stale, stop and reconcile it before continuing.
+- At the end of meaningful work, update `PROJECT_STATE.md` with the actual progress, evidence, verification status, blockers, decisions, and one next action.
+- Do not start a new task or phase while the recorded active task remains unfinished unless the user explicitly redirects the work.
