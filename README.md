@@ -33,6 +33,7 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 - `templates/project-memory/` — reusable project profile, repository map, architecture, inventory, constraints, and task-checkpoint templates.
 - `templates/` — reusable workflow, decision-record, and evaluation-report templates.
 - `docs/project-intelligence.md` and `docs/memory-maintenance.md` — persistent knowledge architecture and upkeep procedure.
+- `docs/agent-validation.md` — Phase 6 agent coordination validation protocol and Codex-required execution gates.
 - `docs/` — source influence and attribution register.
 
 ## Use with Codex
@@ -109,7 +110,7 @@ See [quality gates](docs/quality-gates.md) for local commands, CI behavior, and 
 
 Read [evals/README.md](evals/README.md) for the hybrid evaluation process, [taxonomy](evals/taxonomy.md), and [rubrics](evals/rubrics/). Cases live in `evals/cases/*.json` and use `schemas/evaluation-case.schema.json`. Run records use `schemas/evaluation-result.schema.json`; rubric definitions use `schemas/evaluation-rubric.schema.json`. The existing `schemas/decision-record.schema.json` remains the engineering decision-record contract.
 
-Behavioral checks require an actual trusted Codex session and evidence-backed human grading. The runner deliberately leaves those criteria as `NOT_RUN` until that review occurs. Historical run records are never overwritten.
+Behavioral checks require an actual trusted Codex session and evidence-backed human grading. The runner deliberately leaves those criteria as `NOT_RUN` until that review occurs. Phase 6 adds seven agent-coordination scenarios and a dedicated rubric; see [agent validation](docs/agent-validation.md). Historical run records are never overwritten.
 
 ## Project Intelligence
 
