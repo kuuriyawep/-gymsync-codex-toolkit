@@ -21,6 +21,7 @@ This file is the routing index for detailed procedures. Linked workflow files re
 | Research | Compare technologies, investigate architecture, answer a decision question | [Technical Research and Decision](technical-research.md) | `documentation-and-decisions`, `clear-technical-communication` | `repo_explorer`, `planner` |
 | Release | Release candidate, deployment readiness, pre-release verification | [Release Readiness](release-readiness.md) | `verification-gate`, `code-review`, `security-review` | `reviewer`, `security_auditor` when relevant |
 | Toolkit | Improve toolkit skills, agents, workflows, evals, schemas, or documentation | Select the most relevant workflow above; use this skill for coordination | `skill-authoring-and-evaluation`, plus relevant planning/review/verification skills | `planner`, `implementer`, `reviewer` |
+| Project knowledge | Onboard to a repository, resume work across sessions, map architecture, or maintain evidence-backed project memory | Use the Project Intelligence skill and the relevant feature/research/security workflow | `project-intelligence`, `documentation-and-decisions`, `change-impact-analysis` | `repo_explorer` for read-only discovery; `reviewer` for consequential memory changes |
 
 ## Classification rules
 

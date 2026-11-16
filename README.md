@@ -19,7 +19,7 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 - `AGENTS.md` — repository-wide operating contract and safety rules.
 - `.codex/agents/` — native project-scoped Codex subagents (TOML definitions).
 - `agents/` — readable role briefs and portable reference prompts.
-- `.agents/skills/` — the 12 Codex-discoverable project skills, including workflow orchestration.
+- `.agents/skills/` — the 13 Codex-discoverable project skills, including workflow orchestration.
 - `skills/` — matching portable Markdown skill catalog for browsing and reuse.
 - `workflows/registry.md` — adaptive routing index for task categories, skills, and specialist agents.
 - `workflows/` — authoritative end-to-end bug, feature, database, security, research, and release procedures.
@@ -30,7 +30,9 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 - `evals/` — taxonomy, cases, rubrics, run records, reports, and acceptance checks.
 - `learning/inbox/` — proposed lessons awaiting review.
 - `learning/approved/` — curated lessons approved for reuse.
+- `templates/project-memory/` — reusable project profile, repository map, architecture, inventory, constraints, and task-checkpoint templates.
 - `templates/` — reusable workflow, decision-record, and evaluation-report templates.
+- `docs/project-intelligence.md` and `docs/memory-maintenance.md` — persistent knowledge architecture and upkeep procedure.
 - `docs/` — source influence and attribution register.
 
 ## Use with Codex
@@ -93,6 +95,7 @@ Dependency-free maintenance utilities under `tools/`:
 - `python tools/evaluate_toolkit.py --validate` validates case files against the declared schema contract.
 - `python tools/evaluate_toolkit.py --run` runs deterministic toolkit integrity checks and creates an immutable evidence-ready run record and Markdown report; it does not launch Codex or grade model behavior.
 - `python tools/evaluate_toolkit.py --run --compare evals/results/<previous-run-id>.json` compares stable case/criterion outcomes with a prior run.
+- `python tools/validate_project_memory.py` checks project-memory template structure, status labels, source markers, selected secret-like patterns, and dated-page freshness.
 
 Python 3.11+ is recommended for full TOML validation. The scripts use only the Python standard library. The evaluation runner implements the JSON Schema keywords used by this repository's schemas; it is not a general-purpose full Draft 2020-12 validator.
 
@@ -107,3 +110,7 @@ See [quality gates](docs/quality-gates.md) for local commands, CI behavior, and 
 Read [evals/README.md](evals/README.md) for the hybrid evaluation process, [taxonomy](evals/taxonomy.md), and [rubrics](evals/rubrics/). Cases live in `evals/cases/*.json` and use `schemas/evaluation-case.schema.json`. Run records use `schemas/evaluation-result.schema.json`; rubric definitions use `schemas/evaluation-rubric.schema.json`. The existing `schemas/decision-record.schema.json` remains the engineering decision-record contract.
 
 Behavioral checks require an actual trusted Codex session and evidence-backed human grading. The runner deliberately leaves those criteria as `NOT_RUN` until that review occurs. Historical run records are never overwritten.
+
+## Project Intelligence
+
+Use the [Project Intelligence skill](.agents/skills/project-intelligence/SKILL.md) to retrieve and maintain evidence-backed project knowledge across Codex sessions. The portable skill mirror is in `skills/project-intelligence/`. Start with [the architecture and retrieval protocol](docs/project-intelligence.md), then follow [the memory maintenance procedure](docs/memory-maintenance.md). The generic page templates live in `templates/project-memory/`. This is version-controlled Markdown plus a deterministic validator; it is not a vector database, automatic repository watcher, or autonomous memory agent.
