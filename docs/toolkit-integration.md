@@ -4,6 +4,8 @@
 
 This document explains how the toolkit's existing components fit together. It is an integration guide, not a new runtime or orchestration framework. Codex remains the primary coordinator and execution host.
 
+For a worked illustrative lifecycle, see the [end-to-end example](end-to-end-example.md).
+
 ## Component architecture
 
 ```text
