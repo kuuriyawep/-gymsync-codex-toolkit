@@ -33,6 +33,8 @@ Use when this repository itself is the Codex workspace. Open/trust it in Codex, 
 
 See [Installation in Codex](installation.md) for the full adoption procedure and limitations.
 
+See the [illustrative end-to-end example](end-to-end-example.md) for a complete bug-fix lifecycle. It is a walkthrough, not a record of an executed Codex run.
+
 ## 3. Start a task
 
 For non-trivial work, ask Codex to:
