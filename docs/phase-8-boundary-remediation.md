@@ -43,12 +43,12 @@ These cases are authored evaluation scenarios, not executed behavioral results. 
 |---|---|---|
 | GitHub file updates | PASS | Updates returned commit SHAs on `main` |
 | Native/portable parity | PASS | All 13 skill pairs match; CI `python tools/sync_skills.py --check` passed |
-| Toolkit unit tests | PASS | GitHub Actions run #43880479161 |
+| Toolkit unit tests | PASS | GitHub Actions run #43891253601 |
 | Toolkit validator | PASS | GitHub Actions run #43880479161 |
 | Evaluation schema validation | PASS | GitHub Actions run #43880479161 validated cases and generated result |
-| GitHub Actions CI | PASS | [Run #43880479161](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43880479161) — all steps passed |
+| GitHub Actions CI | PASS | [Run #43891253601](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43891253601) — all steps passed on commit `fb7967a4ce7b54a6a4731b92af221f8833be9e2c`; 38 unit tests passed and all 41 evaluation cases validated |
 | Codex behavioral evaluation | NOT_RUN — CODEX_REQUIRED | Requires a real Codex session and transcript evidence |
 
 ## Scope and safety
 
-No GymSync application source, database, deployment, external agent framework, or installation was touched. No Codex runtime behavior is claimed as tested. Phase 8 remains open until deterministic checks pass and the new scenarios are evaluated in a real Codex session.
+No GymSync application source, database, deployment, external agent framework, or installation was touched. No Codex runtime behavior is claimed as tested. Deterministic checks have now passed on the latest main commit (CI run #109). Phase 8 remains open only for the real Codex behavioral evaluation; those scenarios remain `NOT_RUN — CODEX_REQUIRED`.
