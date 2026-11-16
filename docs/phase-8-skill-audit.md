@@ -1,6 +1,6 @@
 # Phase 8 — Skill Quality Audit
 
-**Status:** Static audit and remediation complete; latest deterministic CI passed; Codex behavioral evaluation remains pending  
+**Status:** Static audit and remediation complete; deterministic CI passed on the latest code-bearing main commit; Codex behavioral evaluation remains pending  
 **Branch:** `main`  
 **Scope:** 13 canonical skills under `.agents/skills/`, checked against `AGENTS.md` and `workflows/registry.md`  
 **Method:** Read-only content review  
@@ -91,4 +91,4 @@ See [Phase 8 Completion Report](phase-8-completion-report.md) for the exact chan
 
 ## Exit status
 
-Static remediation and deterministic verification are complete. The latest main-branch CI run (#109, commit `fb7967a4ce7b54a6a4731b92af221f8833be9e2c`) passed: 38 unit tests passed, all 41 evaluation cases validated, and the toolkit quality pipeline completed with zero warnings. Phase 8 is not behaviorally complete: the prepared scenarios still require execution in a trusted Codex session. Codex runtime evaluation remains `NOT_RUN — CODEX_REQUIRED`.
+Static remediation and deterministic verification are complete. The main-branch CI run #109 on code-bearing commit `fb7967a4ce7b54a6a4731b92af221f8833be9e2c` passed: 38 unit tests passed, all 41 evaluation cases validated, and the toolkit quality pipeline completed with zero warnings. Subsequent commits in this documentation reconciliation changed Markdown reports only. Phase 8 is not behaviorally complete: the prepared scenarios still require execution in a trusted Codex session. Codex runtime evaluation remains `NOT_RUN — CODEX_REQUIRED`.
