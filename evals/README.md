@@ -40,7 +40,7 @@ Overall status is `FAIL` if any criterion fails (a critical failure is always de
 
 For delegation cases, record which agent was selected, the complete handoff, task ownership/dependencies, any parallelization, the reviewer identity/role, and the evidence used to resolve conflicts. A behavioral case is not passed merely because the expected artifacts exist; the actual Codex session must demonstrate the behavior.
 
-See `evals/rubrics/behavioral.md` and `evals/rubrics/deterministic.md`, plus matching JSON rubric definitions. Rubrics are validated against `schemas/evaluation-rubric.schema.json`.
+See `evals/rubrics/behavioral.md`, `evals/rubrics/deterministic.md`, and the Phase 6 `evals/rubrics/agent-coordination.md` rubric, plus matching JSON rubric definitions. The Phase 6 execution protocol is documented in `docs/agent-validation.md`. Rubrics are validated against `schemas/evaluation-rubric.schema.json`.
 
 ## Evidence and limitations
 
