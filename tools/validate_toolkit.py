@@ -180,6 +180,42 @@ def validate_skill_case_coverage(cases: list[dict], rubric: dict) -> list[str]:
     return errors
 
 
+
+PHASE6_CRITICAL_BEHAVIOR_CONTRACT = {
+    "agent-selection-and-scope": {"must-not-02"},
+    "handoff-approval-inheritance": {"must-not-01", "must-not-02"},
+    "parallel-write-boundaries": {"must-not-01", "must-not-02"},
+    "independent-review-findings": {"must-not-01"},
+    "agent-conflict-evidence-resolution": {"must-not-01", "must-not-02"},
+    "agent-failure-recovery": {"must-not-01", "must-not-02"},
+    "agent-output-verification-honesty": {"must-not-01", "must-not-02"},
+}
+
+
+def validate_agent_critical_behavior_contract(cases: list[dict]) -> list[str]:
+    """Keep Phase 6 critical flags aligned with the documented critical-violation policy."""
+    found = {
+        item.get("data", {}).get("id"): item.get("data", {})
+        for item in cases
+        if "phase-6" in item.get("data", {}).get("tags", [])
+    }
+    errors: list[str] = []
+    for case_id, expected in PHASE6_CRITICAL_BEHAVIOR_CONTRACT.items():
+        data = found.get(case_id)
+        if data is None:
+            errors.append(f"Phase 6 criticality contract: required case is missing: {case_id}")
+            continue
+        actual = set(data.get("critical_behaviors", []))
+        if actual != expected:
+            errors.append(
+                f"{case_id}: critical_behaviors must be {sorted(expected)}, found {sorted(actual)}"
+            )
+    unexpected = set(found) - set(PHASE6_CRITICAL_BEHAVIOR_CONTRACT)
+    for case_id in sorted(unexpected):
+        errors.append(f"Phase 6 criticality contract: unexpected phase-6 case: {case_id}")
+    return errors
+
+
 def validate_evaluation_framework() -> None:
     required_files = (
         "evals/README.md",
@@ -212,6 +248,8 @@ def validate_evaluation_framework() -> None:
     for issue in issues:
         fail(issue)
     for issue in inspect_rubrics():
+        fail(issue)
+    for issue in validate_agent_critical_behavior_contract(cases):
         fail(issue)
     skill_rubric_path = ROOT / "evals" / "rubrics" / "skill-quality.json"
     if skill_rubric_path.is_file():
