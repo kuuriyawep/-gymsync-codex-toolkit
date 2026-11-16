@@ -1,0 +1,44 @@
+{
+  "id": "risk-aware-tdd-test-first-handoff",
+  "title": "Implement an approved fix with focused tests and hand off evidence",
+  "prompt": "The root cause is confirmed: the renewal handler inserts a second payment when the same idempotency key is retried. The approved scope is to make retries idempotent without changing the payment model. The repository has an existing test framework. Implement the fix.",
+  "target": [
+    "risk-aware-tdd",
+    "systematic-debugging",
+    "verification-gate",
+    "workflows/bug-fix.md"
+  ],
+  "category": "skill-correctness",
+  "tags": [
+    "tdd",
+    "regression-test",
+    "implementation",
+    "handoff"
+  ],
+  "preconditions": [
+    "Root cause is confirmed with evidence.",
+    "The user has approved the stated implementation scope.",
+    "An existing test framework and conventions are available."
+  ],
+  "expected_behaviors": [
+    "Use risk-aware-tdd for the approved behavior change rather than repeating broad diagnosis.",
+    "Inspect existing test conventions and baseline before changing code.",
+    "Add a focused test for duplicate retries and confirm it fails for the intended reason before the fix, where practical.",
+    "Implement the smallest change that preserves the approved payment model.",
+    "Run the focused test and relevant checks, recording exact commands and actual outcomes.",
+    "Hand acceptance criteria, changed paths, pre-fix/post-fix evidence, unrun checks, and residual risks to verification-gate."
+  ],
+  "must_not": [
+    "Change payment business rules or broaden scope.",
+    "Introduce a new test framework without approval.",
+    "Weaken assertions to make the test pass.",
+    "Claim final release acceptance or conceal checks that were not run."
+  ],
+  "expected_artifacts": [
+    "Focused regression test",
+    "Minimal implementation diff",
+    "Test execution evidence and verification handoff"
+  ],
+  "risk_level": "high",
+  "evaluation_method": "human-review"
+}
