@@ -32,6 +32,9 @@ jobs:
       - name: Check native and portable skills
         run: python tools/sync_skills.py --check
 
+      - name: Validate project memory
+        run: python tools/validate_project_memory.py
+
       - name: Validate toolkit
         run: python tools/validate_toolkit.py
 
