@@ -15,6 +15,19 @@ For the recommended first-use sequence, see the [Toolkit Quickstart](quickstart.
 5. Trust the project in Codex if prompted; project-scoped configuration is only loaded for trusted projects.
 6. Start a new Codex session or refresh it if the agents or skills do not appear.
 
+## Selective adoption dependencies
+
+Copying only the discoverable skills and agent definitions is sufficient for basic skill/agent discovery, but some procedures reference companion files in this repository. When adopting them, also copy the required companion paths:
+
+| Component | Companion paths to include when used |
+|---|---|
+| Workflow orchestration | `workflows/` and the relevant files under `templates/` |
+| Project intelligence | `templates/project-memory/` and `tools/validate_project_memory.py` |
+| Skill authoring/evaluation | `evals/`, `schemas/`, `tools/evaluate_toolkit.py`, and the relevant evaluation templates if you intend to run the toolkit's evaluator |
+| Toolkit maintenance | `tools/`, `tests/`, `schemas/`, `evals/`, and `.github/workflows/` as a complete maintenance set |
+
+Do not copy the toolkit's sample evaluation results into another project's evaluation history as if they were results from that project. Keep each target project's memory and evaluation records separate. If a referenced companion file is not copied, treat that step as unavailable and do not claim it ran.
+
 ## Important distinctions
 - `agents/*.md` are human-readable role briefs, not executable Codex agent definitions.
 - `.codex/agents/*.toml` are the actual project-scoped custom subagent definitions.
