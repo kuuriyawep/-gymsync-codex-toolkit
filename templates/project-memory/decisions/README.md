@@ -6,7 +6,7 @@ Suggested filename: `YYYY-MM-DD-short-decision-title.md`.
 
 Each record should include:
 - ID and title
-- Status: Proposed, Accepted, Rejected, Superseded, or Deprecated
+- Decision status field: Proposed, Accepted, Rejected, Superseded, or Deprecated
 - Date and decision owner
 - Context and problem
 - Options considered
