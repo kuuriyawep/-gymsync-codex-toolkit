@@ -133,10 +133,8 @@
         "additionalProperties": false,
         "required": [
           "id",
-          "title",
           "description",
-          "critical",
-          "applies_to"
+          "critical"
         ],
         "properties": {
           "id": {
