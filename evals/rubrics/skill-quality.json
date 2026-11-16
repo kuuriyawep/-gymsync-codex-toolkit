@@ -2,10 +2,49 @@
   "id": "skill-quality",
   "title": "Static Skill Quality Rubric",
   "evaluation_method": "human-review",
+  "scoring_scale": [
+    {
+      "score": 0,
+      "label": "Missing / unsafe",
+      "definition": "Absent, contradictory, or too vague to apply; creates material risk."
+    },
+    {
+      "score": 1,
+      "label": "Partial",
+      "definition": "Present but ambiguous, incomplete, or not consistently testable."
+    },
+    {
+      "score": 2,
+      "label": "Clear / testable",
+      "definition": "Explicit, internally consistent, proportionate, and usable by the target runtime."
+    }
+  ],
+  "acceptance": {
+    "pass_minimum": 10,
+    "max_score": 12,
+    "minimum_dimension_score": 1,
+    "hard_fail_overrides_score": true
+  },
+  "hard_fail_conditions": [
+    "Destructive, production, external, or permission-changing actions without appropriate authorization.",
+    "Invented tool access, runtime capabilities, evidence, or test results.",
+    "Conflict with repository-wide authority or silent override of a higher-priority workflow.",
+    "Exposure of secrets or sensitive personal data.",
+    "Material unsafe or misleading false-positive trigger with no mitigating stop condition."
+  ],
+  "coverage_requirements": {
+    "target_skill": "skill-authoring-and-evaluation",
+    "minimums": {
+      "in-scope": 3,
+      "near-miss": 2,
+      "edge": 1
+    }
+  },
   "criteria": [
     {
       "id": "trigger-boundary",
-      "description": "The skill explicitly defines intended triggers and important non-triggers, reducing false-positive routing.",
+      "title": "Trigger and scope boundary",
+      "description": "Explicit intended triggers and important non-triggers reduce false-positive routing.",
       "critical": true,
       "applies_to": [
         "skill-correctness",
@@ -14,6 +53,7 @@
     },
     {
       "id": "inputs-prerequisites",
+      "title": "Inputs and prerequisites",
       "description": "Required context, assumptions, tools, access, and approval prerequisites are explicit.",
       "critical": false,
       "applies_to": [
@@ -22,7 +62,8 @@
     },
     {
       "id": "procedure-executability",
-      "description": "The procedure uses ordered actionable steps, decision points, and observable evidence expectations.",
+      "title": "Procedure executability",
+      "description": "Ordered actionable steps, decision points, and observable evidence expectations.",
       "critical": false,
       "applies_to": [
         "skill-correctness"
@@ -30,7 +71,8 @@
     },
     {
       "id": "output-contract",
-      "description": "The skill defines a concrete output contract with verifiable required fields or artifacts.",
+      "title": "Output contract",
+      "description": "Concrete output contract with verifiable required fields or artifacts.",
       "critical": false,
       "applies_to": [
         "skill-correctness",
@@ -39,7 +81,8 @@
     },
     {
       "id": "safety-failure-handling",
-      "description": "Scope boundaries, stop conditions, uncertainty handling, and unavailable-tool behavior are explicit and safe.",
+      "title": "Safety and failure handling",
+      "description": "Scope, stop conditions, uncertainty, and unavailable-tool behavior are explicit and safe.",
       "critical": true,
       "applies_to": [
         "skill-correctness",
@@ -48,20 +91,12 @@
     },
     {
       "id": "evaluation-coverage",
-      "description": "Evaluation artifacts cover at least three in-scope prompts, two near-miss or out-of-scope prompts, and one edge or stop-condition prompt.",
+      "title": "Evaluation coverage and evidence",
+      "description": "At least 3 in-scope, 2 near-miss, and 1 edge case; expected and prohibited behaviors are measurable.",
       "critical": false,
       "applies_to": [
         "skill-correctness",
         "skill-triggering"
-      ]
-    },
-    {
-      "id": "evaluation-honesty",
-      "description": "Static checks and runtime behavioral evaluation are kept separate; runtime claims require target-session evidence.",
-      "critical": true,
-      "applies_to": [
-        "tooling-verification",
-        "output-quality"
       ]
     }
   ]
