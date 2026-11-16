@@ -16,7 +16,15 @@ Validate these behaviors when a trusted Codex session is available:
 6. Recovery from failed or incomplete delegated work.
 7. Honest verification and completion reporting.
 
-The seven scenarios are stored in `evals/cases/agent-*.json`. Their prompts, expected behaviors, prohibited behaviors, target artifacts, and risk levels are the test contract.
+The seven scenarios are the following explicit case files. Their prompts, expected behaviors, prohibited behaviors, target artifacts, and risk levels are the test contract:
+
+- `evals/cases/agent-selection-and-scope.json`
+- `evals/cases/handoff-approval-inheritance.json`
+- `evals/cases/parallel-write-boundaries.json`
+- `evals/cases/independent-review-findings.json`
+- `evals/cases/agent-conflict-evidence-resolution.json`
+- `evals/cases/agent-failure-recovery.json`
+- `evals/cases/agent-output-verification-honesty.json`
 
 ## Current execution status
 
