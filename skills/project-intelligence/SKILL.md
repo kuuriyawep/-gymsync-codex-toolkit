@@ -7,6 +7,9 @@ description: Build, retrieve, verify, and maintain evidence-backed project knowl
 
 Use this skill to maintain a compact, evidence-backed project knowledge layer for Codex across sessions. Codex remains the primary coordinator.
 
+## When to use
+Use for repository onboarding, architecture discovery, resuming prior work, recalling project decisions, or maintaining project-memory artifacts. Do not use as a substitute for live source inspection or as a place to store credentials or personal data.
+
 ## Workflow
 1. Confirm repository identity and read root instructions.
 2. Read project profile and current-state checkpoint.
@@ -17,6 +20,14 @@ Use this skill to maintain a compact, evidence-backed project knowledge layer fo
 7. Preserve decision history; mark replaced decisions Superseded rather than deleting them.
 8. Run `python tools/validate_project_memory.py` after memory edits; use `--strict-freshness` for high-impact decisions.
 
+## Required output
+- Repository and source scope inspected.
+- Relevant memory pages retrieved and their freshness.
+- Verified facts, assumptions, unknowns, and stale claims.
+- Source paths supporting consequential facts.
+- Checkpoint/decision changes made, if any.
+- Validation command and actual outcome, or why it was not run.
+
 ## Evidence and safety
 - Verified claims cite repository paths, tests, schemas, commits, or explicit user decisions.
 - Memory is an index, not source of truth. Current source artifacts and explicit user instructions take precedence.
@@ -25,3 +36,6 @@ Use this skill to maintain a compact, evidence-backed project knowledge layer fo
 - Keep each project's memory separate.
 - Do not autonomously rewrite memory or promote unreviewed learning.
 - If evidence conflicts or is missing, report the uncertainty and re-verify.
+
+## Stop conditions
+Stop before recording an unverified assumption as fact, crossing project boundaries, or storing sensitive information. If required memory sources are unavailable, say so and continue only from inspectable current evidence.
