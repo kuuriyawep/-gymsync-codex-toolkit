@@ -16,8 +16,8 @@
 | Evaluation and memory assets | PASS | Required schemas, evaluation cases/rubrics, validator/evaluator scripts, tests, and project-memory templates were present in the repository tree. |
 | Installation guidance | PASS | Quickstart, installation, integration map, and selective-adoption test plan are linked and distinguish discoverability from companion dependencies and runtime support. |
 | Full Markdown link validation | NOT RUN | A repository-wide link checker was not executed in this environment. Earlier targeted link checks covered README, installation, quickstart, and selective-adoption test plan only. |
-| Python validators and unit tests | NOT RUN | No repository shell/runtime was available to execute the documented Python commands. |
-| GitHub Actions / CI | NOT VERIFIED | The reviewed commit had no reported combined status checks and no associated workflow runs in the available GitHub results. This does not establish that CI passed or failed. |
+| Python validators and unit tests | PASS — GitHub Actions | Run #39 on the reviewed `main` commit completed successfully on Python 3.11. The unit-test, skill parity, project-memory validator, toolkit validator, evaluation-case validation, deterministic evaluation generation, and generated-result validation steps all completed successfully. |
+| GitHub Actions / CI | PASS | [Toolkit Quality Gates run #39](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43870404011) for commit `8b672200d37f8dd12ee7863f42a8578ae13114fb` completed with conclusion `success`. All 10 substantive job steps passed. |
 | Codex behavioral evaluations | NOT RUN — CODEX_REQUIRED | No actual Codex session was available. Agent delegation, skill discovery, approval behavior, and behavioral evals remain untested at runtime. |
 | Selective adoption against a target repository | NOT RUN | The test plan is prepared, but no target repository was modified or used for an adoption trial. |
 
