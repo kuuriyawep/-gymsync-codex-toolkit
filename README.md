@@ -11,7 +11,9 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 - [End-to-End Example](docs/end-to-end-example.md) — an illustrative request-to-completion workflow (not a runtime test).
 - [Selective Adoption Test](docs/selective-adoption-test.md) — non-destructive preflight, acceptance criteria, and rollback checklist.
 - [Installation in Codex](docs/installation.md) — how to adopt the skills and agents in a target project.
-- [Phase 7 Integration Evaluation](docs/phase-7-completion-report.md) — static review results and remaining runtime verification.
+- [Phase 7 Integration Evaluation](docs/phase-7-completion-report.md) — integration review results and remaining runtime verification.
+- [Phase 8 Skill Quality Audit](docs/phase-8-skill-audit.md) — 13-skill audit and remediation summary.
+- [Phase 8 Completion Report](docs/phase-8-completion-report.md) — static remediation, deterministic validation, and deferred Codex runtime tests.
 
 ## Adaptive delivery loop
 
