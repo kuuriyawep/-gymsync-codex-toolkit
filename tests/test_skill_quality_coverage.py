@@ -50,5 +50,41 @@ class SkillCaseCoverageTests(unittest.TestCase):
         self.assertTrue(any("missing valid coverage label" in error for error in errors))
 
 
+
+class SkillRubricContractTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.rubric = {
+            "criteria": [
+                {"id": "trigger-boundary", "title": "Trigger and scope boundary"},
+                {"id": "inputs-prerequisites", "title": "Inputs and prerequisites"},
+                {"id": "procedure-executability", "title": "Procedure executability"},
+                {"id": "output-contract", "title": "Output contract"},
+                {"id": "safety-failure-handling", "title": "Safety and failure handling"},
+                {"id": "evaluation-coverage", "title": "Evaluation coverage and evidence"},
+            ],
+            "scoring_scale": [{"score": 0}, {"score": 1}, {"score": 2}],
+            "acceptance": {"pass_minimum": 10, "max_score": 12, "minimum_dimension_score": 1, "hard_fail_overrides_score": True},
+            "coverage_requirements": {"minimums": {"in-scope": 3, "near-miss": 2, "edge": 1}},
+        }
+        self.markdown = (
+            "Trigger and scope boundary Inputs and prerequisites Procedure executability "
+            "Output contract Safety and failure handling Evaluation coverage and evidence "
+            "PASS 10/12 hard-fail"
+        )
+
+    def test_matching_markdown_and_json_contract_passes(self) -> None:
+        self.assertEqual(validate_toolkit.validate_skill_rubric_contract(self.rubric, self.markdown), [])
+
+    def test_missing_dimension_is_rejected(self) -> None:
+        self.rubric["criteria"].pop()
+        errors = validate_toolkit.validate_skill_rubric_contract(self.rubric, self.markdown)
+        self.assertTrue(any("six canonical dimension IDs" in error for error in errors))
+
+    def test_wrong_threshold_is_rejected(self) -> None:
+        self.rubric["acceptance"]["pass_minimum"] = 8
+        errors = validate_toolkit.validate_skill_rubric_contract(self.rubric, self.markdown)
+        self.assertTrue(any("acceptance must match" in error for error in errors))
+
+
 if __name__ == "__main__":
     unittest.main()
