@@ -31,7 +31,7 @@ Use when this repository itself is the Codex workspace. Open/trust it in Codex, 
 5. Do not copy evaluation results from this toolkit as if they were evidence about the target project.
 6. Trust the target project in Codex if prompted, then start a fresh session if discovery does not refresh.
 
-See [Installation in Codex](installation.md) for the full adoption procedure and limitations.
+See [Installation in Codex](installation.md) for the full adoption procedure and limitations, and the [Selective Adoption Usability Test](selective-adoption-test.md) for a preflight checklist.
 
 See the [illustrative end-to-end example](end-to-end-example.md) for a complete bug-fix lifecycle. It is a walkthrough, not a record of an executed Codex run.
 
