@@ -29,13 +29,16 @@ If expected behavior or approval is materially unclear, stop and request clarifi
 9. Hand the completed change and exact test evidence to `verification-gate` for final cross-surface verification.
 
 ## Required output
-- Approved behavior and test cases.
-- Tests added/changed and why they cover the behavior.
-- Evidence that the regression test failed before the fix, when practical.
-- Implementation summary and changed paths.
-- Exact commands/checks and outcomes.
-- Deviations from test-first, tests not run, and reasons.
-- Remaining risks or follow-up verification.
+- **Approved behavior:** scope and acceptance criteria implemented.
+- **Tests:** cases added/changed and why they cover the behavior.
+- **Test-first evidence:** pre-fix failure and post-fix result, when practical; otherwise the reason test-first was not feasible.
+- **Implementation:** concise summary and changed paths.
+- **Execution record:** exact commands/checks and actual outcomes.
+- **Exceptions:** deviations from test-first, tests not run, and reasons.
+- **Residual risk:** unresolved issues and follow-up verification.
+
+## Handoff to verification
+Provide the approved criteria, changed paths, regression/acceptance tests, pre-fix and post-fix evidence where available, exact commands and outcomes, deviations, unrun checks, and remaining risks. This is implementation evidence, not a release verdict; the final acceptance decision belongs to `verification-gate`.
 
 ## Boundaries and stop conditions
 - TDD owns focused behavior tests and implementation validation; it does not replace root-cause diagnosis or the final verification gate.
