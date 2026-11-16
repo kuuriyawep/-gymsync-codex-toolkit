@@ -119,6 +119,39 @@ def validate_workflows() -> None:
 
 
 
+
+def validate_skill_rubric_contract(rubric: dict, markdown: str) -> list[str]:
+    """Keep the structured rubric, Markdown rubric, and acceptance policy aligned."""
+    expected_ids = {
+        "trigger-boundary", "inputs-prerequisites", "procedure-executability",
+        "output-contract", "safety-failure-handling", "evaluation-coverage",
+    }
+    criteria = rubric.get("criteria", [])
+    ids = {item.get("id") for item in criteria if isinstance(item, dict)}
+    errors: list[str] = []
+    if len(criteria) != 6 or ids != expected_ids:
+        errors.append("skill-quality rubric must define exactly the six canonical dimension IDs")
+    scores = [item.get("score") for item in rubric.get("scoring_scale", []) if isinstance(item, dict)]
+    if scores != [0, 1, 2]:
+        errors.append("skill-quality rubric scoring_scale must define scores 0, 1, and 2 in order")
+    acceptance = rubric.get("acceptance", {})
+    if acceptance != {
+        "pass_minimum": 10, "max_score": 12,
+        "minimum_dimension_score": 1, "hard_fail_overrides_score": True,
+    }:
+        errors.append("skill-quality rubric acceptance must match PASS >=10/12, no zero dimension, and hard-fail override")
+    coverage = rubric.get("coverage_requirements", {}).get("minimums", {})
+    if coverage != {"in-scope": 3, "near-miss": 2, "edge": 1}:
+        errors.append("skill-quality rubric coverage minimums must be 3 in-scope, 2 near-miss, and 1 edge")
+    for item in criteria:
+        title = item.get("title")
+        if title and title not in markdown:
+            errors.append(f"skill-quality Markdown rubric is missing structured criterion title: {title}")
+    if "10/12" not in markdown or "hard-fail" not in markdown.lower():
+        errors.append("skill-quality Markdown rubric is missing the structured acceptance threshold or hard-fail policy")
+    return errors
+
+
 def validate_skill_case_coverage(cases: list[dict], rubric: dict) -> list[str]:
     """Enforce the case mix declared by a structured skill-quality rubric."""
     requirement = rubric.get("coverage_requirements")
@@ -184,6 +217,9 @@ def validate_evaluation_framework() -> None:
     if skill_rubric_path.is_file():
         try:
             skill_rubric = json.loads(read_text(skill_rubric_path))
+            rubric_markdown = read_text(ROOT / "evals" / "rubrics" / "skill-quality.md")
+            for issue in validate_skill_rubric_contract(skill_rubric, rubric_markdown):
+                fail(issue)
             for issue in validate_skill_case_coverage(cases, skill_rubric):
                 fail(issue)
         except json.JSONDecodeError as exc:
