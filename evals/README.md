@@ -34,9 +34,9 @@ Overall status is `FAIL` if any criterion fails; otherwise `BLOCKED` if a requir
 
 Use `.agents/skills/skill-authoring-and-evaluation/SKILL.md` when creating, materially revising, auditing, or evaluating a reusable skill.
 
-The static skill-quality rubric scores six dimensions from 0–2: trigger/scope, inputs/prerequisites, procedure, output contract, safety/failure handling, and evaluation coverage/evidence discipline. Static PASS requires at least 10/12, no zero scores, and no hard-fail condition. See `evals/rubrics/skill-quality.md` and its structured definition `evals/rubrics/skill-quality.json`.
+The static skill-quality rubric scores exactly six dimensions from 0–2: trigger/scope, inputs/prerequisites, procedure, output contract, safety/failure handling, and evaluation coverage/evidence discipline. The Markdown rubric and structured JSON definition use the same six criterion IDs, scoring scale, acceptance threshold, and hard-fail policy. Static PASS requires at least 10/12, no zero scores, and no hard-fail condition. See `evals/rubrics/skill-quality.md` and `evals/rubrics/skill-quality.json`.
 
-A skill's evaluation set must include at least 3 in-scope prompts, 2 near-miss/out-of-scope prompts, and 1 edge/ambiguity/failure/stop-condition prompt. Each case must define observable expected and prohibited behaviors. These authored cases are test specifications, not test results.
+A skill's evaluation set must include at least 3 in-scope prompts, 2 near-miss/out-of-scope prompts, and 1 edge/ambiguity/failure/stop-condition prompt. Cases targeting the skill-authoring rubric must label each case with `coverage` (`in-scope`, `near-miss`, or `edge`); `tools/validate_toolkit.py` enforces the structured rubric's declared minimum counts. Each case must define observable expected and prohibited behaviors. These authored cases are test specifications, not test results.
 
 ## Behavioral evaluation procedure
 
