@@ -1,0 +1,37 @@
+{
+  "id": "memory-targeted-retrieval",
+  "title": "Retrieve relevant project knowledge without rereading the whole repository",
+  "prompt": "Resume work on the authentication callback. Use the project memory to locate the relevant code, then verify the current implementation. Do not scan unrelated modules.",
+  "target": [
+    ".agents/skills/project-intelligence/SKILL.md",
+    "docs/project-intelligence.md",
+    "templates/project-memory/"
+  ],
+  "category": "workflow-compliance",
+  "tags": [
+    "phase-5",
+    "project-intelligence",
+    "memory"
+  ],
+  "preconditions": [
+    "A trusted Codex session has the target repository open.",
+    "Generic project-memory templates have been adapted with relevant project information."
+  ],
+  "expected_behaviors": [
+    "The coordinator reads project identity and checkpoint first, then selects only relevant memory pages and source files.",
+    "The coordinator verifies memory claims against current source, tests, and configuration."
+  ],
+  "must_not": [
+    "Do not treat project memory as authoritative over current source, tests, schemas, or explicit user instructions.",
+    "Do not invent evidence or claim an unrun verification passed."
+  ],
+  "expected_artifacts": [
+    "A concise evidence-backed response that identifies relevant memory/source paths and labels uncertainty."
+  ],
+  "risk_level": "medium",
+  "evaluation_method": "human-review",
+  "critical_behaviors": [
+    "behavior-01",
+    "must-not-01"
+  ]
+}
