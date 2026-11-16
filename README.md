@@ -114,3 +114,6 @@ Behavioral checks require an actual trusted Codex session and evidence-backed hu
 ## Project Intelligence
 
 Use the [Project Intelligence skill](.agents/skills/project-intelligence/SKILL.md) to retrieve and maintain evidence-backed project knowledge across Codex sessions. The portable skill mirror is in `skills/project-intelligence/`. Start with [the architecture and retrieval protocol](docs/project-intelligence.md), then follow [the memory maintenance procedure](docs/memory-maintenance.md). The generic page templates live in `templates/project-memory/`. This is version-controlled Markdown plus a deterministic validator; it is not a vector database, automatic repository watcher, or autonomous memory agent.
+
+
+Phase 6 agent coordination validation: see [`docs/agent-validation.md`](docs/agent-validation.md) and [`evals/rubrics/agent-coordination.md`](evals/rubrics/agent-coordination.md). Seven agent-behavior scenarios are prepared; execution remains `NOT_RUN — CODEX_REQUIRED` until a trusted Codex session is available.
