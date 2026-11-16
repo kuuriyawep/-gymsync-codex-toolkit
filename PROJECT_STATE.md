@@ -765,7 +765,10 @@ Do not assume old feature branches or closed PRs represent current main-branch s
 
 ## 16. Latest CI evidence
 
-<PRIVATE-CI-STATUS>
+## CI status for the expanded checkpoint
+
+- Previous checkpoint commit `b8aafe780a181f0f49acaed3dc23791ed9146d7c`: PASS, run [#43918625052](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43918625052).
+- Expanded checkpoint commit `253710c93ae4795ccb5dbf405e39a2516b20c9c3`: CI run [#43920439162](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43920439162) was IN_PROGRESS when this checkpoint was authored. Re-check the run before marking this documentation task fully verified.
 
 The latest run at the time of this audit:
 - Workflow: Toolkit Quality Gates.
