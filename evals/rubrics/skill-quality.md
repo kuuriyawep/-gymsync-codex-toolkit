@@ -1,6 +1,6 @@
 # Skill Quality Rubric
 
-Use this rubric for static review of a skill file and its associated evaluation cases. Score each dimension from 0 to 2 and cite concrete evidence. Do not award points for length, polish, or claims that are not operationally testable.
+Use this rubric for static review of a skill file and its associated evaluation cases. Score each of the six dimensions from 0 to 2 and cite concrete evidence. `skill-quality.json` is the machine-readable contract: it must contain the same six criterion IDs, scoring scale, acceptance threshold, hard-fail policy, and coverage minimums. Do not award points for length, polish, or claims that are not operationally testable.
 
 ## Scoring scale
 
@@ -46,9 +46,13 @@ Each case should include observable `expected_behaviors`, relevant `must_not` be
 
 ## Evidence and status
 
-Record the score per dimension, total, reviewer, revision, rationale, and evidence references. Use `NOT_RUN` when the intended runtime was not exercised, `BLOCKED` when a prerequisite prevented evaluation, and PASS/FAIL only when actual evidence supports the result.
+Record the score per dimension using the matching criterion ID in `skill-quality.json`, total, reviewer, revision, rationale, and evidence references. Static outcomes are `PASS` (10–12, no zero, no hard-fail), `REVISE` (7–9 or any zero without a hard-fail), and `FAIL` (0–6 or any hard-fail). The six dimension scores must sum to a maximum of 12. Use `NOT_RUN` when the intended runtime was not exercised, `BLOCKED` when a prerequisite prevented evaluation, and PASS/FAIL only when actual evidence supports the result.
 
 Static quality acceptance and behavioral acceptance are separate:
 - Static PASS means the authored contract and test artifacts meet this rubric.
 - Behavioral PASS requires execution in the target runtime, a transcript or equivalent evidence, and criterion-level human review.
 - Deterministic validation and CI do not prove skill triggering or runtime behavior.
+
+## Machine-enforced coverage
+
+The structured rubric declares the target skill and minimum case counts. Every evaluation case targeting this skill must set `coverage` to `in-scope`, `near-miss`, or `edge`. The repository validator enforces at least 3 in-scope, 2 near-miss, and 1 edge case. Adding a case without the coverage label does not satisfy the gate. This check validates authored test coverage only; it does not run Codex or prove skill selection.
