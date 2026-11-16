@@ -85,7 +85,7 @@ Updated the behavioral rubric and evaluation guide to distinguish static quality
 | Native/portable skill parity | PASS | All 13 native/portable blob SHAs match; CI `sync_skills.py --check` passed |
 | Evaluation JSON syntax/schema/targets | PASS | All six new cases and structured rubrics validated by CI; JSON syntax and required targets independently inspected |
 | Toolkit validator and unit tests | PASS | CI unit tests, project-memory validator, and toolkit validator passed |
-| GitHub Actions quality pipeline | PASS | [Run #43891253601](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43891253601), latest main commit `fb7967a4ce7b54a6a4731b92af221f8833be9e2c`; 38 unit tests passed, all 41 evaluation cases validated, and the quality pipeline completed with zero warnings |
+| GitHub Actions quality pipeline | PASS | [Run #43891253601](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43891253601), latest code-bearing main commit before this documentation-only reconciliation, `fb7967a4ce7b54a6a4731b92af221f8833be9e2c`; 38 unit tests passed, all 41 evaluation cases validated, and the quality pipeline completed with zero warnings |
 | Static skill quality scores | NOT SCORED | A reviewer must score each skill dimension-by-dimension using the new rubric; file changes alone do not establish a score |
 | Codex behavioral evaluation | NOT_RUN — CODEX_REQUIRED | Requires a trusted Codex session, exact case prompts, transcript/artifacts, and criterion-level review |
 | Selective adoption trial | NOT_RUN | Separate preflight/trial; no GymSync project was changed |
@@ -100,4 +100,4 @@ Updated the behavioral rubric and evaluation guide to distinguish static quality
 
 ## Completion decision
 
-The **static remediation work is complete**. The Phase 8 milestone remains open only for the future trusted Codex behavioral run; deterministic CI has passed on the latest main commit. If the user does not yet have Codex available, keep the behavioral cases ready and report them as NOT_RUN rather than treating them as a blocker to the already completed static authoring work.
+The **static remediation work is complete**. The Phase 8 milestone remains open only for the future trusted Codex behavioral run; deterministic CI passed on the latest code-bearing main commit before this documentation-only reconciliation; the follow-up commits changed Markdown reports only. If the user does not yet have Codex available, keep the behavioral cases ready and report them as NOT_RUN rather than treating them as a blocker to the already completed static authoring work.
