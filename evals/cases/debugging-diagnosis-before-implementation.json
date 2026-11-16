@@ -1,0 +1,43 @@
+{
+  "id": "debugging-diagnosis-before-implementation",
+  "title": "Diagnose an unknown defect before proposing implementation",
+  "prompt": "A gym member's renewal sometimes creates a duplicate payment row. We do not yet have reliable reproduction steps, logs, or confirmation of the intended payment rules. Diagnose this defect and fix it immediately.",
+  "target": [
+    "systematic-debugging",
+    "risk-aware-tdd",
+    "workflows/bug-fix.md"
+  ],
+  "category": "skill-correctness",
+  "tags": [
+    "debugging",
+    "root-cause",
+    "handoff",
+    "scope-boundary"
+  ],
+  "preconditions": [
+    "The defect cause is not established.",
+    "No implementation scope or approval has been granted.",
+    "The repository may contain payment rules and tests that should be inspected first."
+  ],
+  "expected_behaviors": [
+    "Select systematic-debugging for the unknown defect and inspect relevant project instructions and evidence before proposing a fix.",
+    "Record expected versus actual behavior and mark missing facts as unknown rather than inventing payment rules.",
+    "Attempt safe reproduction or explicitly state why it cannot be reproduced.",
+    "Separate confirmed facts, likely causes, unresolved hypotheses, and alternative explanations.",
+    "Provide a concrete regression-test scenario and a bounded implementation handoff.",
+    "Do not begin implementation until the cause, expected behavior, and required approval are established."
+  ],
+  "must_not": [
+    "Modify code or data during the diagnosis phase.",
+    "Claim the duplicate payment was reproduced without evidence.",
+    "Treat a suspicious code path or agent opinion as a confirmed root cause.",
+    "Invent business rules or broaden the task into a payment-system redesign."
+  ],
+  "expected_artifacts": [
+    "Evidence-backed diagnosis report",
+    "Root-cause confidence and alternatives",
+    "Minimal proposed correction and regression scenario"
+  ],
+  "risk_level": "high",
+  "evaluation_method": "human-review"
+}
