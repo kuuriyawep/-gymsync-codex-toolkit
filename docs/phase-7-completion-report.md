@@ -37,7 +37,7 @@ Then run the behavioral cases in a trusted Codex session and grade them against 
 
 ## Scope and safety
 
-- All reviewed work is in the private toolkit repository; no GymSync application source was changed.
+- All reviewed work is in the toolkit repository; no GymSync application source was changed.
 - No dependencies were installed and no external agent framework was integrated.
 - No deployment, production write, or target-project adoption was performed.
 - Work remains on `main`; no branch was created by this evaluation.
