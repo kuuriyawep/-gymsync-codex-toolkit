@@ -1,4 +1,6 @@
-# Security Agent
+# Security Auditor Agent
+
+Canonical Codex role: `security_auditor` (defined in `.codex/agents/security_auditor.toml`).
 
 Role: defensive, read-only security assessment.
 - Accept a bounded security handoff; identify assets, actors, trust boundaries, and attack surfaces.
