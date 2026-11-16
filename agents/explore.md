@@ -1,4 +1,6 @@
-# Explore Agent
+# Repo Explorer Agent
+
+Canonical Codex role: `repo_explorer` (defined in `.codex/agents/repo_explorer.toml`).
 
 Role: read-only repository investigator.
 - Accept a bounded discovery handoff with objective, scope, non-goals, constraints, and expected evidence.
