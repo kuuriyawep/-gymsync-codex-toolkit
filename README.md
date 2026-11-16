@@ -4,6 +4,12 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 
 > Codex remains the primary agent. This toolkit does not replace it with another agent framework.
 
+## Start here
+
+- [Toolkit Quickstart](docs/quickstart.md) — first-use sequence, adoption modes, safe task intake, and verification commands.
+- [Toolkit Integration Map](docs/toolkit-integration.md) — component architecture, authority order, lifecycle, and integration invariants.
+- [Installation in Codex](docs/installation.md) — how to adopt the skills and agents in a target project.
+
 ## Adaptive delivery loop
 
 For non-trivial engineering work, the toolkit uses adaptive routing:
