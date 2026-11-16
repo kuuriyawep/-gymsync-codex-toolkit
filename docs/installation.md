@@ -1,5 +1,7 @@
 # Installation in Codex
 
+For the recommended first-use sequence, see the [Toolkit Quickstart](quickstart.md) and [Integration Map](toolkit-integration.md).
+
 ## What Codex discovers
 - Project instructions: `AGENTS.md` at the repository root.
 - Project skills: `.agents/skills/<skill-name>/SKILL.md`.
