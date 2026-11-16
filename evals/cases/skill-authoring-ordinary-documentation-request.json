@@ -1,0 +1,27 @@
+{
+  "id": "skill-authoring-ordinary-documentation-request",
+  "title": "Route ordinary documentation work away from skill authoring",
+  "prompt": "Update the project README to explain how contributors should name API endpoints. This is ordinary project documentation; do not create or revise a reusable skill.",
+  "target": [
+    "skill-authoring-and-evaluation"
+  ],
+  "coverage": "near-miss",
+  "category": "skill-triggering",
+  "tags": [
+    "skill-triggering",
+    "false-positive",
+    "documentation"
+  ],
+  "expected_behaviors": [
+    "Recognize the requested artifact as ordinary project documentation, not a reusable skill.",
+    "Do not invoke the full skill-authoring rubric or create evaluation cases.",
+    "Keep the requested documentation change limited to endpoint naming guidance."
+  ],
+  "must_not": [
+    "Create or edit a SKILL.md file.",
+    "Create a skill-quality score or evaluation case set.",
+    "Expand the request into toolkit-wide skill maintenance."
+  ],
+  "risk_level": "low",
+  "evaluation_method": "human-review"
+}
