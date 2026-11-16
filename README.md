@@ -11,6 +11,7 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 - [End-to-End Example](docs/end-to-end-example.md) — an illustrative request-to-completion workflow (not a runtime test).
 - [Selective Adoption Test](docs/selective-adoption-test.md) — non-destructive preflight, acceptance criteria, and rollback checklist.
 - [Installation in Codex](docs/installation.md) — how to adopt the skills and agents in a target project.
+- [Phase 7 Integration Evaluation](docs/phase-7-completion-report.md) — static review results and remaining runtime verification.
 
 ## Adaptive delivery loop
 
