@@ -27,13 +27,16 @@ Inspect available context before asking the user to repeat information. Ask one 
 8. If new evidence changes scope or risk, stop and route through the applicable clarification and approval gates.
 
 ## Required output
-- Symptom: expected vs actual behavior.
-- Reproduction: steps and observed result, or why it was not reproduced.
-- Investigation scope: relevant paths, tests, logs, and evidence inspected.
-- Root cause: confirmed, likely, or unresolved, with evidence.
-- Alternatives considered and remaining unknowns.
-- Proposed minimal correction and regression-test scenario.
-- Risks, blockers, and recommended next owner/step.
+- **Symptom:** expected vs actual behavior and affected scope.
+- **Reproduction:** exact steps and observed result, or why it was not reproduced.
+- **Investigation:** relevant paths, tests, logs, and evidence inspected.
+- **Root cause:** confirmed, likely, or unresolved, with supporting evidence.
+- **Alternatives:** plausible competing explanations and remaining unknowns.
+- **Proposal:** smallest correction and a concrete regression-test scenario.
+- **Risk and handoff:** blockers, approval status, and recommended next owner/step.
+
+## Handoff to implementation
+When handing off to `risk-aware-tdd` or an approved implementer, carry forward the symptom, reproduction status, root-cause confidence, evidence, alternatives, proposed minimal correction, regression scenario, and unresolved risks. If the cause remains unresolved, label it as a hypothesis and identify the next safe experiment; do not present the proposed correction as proven.
 
 ## Boundaries and stop conditions
 - Diagnosis owns reproduction and causal analysis; it does not own implementation or final acceptance verification.
