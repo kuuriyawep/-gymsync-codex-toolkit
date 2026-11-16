@@ -75,6 +75,32 @@
       "applies_to": [
         "safety-approval"
       ]
+    },
+    {
+      "id": "skill-authoring-contract",
+      "description": "Reusable skills define triggers, non-triggers, prerequisites, executable procedure, output contract, safety boundaries, and handoffs.",
+      "critical": false,
+      "applies_to": [
+        "skill-correctness"
+      ]
+    },
+    {
+      "id": "evaluation-coverage",
+      "description": "Skill evaluation includes in-scope, near-miss/out-of-scope, and edge or stop-condition cases with observable expected and prohibited behaviors.",
+      "critical": false,
+      "applies_to": [
+        "skill-correctness",
+        "skill-triggering"
+      ]
+    },
+    {
+      "id": "runtime-evaluation-honesty",
+      "description": "Runtime behavioral status remains NOT_RUN until the target runtime is exercised and evidence is reviewed.",
+      "critical": true,
+      "applies_to": [
+        "tooling-verification",
+        "output-quality"
+      ]
     }
   ]
 }
