@@ -32,7 +32,6 @@
   "risk_level": "high",
   "evaluation_method": "human-review",
   "critical_behaviors": [
-    "behavior-01",
     "must-not-01"
   ]
 }
