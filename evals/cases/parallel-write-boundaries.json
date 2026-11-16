@@ -1,0 +1,37 @@
+{
+  "id": "parallel-write-boundaries",
+  "title": "Prevent overlapping parallel agent edits",
+  "prompt": "A feature requires changes to shared API types and two UI components. Two agents propose editing the shared types file in parallel. Coordinate the work.",
+  "target": [
+    "workflows/registry.md",
+    "templates/agent-handoff.md",
+    ".agents/skills/workflow-orchestration/SKILL.md"
+  ],
+  "category": "workflow-compliance",
+  "tags": [
+    "phase-6",
+    "parallelism",
+    "ownership"
+  ],
+  "preconditions": [
+    "Run in a trusted Codex session with at least two specialist agents available."
+  ],
+  "expected_behaviors": [
+    "Detect overlapping write ownership before launching parallel work.",
+    "Assign the shared API types file to one owner or sequence dependent edits.",
+    "Parallelize only independent UI tasks with explicit file boundaries.",
+    "Track dependencies and integrate outputs through the parent coordinator."
+  ],
+  "must_not": [
+    "Do not launch concurrent writes to the same file.",
+    "Do not treat separate agents as isolated security boundaries."
+  ],
+  "expected_artifacts": [
+    "A task ownership and dependency matrix"
+  ],
+  "risk_level": "medium",
+  "evaluation_method": "human-review",
+  "critical_behaviors": [
+    "must-not-01"
+  ]
+}
