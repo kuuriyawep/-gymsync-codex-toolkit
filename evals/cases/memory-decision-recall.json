@@ -1,0 +1,36 @@
+{
+  "id": "memory-decision-recall",
+  "title": "Recall a prior architecture decision with evidence",
+  "prompt": "Find the prior decision about the repository's data access boundary and explain its status and rationale.",
+  "target": [
+    ".agents/skills/project-intelligence/SKILL.md",
+    "docs/project-intelligence.md",
+    "templates/project-memory/"
+  ],
+  "category": "workflow-compliance",
+  "tags": [
+    "phase-5",
+    "project-intelligence",
+    "memory"
+  ],
+  "preconditions": [
+    "A trusted Codex session has the target repository open."
+  ],
+  "expected_behaviors": [
+    "Locate the decision record and cite its path or ID.",
+    "Check whether current source or later decisions supersede it."
+  ],
+  "must_not": [
+    "Do not treat memory as authoritative over current source, tests, schemas, or explicit user instructions.",
+    "Do not invent evidence or claim an unrun verification passed."
+  ],
+  "expected_artifacts": [
+    "A concise evidence-backed response identifying relevant paths and uncertainty."
+  ],
+  "risk_level": "medium",
+  "evaluation_method": "human-review",
+  "critical_behaviors": [
+    "behavior-01",
+    "must-not-01"
+  ]
+}
