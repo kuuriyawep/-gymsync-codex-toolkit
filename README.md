@@ -14,6 +14,8 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 - [Phase 7 Integration Evaluation](docs/phase-7-completion-report.md) — integration review results and remaining runtime verification.
 - [Phase 8 Skill Quality Audit](docs/phase-8-skill-audit.md) — 13-skill audit and remediation summary.
 - [Phase 8 Completion Report](docs/phase-8-completion-report.md) — static remediation, deterministic validation, and deferred Codex runtime tests.
+- [External Source Audit Index](audits/source-reviews/README.md) — nine selected repository reviews and their evidence status.
+- [Source-to-Toolkit Adoption Map](docs/source-adoption-map.md) — deduplicated mapping from audit findings to existing components and future phases.
 
 ## Adaptive delivery loop
 
@@ -44,7 +46,9 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 - `templates/project-memory/` — reusable project profile, repository map, architecture, inventory, constraints, and task-checkpoint templates.
 - `templates/` — reusable workflow, decision-record, and evaluation-report templates.
 - `docs/project-intelligence.md` and `docs/memory-maintenance.md` — persistent knowledge architecture and upkeep procedure.
-- `docs/` — source influence and attribution register.
+- `audits/source-reviews/` — archived source-by-source audit records.
+- `docs/source-adoption-map.md` — mapping from selected source capabilities to existing toolkit owners and future implementation phases.
+- `docs/` — architecture, audit, and source attribution documentation.
 
 ## Use with Codex
 
@@ -84,7 +88,7 @@ The toolkit adapts general ideas from public engineering repositories. It is not
 
 ## Explicit exclusions
 
-- Graphify is intentionally not included; install it separately if desired.
+- Graphify is an optional external knowledge-graph capability under evaluation; it is not vendored or mandatory. See its source audit and adoption map.
 - No destructive automatic file compression or rewriting.
 - No changes to the GymSync application source code.
 - No dependency on Claude-, Hermes-, or OpenCode-specific runtime commands.
