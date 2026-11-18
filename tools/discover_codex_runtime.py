@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import shutil
 import subprocess
@@ -64,18 +63,18 @@ def _names_from_list(payload: Any, keys: tuple[str, ...]) -> tuple[list[str], st
         value = item.get("name") or item.get("server_name") or item.get("pluginId")
         if isinstance(value, str) and value.strip():
             names.add(value.strip())
+    if entries and not names:
+        return [], "unrecognized"
     return sorted(names), "parsed"
 
 
 def _command_evidence(result: dict[str, Any], names: list[str], parse_status: str) -> dict[str, Any]:
-    raw = result.get("stdout", "")
     return {
         "status": result["status"],
         "returncode": result["returncode"],
         "parse_status": parse_status,
         "configured_names": names,
         "configured_count": len(names) if parse_status == "parsed" else None,
-        "stdout_sha256": hashlib.sha256(raw.encode("utf-8")).hexdigest() if raw else None,
     }
 
 

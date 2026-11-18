@@ -39,7 +39,7 @@ The script:
 2. Reads only `codex --version`.
 3. Calls `codex mcp list --json` and extracts server names only.
 4. Calls `codex plugin list --json` and extracts installed plugin names only.
-5. Reports exit status, parse status, and a SHA-256 digest of command output.
+5. Reports exit status, parse status, and names only; raw command output and derived hashes are not retained.
 
 It does **not** read `config.toml`, inspect environment values, print URLs/commands, expose secrets, install packages, authenticate, start servers, or call tools. It uses argument arrays, never a shell, and applies a 15-second timeout per command.
 

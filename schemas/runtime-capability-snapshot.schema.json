@@ -55,9 +55,6 @@
         }
       }
     },
-    "mcp_servers": {
-      "$ref": "#/$defs/commandEvidence"
-    },
     "plugins": {
       "$ref": "#/$defs/commandEvidence"
     },
@@ -70,6 +67,9 @@
       "items": {
         "type": "string"
       }
+    },
+    "mcp_servers": {
+      "$ref": "#/$defs/commandEvidence"
     }
   },
   "$defs": {
@@ -81,8 +81,7 @@
         "returncode",
         "parse_status",
         "configured_names",
-        "configured_count",
-        "stdout_sha256"
+        "configured_count"
       ],
       "properties": {
         "status": {
@@ -121,13 +120,6 @@
             "null"
           ],
           "minimum": 0
-        },
-        "stdout_sha256": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "pattern": "^[a-f0-9]{64}$"
         }
       }
     }

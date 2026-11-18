@@ -77,7 +77,7 @@ Detailed evidence is in `audits/source-reviews/`.
 - Threat model: documented.
 - Deterministic validator: authored in `tools/validate_tool_registry.py` and wired into `tools/validate_toolkit.py`.
 - Unit tests: added in `tests/test_tool_registry.py` for empty registry, valid declaration, duplicate IDs, raw credentials, runtime evidence, destructive approval, malformed risk types, and secret-path traversal.
-- Runtime discovery: `tools/discover_codex_runtime.py` performs read-only CLI/MCP/plugin preflight, emits sanitized JSON, uses no shell, applies timeouts, and has mocked tests in `tests/test_runtime_discovery.py`.
+- Runtime discovery: `tools/discover_codex_runtime.py` performs read-only CLI/MCP/plugin preflight, emits sanitized JSON, uses no shell, applies timeouts, extracts names only, discards raw command output and has mocked tests in `tests/test_runtime_discovery.py`.
 - Runtime snapshot schema: `schemas/runtime-capability-snapshot.schema.json`.
 - MCP adapter lifecycle and security contract: `docs/mcp-adapter-contract.md`.
 - Per-server evidence template: `templates/mcp-adapter-review.md`.

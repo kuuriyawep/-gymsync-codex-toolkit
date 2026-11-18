@@ -1403,3 +1403,15 @@ This is implementation plus mocked unit-test coverage. It is NOT a live runtime 
 ### Current Phase 7 deliverables
 
 Registry and permission contract, safe host preflight, snapshot schema, mocked tests, MCP adapter lifecycle contract, and review template are now in the repository. Live runtime discovery and the first actual provider selection remain outstanding.
+
+
+## 47. Runtime discovery redaction hardening (2026-11-18)
+
+The Codex preflight was tightened after reviewing its data-minimization boundary:
+- Removed the SHA-256 digest of raw CLI output; hashes of potentially sensitive output are unnecessary.
+- The report retains only command status, parse status, and recognized server/plugin names.
+- Non-empty JSON lists with unknown entry shapes now produce `unrecognized`, not a misleading zero count.
+- Added a regression test for unknown non-empty entry shapes.
+- Updated the snapshot schema and runtime discovery documentation.
+
+No host config values, endpoints, process arguments, environment values, raw stdout, stderr, or derived output fingerprints are retained.

@@ -61,6 +61,16 @@ class RuntimeDiscoveryTests(unittest.TestCase):
         self.assertEqual(result["mcp_servers"]["parse_status"], "unrecognized")
         self.assertIsNone(result["mcp_servers"]["configured_count"])
 
+    def test_nonempty_unrecognized_entries_are_not_reported_as_empty(self) -> None:
+        responses = [
+            subprocess.CompletedProcess([], 0, "codex 0.143.0", ""),
+            subprocess.CompletedProcess([], 0, json.dumps({"servers": [{"unexpected": "shape"}]}), ""),
+            subprocess.CompletedProcess([], 0, json.dumps({"installed": []}), "")
+        ]
+        result = discovery.discover(which=lambda _: "codex", runner=lambda *a, **k: responses.pop(0))
+        self.assertEqual(result["mcp_servers"]["parse_status"], "unrecognized")
+        self.assertIsNone(result["mcp_servers"]["configured_count"])
+
     def test_timeout_is_reported_without_crashing(self) -> None:
         def runner(*args, **kwargs):
             raise subprocess.TimeoutExpired(args[0], kwargs.get("timeout", 15))
