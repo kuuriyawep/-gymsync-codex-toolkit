@@ -236,7 +236,7 @@ class WorkflowLedger:
         elif snapshot is None:
             raise LedgerCorrupt("event log must start with workflow_created")
 
-        if kind == "workflow_transitioned":
+        elif kind == "workflow_transitioned":
             current, target = snapshot["state"], p["to_state"]
             if p["from_state"] != current:
                 raise LedgerError(f"stale transition: expected {current}, received {p['from_state']}")
