@@ -167,7 +167,10 @@ class WorkflowLedgerTests(unittest.TestCase):
         self.ledger.add_task("publish", "implementer", "Publish artifact", write_scope=["dist/"],
             approval_status="approved", approved_scope=["dist/"], approval_reference="user-approval-008",
             idempotent=False, max_attempts=2, idempotency_key="publish-task-01")
-        self.enter_execution()
+        self.to_approval()
+        self.ledger.approval("approved", approved_scope=["src/", "tests/", "dist/"],
+            approval_reference="user-approval-publish", idempotency_key="workflow-approval-publish")
+        self.ledger.transition("EXECUTION", idempotency_key="workflow-execution-publish")
         self.ledger.transition_task("publish", "active", idempotency_key="publish-active-01")
         self.ledger.transition_task("publish", "failed", summary="Network timeout", idempotency_key="publish-failed-01")
         with self.assertRaises(LedgerError):
