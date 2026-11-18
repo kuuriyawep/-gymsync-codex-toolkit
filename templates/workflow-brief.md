@@ -35,6 +35,7 @@
 - Current state:
 - Current owner/agent:
 - Completed steps:
+- Evidence references:
 - Next action:
 - Dependencies/blockers:
 

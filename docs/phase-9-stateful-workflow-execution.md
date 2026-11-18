@@ -155,10 +155,10 @@ python tools/workflow_ledger.py resume --store "$STORE" --workflow-id toolkit-ph
 3. Implement deterministic ledger with append, replay, hash-chain verification, idempotency, atomic snapshot update, and explicit recovery. **Complete in initial implementation.**
 4. Add task/approval/checkpoint operations and completion gates. **Complete in initial implementation.**
 5. Add tests for legal/illegal transitions, duplicate keys, hash corruption, snapshot rebuild, interruption, retries, cancellation, and no false completion. **In progress; expand edge-case coverage.**
-6. Integrate ledger validation and commands into the workflow-orchestration skill and templates. **In progress.**
+6. Integrate ledger validation and commands into the workflow-orchestration skill and templates. **Complete.**
 7. Run full CI. Keep real Codex end-to-end workflow execution NOT_RUN until Phase 11.
 
-## 10. Non-goals
+## 11. Non-goals
 
 - No autonomous agent runtime or scheduler.
 - No n8n/CrewAI/Hermes/OpenCode.

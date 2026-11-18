@@ -1703,3 +1703,13 @@ Implement the deterministic workflow ledger and tests for state transitions, has
 - Added cross-platform guard around file descriptor permission handling.
 - Updated workflow-orchestration skill and workflow brief template with private-store and resume/recovery rules.
 - CI for these latest updates is pending; do not claim the latest integration passed until its exact-head run completes.
+
+
+## 63. Phase 9 portable skill and documentation parity (2026-11-18)
+
+- Synchronized `skills/workflow-orchestration/SKILL.md` with the native `.agents/skills/` version after the native skill gained the Phase 9 ledger section.
+- Updated README workflow-state explanation to distinguish session-only lightweight state from the optional local event-sourced ledger.
+- Fixed the functional-tooling command list and clarified that no hosted database/service is introduced.
+- Added durable ledger fields to `templates/workflow-brief.md`.
+- Corrected duplicate Phase 9 documentation section numbering.
+- Latest-head CI remains pending.

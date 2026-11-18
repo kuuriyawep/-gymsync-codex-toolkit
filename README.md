@@ -78,8 +78,10 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 
 ## Workflow state and delegation
 
-- Workflow state is tracked in the active Codex session; it is not a persistent task database.
+- Lightweight workflow state remains in the active Codex session. For multi-session work, the optional local ledger persists events and checkpoints outside the repository.
 - Use `templates/workflow-brief.md` for complex work or meaningful handoffs, not for every small task.
+- Codex is the single ledger writer. Run `verify` before `resume`; `recover` rebuilds a missing/stale snapshot only from a valid event chain. Resume never launches agents or executes tasks.
+- The ledger stores concise metadata and evidence references, not secrets, raw tool output, or full transcripts.
 - Codex remains the primary coordinator. Existing specialist agents are delegated bounded responsibilities using explicit handoff contracts.
 - Codex works alone when delegation adds no material value; delegate only to a suitable existing role.
 - Parallelize only independent work with non-overlapping ownership; sequence dependent work and shared-file edits.
@@ -107,7 +109,7 @@ The toolkit adapts general ideas from public engineering repositories. It is not
 - No destructive automatic file compression or rewriting.
 - No changes to the GymSync application source code.
 - No dependency on Claude-, Hermes-, or OpenCode-specific runtime commands.
-- No external orchestration framework or persistent workflow database.
+- No external orchestration framework, cloud database, or hosted workflow service; Phase 9 adds only a local event log and snapshot.
 
 ## Quality checks
 
@@ -118,8 +120,8 @@ See [toolkit acceptance checks](evals/acceptance-checks.md). The evaluation syst
 Dependency-free maintenance utilities under `tools/`:
 
 - `python tools/validate_tool_registry.py` checks the tool registry manifest.
-- `python tools/workflow_ledger.py --help
-python tools/validate_agent_contracts.py` checks the handoff, result, and task-graph schema files.
+- `python tools/workflow_ledger.py --help` shows local ledger commands; the ledger requires an explicit private `--store` path outside this repository.
+- `python tools/validate_agent_contracts.py` checks handoff, result, and task-graph schemas.
 - `python tools/validate_toolkit.py` checks skill metadata, native/portable skill parity, agent TOML, workflow sections, evaluation schemas, all evaluation cases, and the skill-quality rubric's Markdown/JSON alignment plus declared trigger-coverage minimums.
 - `python tools/sync_skills.py` previews differences between native skills and the portable mirror.
 - `python tools/sync_skills.py --check` exits non-zero when the mirror is out of sync.
