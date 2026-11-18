@@ -1309,8 +1309,8 @@ The user directed that the completed source audit work be consolidated into the 
 
 - GitHub Actions for the latest code-bearing commit before the final test update: run #44292691809 was in progress at the time of this checkpoint.
 - Latest main commit after the test update: `ecce6ac77bd6eb0e19c3fde56bf2ca65b11d2a18`.
-- Latest CI for that exact commit: run #44292713579 was pending at the time of inspection.
-- Do not claim Phase 7 tests or CI passed until the exact latest-head run completes and its job steps are inspected.
+- The run for baseline commit `b70e222a1d89ccf9e816bd3b6b7c1fbc22dd16e5` completed SUCCESS: [run #44292786044](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/44292786044). All 10 substantive steps passed, including unit tests, skill parity, project-memory validation, toolkit validation, evaluation-case validation, deterministic run generation, and result validation.
+- This CI result validates the baseline commit only; any later commit needs its own run.
 - No local test execution is claimed.
 
 ## 43. Current active task
@@ -1321,4 +1321,18 @@ The user directed that the completed source audit work be consolidated into the 
 
 **Remaining:** Latest CI inspection; harden any failures; then select/configure a real adapter only after checking actual host availability and user-approved provider scope.
 
-**Single next action:** Inspect GitHub Actions run #44292713579 for commit `ecce6ac77bd6eb0e19c3fde56bf2ca65b11d2a18`; fix any failing step before adding adapters.
+**Single next action:** Inspect CI for the latest documentation checkpoint, then continue Phase 7 by defining and validating the first real adapter contract only for a provider the user has selected and the current Codex runtime actually exposes.
+
+
+## 44. CI evidence update
+
+GitHub Actions run [#44292786044](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/44292786044) completed with conclusion `success` for baseline commit `b70e222a1d89ccf9e816bd3b6b7c1fbc22dd16e5`. The job's substantive steps all completed successfully:
+- Unit tests.
+- Native/portable skill parity.
+- Project-memory validator.
+- Toolkit validator, including the new tool-registry validator.
+- Evaluation-case validation.
+- Deterministic evaluation generation.
+- Generated result validation.
+
+This is deterministic repository CI evidence, not proof of actual Codex runtime tool availability, adapter connectivity, or behavioral performance.
