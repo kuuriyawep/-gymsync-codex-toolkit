@@ -1336,3 +1336,46 @@ GitHub Actions run [#44292786044](https://github.com/kuuriyawep/-gymsync-codex-t
 - Generated result validation.
 
 This is deterministic repository CI evidence, not proof of actual Codex runtime tool availability, adapter connectivity, or behavioral performance.
+
+
+## 45. Phase 7 — runtime discovery implementation (2026-11-18)
+
+### Official Codex behavior reviewed
+
+Current official Codex documentation confirms:
+- `codex mcp list --json` lists configured MCP server entries.
+- `codex plugin list --json` lists installed plugins.
+- `codex mcp add` supports stdio and Streamable HTTP transports.
+- `codex mcp login` supports OAuth-capable Streamable HTTP servers.
+- `/mcp` in the active TUI displays active MCP servers.
+- User configuration is in `~/.codex/config.toml`; trusted projects may also use `.codex/config.toml`.
+- The removed `codex mcp-server` command was the host/server mode; Codex still supports connecting to external MCP servers as a client.
+
+Official references are linked in `docs/codex-runtime-discovery.md`.
+
+### Added files
+
+- `tools/discover_codex_runtime.py` — read-only preflight of Codex CLI version, configured MCP server names, and installed plugin names.
+- `schemas/runtime-capability-snapshot.schema.json` — sanitized evidence schema.
+- `tests/test_runtime_discovery.py` — tests missing CLI, safe name extraction, secret/endpoint redaction, unknown output shape, timeout, and non-zero command behavior.
+- `docs/codex-runtime-discovery.md` — operating procedure, official references, and evidence boundaries.
+
+### Updated files
+
+- `tools/validate_toolkit.py` — requires runtime discovery utility, schema, and documentation.
+- `README.md` — links the runtime discovery procedure and describes its command.
+- `docs/toolkit-integration.md` — adds the preflight to the architecture and health checks.
+- `docs/phase-7-tool-ecosystem.md` — records actual Codex commands and separates configured servers from active callable tools.
+
+### Safety properties
+
+The utility does not read `config.toml`, expose environment values, print endpoint URLs or command arguments, install packages, authenticate, start MCP servers, or invoke tools. It calls only:
+- `codex --version`
+- `codex mcp list --json`
+- `codex plugin list --json`
+
+Commands use argument arrays (no shell), a 15-second timeout, and sanitized output. Unknown JSON shapes are reported as unrecognized, not as an empty list.
+
+### Evidence boundary
+
+This is implementation plus mocked unit-test coverage. It is NOT a live runtime test. The user must run the utility on the actual Codex host and inspect `/mcp` in the active session. No provider adapter is registered or installed yet.
