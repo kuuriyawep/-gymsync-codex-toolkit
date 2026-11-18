@@ -160,7 +160,8 @@
           "approval_reference",
           "evidence_refs",
           "summary",
-          "next_action"
+          "next_action",
+          "approved_scope"
         ],
         "properties": {
           "task_id": {
@@ -242,6 +243,12 @@
           },
           "next_action": {
             "type": "string"
+          },
+          "approved_scope": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }
