@@ -198,7 +198,13 @@ Phase 6 Final Synthesis is considered documented when:
 
 This closeout does not mark historical Phase 6 agent behavioral validation as passed. Actual Codex runtime validation remains a separate requirement.
 
-## 11. Change-control record
+## 11. Source audit archive and adoption ledger
+
+The nine selected source reviews are archived individually in [`audits/source-reviews/`](../audits/source-reviews/README.md). The deduplicated mapping from each source to the toolkit's existing owners and future implementation work is maintained in [`docs/source-adoption-map.md`](source-adoption-map.md).
+
+Evidence qualification: seven later source reviews have revision-pinned source/documentation findings. ECC and Hermes are carried forward from earlier work and are marked PARTIAL because the recovered checkpoint did not preserve exact revisions and complete file-level evidence. They were not re-audited, honoring the user's duplicate-work constraint. No full-audit claim is made for those two records.
+
+## 12. Change-control record
 
 - Scope authorized: write the Phase 6 synthesis documentation and reconcile the central project checkpoint/source register.
 - Out of scope: GymSync application changes, database/deployment changes, external integrations, installations not explicitly identified and approved, and runtime claims without execution evidence.
