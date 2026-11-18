@@ -2,5 +2,550 @@
   "schema_version": "1.0.0",
   "registry_id": "codex-toolkit",
   "default_policy": "deny",
-  "tools": []
+  "tools": [
+    {
+      "id": "graphify-local",
+      "name": "Graphify Local Knowledge Graph",
+      "description": "Optional local code and documentation relationship graph exposed through Graphify's MCP stdio server. Candidate only; not installed or runtime-verified.",
+      "provider": "Graphify Labs",
+      "provider_version": "0.9.112",
+      "transport": "mcp",
+      "capabilities": [
+        "knowledge-graph.search",
+        "knowledge-graph.lookup",
+        "knowledge-graph.relationships",
+        "knowledge-graph.provenance"
+      ],
+      "operations": [
+        {
+          "id": "query-graph",
+          "description": "Search the configured local knowledge graph using BFS or DFS.",
+          "resource_scope": [
+            "local:configured-project-source",
+            "local:graphify-out"
+          ],
+          "action": "search",
+          "effect": "none",
+          "risk": "read",
+          "idempotent": true,
+          "approval": "none",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "string",
+                "minLength": 1
+              },
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "bfs",
+                  "dfs"
+                ]
+              },
+              "depth": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 6
+              },
+              "token_budget": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "context_filter": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "demote_docs": {
+                "type": "boolean"
+              },
+              "project_path": {
+                "type": "string",
+                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
+              }
+            },
+            "required": [
+              "question"
+            ]
+          },
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "const": "text"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "text"
+                  ]
+                }
+              },
+              "isError": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "content"
+            ]
+          }
+        },
+        {
+          "id": "get-node",
+          "description": "Read one node and its stored metadata from the configured graph.",
+          "resource_scope": [
+            "local:configured-project-source",
+            "local:graphify-out"
+          ],
+          "action": "read",
+          "effect": "none",
+          "risk": "read",
+          "idempotent": true,
+          "approval": "none",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "node_id": {
+                "type": "string"
+              },
+              "project_path": {
+                "type": "string",
+                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
+              }
+            }
+          },
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "const": "text"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "text"
+                  ]
+                }
+              },
+              "isError": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "content"
+            ]
+          }
+        },
+        {
+          "id": "get-section",
+          "description": "Read a source Markdown section or page referenced by the configured graph.",
+          "resource_scope": [
+            "local:configured-project-source",
+            "local:graphify-out"
+          ],
+          "action": "read",
+          "effect": "none",
+          "risk": "read",
+          "idempotent": true,
+          "approval": "none",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "node_id": {
+                "type": "string"
+              },
+              "max_chars": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "project_path": {
+                "type": "string",
+                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
+              }
+            }
+          },
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "const": "text"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "text"
+                  ]
+                }
+              },
+              "isError": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "content"
+            ]
+          }
+        },
+        {
+          "id": "get-neighbors",
+          "description": "Read direct graph neighbors and relationship details for a node.",
+          "resource_scope": [
+            "local:configured-project-source",
+            "local:graphify-out"
+          ],
+          "action": "read",
+          "effect": "none",
+          "risk": "read",
+          "idempotent": true,
+          "approval": "none",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "node_id": {
+                "type": "string"
+              },
+              "relation_filter": {
+                "type": "string"
+              },
+              "token_budget": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "project_path": {
+                "type": "string",
+                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
+              }
+            }
+          },
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "const": "text"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "text"
+                  ]
+                }
+              },
+              "isError": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "content"
+            ]
+          }
+        },
+        {
+          "id": "get-community",
+          "description": "Read nodes belonging to a selected graph community.",
+          "resource_scope": [
+            "local:configured-project-source",
+            "local:graphify-out"
+          ],
+          "action": "read",
+          "effect": "none",
+          "risk": "read",
+          "idempotent": true,
+          "approval": "none",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "community_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "token_budget": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "project_path": {
+                "type": "string",
+                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
+              }
+            },
+            "required": [
+              "community_id"
+            ]
+          },
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "const": "text"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "text"
+                  ]
+                }
+              },
+              "isError": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "content"
+            ]
+          }
+        },
+        {
+          "id": "god-nodes",
+          "description": "Read the most connected nodes in the configured graph.",
+          "resource_scope": [
+            "local:configured-project-source",
+            "local:graphify-out"
+          ],
+          "action": "list",
+          "effect": "none",
+          "risk": "read",
+          "idempotent": true,
+          "approval": "none",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "top_n": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "exclude_hubs_percentile": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "project_path": {
+                "type": "string",
+                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
+              }
+            }
+          },
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "const": "text"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "text"
+                  ]
+                }
+              },
+              "isError": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "content"
+            ]
+          }
+        },
+        {
+          "id": "graph-stats",
+          "description": "Read graph counts, communities, and confidence statistics.",
+          "resource_scope": [
+            "local:configured-project-source",
+            "local:graphify-out"
+          ],
+          "action": "read",
+          "effect": "none",
+          "risk": "read",
+          "idempotent": true,
+          "approval": "none",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "project_path": {
+                "type": "string",
+                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
+              }
+            }
+          },
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "const": "text"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "text"
+                  ]
+                }
+              },
+              "isError": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "content"
+            ]
+          }
+        },
+        {
+          "id": "shortest-path",
+          "description": "Find a path between two concepts in the configured graph.",
+          "resource_scope": [
+            "local:configured-project-source",
+            "local:graphify-out"
+          ],
+          "action": "search",
+          "effect": "none",
+          "risk": "read",
+          "idempotent": true,
+          "approval": "none",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "target": {
+                "type": "string",
+                "minLength": 1
+              },
+              "max_hops": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "undirected": {
+                "type": "boolean"
+              },
+              "project_path": {
+                "type": "string",
+                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
+              }
+            },
+            "required": [
+              "source",
+              "target"
+            ]
+          },
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "const": "text"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "text"
+                  ]
+                }
+              },
+              "isError": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "content"
+            ]
+          }
+        }
+      ],
+      "availability": "planned",
+      "permission_profile": "graphify-readonly-candidate",
+      "credential_ref": null,
+      "timeout_seconds": 60,
+      "retry": {
+        "max_attempts": 1,
+        "retryable_errors": []
+      },
+      "evidence": {
+        "status": "static-reviewed",
+        "references": [
+          "https://github.com/Graphify-Labs/graphify/releases/tag/v0.9.112",
+          "https://github.com/Graphify-Labs/graphify/blob/340268a70a83588d6b3c6de1fffb05326350ef1d/pyproject.toml",
+          "https://github.com/Graphify-Labs/graphify/blob/340268a70a83588d6b3c6de1fffb05326350ef1d/graphify/serve.py",
+          "https://github.com/Graphify-Labs/graphify/blob/340268a70a83588d6b3c6de1fffb05326350ef1d/graphify/querylog.py",
+          "https://github.com/Graphify-Labs/graphify/blob/340268a70a83588d6b3c6de1fffb05326350ef1d/SECURITY.md",
+          "https://pypi.org/project/graphifyy/0.9.112/"
+        ],
+        "verified_at": null
+      }
+    }
+  ]
 }
