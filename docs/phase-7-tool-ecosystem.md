@@ -39,9 +39,9 @@ The schema is a declaration/validation contract, not a runtime authorization mec
 
 ## Initial registry state
 
-`registry/tools.json` intentionally starts with an empty `tools` array and `default_policy: deny`. The repository has no verified third-party tool adapters registered at this point. Codex-native tools exposed by a particular host session must not be hard-coded as universally available.
+`registry/tools.json` uses `default_policy: deny`. It now contains one real, pinned, static-reviewed Graphify candidate with `availability: planned`; this does not mean the package is installed, connected, or approved for use. No runtime-verified adapter is registered. Codex-native tools exposed by a particular host session must not be hard-coded as universally available.
 
-Do not populate the registry with hypothetical MCP servers, API endpoints, shell commands, or credentials. Use the runtime discovery procedure before selecting a provider.
+Do not populate the registry with hypothetical MCP servers, API endpoints, shell commands, or credentials. Use the runtime discovery procedure and a per-server review before selecting a provider.
 
 ## Source-informed decisions
 
@@ -49,7 +49,7 @@ Do not populate the registry with hypothetical MCP servers, API endpoints, shell
 - **n8n:** adapt typed tool catalogs, action schemas, deferred discovery, lifecycle/error handling, and approval gates; do not copy its runtime/nodes.
 - **Anthropic MCP Builder:** adapt naming, focused output, pagination, typed schemas, actionable errors, and operation annotations; annotations are hints, not authorization.
 - **Current Codex host:** use documented `codex mcp list --json`, `codex plugin list --json`, and active-session `/mcp` inspection; do not confuse configured entries with callable tools.
-- **Graphify:** optional external adapter candidate; do not vendor or silently install.
+- **Graphify:** exact v0.9.112 candidate reviewed and registered as `planned`; only eight local graph-query tools are allowlisted in the candidate contract. Three GitHub PR tools are excluded. Installation remains blocked by the `project_path` scope issue and user approval; do not vendor or silently install.
 - **Superpowers/Matt Pocock/ECC:** reuse existing skill, review, TDD, and verification owners rather than adding duplicate skills.
 - **Hermes:** preserve Codex-owned skill/memory lifecycle; no second runtime or memory authority.
 
@@ -82,6 +82,7 @@ Detailed evidence is in `audits/source-reviews/`.
 - MCP adapter lifecycle and security contract: `docs/mcp-adapter-contract.md`.
 - Per-server evidence template: `templates/mcp-adapter-review.md`.
 - Real adapters: NOT_IMPLEMENTED.
+- Graphify: STATIC_REVIEWED / PLANNED only; not installed, configured, session-loaded, or runtime-verified.
 - Credentials: NOT_CONFIGURED.
 - Runtime integration: NOT_RUN — utility must be run on the user's actual Codex host.
 - Active-session tool inventory: NOT_CAPTURED — requires `/mcp` inspection in a live session.
@@ -103,4 +104,4 @@ Phase 7 cannot close until:
 
 ## Next work
 
-Run `python tools/discover_codex_runtime.py` on the actual Codex host, then inspect `/mcp` in the active session. Select one high-value read-only provider only after its server, tools, authentication, scopes, and data egress have been reviewed using the adapter review template. Keep the registry empty until the user deliberately configures an adapter and runtime evidence exists.
+Run `python tools/discover_codex_runtime.py` on the actual Codex host, then inspect `/mcp` in the active session. For Graphify, first resolve the `project_path` override scope through an OS/container sandbox or a tested pinned-path proxy. Only then request approval for the pinned package install and test. Keep Graphify marked `planned` until the user approves setup and live evidence exists.

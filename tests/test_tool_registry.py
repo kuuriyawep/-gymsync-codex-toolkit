@@ -14,8 +14,19 @@ SPEC.loader.exec_module(validator)
 
 
 class ToolRegistryTests(unittest.TestCase):
-    def test_empty_deny_by_default_registry_is_valid(self) -> None:
+    def test_committed_registry_manifest_is_valid(self) -> None:
         self.assertEqual(validator.validate_files(), [])
+
+    def test_graphify_candidate_is_not_misreported_as_verified(self) -> None:
+        import json
+        data = json.loads((ROOT / "registry" / "tools.json").read_text(encoding="utf-8"))
+        self.assertEqual(data["default_policy"], "deny")
+        self.assertEqual(len(data["tools"]), 1)
+        candidate = data["tools"][0]
+        self.assertEqual(candidate["id"], "graphify-local")
+        self.assertEqual(candidate["availability"], "planned")
+        self.assertEqual(candidate["evidence"]["status"], "static-reviewed")
+        self.assertNotEqual(candidate["availability"], "verified")
 
     def valid_tool(self) -> dict:
         return {

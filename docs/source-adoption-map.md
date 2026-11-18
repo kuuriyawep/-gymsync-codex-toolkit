@@ -24,7 +24,7 @@ This is an integration ledger, not a claim that every source capability has alre
 | Tool registry/adapters | No complete central typed registry or real external adapter layer identified | GAP — Phase 7 |
 | Durable workflow ledger/state transitions | Workflow briefs/checkpoints exist; no persistent execution database/state machine identified | GAP — Phase 9 |
 | Recoverable tool-output compression | No secure original-store/retrieval-handle system identified | GAP — evaluate selectively in Phase 9/10 |
-| Optional repository knowledge graph | No Graphify adapter installed | OPTIONAL — Phase 7 design, Phase 11 runtime validation |
+| Optional repository knowledge graph | Graphify v0.9.112 has a static-reviewed `planned` registry candidate; no package or MCP server is installed | OPTIONAL — Phase 7 design, Phase 11 runtime validation |
 
 ## 2. Source contribution → existing owner → action
 

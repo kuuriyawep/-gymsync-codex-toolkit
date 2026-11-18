@@ -1433,3 +1433,36 @@ The validator now checks schema/validator enum parity and enforces:
 - Every operation must declare at least one resource scope.
 
 These are contract-level checks, not a sandbox. The host's actual permission controls remain authoritative.
+
+
+## 49. Graphify v0.9.112 static adapter review (2026-11-18)
+
+### Decision
+
+Graphify is registered as one **planned** optional MCP adapter candidate. It is not installed, authenticated, started, connected, or runtime-verified.
+
+### Evidence reviewed
+
+- Exact release: `v0.9.112`, source commit `340268a70a83588d6b3c6de1fffb05326350ef1d`.
+- Python range: `>=3.11,<3.15`.
+- Package: `graphifyy`; MCP extra available; stdio server entry point `graphify-mcp`.
+- License: Apache-2.0 with legacy MIT portions and NOTICE.
+- PyPI Trusted Publishing provenance and artifact hashes recorded.
+- GHSA-pcc4-rvhr-2pr8 fixed-version threshold is 0.9.70; reviewed release is later.
+- Query logging is opt-in in the reviewed source; proposed environment override is `GRAPHIFY_QUERY_LOG_DISABLE=1`.
+- MCP source exposes 11 tools: 8 graph-query tools and 3 GitHub PR tools. Only the eight local graph-query tools are registered as candidate operations; the PR tools are excluded.
+
+### Blocking security issue
+
+Graphify MCP tools accept optional `project_path` overrides. The server validates graph files within a `graphify-out` directory, but that is not a single-project boundary. Before runtime approval, use an OS/container sandbox restricted to the intended project or build and test a pinned-path proxy that rejects overrides.
+
+### Repository changes
+
+- `docs/adapters/graphify-v0.9.112-review.md` — exact package, license, provenance, security, data egress, tool inventory, proposed allowlist, and verification checklist.
+- `registry/tools.json` — one Graphify candidate with eight typed read-only operations, `availability: planned`, and static-review evidence.
+- `tests/test_tool_registry.py` — verifies the committed candidate is not misreported as verified.
+- `README.md`, `docs/phase-7-tool-ecosystem.md`, and `docs/source-adoption-map.md` — reflect the candidate's true status.
+
+### Installation status
+
+NOT INSTALLED. No package installation or Codex MCP configuration has been performed. User approval and resolution of the path-scope issue are required before a proof of concept.

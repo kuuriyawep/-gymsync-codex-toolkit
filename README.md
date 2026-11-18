@@ -18,6 +18,7 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 - [Phase 7 Tool Ecosystem](docs/phase-7-tool-ecosystem.md) — typed registry, permission model, and adapter acceptance criteria.
 - [Codex Runtime Discovery](docs/codex-runtime-discovery.md) — safe local preflight for configured MCP servers and plugins.
 - [MCP Adapter Contract](docs/mcp-adapter-contract.md) — lifecycle, trust review, permissions, reliability, and verification gates.
+- [Graphify v0.9.112 Review](docs/adapters/graphify-v0.9.112-review.md) — pinned optional adapter candidate and runtime blockers.
 - [Source-to-Toolkit Adoption Map](docs/source-adoption-map.md) — deduplicated mapping from audit findings to existing components and future phases.
 
 ## Adaptive delivery loop
@@ -44,7 +45,7 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 - `templates/agent-review-report.md` — structured independent review and conflict report.
 - `templates/mcp-adapter-review.md` — repeatable review record for each proposed MCP server.
 - `references/` — permission/approval, tool permission matrix, and source-adaptation policies.
-- `registry/tools.json` — deny-by-default declarative tool inventory; empty until real adapters are configured and evidenced.
+- `registry/tools.json` — deny-by-default declarative tool inventory; currently contains one static-reviewed Graphify candidate marked `planned`, not configured or verified.
 - `schemas/tool-registry.schema.json` — typed tool registry contract.
 - `schemas/runtime-capability-snapshot.schema.json` — sanitized host-discovery evidence contract.
 - `evals/` — taxonomy, cases, rubrics, run records, reports, and acceptance checks.
