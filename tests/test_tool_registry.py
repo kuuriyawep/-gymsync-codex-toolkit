@@ -66,6 +66,18 @@ class ToolRegistryTests(unittest.TestCase):
         tool["availability"] = "verified"
         self.assertTrue(any("verified availability requires runtime-verified evidence" in e for e in validator.validate_registry(self.registry(tool))))
 
+    def test_malformed_risk_type_is_rejected_without_crashing(self) -> None:
+        tool = self.valid_tool()
+        tool["operations"][0]["risk"] = {"unexpected": "object"}
+        errors = validator.validate_registry(self.registry(tool))
+        self.assertTrue(any(".risk is unsupported" in e for e in errors))
+
+    def test_secret_reference_rejects_path_traversal(self) -> None:
+        tool = self.valid_tool()
+        tool["credential_ref"] = "secret://provider/../token"
+        errors = validator.validate_registry(self.registry(tool))
+        self.assertTrue(any("raw credentials are forbidden" in e for e in errors))
+
     def test_destructive_operation_requires_explicit_approval(self) -> None:
         tool = self.valid_tool()
         tool["operations"][0]["risk"] = "destructive"
