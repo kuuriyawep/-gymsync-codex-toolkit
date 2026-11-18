@@ -90,6 +90,7 @@ class WorkflowLedgerTests(unittest.TestCase):
                              idempotency_key="task-inspect-001")
         self.ledger.add_task("implement", "implementer", "Implement source", read_scope=["src/"],
                              write_scope=["src/main.py"], depends_on=["inspect"], idempotency_key="task-implement-001")
+        self.enter_execution()
         with self.assertRaises(LedgerError):
             self.ledger.transition_task("implement", "active", idempotency_key="task-implement-active-01")
         self.ledger.transition_task("inspect", "active", idempotency_key="task-inspect-active-01")
@@ -166,6 +167,7 @@ class WorkflowLedgerTests(unittest.TestCase):
         self.ledger.add_task("publish", "implementer", "Publish artifact", write_scope=["dist/"],
             approval_status="approved", approved_scope=["dist/"], approval_reference="user-approval-008",
             idempotent=False, max_attempts=2, idempotency_key="publish-task-01")
+        self.enter_execution()
         self.ledger.transition_task("publish", "active", idempotency_key="publish-active-01")
         self.ledger.transition_task("publish", "failed", summary="Network timeout", idempotency_key="publish-failed-01")
         with self.assertRaises(LedgerError):
