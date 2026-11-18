@@ -155,7 +155,7 @@
               "string",
               "null"
             ],
-            "pattern": "^(env:[A-Z][A-Z0-9_]*|secret://[a-zA-Z0-9._/-]+)$"
+            "pattern": "^(env:[A-Z][A-Z0-9_]*|secret://[A-Za-z0-9_-]+(?:/[A-Za-z0-9_-]+)*)$"
           },
           "timeout_seconds": {
             "type": "integer",
