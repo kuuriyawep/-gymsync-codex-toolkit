@@ -71,12 +71,12 @@ Detailed evidence is in `audits/source-reviews/`.
 
 ## Current status
 
-- Registry schema: authored.
+- Registry schema: authored with explicit operation-level resource scope, action, effect, risk, idempotency, and approval fields.
 - Registry manifest: initialized empty, deny-by-default.
 - Permission matrix: authored.
 - Threat model: documented.
-- Deterministic validator: authored in `tools/validate_tool_registry.py` and wired into `tools/validate_toolkit.py`.
-- Unit tests: added in `tests/test_tool_registry.py` for empty registry, valid declaration, duplicate IDs, raw credentials, runtime evidence, destructive approval, malformed risk types, and secret-path traversal.
+- Deterministic validator: authored in `tools/validate_tool_registry.py` and wired into `tools/validate_toolkit.py`; schema enums and required operation fields are checked against the validator contract.
+- Unit tests: added in `tests/test_tool_registry.py` for empty registry, valid declaration, duplicate IDs, raw credentials, runtime evidence, destructive approval, malformed risk types, secret-path traversal, and resource/action/effect invariants.
 - Runtime discovery: `tools/discover_codex_runtime.py` performs read-only CLI/MCP/plugin preflight, emits sanitized JSON, uses no shell, applies timeouts, extracts names only, discards raw command output and has mocked tests in `tests/test_runtime_discovery.py`.
 - Runtime snapshot schema: `schemas/runtime-capability-snapshot.schema.json`.
 - MCP adapter lifecycle and security contract: `docs/mcp-adapter-contract.md`.

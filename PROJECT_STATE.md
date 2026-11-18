@@ -1415,3 +1415,21 @@ The Codex preflight was tightened after reviewing its data-minimization boundary
 - Updated the snapshot schema and runtime discovery documentation.
 
 No host config values, endpoints, process arguments, environment values, raw stdout, stderr, or derived output fingerprints are retained.
+
+
+## 48. Phase 7 operation-level permission contract
+
+The tool registry operation schema now requires explicit:
+- `resource_scope` — bounded resources/accounts/paths the operation may access.
+- `action` — read/list/search/create/update/delete/execute/publish.
+- `effect` — none/local-write/remote-read/remote-state-change/external-communication/production-data-mutation.
+- Existing risk, idempotency, and approval fields.
+
+The validator now checks schema/validator enum parity and enforces:
+- Destructive and external risk always require explicit approval.
+- Side-effecting operations cannot declare `approval: none`.
+- Create/update/delete/publish cannot claim a read-only effect.
+- Read-risk operations cannot claim local/remote/production write effects.
+- Every operation must declare at least one resource scope.
+
+These are contract-level checks, not a sandbox. The host's actual permission controls remain authoritative.

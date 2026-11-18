@@ -14,6 +14,8 @@ ID_RE = re.compile(r"^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$")
 CREDENTIAL_RE = re.compile(r"^(env:[A-Z][A-Z0-9_]*|secret://[A-Za-z0-9_-]+(?:/[A-Za-z0-9_-]+)*)$")
 TRANSPORTS = {"codex-native", "mcp", "cli", "http-api", "browser", "database", "filesystem", "git"}
 RISKS = {"read", "write", "destructive", "external"}
+ACTIONS = {"read", "list", "search", "create", "update", "delete", "execute", "publish"}
+EFFECTS = {"none", "local-write", "remote-read", "remote-state-change", "external-communication", "production-data-mutation"}
 APPROVALS = {"none", "required", "conditional"}
 AVAILABILITY = {"planned", "configured", "verified", "disabled"}
 EVIDENCE = {"not-run", "static-reviewed", "runtime-verified", "blocked"}
@@ -81,7 +83,7 @@ def validate_registry(data: Any) -> list[str]:
                 if not isinstance(op, dict):
                     errors.append(f"{q} must be an object")
                     continue
-                req = {"id", "description", "risk", "idempotent", "approval"}
+                req = {"id", "description", "resource_scope", "action", "effect", "risk", "idempotent", "approval"}
                 opt = {"input_schema", "output_schema"}
                 if set(op) - req - opt:
                     errors.append(f"{q} has unexpected properties: {sorted(set(op) - req - opt)}")
@@ -96,6 +98,15 @@ def validate_registry(data: Any) -> list[str]:
                     seen_ops.add(oid)
                 if not isinstance(op.get("description"), str) or len(op["description"].strip()) < 5:
                     errors.append(f"{q}.description must contain at least 5 characters")
+                scopes = op.get("resource_scope")
+                if not isinstance(scopes, list) or not scopes or any(not isinstance(x, str) or len(x.strip()) < 2 for x in scopes):
+                    errors.append(f"{q}.resource_scope must be a non-empty array of scoped resource labels")
+                action = op.get("action")
+                if not isinstance(action, str) or action not in ACTIONS:
+                    errors.append(f"{q}.action is unsupported")
+                effect = op.get("effect")
+                if not isinstance(effect, str) or effect not in EFFECTS:
+                    errors.append(f"{q}.effect is unsupported")
                 risk = op.get("risk")
                 if not isinstance(risk, str) or risk not in RISKS:
                     errors.append(f"{q}.risk is unsupported")
@@ -106,6 +117,12 @@ def validate_registry(data: Any) -> list[str]:
                     errors.append(f"{q}.approval is unsupported")
                 if isinstance(risk, str) and risk in {"destructive", "external"} and approval != "required":
                     errors.append(f"{q}: destructive/external operations must require approval")
+                if isinstance(effect, str) and effect in {"local-write", "remote-state-change", "external-communication", "production-data-mutation"} and approval == "none":
+                    errors.append(f"{q}: side-effecting operations cannot use approval='none'")
+                if action in {"create", "update", "delete", "publish"} and effect in {"none", "remote-read"}:
+                    errors.append(f"{q}: write action cannot declare a read-only effect")
+                if risk == "read" and effect in {"local-write", "remote-state-change", "production-data-mutation"}:
+                    errors.append(f"{q}: read risk cannot declare a write effect")
                 for field in ("input_schema", "output_schema"):
                     if field in op and not isinstance(op[field], dict):
                         errors.append(f"{q}.{field} must be a JSON Schema object")
@@ -147,6 +164,21 @@ def validate_files() -> list[str]:
         schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
         if not isinstance(schema, dict) or schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema" or schema.get("type") != "object":
             errors.append("tool registry schema must declare a Draft 2020-12 object root")
+        else:
+            properties = schema.get("properties", {})
+            if properties.get("default_policy", {}).get("const") != "deny":
+                errors.append("tool registry schema must enforce default_policy=deny")
+            tool_item = properties.get("tools", {}).get("items", {})
+            tool_props = tool_item.get("properties", {}) if isinstance(tool_item, dict) else {}
+            op_item = tool_props.get("operations", {}).get("items", {})
+            op_props = op_item.get("properties", {}) if isinstance(op_item, dict) else {}
+            for field, expected in (("risk", RISKS), ("action", ACTIONS), ("effect", EFFECTS), ("approval", APPROVALS)):
+                actual = op_props.get(field, {}).get("enum")
+                if not isinstance(actual, list) or set(actual) != expected:
+                    errors.append(f"tool registry schema {field} enum does not match validator contract")
+            required_ops = {"id", "description", "resource_scope", "action", "effect", "risk", "idempotent", "approval"}
+            if set(op_item.get("required", [])) != required_ops:
+                errors.append("tool registry schema operation required fields do not match validator contract")
     except (OSError, json.JSONDecodeError) as exc:
         errors.append(f"cannot read valid tool registry schema: {exc}")
     try:

@@ -28,6 +28,9 @@ class ToolRegistryTests(unittest.TestCase):
             "operations": [{
                 "id": "read-file",
                 "description": "Read a file within the approved repository scope.",
+                "resource_scope": ["repo:approved-root"],
+                "action": "read",
+                "effect": "remote-read",
                 "risk": "read",
                 "idempotent": True,
                 "approval": "none",
@@ -78,10 +81,25 @@ class ToolRegistryTests(unittest.TestCase):
         errors = validator.validate_registry(self.registry(tool))
         self.assertTrue(any("raw credentials are forbidden" in e for e in errors))
 
+    def test_write_action_requires_side_effect_and_approval(self) -> None:
+        tool = self.valid_tool()
+        tool["operations"][0]["action"] = "update"
+        tool["operations"][0]["effect"] = "remote-read"
+        errors = validator.validate_registry(self.registry(tool))
+        self.assertTrue(any("write action cannot declare a read-only effect" in e for e in errors))
+
+    def test_resource_scope_is_required(self) -> None:
+        tool = self.valid_tool()
+        tool["operations"][0]["resource_scope"] = []
+        errors = validator.validate_registry(self.registry(tool))
+        self.assertTrue(any("resource_scope must be a non-empty array" in e for e in errors))
+
     def test_destructive_operation_requires_explicit_approval(self) -> None:
         tool = self.valid_tool()
         tool["operations"][0]["risk"] = "destructive"
         tool["operations"][0]["approval"] = "none"
+        tool["operations"][0]["effect"] = "remote-state-change"
+        tool["operations"][0]["action"] = "delete"
         self.assertTrue(any("destructive/external operations must require approval" in e for e in validator.validate_registry(self.registry(tool))))
 
 

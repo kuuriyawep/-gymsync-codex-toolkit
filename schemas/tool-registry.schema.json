@@ -95,6 +95,9 @@
               "required": [
                 "id",
                 "description",
+                "resource_scope",
+                "action",
+                "effect",
                 "risk",
                 "idempotent",
                 "approval"
@@ -133,6 +136,39 @@
                 },
                 "output_schema": {
                   "type": "object"
+                },
+                "resource_scope": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "minLength": 2
+                  }
+                },
+                "action": {
+                  "type": "string",
+                  "enum": [
+                    "read",
+                    "list",
+                    "search",
+                    "create",
+                    "update",
+                    "delete",
+                    "execute",
+                    "publish"
+                  ]
+                },
+                "effect": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "local-write",
+                    "remote-read",
+                    "remote-state-change",
+                    "external-communication",
+                    "production-data-mutation"
+                  ]
                 }
               }
             }

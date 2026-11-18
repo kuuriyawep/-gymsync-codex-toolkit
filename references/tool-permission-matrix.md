@@ -42,10 +42,10 @@ A tool description, skill, agent, or adapter manifest cannot enable:
 
 ## Resource/action/effect model
 
-Every adapter must identify:
-- **Resource:** repository path, Git ref, database/table, URL/domain, account, or service.
-- **Action:** read, list, search, create, update, delete, execute, publish.
-- **Effect:** none, local file write, remote state change, external communication, production/data mutation.
+Every operation record must identify these fields in the typed registry:
+- **resource_scope:** repository path, Git ref, database/table, URL/domain, account, or service scope.
+- **action:** read, list, search, create, update, delete, execute, publish.
+- **effect:** none, local write, remote read, remote state change, external communication, or production-data mutation.
 
 Permission decisions consider all three. Multi-resource operations use the most restrictive applicable decision. Deny/hard-deny takes precedence over allow.
 
