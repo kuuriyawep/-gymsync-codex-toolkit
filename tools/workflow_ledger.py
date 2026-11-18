@@ -188,7 +188,8 @@ class WorkflowLedger:
         self.directory.mkdir(parents=True, exist_ok=True, mode=0o700)
         fd, temporary = tempfile.mkstemp(prefix=".snapshot-", suffix=".tmp", dir=self.directory)
         try:
-            os.fchmod(fd, 0o600)
+            if hasattr(os, "fchmod"):
+                os.fchmod(fd, 0o600)
             with os.fdopen(fd, "w", encoding="utf-8") as handle:
                 handle.write(json.dumps(snapshot, indent=2, sort_keys=True) + "\n")
                 handle.flush()
@@ -286,12 +287,21 @@ class WorkflowLedger:
             known = {t["task_id"] for t in snapshot["tasks"]}
             if set(deps) - known:
                 raise LedgerError(f"dependencies must exist before this task: {sorted(set(deps) - known)}")
-            # Overlapping writes are allowed only when the new task depends on the existing owner.
+            # Overlapping writes are allowed only when the new task depends transitively on the existing owner.
+            ancestors = set(deps)
+            pending = list(deps)
+            by_id = {t["task_id"]: t for t in snapshot["tasks"]}
+            while pending:
+                parent_id = pending.pop()
+                for ancestor in by_id[parent_id]["depends_on"]:
+                    if ancestor not in ancestors:
+                        ancestors.add(ancestor)
+                        pending.append(ancestor)
             for old in snapshot["tasks"]:
                 overlap = any(a == b or a.startswith(b.rstrip("/") + "/") or b.startswith(a.rstrip("/") + "/")
                               or fnmatch.fnmatchcase(a, b) or fnmatch.fnmatchcase(b, a)
                               for a in write_scope for b in old["write_scope"])
-                if overlap and old["task_id"] not in deps:
+                if overlap and old["task_id"] not in ancestors:
                     raise LedgerError(f"parallel write-scope overlap with task {old['task_id']}")
             approved_scope = p.get("approved_scope", [])
             approval_status = p["approval_status"]
@@ -338,6 +348,8 @@ class WorkflowLedger:
             target = self.task(snapshot, task_id) if task_id else snapshot
             if status == "pending":
                 target["approved_scope"], target["approval_reference"] = [], None
+            if status == "pending":
+                target["approved_scope"], target["approval_reference"] = [], None
             if status == "approved":
                 approved_scope, ref = p.get("approved_scope", []), p.get("approval_reference")
                 if not isinstance(ref, str) or not ref.strip():
@@ -372,6 +384,8 @@ class WorkflowLedger:
             task = self.task(snapshot, p["task_id"])
             if task["state"] != "failed":
                 raise LedgerError("retry is allowed only for a failed task")
+            if not p.get("retryable", False):
+                raise LedgerError("task failure is not marked retryable")
             if task["attempt"] >= task["max_attempts"]:
                 raise LedgerError("task retry limit reached")
             if not task["idempotent"] and not p.get("approval_reference"):
@@ -591,6 +605,31 @@ class WorkflowLedger:
             raise LedgerError("workflow does not exist")
         return snapshot
 
+    def resume(self) -> dict[str, Any]:
+        valid, message = self.verify()
+        if not valid:
+            raise SnapshotOutOfSync(message)
+        snapshot = self.show()
+        snapshot["_resume_note"] = "State restored from verified ledger; no tasks were automatically executed."
+        return snapshot
+
+    @staticmethod
+    def validate_schemas() -> list[str]:
+        errors: list[str] = []
+        for filename in ("workflow-event.schema.json", "workflow-snapshot.schema.json"):
+            try:
+                schema = json.loads((SCHEMA_DIR / filename).read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError) as exc:
+                errors.append(f"cannot read {filename}: {exc}")
+                continue
+            if not isinstance(schema, dict) or schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema" or schema.get("type") != "object":
+                errors.append(f"{filename} must be a Draft 2020-12 object schema")
+            elif not isinstance(schema.get("required"), list) or not isinstance(schema.get("properties"), dict):
+                errors.append(f"{filename} must define required and properties")
+            elif set(schema["required"]) - set(schema["properties"]):
+                errors.append(f"{filename} required fields must be defined in properties")
+        return errors
+
     def verify(self) -> tuple[bool, str]:
         events = self.read_events()
         if not events:
@@ -636,7 +675,7 @@ def main() -> int:
     create.add_argument("--approval-required", action="store_true")
     create.add_argument("--review-required", action=argparse.BooleanOptionalAction, default=True)
 
-    for name in ("show", "verify", "recover"):
+    for name in ("show", "verify", "recover", "resume"):
         add_read_args(sub.add_parser(name))
 
     transition = sub.add_parser("transition"); add_write_args(transition)
@@ -683,6 +722,8 @@ def main() -> int:
                 actor=args.actor, idempotency_key=args.idempotency_key)
         elif args.command == "show":
             result = ledger.show()
+        elif args.command == "resume":
+            result = ledger.resume()
         elif args.command == "verify":
             valid, message = ledger.verify(); print(message); return 0 if valid else 1
         elif args.command == "recover":
