@@ -1,6 +1,6 @@
 # Phase 7 — Tool Ecosystem & Integration
 
-**Status:** IN PROGRESS — initial registry contract, deny-by-default manifest, permission matrix, validator, and unit tests authored. CI passed on baseline commit `b70e222a1d89ccf9e816bd3b6b7c1fbc22dd16e5` (run #44292786044); the next documentation commit still requires its own run.  
+**Status:** IN PROGRESS — registry foundation and sanitized Codex host-discovery utility authored. CI verification for the latest commits is pending.  
 **Inputs:** [Phase 6 synthesis](phase-6-final-synthesis.md), [source audit index](../audits/source-reviews/README.md), [source adoption map](source-adoption-map.md)
 
 ## Objective
@@ -17,6 +17,7 @@ Create one safe, typed, Codex-first inventory for tools that Codex may use. The 
 | Adapter implementation | Future `tools/adapters/` or host configuration | Call a real provider through a supported transport |
 | Credential references | Runtime/secret manager | Reference secrets without storing values |
 | Verification evidence | Tests and immutable evaluation records | Prove configured behavior |
+| Runtime discovery | `tools/discover_codex_runtime.py` + snapshot schema | Report local Codex CLI, configured MCP server names, and installed plugin names without exposing config values |
 
 Codex remains the primary coordinator. No external runtime is introduced.
 
@@ -39,13 +40,14 @@ The schema is a declaration/validation contract, not a runtime authorization mec
 
 `registry/tools.json` intentionally starts with an empty `tools` array and `default_policy: deny`. The repository has no verified third-party tool adapters registered at this point. Codex-native tools exposed by a particular host session must not be hard-coded as universally available.
 
-Do not populate the registry with hypothetical MCP servers, API endpoints, shell commands, or credentials.
+Do not populate the registry with hypothetical MCP servers, API endpoints, shell commands, or credentials. Use the runtime discovery procedure before selecting a provider.
 
 ## Source-informed decisions
 
 - **OpenCode:** adapt action/resource/effect permissions, ordered rules, typed schemas, and child-session boundaries; permission UX is not sandboxing.
 - **n8n:** adapt typed tool catalogs, action schemas, deferred discovery, lifecycle/error handling, and approval gates; do not copy its runtime/nodes.
 - **Anthropic MCP Builder:** adapt naming, focused output, pagination, typed schemas, actionable errors, and operation annotations; annotations are hints, not authorization.
+- **Current Codex host:** use documented `codex mcp list --json`, `codex plugin list --json`, and active-session `/mcp` inspection; do not confuse configured entries with callable tools.
 - **Graphify:** optional external adapter candidate; do not vendor or silently install.
 - **Superpowers/Matt Pocock/ECC:** reuse existing skill, review, TDD, and verification owners rather than adding duplicate skills.
 - **Hermes:** preserve Codex-owned skill/memory lifecycle; no second runtime or memory authority.
@@ -74,9 +76,12 @@ Detailed evidence is in `audits/source-reviews/`.
 - Threat model: documented.
 - Deterministic validator: authored in `tools/validate_tool_registry.py` and wired into `tools/validate_toolkit.py`.
 - Unit tests: added in `tests/test_tool_registry.py` for empty registry, valid declaration, duplicate IDs, raw credentials, runtime evidence, destructive approval, malformed risk types, and secret-path traversal.
+- Runtime discovery: `tools/discover_codex_runtime.py` performs read-only CLI/MCP/plugin preflight, emits sanitized JSON, uses no shell, applies timeouts, and has mocked tests in `tests/test_runtime_discovery.py`.
+- Runtime snapshot schema: `schemas/runtime-capability-snapshot.schema.json`.
 - Real adapters: NOT_IMPLEMENTED.
 - Credentials: NOT_CONFIGURED.
-- Runtime integration: NOT_RUN.
+- Runtime integration: NOT_RUN — utility must be run on the user's actual Codex host.
+- Active-session tool inventory: NOT_CAPTURED — requires `/mcp` inspection in a live session.
 - Codex behavior: NOT_RUN.
 
 ## Acceptance criteria
@@ -95,4 +100,4 @@ Phase 7 cannot close until:
 
 ## Next work
 
-Inspect CI for the latest main commit. After it passes, review exact host-exposed integrations and choose one adapter only when its provider, transport, permissions, and runtime availability are evidenced. Keep the registry empty until a real adapter is selected and configured.
+Run `python tools/discover_codex_runtime.py` on the actual Codex host, then inspect `/mcp` in the active session. Select one high-value read-only provider only after its server, tools, authentication, scopes, and data egress have been reviewed. Keep the registry empty until the user deliberately configures an adapter and runtime evidence exists.
