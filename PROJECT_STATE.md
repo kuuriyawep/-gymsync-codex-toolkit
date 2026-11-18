@@ -1625,3 +1625,11 @@ No new runtime tool or external service was installed. Live agent behavior remai
 - Added a test_engineer behavioral evaluation case for test-only ownership and non-overlapping writes.
 - Added a positive validator test for approved test-file changes by test_engineer.
 - Updated repository-wide agent boundaries and workflow routing.
+
+
+## 58. Phase 8 path-scope and reviewer-boundary hardening (2026-11-18)
+
+- Agent handoff and task-graph validators now reject absolute paths, Windows drive paths, backslashes, and `.`/`..` traversal in write scopes.
+- Result validation rejects unsafe changed-file paths.
+- Added regression tests for test-engineer and implementer path traversal.
+- Reviewer instructions now focus on correctness, regressions, maintainability, and test quality; security indicators are escalated to the dedicated security_auditor.

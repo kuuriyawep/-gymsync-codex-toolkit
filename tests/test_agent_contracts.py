@@ -108,6 +108,10 @@ class HandoffContractTests(unittest.TestCase):
             []
         )
 
+    def test_test_engineer_path_traversal_is_rejected(self):
+        errors = validator.validate_handoff(handoff("test_engineer", ["tests/../../src/auth.py"], "approved"))
+        self.assertTrue(any("safe repository-relative paths" in e or "test_engineer write_scope" in e for e in errors))
+
     def test_test_engineer_cannot_receive_production_write_scope(self):
         errors = validator.validate_handoff(handoff("test_engineer", ["src/auth.py"], "approved"))
         self.assertTrue(any("test_engineer write_scope" in e for e in errors))
@@ -199,6 +203,10 @@ class TaskGraphTests(unittest.TestCase):
     def test_test_engineer_cannot_own_production_write(self):
         data = graph([task("edit-auth", "test_engineer", writes=["src/auth.py"], approved=True)])
         self.assertTrue(any("test_engineer task" in e for e in validator.validate_task_graph(data)))
+
+    def test_implementer_path_traversal_is_rejected(self):
+        data = graph([task("edit-one", "implementer", writes=["src/../../secrets.txt"], approved=True)])
+        self.assertTrue(any("safe repository-relative paths" in e for e in validator.validate_task_graph(data)))
 
     def test_write_task_requires_user_approval(self):
         data = graph([task("edit-one", "implementer", writes=["src/main.py"])])

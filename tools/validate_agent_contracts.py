@@ -33,11 +33,19 @@ def _strings(value: Any, *, nonempty: bool = False) -> bool:
     return isinstance(value, list) and (not nonempty or bool(value)) and all(isinstance(item, str) and item.strip() for item in value)
 
 
-def _is_test_path(path: Any) -> bool:
+def _safe_repo_path(path: Any) -> bool:
     if not isinstance(path, str) or not path.strip() or path.startswith("/") or "\\" in path:
         return False
+    if len(path) >= 2 and path[1] == ":":
+        return False
     parts = [part for part in path.split("/") if part]
-    if not parts or any(part in {".", ".."} for part in parts):
+    return bool(parts) and not any(part in {".", ".."} for part in parts)
+
+
+def _is_test_path(path: Any) -> bool:
+    if not _safe_repo_path(path):
+        return False
+    parts = [part for part in path.split("/") if part]
         return False
     filename = parts[-1].lower()
     return any(part in TEST_PATH_PARTS for part in parts) or filename.startswith("test_") or filename.endswith("_test.py") or ".test." in filename or ".spec." in filename
@@ -78,6 +86,8 @@ def validate_handoff(data: Any) -> list[str]:
     if not _strings(write_scope) and write_scope != []:
         errors.append("constraints.write_scope must be an array of strings")
         write_scope = []
+    if any(not _safe_repo_path(path) for path in write_scope):
+        errors.append("constraints.write_scope must contain safe repository-relative paths")
     mode = constraints.get("mode")
     if not isinstance(mode, str) or mode not in {"read-only", "scoped-write"}:
         errors.append("constraints.mode is invalid")
@@ -124,6 +134,8 @@ def validate_result(result: Any, handoff: dict[str, Any]) -> list[str]:
     approval = handoff.get("approval", {})
     if not isinstance(approval, dict):
         approval = {}
+    if any(not _safe_repo_path(path) for path in changed_files):
+        errors.append("changed_files must contain safe repository-relative paths")
     if changed_files:
         if not isinstance(role, str) or role not in WRITE_ROLES:
             errors.append("only approved write roles may return changed files under current role policy")
@@ -192,6 +204,8 @@ def validate_task_graph(data: Any) -> list[str]:
         if not _strings(write_scope) and write_scope != []:
             errors.append(f"tasks[{i}].write_scope must be an array of strings")
             write_scope = []
+        if any(not _safe_repo_path(path) for path in write_scope):
+            errors.append(f"tasks[{i}].write_scope must contain safe repository-relative paths")
         if not _strings(deps) and deps != []:
             errors.append(f"tasks[{i}].depends_on must be an array of task IDs")
             deps = []

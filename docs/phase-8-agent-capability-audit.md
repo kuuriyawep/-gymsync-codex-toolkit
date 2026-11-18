@@ -103,7 +103,7 @@ The test engineer was added only after the handoff/result schema and task owners
 1. Role and write-scope rules remain procedural; they do not create independent OS sandboxing.
 2. Per-agent capability reductions have not been tested in a real Codex session.
 3. Existing evaluation cases still need trusted-session execution for behavioral sign-off.
-4. The task graph validator checks declared write overlap and dependencies, but actual concurrent agent behavior remains unverified.
+4. The task graph validator checks repository-relative safe write paths, declared write overlap, dependencies, and cycles, but actual concurrent agent behavior remains unverified.
 
 ## 7. Phase 8 work sequence
 
