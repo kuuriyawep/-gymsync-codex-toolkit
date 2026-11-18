@@ -14,6 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 from evaluate_toolkit import inspect_cases, inspect_rubrics  # noqa: E402
+import validate_tool_registry as tool_registry_validator  # noqa: E402
 
 ERRORS: list[str] = []
 WARNINGS: list[str] = []
@@ -270,6 +271,8 @@ def validate_evaluation_framework() -> None:
 
 
 def main() -> int:
+    for issue in tool_registry_validator.validate_files():
+        fail(f"tool registry: {issue}")
     validate_skills()
     validate_agents()
     validate_workflows()
