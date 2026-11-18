@@ -24,7 +24,7 @@ RUBRIC_DIR = ROOT / "evals" / "rubrics"
 RUBRIC_SCHEMA = ROOT / "schemas" / "evaluation-rubric.schema.json"
 RESULT_SCHEMA = ROOT / "schemas" / "evaluation-result.schema.json"
 VALID_STATUSES = {"PASS", "FAIL", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"}
-SUPPORTED_SCHEMA_KEYS = {"type", "const", "enum", "minLength", "pattern", "format", "minimum", "minItems", "uniqueItems", "items", "required", "properties", "additionalProperties"}
+SUPPORTED_SCHEMA_KEYS = {"type", "const", "enum", "minLength", "pattern", "format", "minimum", "maximum", "minItems", "maxItems", "uniqueItems", "items", "required", "properties", "additionalProperties"}
 SCHEMA_ANNOTATION_KEYS = {"$schema", "$id", "title", "description", "default", "examples"}
 
 
@@ -77,9 +77,13 @@ def validate_instance(value: Any, schema: dict[str, Any], path: str = "$") -> li
     if isinstance(value, (int, float)) and not isinstance(value, bool):
         if value < schema.get("minimum", float("-inf")):
             errors.append(f"{path}: below minimum")
+        if value > schema.get("maximum", float("inf")):
+            errors.append(f"{path}: above maximum")
     if isinstance(value, list):
         if len(value) < schema.get("minItems", 0):
             errors.append(f"{path}: fewer than minItems")
+        if len(value) > schema.get("maxItems", float("inf")):
+            errors.append(f"{path}: more than maxItems")
         if schema.get("uniqueItems") and len({json.dumps(x, sort_keys=True) for x in value}) != len(value):
             errors.append(f"{path}: items must be unique")
         item_schema = schema.get("items")

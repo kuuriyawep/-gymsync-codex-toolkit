@@ -55,6 +55,10 @@ class SchemaValidationTests(unittest.TestCase):
         errors = evaluator.validate_instance("short", schema)
         self.assertTrue(any("unsupported schema keyword" in item for item in errors))
 
+    def test_maximum_and_max_items_are_enforced(self) -> None:
+        self.assertTrue(any("above maximum" in item for item in evaluator.validate_instance(11, {"type": "integer", "maximum": 10})))
+        self.assertTrue(any("more than maxItems" in item for item in evaluator.validate_instance([1, 2], {"type": "array", "maxItems": 1})))
+
 
 class OverallStatusTests(unittest.TestCase):
     def status(self, status: str, critical: bool = False) -> str:
