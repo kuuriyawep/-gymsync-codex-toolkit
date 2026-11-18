@@ -2,7 +2,7 @@
 
 This register records the external projects that informed the GymSync Codex Toolkit and the selected capabilities being evaluated or adapted. It distinguishes conceptual influence from code reuse permission.
 
-The canonical synthesis and disposition decisions are maintained in [Phase 6 — Capability & Architecture Final Synthesis](phase-6-final-synthesis.md).
+The canonical synthesis and disposition decisions are maintained in [Phase 6 — Capability & Architecture Final Synthesis](phase-6-final-synthesis.md). The detailed source records are archived in [audits/source-reviews/](../audits/source-reviews/README.md), and their mapping to existing toolkit components is in [source-adoption-map.md](source-adoption-map.md).
 
 ## Foundational source repositories
 
@@ -50,3 +50,8 @@ The dispositions above are architecture-level decisions based on the completed s
 Exact file-level license and supply-chain review remains a prerequisite before copying implementation code or installing packages. Runtime compatibility and actual tool behavior must be tested in a trusted Codex environment.
 
 For the reconciled capability ownership, overlap decisions, security gates, and Phase 7–11 roadmap, see [phase-6-final-synthesis.md](phase-6-final-synthesis.md).
+
+
+## Audit archive
+
+The nine selected sources have individual records in [`audits/source-reviews/`](../audits/source-reviews/README.md). ECC and Hermes are explicitly marked as legacy/partial records because their exact source revisions and complete file-level evidence were not recoverable from the prior audit checkpoint; their already-selected work was not re-audited. The other seven source records preserve the revision identifiers and findings available from the completed 2026-11-18 source reviews.
