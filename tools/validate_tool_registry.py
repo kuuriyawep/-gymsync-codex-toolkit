@@ -104,7 +104,7 @@ def validate_registry(data: Any) -> list[str]:
                 approval = op.get("approval")
                 if not isinstance(approval, str) or approval not in APPROVALS:
                     errors.append(f"{q}.approval is unsupported")
-                if risk in {"destructive", "external"} and approval != "required":
+                if isinstance(risk, str) and risk in {"destructive", "external"} and approval != "required":
                     errors.append(f"{q}: destructive/external operations must require approval")
                 for field in ("input_schema", "output_schema"):
                     if field in op and not isinstance(op[field], dict):
