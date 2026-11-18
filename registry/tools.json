@@ -1,0 +1,6 @@
+{
+  "schema_version": "1.0.0",
+  "registry_id": "codex-toolkit",
+  "default_policy": "deny",
+  "tools": []
+}
