@@ -1578,3 +1578,14 @@ Official source: https://learn.chatgpt.com/docs/agent-configuration/subagents
 Define JSON Schemas for handoffs, agent results, and dependency DAGs; implement deterministic checks for unique ownership, approval scope, read-only result integrity, dependency cycles, and overlapping parallel write scopes.
 
 No GymSync application files, databases, deployments, or production data were touched.
+
+
+## 55. Phase 8 contract validation integration (2026-11-18)
+
+- Added `validate_agent_contracts.py` to the main toolkit validation path.
+- Main validator now checks that the five native TOML agents have matching canonical role briefs.
+- Required Phase 8 role audit and tool-access matrix documents are checked.
+- README now documents the three JSON schemas and the validator command.
+- Added schema files and tests are already committed; latest successful contract-test run is #44295437418 for commit `af1aafadd5fd90414d5917c898029c733f3c2415`.
+
+The next CI run must verify this integrated validation path before adding any new agent.

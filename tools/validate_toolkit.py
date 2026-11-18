@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 from evaluate_toolkit import inspect_cases, inspect_rubrics  # noqa: E402
 import validate_tool_registry as tool_registry_validator  # noqa: E402
+import validate_agent_contracts as agent_contract_validator  # noqa: E402
 
 ERRORS: list[str] = []
 WARNINGS: list[str] = []
@@ -94,6 +95,16 @@ def validate_agents() -> None:
     except ImportError:
         warn("Python 3.11+ is required for native TOML parsing; agent TOML checks skipped")
         return
+    role_briefs = {
+        "repo_explorer": "agents/explore.md",
+        "planner": "agents/planner.md",
+        "implementer": "agents/implementer.md",
+        "reviewer": "agents/reviewer.md",
+        "security_auditor": "agents/security.md",
+    }
+    for agent_name, brief_path in role_briefs.items():
+        if not (ROOT / brief_path).is_file():
+            fail(f"{brief_path}: role brief for {agent_name} is missing")
     for path in sorted(agent_dir.glob("*.toml")):
         try:
             data = tomllib.loads(read_text(path))
@@ -105,6 +116,11 @@ def validate_agents() -> None:
                 fail(f"{path.relative_to(ROOT)}: '{key}' must be a non-empty string")
         if data.get("name") and data["name"] != path.stem:
             fail(f"{path.relative_to(ROOT)}: name must match filename '{path.stem}'")
+        if path.stem not in role_briefs:
+            fail(f"{path.relative_to(ROOT)}: no canonical role brief mapping exists")
+    actual_names = {path.stem for path in agent_dir.glob("*.toml")}
+    for missing in sorted(set(role_briefs) - actual_names):
+        fail(f".codex/agents/{missing}.toml is missing")
 
 
 def validate_workflows() -> None:
@@ -277,6 +293,8 @@ def validate_evaluation_framework() -> None:
 def main() -> int:
     for issue in tool_registry_validator.validate_files():
         fail(f"tool registry: {issue}")
+    for issue in agent_contract_validator.validate_files():
+        fail(f"agent contracts: {issue}")
     validate_skills()
     validate_agents()
     validate_workflows()

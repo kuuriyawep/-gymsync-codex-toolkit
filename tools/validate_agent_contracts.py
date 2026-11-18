@@ -12,6 +12,7 @@ READ_ONLY_ROLES = {"repo_explorer", "planner", "reviewer", "security_auditor"}
 WRITE_ROLES = {"implementer"}
 ROLES = READ_ONLY_ROLES | WRITE_ROLES
 SCHEMA_FILES = ("agent-handoff.schema.json", "agent-result.schema.json", "agent-task-graph.schema.json")
+REQUIRED_DOCS = ("docs/phase-8-agent-capability-audit.md", "references/agent-tool-access-matrix.md")
 
 
 def _strings(value: Any, *, nonempty: bool = False) -> bool:
@@ -227,6 +228,9 @@ def validate_task_graph(data: Any) -> list[str]:
 
 def validate_files() -> list[str]:
     errors: list[str] = []
+    for relative in REQUIRED_DOCS:
+        if not (ROOT / relative).is_file():
+            errors.append(f"required agent contract document is missing: {relative}")
     for filename in SCHEMA_FILES:
         path = SCHEMA_DIR / filename
         try:

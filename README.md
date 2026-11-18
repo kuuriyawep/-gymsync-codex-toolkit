@@ -17,6 +17,7 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 - [External Source Audit Index](audits/source-reviews/README.md) — nine selected repository reviews and their evidence status.
 - [Phase 7 Tool Ecosystem](docs/phase-7-tool-ecosystem.md) — typed registry, permission model, and adapter acceptance criteria.
 - [Phase 8 Agent Audit](docs/phase-8-agent-capability-audit.md) — five-role inventory, ownership, runtime constraints, and candidate roles.
+- [Agent Tool Access Matrix](references/agent-tool-access-matrix.md) — proposed task-level role permissions and enforcement boundaries.
 - [Codex Runtime Discovery](docs/codex-runtime-discovery.md) — safe local preflight for configured MCP servers and plugins.
 - [MCP Adapter Contract](docs/mcp-adapter-contract.md) — MCP lifecycle, trust review, permissions, reliability, and verification gates.
 - [Non-MCP Adapter Contracts](docs/non-mcp-adapter-contracts.md) — API, CLI, browser, database, design, and test adapters.
@@ -50,6 +51,7 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 - `registry/tools.json` — deny-by-default declarative tool inventory; currently contains one static-reviewed Graphify candidate marked `planned`, not configured or verified.
 - `schemas/tool-registry.schema.json` — typed tool registry contract with operation-level resource/action/effect and input/output schema validation.
 - `schemas/runtime-capability-snapshot.schema.json` — sanitized host-discovery evidence contract.
+- `schemas/agent-handoff.schema.json`, `agent-result.schema.json`, and `agent-task-graph.schema.json` — typed delegation and dependency contracts.
 - `evals/` — taxonomy, cases, rubrics, run records, reports, and acceptance checks.
 - `learning/inbox/` — proposed lessons awaiting review.
 - `learning/approved/` — curated lessons approved for reuse.
@@ -113,6 +115,7 @@ See [toolkit acceptance checks](evals/acceptance-checks.md). The evaluation syst
 Dependency-free maintenance utilities under `tools/`:
 
 - `python tools/validate_tool_registry.py` checks the tool registry manifest.
+- `python tools/validate_agent_contracts.py` checks the handoff, result, and task-graph schema files.
 - `python tools/validate_toolkit.py` checks skill metadata, native/portable skill parity, agent TOML, workflow sections, evaluation schemas, all evaluation cases, and the skill-quality rubric's Markdown/JSON alignment plus declared trigger-coverage minimums.
 - `python tools/sync_skills.py` previews differences between native skills and the portable mirror.
 - `python tools/sync_skills.py --check` exits non-zero when the mirror is out of sync.
