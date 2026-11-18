@@ -49,7 +49,7 @@ def result(role="repo_explorer", changed=None, check_status="passed", evidence=N
         "work_performed": [{"description": "Inspected project instructions.", "evidence_refs": ["AGENTS.md"]}],
         "findings": [],
         "changed_files": changed or [],
-        "checks": [{"name": "Read-only inspection", "status": check_status, "evidence_refs": evidence or ["AGENTS.md"]}],
+        "checks": [{"name": "Read-only inspection", "status": check_status, "evidence_refs": evidence if evidence is not None else ["AGENTS.md"]}],
         "risks": [],
         "next_action": "Parent coordinator reviews the evidence.",
         "approval_needed": False
@@ -87,6 +87,16 @@ class HandoffContractTests(unittest.TestCase):
     def test_implementer_pending_approval_is_a_valid_non_executable_handoff(self):
         self.assertEqual(validator.validate_handoff(handoff("implementer", ["src/main.py"], "pending")), [])
 
+    def test_empty_in_scope_is_rejected(self):
+        data = handoff()
+        data["scope"]["in_scope"] = []
+        self.assertTrue(any("non-empty in_scope" in e for e in validator.validate_handoff(data)))
+
+    def test_malformed_recipient_does_not_crash(self):
+        data = handoff()
+        data["recipient"] = []
+        self.assertTrue(any("recipient must name" in e for e in validator.validate_handoff(data)))
+
     def test_approved_write_scope_must_cover_requested_paths(self):
         data = handoff("implementer", ["src/main.py"], "approved")
         data["approval"]["approved_scope"] = ["src/other.py"]
@@ -108,6 +118,11 @@ class AgentResultTests(unittest.TestCase):
     def test_passed_check_requires_evidence(self):
         errors = validator.validate_result(result(evidence=[]), handoff())
         self.assertTrue(any("passed status requires evidence_refs" in e for e in errors))
+
+    def test_malformed_changed_files_is_rejected_without_crashing(self):
+        data = result()
+        data["changed_files"] = {"unexpected": "object"}
+        self.assertTrue(any("changed_files must be an array" in e for e in validator.validate_result(data, handoff())))
 
     def test_result_must_match_handoff_recipient(self):
         errors = validator.validate_result(result("planner"), handoff())
@@ -150,6 +165,11 @@ class TaskGraphTests(unittest.TestCase):
     def test_readonly_role_cannot_own_write_task(self):
         data = graph([task("edit-one", "reviewer", writes=["src/main.py"], approved=True)])
         self.assertTrue(any("cannot own write_scope" in e for e in validator.validate_task_graph(data)))
+
+    def test_malformed_owner_does_not_crash(self):
+        data = graph([task("inspect")])
+        data["tasks"][0]["owner"] = []
+        self.assertTrue(any("owner is not an existing agent" in e for e in validator.validate_task_graph(data)))
 
     def test_unknown_dependency_is_rejected(self):
         data = graph([task("inspect", deps=["missing"])])

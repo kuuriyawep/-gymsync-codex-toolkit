@@ -14,8 +14,8 @@ ROLES = READ_ONLY_ROLES | WRITE_ROLES
 SCHEMA_FILES = ("agent-handoff.schema.json", "agent-result.schema.json", "agent-task-graph.schema.json")
 
 
-def _strings(value: Any) -> bool:
-    return isinstance(value, list) and all(isinstance(item, str) and item.strip() for item in value)
+def _strings(value: Any, *, nonempty: bool = False) -> bool:
+    return isinstance(value, list) and (not nonempty or bool(value)) and all(isinstance(item, str) and item.strip() for item in value)
 
 
 def _covers(approved: list[str], requested: list[str]) -> bool:
@@ -31,10 +31,10 @@ def validate_handoff(data: Any) -> list[str]:
     if not isinstance(data.get("handoff_id"), str) or not data["handoff_id"].startswith("H-"):
         errors.append("handoff_id must start with H-")
     role = data.get("recipient")
-    if role not in ROLES:
+    if not isinstance(role, str) or role not in ROLES:
         errors.append("recipient must name an existing canonical agent")
     scope = data.get("scope")
-    if not isinstance(scope, dict) or not _strings(scope.get("in_scope")) or not _strings(scope.get("out_of_scope")):
+    if not isinstance(scope, dict) or not _strings(scope.get("in_scope"), nonempty=True) or not _strings(scope.get("out_of_scope"), nonempty=True):
         errors.append("scope must define non-empty in_scope and out_of_scope string arrays")
     approval = data.get("approval")
     constraints = data.get("constraints")
@@ -42,7 +42,7 @@ def validate_handoff(data: Any) -> list[str]:
         errors.append("approval and constraints objects are required")
         return errors
     status = approval.get("status")
-    if status not in {"not-required", "pending", "approved", "denied"}:
+    if not isinstance(status, str) or status not in {"not-required", "pending", "approved", "denied"}:
         errors.append("approval.status is invalid")
     approved_scope = approval.get("approved_scope", [])
     if not _strings(approved_scope) and approved_scope != []:
@@ -51,9 +51,9 @@ def validate_handoff(data: Any) -> list[str]:
     if not _strings(write_scope) and write_scope != []:
         errors.append("constraints.write_scope must be an array of strings")
     mode = constraints.get("mode")
-    if mode not in {"read-only", "scoped-write"}:
+    if not isinstance(mode, str) or mode not in {"read-only", "scoped-write"}:
         errors.append("constraints.mode is invalid")
-    if role in READ_ONLY_ROLES and (write_scope or mode != "read-only"):
+    if isinstance(role, str) and role in READ_ONLY_ROLES and (write_scope or mode != "read-only"):
         errors.append(f"{role} handoffs must be read-only with an empty write_scope")
     if role == "implementer" and write_scope and mode != "scoped-write":
         errors.append("implementer with write_scope must use scoped-write mode")
@@ -82,16 +82,23 @@ def validate_result(result: Any, handoff: dict[str, Any]) -> list[str]:
     role = handoff.get("recipient")
     if result.get("agent") != role:
         errors.append("result agent does not match handoff recipient")
-    if role in READ_ONLY_ROLES and result.get("changed_files"):
+    changed_files = result.get("changed_files", [])
+    if not _strings(changed_files) and changed_files != []:
+        errors.append("changed_files must be an array of file paths")
+        changed_files = []
+    if isinstance(role, str) and role in READ_ONLY_ROLES and changed_files:
         errors.append(f"read-only role {role} cannot report changed_files")
-    allowed_writes = handoff.get("constraints", {}).get("write_scope", [])
+    constraints = handoff.get("constraints", {})
+    allowed_writes = constraints.get("write_scope", []) if isinstance(constraints, dict) else []
     approval = handoff.get("approval", {})
-    if result.get("changed_files"):
+    if not isinstance(approval, dict):
+        approval = {}
+    if changed_files:
         if role != "implementer":
             errors.append("only implementer may return changed files under current role policy")
         if approval.get("status") != "approved":
             errors.append("changed files require an approved handoff")
-        if not _covers(allowed_writes, result["changed_files"]):
+        if not isinstance(allowed_writes, list) or not _covers(allowed_writes, changed_files):
             errors.append("changed_files exceed the approved write_scope")
     checks = result.get("checks", [])
     if not isinstance(checks, list):
@@ -101,7 +108,7 @@ def validate_result(result: Any, handoff: dict[str, Any]) -> list[str]:
             if not isinstance(check, dict):
                 errors.append(f"checks[{i}] must be an object")
                 continue
-            if check.get("status") == "passed" and not _strings(check.get("evidence_refs")):
+            if check.get("status") == "passed" and not _strings(check.get("evidence_refs"), nonempty=True):
                 errors.append(f"checks[{i}] passed status requires evidence_refs")
     if result.get("approval_needed") and result.get("outcome") == "complete":
         errors.append("result cannot be complete while approval_needed is true")
@@ -140,25 +147,32 @@ def validate_task_graph(data: Any) -> list[str]:
             errors.append(f"duplicate task id: {tid}")
         by_id[tid] = task
         owner = task.get("owner")
-        if owner not in ROLES:
+        if not isinstance(owner, str) or owner not in ROLES:
             errors.append(f"tasks[{i}].owner is not an existing agent")
         read_scope = task.get("read_scope", [])
         write_scope = task.get("write_scope", [])
         deps = task.get("depends_on", [])
         if not _strings(read_scope) and read_scope != []:
             errors.append(f"tasks[{i}].read_scope must be an array of strings")
+            read_scope = []
         if not _strings(write_scope) and write_scope != []:
             errors.append(f"tasks[{i}].write_scope must be an array of strings")
+            write_scope = []
         if not _strings(deps) and deps != []:
             errors.append(f"tasks[{i}].depends_on must be an array of task IDs")
-        if owner in READ_ONLY_ROLES and write_scope:
+            deps = []
+        task["read_scope"] = read_scope
+        task["write_scope"] = write_scope
+        task["depends_on"] = deps
+        if isinstance(owner, str) and owner in READ_ONLY_ROLES and write_scope:
             errors.append(f"read-only owner {owner} cannot own write_scope")
         if write_scope:
-            if owner not in WRITE_ROLES:
+            if not isinstance(owner, str) or owner not in WRITE_ROLES:
                 errors.append(f"owner {owner} is not authorized for write tasks")
             if task.get("approval_status") != "approved":
                 errors.append(f"write task {tid} requires approval_status=approved")
-            if not _covers(task.get("approved_scope", []), write_scope):
+            approved_scope = task.get("approved_scope", [])
+            if not _strings(approved_scope) or not _covers(approved_scope, write_scope):
                 errors.append(f"write task {tid} exceeds approved_scope")
             if not isinstance(task.get("approval_reference"), str) or not task["approval_reference"].strip():
                 errors.append(f"write task {tid} requires approval_reference")
@@ -201,8 +215,8 @@ def validate_task_graph(data: Any) -> list[str]:
         for right_id in ids[i + 1:]:
             right = by_id[right_id]
             overlap = any(_scope_overlaps(a, b)
-                          for a in left.get("write_scope", [])
-                          for b in right.get("write_scope", []))
+                          for a in left.get("write_scope", []) if isinstance(a, str)
+                          for b in right.get("write_scope", []) if isinstance(b, str))
             if not overlap:
                 continue
             sequential = left_id in ancestor_map[right_id] or right_id in ancestor_map[left_id]
@@ -224,6 +238,8 @@ def validate_files() -> list[str]:
             errors.append(f"{filename} must be a Draft 2020-12 object schema")
         elif not isinstance(schema.get("required"), list) or not isinstance(schema.get("properties"), dict):
             errors.append(f"{filename} must define required and properties")
+        elif set(schema["required"]) - set(schema["properties"]):
+            errors.append(f"{filename} required fields must all be defined in properties")
     return errors
 
 
