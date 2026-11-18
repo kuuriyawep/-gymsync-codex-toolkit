@@ -53,6 +53,15 @@ class WorkflowLedgerTests(unittest.TestCase):
         with self.assertRaises(LedgerError):
             WorkflowLedger(ROOT / ".codex" / "workflow-state", "invalid-store")
 
+    def test_resume_verifies_state_without_executing_tasks(self):
+        before = self.ledger.show()["seq"]
+        resumed = self.ledger.resume()
+        self.assertEqual(resumed["seq"], before)
+        self.assertIn("no tasks were automatically executed", resumed["_resume_note"])
+
+    def test_workflow_schema_files_validate(self):
+        self.assertEqual(WorkflowLedger.validate_schemas(), [])
+
     def test_create_persists_event_and_snapshot(self):
         snapshot = self.ledger.show()
         self.assertEqual(snapshot["state"], "INTAKE")
@@ -103,6 +112,41 @@ class WorkflowLedgerTests(unittest.TestCase):
         self.ledger.transition_task("implement", "completed", evidence_refs=["test:unit-01"],
                                     idempotency_key="task-implement-done-01")
         self.assertEqual(module.WorkflowLedger.task(self.ledger.show(), "implement")["state"], "completed")
+
+    def test_completion_is_rejected_while_task_is_active(self):
+        self.ledger.add_task("work", "implementer", "Implement feature", write_scope=["src/main.py"],
+            approval_status="approved", approved_scope=["src/main.py"], approval_reference="user-approval-active",
+            idempotency_key="active-completion-task")
+        self.enter_execution()
+        self.ledger.transition_task("work", "active", idempotency_key="active-completion-start")
+        with self.assertRaises(LedgerError):
+            self.ledger.transition("VALIDATION", idempotency_key="active-completion-validation")
+
+    def test_approval_denial_blocks_execution(self):
+        self.to_approval()
+        self.ledger.transition("AWAITING_APPROVAL", idempotency_key="approval-denied-await")
+        self.ledger.approval("denied", approval_reference="user-denied-01", idempotency_key="approval-denied-01")
+        with self.assertRaises(LedgerError):
+            self.ledger.transition("APPROVAL", idempotency_key="approval-denied-reenter")
+
+    def test_task_timeout_marks_task_failed(self):
+        self.ledger.add_task("inspect", "repo_explorer", "Inspect source", idempotency_key="timeout-task-add")
+        self.enter_execution()
+        self.ledger.transition_task("inspect", "active", idempotency_key="timeout-task-start")
+        self.ledger.timeout("Task timed out", task_id="inspect", idempotency_key="timeout-task-event")
+        snapshot = self.ledger.show()
+        self.assertEqual(snapshot["state"], "BLOCKED")
+        self.assertEqual(module.WorkflowLedger.task(snapshot, "inspect")["state"], "failed")
+
+    def test_retry_limit_is_enforced(self):
+        self.ledger.add_task("read-task", "repo_explorer", "Read a source file", max_attempts=1,
+                             idempotency_key="retry-limit-add")
+        self.enter_execution()
+        self.ledger.transition_task("read-task", "active", idempotency_key="retry-limit-start")
+        self.ledger.transition_task("read-task", "failed", summary="Transient failure",
+                                    idempotency_key="retry-limit-fail")
+        with self.assertRaises(LedgerError):
+            self.ledger.retry_task("read-task", "Try again", idempotency_key="retry-limit-second")
 
     def test_tasks_cannot_activate_outside_execution(self):
         self.ledger.add_task("inspect", "repo_explorer", "Inspect source", idempotency_key="task-outside-01")
