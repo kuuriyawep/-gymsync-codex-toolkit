@@ -6,7 +6,7 @@
 
 ## 1. Existing agent inventory
 
-The repository currently defines five executable Codex custom agents and five human-readable role briefs.
+The repository now defines six executable Codex custom agents and six human-readable role briefs.
 
 | Agent ID | Native config | Role brief | Primary responsibility | Write policy |
 |---|---|---|---|---|
@@ -17,7 +17,7 @@ The repository currently defines five executable Codex custom agents and five hu
 | `security_auditor` | `.codex/agents/security_auditor.toml` | `agents/security.md` | Defensive application security and trust-boundary review | No writes |
 | `test_engineer` | `.codex/agents/test_engineer.toml` | `agents/test_engineer.md` | Test strategy, fixtures, test harnesses, coverage, and safe test execution | Approved test/fixture/evaluation paths only |
 
-All five native files currently contain the required `name`, `description`, and `developer_instructions` fields. Each TOML name matches its filename. The five role briefs describe the same five responsibilities.
+All six native files contain the required `name`, `description`, and `developer_instructions` fields. Each TOML name matches its filename. All six role briefs map to the corresponding executable definitions.
 
 No agent is missing a canonical brief. No duplicate native agent ID was found in the current inventory.
 
@@ -107,12 +107,12 @@ The test engineer was added only after the handoff/result schema and task owners
 
 ## 7. Phase 8 work sequence
 
-1. Freeze the existing five-role inventory and ownership boundaries. **Complete.**
+1. Freeze the original five-role inventory and ownership boundaries. **Complete.**
 2. Define JSON Schemas for handoffs, agent results, and task graphs. **Complete.**
 3. Implement deterministic checks for approval scope, result evidence, DAG cycles, and parallel write ownership. **Complete.**
 4. Add test_engineer with test-only scope checks. **Complete.**
-5. Update workflow routing and handoff templates. **In progress.**
-6. Add evaluation cases for role fit, context boundaries, conflicts, failure recovery, and write-scope enforcement. **In progress.**
+5. Update workflow routing and handoff templates. **Complete.**
+6. Add evaluation cases for role fit, context boundaries, conflicts, failure recovery, and write-scope enforcement. **Initial test-engineer case added; broader suite in progress.**
 7. Run CI; leave actual subagent behavior as NOT_RUN until a trusted Codex session is available.
 
 ## 8. Explicit non-goals

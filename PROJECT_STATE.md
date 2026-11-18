@@ -1616,3 +1616,12 @@ The test engineer may write only approved test files, fixtures, or evaluation ca
 - Main toolkit validation requires the test engineer TOML and role brief.
 
 No new runtime tool or external service was installed. Live agent behavior remains NOT_RUN until a trusted Codex session is available.
+
+
+## 57. Phase 8 role-boundary refinement (2026-11-18)
+
+- Corrected the Phase 8 audit inventory to six executable agents and six matching briefs.
+- Clarified reviewer/security-auditor separation: reviewer owns general correctness, regression, maintainability, and test quality; security_auditor owns dedicated threat/auth/data-exposure assessment.
+- Added a test_engineer behavioral evaluation case for test-only ownership and non-overlapping writes.
+- Added a positive validator test for approved test-file changes by test_engineer.
+- Updated repository-wide agent boundaries and workflow routing.

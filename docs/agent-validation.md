@@ -69,3 +69,11 @@ Phase 6 can be marked **prepared** when the cases, rubric, protocol, references,
 Phase 6 behavioral validation can be marked **passed** only after a real trusted Codex session executes the applicable cases, evidence is recorded, critical criteria pass, failures are resolved or explicitly accepted by the user, and an independent review is completed.
 
 Until then, the correct status is **PREPARED — BEHAVIORAL VALIDATION PENDING CODEX**.
+
+
+## Phase 8 agent contract tests
+
+The new Phase 8 scenario is:
+- `evals/cases/test-engineer-scope-and-ownership.json`
+
+It checks that production implementation and test-file ownership are separated, write scopes are approved and disjoint, dependency order is explicit, and test_engineer does not edit production code. Its behavioral execution remains NOT_RUN until a trusted Codex session is available.

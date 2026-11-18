@@ -38,7 +38,7 @@ Use adaptive routing for non-trivial engineering work: Explore → Clarify → T
 - Explore: read-only discovery and evidence gathering.
 - Planner: requirements, risks, sequence, acceptance criteria; no implementation.
 - Implementer: changes only within approved plan and scope.
-- Reviewer: independent correctness, regression, maintainability, and security review.
+- Reviewer: independent correctness, regression, maintainability, and test-quality review; flag security indicators for the security auditor.
 - Security: threat modeling and security findings; no exploitative actions.
 - Test engineer: owns approved test files, fixtures, evaluation cases, and safe test execution; no production implementation edits.
 

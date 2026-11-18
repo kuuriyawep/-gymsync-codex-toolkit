@@ -139,6 +139,13 @@ class AgentResultTests(unittest.TestCase):
         del data["summary"]
         self.assertTrue(any("summary" in e for e in validator.validate_result(data, handoff())))
 
+    def test_test_engineer_can_return_approved_test_file_changes(self):
+        errors = validator.validate_result(
+            result("test_engineer", ["tests/test_auth.py"]),
+            handoff("test_engineer", ["tests/test_auth.py"], "approved")
+        )
+        self.assertEqual(errors, [])
+
     def test_test_engineer_cannot_change_production_files(self):
         errors = validator.validate_result(
             result("test_engineer", ["src/auth.py"]),
