@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "graph_id": "sample-parallel-discovery",
+  "max_parallel_tasks": 2,
+  "tasks": [
+    {
+      "id": "inspect-api",
+      "owner": "repo_explorer",
+      "objective": "Map API entry points and data flow.",
+      "read_scope": [
+        "api/"
+      ],
+      "write_scope": [],
+      "depends_on": [],
+      "approval_status": "not-required",
+      "approved_scope": [],
+      "approval_reference": null,
+      "state": "ready"
+    },
+    {
+      "id": "inspect-ui",
+      "owner": "repo_explorer",
+      "objective": "Map UI entry points and state transitions.",
+      "read_scope": [
+        "ui/"
+      ],
+      "write_scope": [],
+      "depends_on": [],
+      "approval_status": "not-required",
+      "approved_scope": [],
+      "approval_reference": null,
+      "state": "ready"
+    }
+  ]
+}

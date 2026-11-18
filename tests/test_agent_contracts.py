@@ -92,6 +92,11 @@ class HandoffContractTests(unittest.TestCase):
         data["scope"]["in_scope"] = []
         self.assertTrue(any("non-empty in_scope" in e for e in validator.validate_handoff(data)))
 
+    def test_missing_required_handoff_field_is_rejected(self):
+        data = handoff()
+        del data["objective"]
+        self.assertTrue(any("objective" in e for e in validator.validate_handoff(data)))
+
     def test_malformed_recipient_does_not_crash(self):
         data = handoff()
         data["recipient"] = []
@@ -118,6 +123,11 @@ class AgentResultTests(unittest.TestCase):
     def test_passed_check_requires_evidence(self):
         errors = validator.validate_result(result(evidence=[]), handoff())
         self.assertTrue(any("passed status requires evidence_refs" in e for e in errors))
+
+    def test_missing_result_summary_is_rejected(self):
+        data = result()
+        del data["summary"]
+        self.assertTrue(any("summary" in e for e in validator.validate_result(data, handoff())))
 
     def test_malformed_changed_files_is_rejected_without_crashing(self):
         data = result()

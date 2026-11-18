@@ -3,16 +3,28 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_DIR = ROOT / "schemas"
+sys.path.insert(0, str(ROOT / "tools"))
+from evaluate_toolkit import validate_instance  # noqa: E402
 READ_ONLY_ROLES = {"repo_explorer", "planner", "reviewer", "security_auditor"}
 WRITE_ROLES = {"implementer"}
 ROLES = READ_ONLY_ROLES | WRITE_ROLES
 SCHEMA_FILES = ("agent-handoff.schema.json", "agent-result.schema.json", "agent-task-graph.schema.json")
-REQUIRED_DOCS = ("docs/phase-8-agent-capability-audit.md", "references/agent-tool-access-matrix.md")
+TASK_GRAPH_EXAMPLE = ROOT / "templates" / "agent-task-graph.json"
+REQUIRED_DOCS = ("docs/phase-8-agent-capability-audit.md", "references/agent-tool-access-matrix.md", "templates/agent-result.md", "templates/agent-task-graph.json")
+
+
+def _schema_errors(value: Any, filename: str) -> list[str]:
+    try:
+        schema = json.loads((SCHEMA_DIR / filename).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return [f"cannot load {filename}: {exc}"]
+    return [f"{filename}: {issue}" for issue in validate_instance(value, schema)]
 
 
 def _strings(value: Any, *, nonempty: bool = False) -> bool:
@@ -27,6 +39,7 @@ def validate_handoff(data: Any) -> list[str]:
     errors: list[str] = []
     if not isinstance(data, dict):
         return ["handoff must be an object"]
+    errors.extend(_schema_errors(data, "agent-handoff.schema.json"))
     if data.get("schema_version") != "1.0.0":
         errors.append("handoff schema_version must be 1.0.0")
     if not isinstance(data.get("handoff_id"), str) or not data["handoff_id"].startswith("H-"):
@@ -48,9 +61,11 @@ def validate_handoff(data: Any) -> list[str]:
     approved_scope = approval.get("approved_scope", [])
     if not _strings(approved_scope) and approved_scope != []:
         errors.append("approval.approved_scope must be an array of strings")
+        approved_scope = []
     write_scope = constraints.get("write_scope", [])
     if not _strings(write_scope) and write_scope != []:
         errors.append("constraints.write_scope must be an array of strings")
+        write_scope = []
     mode = constraints.get("mode")
     if not isinstance(mode, str) or mode not in {"read-only", "scoped-write"}:
         errors.append("constraints.mode is invalid")
@@ -76,6 +91,7 @@ def validate_result(result: Any, handoff: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     if not isinstance(result, dict):
         return ["agent result must be an object"]
+    errors.extend(_schema_errors(result, "agent-result.schema.json"))
     if result.get("schema_version") != "1.0.0":
         errors.append("result schema_version must be 1.0.0")
     if result.get("handoff_id") != handoff.get("handoff_id"):
@@ -129,6 +145,7 @@ def validate_task_graph(data: Any) -> list[str]:
     errors: list[str] = []
     if not isinstance(data, dict):
         return ["task graph must be an object"]
+    errors.extend(_schema_errors(data, "agent-task-graph.schema.json"))
     tasks = data.get("tasks")
     if not isinstance(tasks, list) or not tasks:
         return ["task graph tasks must be a non-empty array"]
@@ -244,6 +261,12 @@ def validate_files() -> list[str]:
             errors.append(f"{filename} must define required and properties")
         elif set(schema["required"]) - set(schema["properties"]):
             errors.append(f"{filename} required fields must all be defined in properties")
+    if TASK_GRAPH_EXAMPLE.is_file():
+        try:
+            example = json.loads(TASK_GRAPH_EXAMPLE.read_text(encoding="utf-8"))
+            errors.extend(f"agent task graph example: {issue}" for issue in validate_task_graph(example))
+        except (OSError, json.JSONDecodeError) as exc:
+            errors.append(f"cannot read agent task graph example: {exc}")
     return errors
 
 

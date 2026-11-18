@@ -4,17 +4,17 @@ Use this contract whenever Codex delegates a non-trivial task. Keep the handoff 
 
 ## Required fields
 
-- **Handoff ID / task:** Short identifier and one-sentence objective.
+- **Handoff ID / task:** Stable ID in the form `H-short-description`; one-sentence task.
 - **Recipient:** Existing project agent name and why its specialty is relevant.
 - **Objective:** Observable outcome expected from this assignment.
 - **In scope:** Exact files, components, questions, or checks the agent owns.
 - **Out of scope:** Explicit exclusions and work reserved for the parent coordinator.
 - **Context and evidence:** Relevant paths, symbols, decisions, links, and confirmed facts.
 - **Assumptions / unknowns:** Clearly label anything not yet verified.
-- **Approval status:** State the exact user-approved scope and any actions that remain unapproved.
-- **Constraints:** Read/write boundary, tools, safety rules, time/order dependencies, and no-go actions.
+- **Approval status:** `not-required | pending | approved | denied`; include exact `approved_scope` and an `approval_reference` when approved.
+- **Constraints:** `read-only | scoped-write`, permission profile, exact `write_scope`, tools, safety rules, time/order dependencies, and no-go actions.
 - **Expected output:** Required format, evidence, severity/risk labels, and completion criteria.
-- **Dependencies:** Inputs required, upstream tasks, and whether parallel work is safe.
+- **Dependencies:** `blocked_by` task IDs, inputs required, and `parallel_safe: true | false`.
 
 ## Handoff rules
 
@@ -27,6 +27,10 @@ Use this contract whenever Codex delegates a non-trivial task. Keep the handoff 
 7. The parent coordinator may relay the user's approval and clarify its scope, but cannot independently grant approval or expand it.
 8. Agent instructions do not create isolation or elevate permissions. The parent session's sandbox, tools, and approval settings remain authoritative.
 9. If scope, ownership, approval, or a safety boundary is unclear, the agent must stop and report the blocker rather than guess.
+
+## Schema contract
+
+The structured form must validate against `schemas/agent-handoff.schema.json`. Use the matching `handoff_id` in the agent result. A pending or denied approval is not permission to write. Read-only roles must have an empty `write_scope`.
 
 ## Required response from the agent
 
