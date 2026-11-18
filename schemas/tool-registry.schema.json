@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gymsync-codex-toolkit:schema:tool-registry",
+  "title": "Codex Toolkit Tool Registry",
+  "description": "Declarative tool inventory; metadata never grants runtime authorization.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "registry_id",
+    "default_policy",
+    "tools"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "registry_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "default_policy": {
+      "type": "string",
+      "const": "deny"
+    },
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "description",
+          "provider",
+          "transport",
+          "capabilities",
+          "operations",
+          "availability",
+          "permission_profile",
+          "evidence"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 2
+          },
+          "description": {
+            "type": "string",
+            "minLength": 10
+          },
+          "provider": {
+            "type": "string",
+            "minLength": 2
+          },
+          "provider_version": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "transport": {
+            "type": "string",
+            "enum": [
+              "codex-native",
+              "mcp",
+              "cli",
+              "http-api",
+              "browser",
+              "database",
+              "filesystem",
+              "git"
+            ]
+          },
+          "capabilities": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 2
+            }
+          },
+          "operations": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "description",
+                "risk",
+                "idempotent",
+                "approval"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 5
+                },
+                "risk": {
+                  "type": "string",
+                  "enum": [
+                    "read",
+                    "write",
+                    "destructive",
+                    "external"
+                  ]
+                },
+                "idempotent": {
+                  "type": "boolean"
+                },
+                "approval": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "required",
+                    "conditional"
+                  ]
+                },
+                "input_schema": {
+                  "type": "object"
+                },
+                "output_schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "availability": {
+            "type": "string",
+            "enum": [
+              "planned",
+              "configured",
+              "verified",
+              "disabled"
+            ]
+          },
+          "permission_profile": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "credential_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^(env:[A-Z][A-Z0-9_]*|secret://[a-zA-Z0-9._/-]+)$"
+          },
+          "timeout_seconds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3600
+          },
+          "retry": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "max_attempts",
+              "retryable_errors"
+            ],
+            "properties": {
+              "max_attempts": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "retryable_errors": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "evidence": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "status",
+              "references"
+            ],
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "not-run",
+                  "static-reviewed",
+                  "runtime-verified",
+                  "blocked"
+                ]
+              },
+              "references": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "verified_at": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date-time"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
