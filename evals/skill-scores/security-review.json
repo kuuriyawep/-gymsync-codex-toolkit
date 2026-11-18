@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0.0",
+  "skill_id": "security-review",
+  "skill_path": ".agents/skills/security-review/SKILL.md",
+  "target_revision": "f47bb2857d5fe33e390f02bf94c68ea3e3e488d5",
+  "reviewer": "Codex static review (model-assisted; not an independent human review)",
+  "reviewed_at": "2026-11-18T12:15:00Z",
+  "review_type": "static",
+  "criteria": [
+    {
+      "id": "trigger-boundary",
+      "score": 2,
+      "rationale": "The trigger clearly limits the skill to defensive application security, identity, data, API, dependency, and deployment review.",
+      "evidence_refs": [
+        ".agents/skills/security-review/SKILL.md#When-to-use"
+      ]
+    },
+    {
+      "id": "inputs-prerequisites",
+      "score": 1,
+      "rationale": "Assets, actors, trust boundaries, threat assumptions, and attack surfaces are specified in the first step rather than a separate input section.",
+      "evidence_refs": [
+        ".agents/skills/security-review/SKILL.md#Inputs-and-prerequisites"
+      ]
+    },
+    {
+      "id": "procedure-executability",
+      "score": 2,
+      "rationale": "The six-step procedure separates authentication/authorization, data handling, database controls, findings, severity/confidence, and safe verification.",
+      "evidence_refs": [
+        ".agents/skills/security-review/SKILL.md#Procedure"
+      ]
+    },
+    {
+      "id": "output-contract",
+      "score": 2,
+      "rationale": "The finding format requires severity, confidence, asset, location, impact, remediation, verification, and uncertainty.",
+      "evidence_refs": [
+        ".agents/skills/security-review/SKILL.md#Required-output"
+      ]
+    },
+    {
+      "id": "safety-failure-handling",
+      "score": 2,
+      "rationale": "The skill is read-only by default and explicitly stops before live exploitation, exfiltration, permission changes, or destructive tests.",
+      "evidence_refs": [
+        ".agents/skills/security-review/SKILL.md#Stop-conditions"
+      ]
+    },
+    {
+      "id": "evaluation-coverage",
+      "score": 1,
+      "rationale": "Two direct cases cover tenant isolation and production data deletion; additional near-miss/edge security scenarios are missing.",
+      "evidence_refs": [
+        "evals/cases/production-data-deletion.json",
+        "evals/cases/tenant-isolation-review.json"
+      ]
+    }
+  ],
+  "total": 10,
+  "disposition": "PASS",
+  "hard_fail": false,
+  "runtime_status": "NOT_RUN",
+  "case_count": 2,
+  "coverage_labels": {
+    "in_scope": 0,
+    "near_miss": 0,
+    "edge": 0
+  },
+  "case_refs": [
+    "production-data-deletion",
+    "tenant-isolation-review"
+  ],
+  "gaps": [
+    "Add near-miss and edge cases for out-of-scope targets and unavailable authorization."
+  ],
+  "summary": "Static document review only. This score does not establish behavioral performance; runtime remains NOT_RUN."
+}

@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0.0",
+  "skill_id": "implementation-planning",
+  "skill_path": ".agents/skills/implementation-planning/SKILL.md",
+  "target_revision": "f47bb2857d5fe33e390f02bf94c68ea3e3e488d5",
+  "reviewer": "Codex static review (model-assisted; not an independent human review)",
+  "reviewed_at": "2026-11-18T12:15:00Z",
+  "review_type": "static",
+  "criteria": [
+    {
+      "id": "trigger-boundary",
+      "score": 2,
+      "rationale": "The trigger distinguishes non-trivial multi-file work from trivial localized reversible changes.",
+      "evidence_refs": [
+        ".agents/skills/implementation-planning/SKILL.md#When-to-use"
+      ]
+    },
+    {
+      "id": "inputs-prerequisites",
+      "score": 1,
+      "rationale": "Goal, scope, constraints, and acceptance criteria are gathered in step one, but a dedicated inputs section is absent.",
+      "evidence_refs": [
+        ".agents/skills/implementation-planning/SKILL.md#Inputs-and-prerequisites"
+      ]
+    },
+    {
+      "id": "procedure-executability",
+      "score": 2,
+      "rationale": "Seven steps cover architecture inspection, task decomposition, ownership/dependencies, risk, testing, rollout, rollback, and approvals.",
+      "evidence_refs": [
+        ".agents/skills/implementation-planning/SKILL.md#Procedure"
+      ]
+    },
+    {
+      "id": "output-contract",
+      "score": 2,
+      "rationale": "The required plan has explicit goal, acceptance, ordered tasks, risks, verification, approvals, rollout, rollback, and unknowns.",
+      "evidence_refs": [
+        ".agents/skills/implementation-planning/SKILL.md#Required-output"
+      ]
+    },
+    {
+      "id": "safety-failure-handling",
+      "score": 2,
+      "rationale": "The skill forbids implementation during planning and requires guessed paths/architecture to be labelled.",
+      "evidence_refs": [
+        ".agents/skills/implementation-planning/SKILL.md#Stop-conditions"
+      ]
+    },
+    {
+      "id": "evaluation-coverage",
+      "score": 1,
+      "rationale": "Two direct cases cover complex planning and trivial-change near misses; an edge ambiguity/dependency case is missing.",
+      "evidence_refs": [
+        "evals/cases/implementation-planning-multi-task-approval-recovery.json",
+        "evals/cases/implementation-planning-trivial-change-near-miss.json"
+      ]
+    }
+  ],
+  "total": 10,
+  "disposition": "PASS",
+  "hard_fail": false,
+  "runtime_status": "NOT_RUN",
+  "case_count": 2,
+  "coverage_labels": {
+    "in_scope": 1,
+    "near_miss": 1,
+    "edge": 0
+  },
+  "case_refs": [
+    "implementation-planning-multi-task-approval-recovery",
+    "implementation-planning-trivial-change-near-miss"
+  ],
+  "gaps": [
+    "Add an edge case for unresolved architecture or cyclic dependencies."
+  ],
+  "summary": "Static document review only. This score does not establish behavioral performance; runtime remains NOT_RUN."
+}

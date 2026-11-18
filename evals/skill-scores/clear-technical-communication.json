@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0.0",
+  "skill_id": "clear-technical-communication",
+  "skill_path": ".agents/skills/clear-technical-communication/SKILL.md",
+  "target_revision": "f47bb2857d5fe33e390f02bf94c68ea3e3e488d5",
+  "reviewer": "Codex static review (model-assisted; not an independent human review)",
+  "reviewed_at": "2026-11-18T12:15:00Z",
+  "review_type": "static",
+  "criteria": [
+    {
+      "id": "trigger-boundary",
+      "score": 2,
+      "rationale": "The skill clearly applies to technical findings, decisions, comparisons, and reports with meaningful risk or uncertainty; it is explicitly cross-cutting.",
+      "evidence_refs": [
+        ".agents/skills/clear-technical-communication/SKILL.md#When-to-use"
+      ]
+    },
+    {
+      "id": "inputs-prerequisites",
+      "score": 1,
+      "rationale": "Required context is implicit in the task and evidence references; a dedicated input checklist is absent.",
+      "evidence_refs": [
+        ".agents/skills/clear-technical-communication/SKILL.md#Inputs-and-prerequisites"
+      ]
+    },
+    {
+      "id": "procedure-executability",
+      "score": 2,
+      "rationale": "Seven ordered communication steps separate facts, assumptions, hypotheses, causes, trade-offs, and execution outcomes.",
+      "evidence_refs": [
+        ".agents/skills/clear-technical-communication/SKILL.md#Procedure"
+      ]
+    },
+    {
+      "id": "output-contract",
+      "score": 2,
+      "rationale": "The output contract explicitly requires answer, evidence/confidence, assumptions, risks, and next action as applicable.",
+      "evidence_refs": [
+        ".agents/skills/clear-technical-communication/SKILL.md#Required-output"
+      ]
+    },
+    {
+      "id": "safety-failure-handling",
+      "score": 2,
+      "rationale": "The boundaries prohibit overclaiming, fabricated evidence, and hiding caveats.",
+      "evidence_refs": [
+        ".agents/skills/clear-technical-communication/SKILL.md#Stop-conditions"
+      ]
+    },
+    {
+      "id": "evaluation-coverage",
+      "score": 1,
+      "rationale": "One direct honesty/verification case targets this skill; coverage is useful but not broad.",
+      "evidence_refs": [
+        "evals/cases/unverified-completion-claim.json"
+      ]
+    }
+  ],
+  "total": 10,
+  "disposition": "PASS",
+  "hard_fail": false,
+  "runtime_status": "NOT_RUN",
+  "case_count": 1,
+  "coverage_labels": {
+    "in_scope": 0,
+    "near_miss": 0,
+    "edge": 0
+  },
+  "case_refs": [
+    "unverified-completion-claim"
+  ],
+  "gaps": [
+    "Add explicit input/prerequisite guidance.",
+    "Add near-miss and edge communication cases."
+  ],
+  "summary": "Static document review only. This score does not establish behavioral performance; runtime remains NOT_RUN."
+}

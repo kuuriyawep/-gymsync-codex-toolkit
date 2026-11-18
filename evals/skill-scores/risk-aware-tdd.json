@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0.0",
+  "skill_id": "risk-aware-tdd",
+  "skill_path": ".agents/skills/risk-aware-tdd/SKILL.md",
+  "target_revision": "f47bb2857d5fe33e390f02bf94c68ea3e3e488d5",
+  "reviewer": "Codex static review (model-assisted; not an independent human review)",
+  "reviewed_at": "2026-11-18T12:15:00Z",
+  "review_type": "static",
+  "criteria": [
+    {
+      "id": "trigger-boundary",
+      "score": 2,
+      "rationale": "The trigger distinguishes approved behavior changes from unknown-defect diagnosis and final acceptance verification.",
+      "evidence_refs": [
+        ".agents/skills/risk-aware-tdd/SKILL.md#When-to-use"
+      ]
+    },
+    {
+      "id": "inputs-prerequisites",
+      "score": 2,
+      "rationale": "Inputs explicitly require approved scope, expected behavior, diagnosis findings, test framework, and risk context.",
+      "evidence_refs": [
+        ".agents/skills/risk-aware-tdd/SKILL.md#Inputs-and-prerequisites"
+      ]
+    },
+    {
+      "id": "procedure-executability",
+      "score": 2,
+      "rationale": "Nine ordered steps define baseline inspection, failing tests, smallest implementation, risk-based depth, and handoff.",
+      "evidence_refs": [
+        ".agents/skills/risk-aware-tdd/SKILL.md#Procedure"
+      ]
+    },
+    {
+      "id": "output-contract",
+      "score": 2,
+      "rationale": "The output contract requires approved behavior, tests, test-first evidence, implementation paths, execution record, exceptions, and residual risk.",
+      "evidence_refs": [
+        ".agents/skills/risk-aware-tdd/SKILL.md#Required-output"
+      ]
+    },
+    {
+      "id": "safety-failure-handling",
+      "score": 2,
+      "rationale": "The skill has explicit authorization boundaries, stop conditions, and honest reporting of unavailable tests/baselines.",
+      "evidence_refs": [
+        ".agents/skills/risk-aware-tdd/SKILL.md#Stop-conditions"
+      ]
+    },
+    {
+      "id": "evaluation-coverage",
+      "score": 1,
+      "rationale": "Three direct cases cover debugging handoff, test-first implementation, and final verification; formal near-miss/edge labels are not recorded.",
+      "evidence_refs": [
+        "evals/cases/debugging-diagnosis-before-implementation.json",
+        "evals/cases/risk-aware-tdd-test-first-handoff.json",
+        "evals/cases/verification-gate-final-acceptance.json"
+      ]
+    }
+  ],
+  "total": 11,
+  "disposition": "PASS",
+  "hard_fail": false,
+  "runtime_status": "NOT_RUN",
+  "case_count": 3,
+  "coverage_labels": {
+    "in_scope": 0,
+    "near_miss": 0,
+    "edge": 0
+  },
+  "case_refs": [
+    "debugging-diagnosis-before-implementation",
+    "risk-aware-tdd-test-first-handoff",
+    "verification-gate-final-acceptance"
+  ],
+  "gaps": [
+    "Add formal coverage labels and a near-miss/edge case for unavailable harness or unrelated baseline failure."
+  ],
+  "summary": "Static document review only. This score does not establish behavioral performance; runtime remains NOT_RUN."
+}

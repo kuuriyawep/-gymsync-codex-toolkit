@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0.0",
+  "skill_id": "skill-authoring-and-evaluation",
+  "skill_path": ".agents/skills/skill-authoring-and-evaluation/SKILL.md",
+  "target_revision": "f47bb2857d5fe33e390f02bf94c68ea3e3e488d5",
+  "reviewer": "Codex static review (model-assisted; not an independent human review)",
+  "reviewed_at": "2026-11-18T12:15:00Z",
+  "review_type": "static",
+  "criteria": [
+    {
+      "id": "trigger-boundary",
+      "score": 2,
+      "rationale": "The trigger explicitly covers reusable skill creation/revision/audit and excludes ordinary documentation, one-off prompts, agent roles, and generic workflows.",
+      "evidence_refs": [
+        ".agents/skills/skill-authoring-and-evaluation/SKILL.md#When-to-use"
+      ]
+    },
+    {
+      "id": "inputs-prerequisites",
+      "score": 2,
+      "rationale": "Target runtime, user, task, triggers, non-goals, capabilities, approvals, and tool availability are required inputs.",
+      "evidence_refs": [
+        ".agents/skills/skill-authoring-and-evaluation/SKILL.md#Inputs-and-prerequisites"
+      ]
+    },
+    {
+      "id": "procedure-executability",
+      "score": 2,
+      "rationale": "The authoring procedure is ordered and includes overlap audit, contract, evaluation-first design, scoring, validation, and runtime execution.",
+      "evidence_refs": [
+        ".agents/skills/skill-authoring-and-evaluation/SKILL.md#Procedure"
+      ]
+    },
+    {
+      "id": "output-contract",
+      "score": 2,
+      "rationale": "The required output specifies target, triggers, ownership, contract review, score, cases, deterministic checks, runtime status, and gaps.",
+      "evidence_refs": [
+        ".agents/skills/skill-authoring-and-evaluation/SKILL.md#Required-output"
+      ]
+    },
+    {
+      "id": "safety-failure-handling",
+      "score": 2,
+      "rationale": "Stop conditions prohibit invented capabilities, unapproved dependencies, and fabricated behavioral evidence.",
+      "evidence_refs": [
+        ".agents/skills/skill-authoring-and-evaluation/SKILL.md#Stop-conditions"
+      ]
+    },
+    {
+      "id": "evaluation-coverage",
+      "score": 2,
+      "rationale": "Six direct cases meet the rubric's exact three in-scope, two near-miss, and one edge coverage minimum.",
+      "evidence_refs": [
+        "evals/cases/skill-authoring-boundary-and-overlap-audit.json",
+        "evals/cases/skill-authoring-contract-and-coverage.json",
+        "evals/cases/skill-authoring-ordinary-documentation-request.json",
+        "evals/cases/skill-authoring-out-of-scope-routing.json",
+        "evals/cases/skill-authoring-runtime-unavailable.json",
+        "evals/cases/skill-authoring-tool-limited-skill-design.json"
+      ]
+    }
+  ],
+  "total": 12,
+  "disposition": "PASS",
+  "hard_fail": false,
+  "runtime_status": "NOT_RUN",
+  "case_count": 6,
+  "coverage_labels": {
+    "in_scope": 3,
+    "near_miss": 2,
+    "edge": 1
+  },
+  "case_refs": [
+    "skill-authoring-boundary-and-overlap-audit",
+    "skill-authoring-contract-and-coverage",
+    "skill-authoring-ordinary-documentation-request",
+    "skill-authoring-out-of-scope-routing",
+    "skill-authoring-runtime-unavailable",
+    "skill-authoring-tool-limited-skill-design"
+  ],
+  "gaps": [],
+  "summary": "Static document review only. This score does not establish behavioral performance; runtime remains NOT_RUN."
+}

@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0.0",
+  "skill_id": "code-review",
+  "skill_path": ".agents/skills/code-review/SKILL.md",
+  "target_revision": "f47bb2857d5fe33e390f02bf94c68ea3e3e488d5",
+  "reviewer": "Codex static review (model-assisted; not an independent human review)",
+  "reviewed_at": "2026-11-18T12:15:00Z",
+  "review_type": "static",
+  "criteria": [
+    {
+      "id": "trigger-boundary",
+      "score": 2,
+      "rationale": "The trigger is specific to proposed/completed diffs and explicitly excludes implementation ownership.",
+      "evidence_refs": [
+        ".agents/skills/code-review/SKILL.md#When-to-use"
+      ]
+    },
+    {
+      "id": "inputs-prerequisites",
+      "score": 2,
+      "rationale": "Inputs explicitly require approved scope, acceptance criteria, exact revision/diff, instructions, code context, and test evidence.",
+      "evidence_refs": [
+        ".agents/skills/code-review/SKILL.md#Inputs-and-prerequisites"
+      ]
+    },
+    {
+      "id": "procedure-executability",
+      "score": 2,
+      "rationale": "The review sequence is ordered and actionable, including full-diff inspection, causal tracing, evidence checks, and duplicate-finding removal.",
+      "evidence_refs": [
+        ".agents/skills/code-review/SKILL.md#Procedure"
+      ]
+    },
+    {
+      "id": "output-contract",
+      "score": 2,
+      "rationale": "The finding format requires severity, confidence, location, scenario, evidence, impact, recommendation, and verification.",
+      "evidence_refs": [
+        ".agents/skills/code-review/SKILL.md#Required-output"
+      ]
+    },
+    {
+      "id": "safety-failure-handling",
+      "score": 2,
+      "rationale": "Review is read-only; missing context and destructive tests are explicit stop conditions.",
+      "evidence_refs": [
+        ".agents/skills/code-review/SKILL.md#Stop-conditions"
+      ]
+    },
+    {
+      "id": "evaluation-coverage",
+      "score": 1,
+      "rationale": "Two direct cases cover evidence-backed defects and style-only near misses; an edge/failure case is still missing.",
+      "evidence_refs": [
+        "evals/cases/code-review-evidence-based-finding.json",
+        "evals/cases/code-review-style-preference-near-miss.json"
+      ]
+    }
+  ],
+  "total": 11,
+  "disposition": "PASS",
+  "hard_fail": false,
+  "runtime_status": "NOT_RUN",
+  "case_count": 2,
+  "coverage_labels": {
+    "in_scope": 1,
+    "near_miss": 1,
+    "edge": 0
+  },
+  "case_refs": [
+    "code-review-evidence-based-finding",
+    "code-review-style-preference-near-miss"
+  ],
+  "gaps": [
+    "Add an edge case for incomplete diff or unavailable test evidence."
+  ],
+  "summary": "Static document review only. This score does not establish behavioral performance; runtime remains NOT_RUN."
+}

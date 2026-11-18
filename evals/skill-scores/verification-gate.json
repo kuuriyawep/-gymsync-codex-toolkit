@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0.0",
+  "skill_id": "verification-gate",
+  "skill_path": ".agents/skills/verification-gate/SKILL.md",
+  "target_revision": "f47bb2857d5fe33e390f02bf94c68ea3e3e488d5",
+  "reviewer": "Codex static review (model-assisted; not an independent human review)",
+  "reviewed_at": "2026-11-18T12:15:00Z",
+  "review_type": "static",
+  "criteria": [
+    {
+      "id": "trigger-boundary",
+      "score": 2,
+      "rationale": "The trigger clearly places the skill at final acceptance after implementation and distinguishes diagnosis/TDD.",
+      "evidence_refs": [
+        ".agents/skills/verification-gate/SKILL.md#When-to-use"
+      ]
+    },
+    {
+      "id": "inputs-prerequisites",
+      "score": 2,
+      "rationale": "Inputs explicitly require approved scope, acceptance criteria, final diff/artifact, checks already run, and project instructions.",
+      "evidence_refs": [
+        ".agents/skills/verification-gate/SKILL.md#Inputs-and-prerequisites"
+      ]
+    },
+    {
+      "id": "procedure-executability",
+      "score": 2,
+      "rationale": "Eight ordered steps map criteria to checks, inspect scope, run proportionate checks, classify outcomes, and decide disposition.",
+      "evidence_refs": [
+        ".agents/skills/verification-gate/SKILL.md#Procedure"
+      ]
+    },
+    {
+      "id": "output-contract",
+      "score": 2,
+      "rationale": "The output contract requires acceptance map, scope review, checks run/skipped/unrun, risks, residual issues, and disposition.",
+      "evidence_refs": [
+        ".agents/skills/verification-gate/SKILL.md#Required-output"
+      ]
+    },
+    {
+      "id": "safety-failure-handling",
+      "score": 2,
+      "rationale": "The skill prohibits false passes, production/destructive actions without approval, and overclaiming partial checks.",
+      "evidence_refs": [
+        ".agents/skills/verification-gate/SKILL.md#Stop-conditions"
+      ]
+    },
+    {
+      "id": "evaluation-coverage",
+      "score": 1,
+      "rationale": "Two direct cases cover unverified completion and final acceptance; edge and near-miss coverage are not formally labelled.",
+      "evidence_refs": [
+        "evals/cases/unverified-completion-claim.json",
+        "evals/cases/verification-gate-final-acceptance.json"
+      ]
+    }
+  ],
+  "total": 11,
+  "disposition": "PASS",
+  "hard_fail": false,
+  "runtime_status": "NOT_RUN",
+  "case_count": 2,
+  "coverage_labels": {
+    "in_scope": 0,
+    "near_miss": 0,
+    "edge": 0
+  },
+  "case_refs": [
+    "unverified-completion-claim",
+    "verification-gate-final-acceptance"
+  ],
+  "gaps": [
+    "Add an edge case for unavailable verification tooling and a near-miss for a partial pass."
+  ],
+  "summary": "Static document review only. This score does not establish behavioral performance; runtime remains NOT_RUN."
+}

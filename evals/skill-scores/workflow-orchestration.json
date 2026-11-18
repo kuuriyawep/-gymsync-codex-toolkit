@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0.0",
+  "skill_id": "workflow-orchestration",
+  "skill_path": ".agents/skills/workflow-orchestration/SKILL.md",
+  "target_revision": "f47bb2857d5fe33e390f02bf94c68ea3e3e488d5",
+  "reviewer": "Codex static review (model-assisted; not an independent human review)",
+  "reviewed_at": "2026-11-18T12:15:00Z",
+  "review_type": "static",
+  "criteria": [
+    {
+      "id": "trigger-boundary",
+      "score": 2,
+      "rationale": "The trigger distinguishes non-trivial multi-step engineering work from trivial reversible tasks and preserves Codex as coordinator.",
+      "evidence_refs": [
+        ".agents/skills/workflow-orchestration/SKILL.md#When-to-use"
+      ]
+    },
+    {
+      "id": "inputs-prerequisites",
+      "score": 2,
+      "rationale": "Authority, user/repository instructions, workflow registry, selected procedures, scope, acceptance, dependencies, and approvals are explicit.",
+      "evidence_refs": [
+        ".agents/skills/workflow-orchestration/SKILL.md#Inputs-and-prerequisites"
+      ]
+    },
+    {
+      "id": "procedure-executability",
+      "score": 2,
+      "rationale": "The nine-step procedure defines intake, routing, planning, delegation, approval, coordination, review, verification, and reporting.",
+      "evidence_refs": [
+        ".agents/skills/workflow-orchestration/SKILL.md#Procedure"
+      ]
+    },
+    {
+      "id": "output-contract",
+      "score": 2,
+      "rationale": "The required output covers objective, workflow, risk, scope, owners, handoffs, state, evidence, blockers, and verification.",
+      "evidence_refs": [
+        ".agents/skills/workflow-orchestration/SKILL.md#Required-output"
+      ]
+    },
+    {
+      "id": "safety-failure-handling",
+      "score": 2,
+      "rationale": "Stop conditions and the Phase 9 ledger section define single-writer ownership, private storage, idempotency, approval, recovery, and no autonomous execution.",
+      "evidence_refs": [
+        ".agents/skills/workflow-orchestration/SKILL.md#Stop-conditions"
+      ]
+    },
+    {
+      "id": "evaluation-coverage",
+      "score": 2,
+      "rationale": "Nineteen direct cases include a labelled three in-scope, two near-miss, one edge ledger suite plus existing delegation/recovery/conflict coverage.",
+      "evidence_refs": [
+        "evals/cases/adaptive-lightweight-routing.json",
+        "evals/cases/agent-conflict-evidence-resolution.json",
+        "evals/cases/agent-failure-recovery.json",
+        "evals/cases/agent-output-verification-honesty.json",
+        "evals/cases/agent-selection-and-scope.json",
+        "evals/cases/agent-selection.json",
+        "evals/cases/complete-agent-handoff.json",
+        "evals/cases/conflicting-agent-findings.json",
+        "evals/cases/handoff-approval-inheritance.json",
+        "evals/cases/independent-review-findings.json",
+        "evals/cases/parallel-write-boundaries.json",
+        "evals/cases/risk-overrides-complexity.json",
+        "evals/cases/session-state-approval-gate.json",
+        "evals/cases/workflow-ledger-resume-and-recovery.json",
+        "evals/cases/workflow-ledger-idempotency-and-event-integrity.json",
+        "evals/cases/workflow-ledger-approval-and-completion-gates.json",
+        "evals/cases/workflow-ledger-retry-timeout-cancellation.json",
+        "evals/cases/workflow-ledger-private-store-boundary.json",
+        "evals/cases/workflow-ledger-no-autonomous-execution.json"
+      ]
+    }
+  ],
+  "total": 12,
+  "disposition": "PASS",
+  "hard_fail": false,
+  "runtime_status": "NOT_RUN",
+  "case_count": 19,
+  "coverage_labels": {
+    "in_scope": 3,
+    "near_miss": 2,
+    "edge": 1
+  },
+  "case_refs": [
+    "adaptive-lightweight-routing",
+    "agent-conflict-evidence-resolution",
+    "agent-failure-recovery",
+    "agent-output-verification-honesty",
+    "agent-selection-and-scope",
+    "agent-selection",
+    "complete-agent-handoff",
+    "conflicting-agent-findings",
+    "handoff-approval-inheritance",
+    "independent-review-findings",
+    "parallel-write-boundaries",
+    "risk-overrides-complexity",
+    "session-state-approval-gate",
+    "workflow-ledger-resume-and-recovery",
+    "workflow-ledger-idempotency-and-event-integrity",
+    "workflow-ledger-approval-and-completion-gates",
+    "workflow-ledger-retry-timeout-cancellation",
+    "workflow-ledger-private-store-boundary",
+    "workflow-ledger-no-autonomous-execution"
+  ],
+  "gaps": [],
+  "summary": "Static document review only. This score does not establish behavioral performance; runtime remains NOT_RUN."
+}

@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0.0",
+  "skill_id": "project-intelligence",
+  "skill_path": ".agents/skills/project-intelligence/SKILL.md",
+  "target_revision": "f47bb2857d5fe33e390f02bf94c68ea3e3e488d5",
+  "reviewer": "Codex static review (model-assisted; not an independent human review)",
+  "reviewed_at": "2026-11-18T12:15:00Z",
+  "review_type": "static",
+  "criteria": [
+    {
+      "id": "trigger-boundary",
+      "score": 2,
+      "rationale": "The trigger covers onboarding, architecture discovery, resumption, decision recall, and freshness maintenance, with explicit non-triggers.",
+      "evidence_refs": [
+        ".agents/skills/project-intelligence/SKILL.md#When-to-use"
+      ]
+    },
+    {
+      "id": "inputs-prerequisites",
+      "score": 2,
+      "rationale": "Repository identity, instructions, project profile, current-state checkpoint, and relevant memory pages are explicit prerequisites.",
+      "evidence_refs": [
+        ".agents/skills/project-intelligence/SKILL.md#Inputs-and-prerequisites"
+      ]
+    },
+    {
+      "id": "procedure-executability",
+      "score": 2,
+      "rationale": "The eight-step workflow is ordered and requires source verification, claim labels, checkpoint updates, and validation.",
+      "evidence_refs": [
+        ".agents/skills/project-intelligence/SKILL.md#Procedure"
+      ]
+    },
+    {
+      "id": "output-contract",
+      "score": 2,
+      "rationale": "The required output enumerates inspected scope, retrieved pages/freshness, facts/assumptions/unknowns, evidence, and checkpoint changes.",
+      "evidence_refs": [
+        ".agents/skills/project-intelligence/SKILL.md#Required-output"
+      ]
+    },
+    {
+      "id": "safety-failure-handling",
+      "score": 2,
+      "rationale": "Evidence authority, project isolation, privacy, stale-memory handling, and stop conditions are explicit.",
+      "evidence_refs": [
+        ".agents/skills/project-intelligence/SKILL.md#Stop-conditions"
+      ]
+    },
+    {
+      "id": "evaluation-coverage",
+      "score": 2,
+      "rationale": "Eight direct cases include three in-scope, two near-miss, and one edge label; evidence covers recall, authority, isolation, staleness, retrieval, and resumption.",
+      "evidence_refs": [
+        "evals/cases/memory-decision-recall.json",
+        "evals/cases/memory-fact-vs-assumption.json",
+        "evals/cases/memory-project-isolation.json",
+        "evals/cases/memory-source-authority.json",
+        "evals/cases/memory-stale-detection.json",
+        "evals/cases/memory-targeted-retrieval.json",
+        "evals/cases/memory-task-resumption.json",
+        "evals/cases/memory-unverified-claim.json"
+      ]
+    }
+  ],
+  "total": 12,
+  "disposition": "PASS",
+  "hard_fail": false,
+  "runtime_status": "NOT_RUN",
+  "case_count": 8,
+  "coverage_labels": {
+    "in_scope": 3,
+    "near_miss": 2,
+    "edge": 1
+  },
+  "case_refs": [
+    "memory-decision-recall",
+    "memory-fact-vs-assumption",
+    "memory-project-isolation",
+    "memory-source-authority",
+    "memory-stale-detection",
+    "memory-targeted-retrieval",
+    "memory-task-resumption",
+    "memory-unverified-claim"
+  ],
+  "gaps": [],
+  "summary": "Static document review only. This score does not establish behavioral performance; runtime remains NOT_RUN."
+}

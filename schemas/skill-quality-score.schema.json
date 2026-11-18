@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gymsync-codex-toolkit:schema:skill-quality-score",
+  "title": "Static Skill Quality Scorecard",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "skill_id",
+    "skill_path",
+    "target_revision",
+    "reviewer",
+    "reviewed_at",
+    "review_type",
+    "criteria",
+    "total",
+    "disposition",
+    "hard_fail",
+    "runtime_status",
+    "case_count",
+    "coverage_labels",
+    "case_refs",
+    "gaps",
+    "summary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "skill_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "skill_path": {
+      "type": "string",
+      "pattern": "^\\.agents/skills/[a-z0-9-]+/SKILL\\.md$"
+    },
+    "target_revision": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "reviewer": {
+      "type": "string",
+      "minLength": 5
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "review_type": {
+      "const": "static"
+    },
+    "criteria": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "score",
+          "rationale",
+          "evidence_refs"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "trigger-boundary",
+              "inputs-prerequisites",
+              "procedure-executability",
+              "output-contract",
+              "safety-failure-handling",
+              "evaluation-coverage"
+            ]
+          },
+          "score": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 10
+          },
+          "evidence_refs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "total": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 12
+    },
+    "disposition": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "REVISE",
+        "FAIL"
+      ]
+    },
+    "hard_fail": {
+      "type": "boolean"
+    },
+    "runtime_status": {
+      "type": "string",
+      "enum": [
+        "NOT_RUN",
+        "BLOCKED"
+      ]
+    },
+    "case_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "coverage_labels": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "in_scope",
+        "near_miss",
+        "edge"
+      ],
+      "properties": {
+        "in_scope": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "near_miss": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "edge": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "case_refs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 10
+    }
+  }
+}

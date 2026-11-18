@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0.0",
+  "skill_id": "change-impact-analysis",
+  "skill_path": ".agents/skills/change-impact-analysis/SKILL.md",
+  "target_revision": "f47bb2857d5fe33e390f02bf94c68ea3e3e488d5",
+  "reviewer": "Codex static review (model-assisted; not an independent human review)",
+  "reviewed_at": "2026-11-18T12:15:00Z",
+  "review_type": "static",
+  "criteria": [
+    {
+      "id": "trigger-boundary",
+      "score": 2,
+      "rationale": "The trigger section defines non-trivial cross-module, data, API, role, and integration changes, and excludes routine explanations and planning substitution.",
+      "evidence_refs": [
+        ".agents/skills/change-impact-analysis/SKILL.md#When-to-use"
+      ]
+    },
+    {
+      "id": "inputs-prerequisites",
+      "score": 1,
+      "rationale": "Required context is present in the first procedure step, but there is no dedicated input/prerequisite contract.",
+      "evidence_refs": [
+        ".agents/skills/change-impact-analysis/SKILL.md#Inputs-and-prerequisites"
+      ]
+    },
+    {
+      "id": "procedure-executability",
+      "score": 2,
+      "rationale": "Seven ordered steps direct read-only discovery, flow tracing, compatibility analysis, risk identification, and a bounded verification plan.",
+      "evidence_refs": [
+        ".agents/skills/change-impact-analysis/SKILL.md#Procedure"
+      ]
+    },
+    {
+      "id": "output-contract",
+      "score": 2,
+      "rationale": "Required output enumerates affected components, flows, compatibility, risks, scope, and verification checks.",
+      "evidence_refs": [
+        ".agents/skills/change-impact-analysis/SKILL.md#Required-output"
+      ]
+    },
+    {
+      "id": "safety-failure-handling",
+      "score": 2,
+      "rationale": "The skill is read-only and has an explicit stop condition for unclear behavior or boundaries.",
+      "evidence_refs": [
+        ".agents/skills/change-impact-analysis/SKILL.md#Stop-conditions"
+      ]
+    },
+    {
+      "id": "evaluation-coverage",
+      "score": 1,
+      "rationale": "One directly targeted preserve-existing-UI case exists, but no near-miss/edge-labelled suite is recorded.",
+      "evidence_refs": [
+        "evals/cases/preserve-existing-ui.json"
+      ]
+    }
+  ],
+  "total": 10,
+  "disposition": "PASS",
+  "hard_fail": false,
+  "runtime_status": "NOT_RUN",
+  "case_count": 1,
+  "coverage_labels": {
+    "in_scope": 0,
+    "near_miss": 0,
+    "edge": 0
+  },
+  "case_refs": [
+    "preserve-existing-ui"
+  ],
+  "gaps": [
+    "Add explicit inputs/prerequisites section.",
+    "Expand direct coverage with near-miss and edge cases."
+  ],
+  "summary": "Static document review only. This score does not establish behavioral performance; runtime remains NOT_RUN."
+}
