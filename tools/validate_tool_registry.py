@@ -21,6 +21,34 @@ AVAILABILITY = {"planned", "configured", "verified", "disabled"}
 EVIDENCE = {"not-run", "static-reviewed", "runtime-verified", "blocked"}
 
 
+def _validate_io_schema(value: Any, path: str, errors: list[str]) -> None:
+    """Validate the structural subset used by operation input/output JSON Schemas."""
+    if not isinstance(value, dict):
+        errors.append(f"{path} must be a JSON Schema object")
+        return
+    if value.get("type") != "object":
+        errors.append(f"{path}.type must be 'object'")
+    properties = value.get("properties", {})
+    if not isinstance(properties, dict):
+        errors.append(f"{path}.properties must be an object")
+        return
+    required = value.get("required", [])
+    if not isinstance(required, list) or any(not isinstance(x, str) for x in required):
+        errors.append(f"{path}.required must be an array of property names")
+    elif set(required) - set(properties):
+        errors.append(f"{path}.required references undefined properties")
+    for name, spec in properties.items():
+        if not isinstance(name, str) or not isinstance(spec, dict):
+            errors.append(f"{path}.properties entries must map names to schema objects")
+            continue
+        if not isinstance(spec.get("type"), str) and "const" not in spec and "enum" not in spec:
+            errors.append(f"{path}.properties.{name} must declare a type, const, or enum")
+        if "items" in spec and not isinstance(spec["items"], dict):
+            errors.append(f"{path}.properties.{name}.items must be a schema object")
+        if "properties" in spec and not isinstance(spec["properties"], dict):
+            errors.append(f"{path}.properties.{name}.properties must be an object")
+
+
 def validate_registry(data: Any) -> list[str]:
     errors: list[str] = []
     if not isinstance(data, dict):
@@ -84,7 +112,7 @@ def validate_registry(data: Any) -> list[str]:
                     errors.append(f"{q} must be an object")
                     continue
                 req = {"id", "description", "resource_scope", "action", "effect", "risk", "idempotent", "approval"}
-                opt = {"input_schema", "output_schema"}
+                opt = set()
                 if set(op) - req - opt:
                     errors.append(f"{q} has unexpected properties: {sorted(set(op) - req - opt)}")
                 if req - set(op):
@@ -124,8 +152,7 @@ def validate_registry(data: Any) -> list[str]:
                 if risk == "read" and effect in {"local-write", "remote-state-change", "production-data-mutation"}:
                     errors.append(f"{q}: read risk cannot declare a write effect")
                 for field in ("input_schema", "output_schema"):
-                    if field in op and not isinstance(op[field], dict):
-                        errors.append(f"{q}.{field} must be a JSON Schema object")
+                    _validate_io_schema(op.get(field), f"{q}.{field}", errors)
         cred = tool.get("credential_ref")
         if cred is not None and (not isinstance(cred, str) or not CREDENTIAL_RE.fullmatch(cred)):
             errors.append(f"{p}.credential_ref must be env:NAME or secret://path; raw credentials are forbidden")
@@ -176,7 +203,7 @@ def validate_files() -> list[str]:
                 actual = op_props.get(field, {}).get("enum")
                 if not isinstance(actual, list) or set(actual) != expected:
                     errors.append(f"tool registry schema {field} enum does not match validator contract")
-            required_ops = {"id", "description", "resource_scope", "action", "effect", "risk", "idempotent", "approval"}
+            required_ops = {"id", "description", "resource_scope", "action", "effect", "risk", "idempotent", "approval", "input_schema", "output_schema"}
             if set(op_item.get("required", [])) != required_ops:
                 errors.append("tool registry schema operation required fields do not match validator contract")
     except (OSError, json.JSONDecodeError) as exc:

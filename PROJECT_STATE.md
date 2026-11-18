@@ -1466,3 +1466,10 @@ Graphify MCP tools accept optional `project_path` overrides. The server validate
 ### Installation status
 
 NOT INSTALLED. No package installation or Codex MCP configuration has been performed. User approval and resolution of the path-scope issue are required before a proof of concept.
+
+
+## 50. Registry input/output schema enforcement (2026-11-18)
+
+Operation-level `input_schema` and `output_schema` are now required fields in the registry schema. The deterministic validator checks their structural object schema shape, property declarations, and required-property references. The Graphify candidate's eight operations already carry both schemas.
+
+Added a regression test proving malformed input-schema required properties are rejected. This is structural validation of the toolkit's supported schema subset; it is not a full Draft 2020-12 JSON Schema engine.

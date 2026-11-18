@@ -46,7 +46,7 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 - `templates/mcp-adapter-review.md` — repeatable review record for each proposed MCP server.
 - `references/` — permission/approval, tool permission matrix, and source-adaptation policies.
 - `registry/tools.json` — deny-by-default declarative tool inventory; currently contains one static-reviewed Graphify candidate marked `planned`, not configured or verified.
-- `schemas/tool-registry.schema.json` — typed tool registry contract.
+- `schemas/tool-registry.schema.json` — typed tool registry contract with operation-level resource/action/effect and input/output schema validation.
 - `schemas/runtime-capability-snapshot.schema.json` — sanitized host-discovery evidence contract.
 - `evals/` — taxonomy, cases, rubrics, run records, reports, and acceptance checks.
 - `learning/inbox/` — proposed lessons awaiting review.

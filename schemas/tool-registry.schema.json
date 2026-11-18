@@ -100,7 +100,9 @@
                 "effect",
                 "risk",
                 "idempotent",
-                "approval"
+                "approval",
+                "input_schema",
+                "output_schema"
               ],
               "properties": {
                 "id": {

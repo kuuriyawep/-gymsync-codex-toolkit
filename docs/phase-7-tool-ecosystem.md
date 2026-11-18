@@ -49,7 +49,7 @@ Do not populate the registry with hypothetical MCP servers, API endpoints, shell
 - **n8n:** adapt typed tool catalogs, action schemas, deferred discovery, lifecycle/error handling, and approval gates; do not copy its runtime/nodes.
 - **Anthropic MCP Builder:** adapt naming, focused output, pagination, typed schemas, actionable errors, and operation annotations; annotations are hints, not authorization.
 - **Current Codex host:** use documented `codex mcp list --json`, `codex plugin list --json`, and active-session `/mcp` inspection; do not confuse configured entries with callable tools.
-- **Graphify:** exact v0.9.112 candidate reviewed and registered as `planned`; only eight local graph-query tools are allowlisted in the candidate contract. Three GitHub PR tools are excluded. Installation remains blocked by the `project_path` scope issue and user approval; do not vendor or silently install.
+- **Graphify:** exact v0.9.112 candidate reviewed and registered as `planned`; only eight local graph-query tools are included as candidate operations; the proposed Codex config allowlists those eight. Three GitHub PR tools are excluded. Installation remains blocked by the `project_path` scope issue and user approval; do not vendor or silently install.
 - **Superpowers/Matt Pocock/ECC:** reuse existing skill, review, TDD, and verification owners rather than adding duplicate skills.
 - **Hermes:** preserve Codex-owned skill/memory lifecycle; no second runtime or memory authority.
 
@@ -71,12 +71,12 @@ Detailed evidence is in `audits/source-reviews/`.
 
 ## Current status
 
-- Registry schema: authored with explicit operation-level resource scope, action, effect, risk, idempotency, and approval fields.
-- Registry manifest: initialized empty, deny-by-default.
+- Registry schema: authored with explicit operation-level resource scope, action, effect, risk, idempotency, approval, input schema, and output schema fields.
+- Registry manifest: deny-by-default; contains one static-reviewed Graphify candidate marked `planned`.
 - Permission matrix: authored.
 - Threat model: documented.
-- Deterministic validator: authored in `tools/validate_tool_registry.py` and wired into `tools/validate_toolkit.py`; schema enums and required operation fields are checked against the validator contract.
-- Unit tests: added in `tests/test_tool_registry.py` for empty registry, valid declaration, duplicate IDs, raw credentials, runtime evidence, destructive approval, malformed risk types, secret-path traversal, and resource/action/effect invariants.
+- Deterministic validator: authored in `tools/validate_tool_registry.py` and wired into `tools/validate_toolkit.py`; schema enums, required operation fields, and input/output schema structure are checked.
+- Unit tests: added in `tests/test_tool_registry.py` for the committed Graphify candidate, valid declarations, duplicate IDs, raw credentials, runtime evidence, destructive approval, malformed risk types, secret-path traversal, resource/action/effect invariants, and malformed input schemas.
 - Runtime discovery: `tools/discover_codex_runtime.py` performs read-only CLI/MCP/plugin preflight, emits sanitized JSON, uses no shell, applies timeouts, extracts names only, discards raw command output and has mocked tests in `tests/test_runtime_discovery.py`.
 - Runtime snapshot schema: `schemas/runtime-capability-snapshot.schema.json`.
 - MCP adapter lifecycle and security contract: `docs/mcp-adapter-contract.md`.
