@@ -18,7 +18,7 @@ Phase 10 improves the evaluation system already in the repository. It must not d
 | Static skill scorecards | 13 (one per native skill; model-assisted static reviews) |
 | Evaluation result/report artifacts tracked in Git | 0 |
 | Phase 9 workflow-ledger unit tests | 31 |
-| Latest verified CI run | #44302659907 — 125 unit tests and all 10 quality-gate steps passed |
+| Latest verified CI run | #44303295207 — 127 unit tests and all 10 quality-gate steps passed |
 
 The 54 cases are authored specifications, not completed behavioral evaluations. The absence of committed run records is not evidence of a pass; it means no historical run record is currently tracked in the repository. CI creates and validates a deterministic smoke-test result during the run, but that result is not a trusted Codex behavioral evaluation.
 
@@ -97,7 +97,7 @@ The skill-quality rubric describes evaluation coverage as part of the quality of
 2. **Behavioral evidence:** all runtime behavior remains unverified until trusted Codex sessions are run. Seven agent-coordination scenarios are explicitly deferred.
 3. **Result history:** no result/report artifacts are currently tracked. Decide which baseline runs should be retained after review, without fabricating past results.
 4. **Regression comparison:** inspect comparison semantics for missing cases, changed criterion IDs, and status downgrades; ensure missing evidence never appears as improvement.
-5. **Schema validator limits:** the repository intentionally implements a subset of JSON Schema Draft 2020-12. Test that unsupported keywords cannot silently create false confidence, and keep the limitation visible.
+5. **Schema validator limits:** the repository intentionally implements a subset of JSON Schema Draft 2020-12. The evaluator now rejects unsupported schema keywords rather than silently ignoring them; `minimum`, `maximum`, `minItems`, and `maxItems` are enforced, with regression tests. Full Draft 2020-12 compatibility remains out of scope.
 6. **Runner failure safety:** review interruption between JSON and Markdown creation, cleanup behavior, concurrent run IDs, symlink/path edge cases, and corrupted prior records.
 7. **Coverage mapping:** map the 54 cases to the 13 skills and evaluation taxonomy to identify true gaps and redundant scenarios before adding any case.
 8. **Cross-platform reliability:** current CI is Python 3.11 on Ubuntu; Windows, macOS, and additional Python versions are not certified.
