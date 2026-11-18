@@ -21,6 +21,18 @@ class TypeMatchingTests(unittest.TestCase):
     def test_integer_matches_number(self) -> None:
         self.assertTrue(evaluator.type_matches(7, "number"))
 
+    def test_unknown_schema_type_fails_closed(self) -> None:
+        self.assertFalse(evaluator.type_matches("anything", "made-up"))
+        self.assertTrue(evaluator.validate_instance("anything", {"type": "made-up"}))
+
+    def test_unknown_schema_format_fails_closed(self) -> None:
+        errors = evaluator.validate_instance("value", {"type": "string", "format": "hostname"})
+        self.assertTrue(any("unsupported schema format" in item for item in errors))
+
+    def test_invalid_type_union_fails_closed(self) -> None:
+        errors = evaluator.validate_instance("value", {"type": ["string", "made-up"]})
+        self.assertTrue(any("unsupported or invalid type" in item for item in errors))
+
 
 class SchemaValidationTests(unittest.TestCase):
     def test_required_and_additional_properties_are_checked(self) -> None:

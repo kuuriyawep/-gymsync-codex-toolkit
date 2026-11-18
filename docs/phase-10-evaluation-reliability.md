@@ -1,6 +1,6 @@
 # Phase 10 — Evaluation & Reliability
 
-**Status:** IN PROGRESS — inventory and first-pass gap map completed; per-skill scoring and reliability hardening remain open.
+**Status:** CLOSEOUT CANDIDATE — static review, case mapping, evaluator hardening, and final CI verification are the remaining closeout gates.
 
 ## 1. Scope and audit rules
 
@@ -77,7 +77,7 @@ The formal label counts use the case-level coverage field; unlabelled cases rema
 
 ### Coverage-enforcement discrepancy
 
-The skill-quality rubric describes evaluation coverage as part of the quality of a skill and the authoring skill describes a representative case set. However, the structured `coverage_requirements.target_skill` currently points specifically to `skill-authoring-and-evaluation`, and the validator applies the 3/2/1 minimums to that target. It does not prove that each of the other 12 skills has its own 3 in-scope, 2 near-miss, and 1 edge case. Treat this as a real coverage gap to resolve deliberately, not as a reason to duplicate 78 cases blindly. First map existing 54 cases to skills and taxonomy, then decide proportionate per-skill coverage requirements.
+The skill-quality rubric describes evaluation coverage as part of the quality of a skill and the authoring skill describes a representative case set. However, the structured `coverage_requirements.target_skill` currently points specifically to `skill-authoring-and-evaluation`, and the validator applies the 3/2/1 minimums to that target. It does not prove that each of the other 12 skills has its own 3 in-scope, 2 near-miss, and 1 edge case. Treat this as a real coverage gap to resolve deliberately, not as a reason to duplicate 78 cases blindly. The 55-case inventory is now mapped by explicit direct skill targets and taxonomy categories in the Phase 10 closeout addendum. Direct coverage gaps are accepted as Phase 11 behavioral-suite work; do not pad the suite with near-duplicates.
 
 ## 5. First-pass findings
 
@@ -123,3 +123,30 @@ The skill-quality rubric describes evaluation coverage as part of the quality of
 ## 8. Exit criteria
 
 Phase 10 is complete only when the 13-skill static review is evidence-backed, case coverage and overlap are mapped, evaluator reliability gaps are either fixed or explicitly accepted, the exact-head CI passes, and all unexecuted live Codex scenarios remain clearly marked NOT_RUN for Phase 11.
+
+
+## Phase 10 closeout addendum — coverage and final boundaries
+
+The 55-case inventory was reviewed by explicit `target`, taxonomy `category`, `coverage` label, and tags. Direct skill-target counts (not inferred from shared workflow files) are:
+
+| Native skill | Direct cases | Disposition |
+|---|---:|---|
+| change-impact-analysis | 1 | Under-covered; expand in Phase 11 behavioral tests |
+| clear-technical-communication | 1 | Under-covered; shared output-quality scenario only |
+| code-review | 2 | In-scope and near-miss represented; edge absent |
+| documentation-and-decisions | 2 | In-scope and near-miss represented; edge absent |
+| implementation-planning | 2 | In-scope and near-miss represented; edge absent |
+| project-intelligence | 8 | Broad direct suite; all three coverage labels represented |
+| requirements-clarification | 2 | Limited; one scenario is shared |
+| risk-aware-tdd | 3 | Multiple direct scenarios; formal labels absent |
+| security-review | 2 | High-risk scenarios represented; formal labels absent |
+| skill-authoring-and-evaluation | 6 | Enforced in-scope/near-miss/edge mix satisfied |
+| systematic-debugging | 3 | Multiple direct scenarios; formal labels absent |
+| verification-gate | 3 | Multiple direct scenarios; formal labels absent |
+| workflow-orchestration | 20 | Broad shared-coordinator suite; overlap is intentional |
+
+Cases targeting workflows, agents, schemas, and tools without naming a native skill remain cross-cutting system scenarios. They are not silently attributed to every skill. This mapping records a deliberate Phase 11 coverage backlog rather than asserting every skill has a 3/2/1 behavioral suite. The 3/2/1 validator remains scoped to skill-authoring-and-evaluation; a blanket quota was not introduced because it would create redundant cases.
+
+The evaluator was additionally hardened to reject unknown JSON Schema `type` values, invalid type unions, and unsupported string formats rather than treating unknown types as valid. The implemented validator remains a documented subset, not full Draft 2020-12.
+
+**Phase 10 boundary:** static scorecards are model-assisted and all runtime statuses remain `NOT_RUN`. Trusted Codex-session behavior, cross-platform CI, and the remaining per-skill behavioral coverage are Phase 11 work. Phase 10 may be closed only after the exact final commit passes CI and its logs are reviewed.

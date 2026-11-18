@@ -43,7 +43,7 @@ def type_matches(value: Any, expected: str) -> bool:
         "boolean": lambda v: isinstance(v, bool),
         "null": lambda v: v is None,
     }
-    return checks.get(expected, lambda _v: True)(value)
+    return checks.get(expected, lambda _v: False)(value)
 
 
 def validate_instance(value: Any, schema: dict[str, Any], path: str = "$") -> list[str]:
@@ -53,11 +53,19 @@ def validate_instance(value: Any, schema: dict[str, Any], path: str = "$") -> li
     for keyword in sorted(unsupported):
         errors.append(f"{path}: unsupported schema keyword {keyword!r}; validator does not implement it")
     expected = schema.get("type")
+    valid_types = {"object", "array", "string", "integer", "number", "boolean", "null"}
     if isinstance(expected, list):
+        if not expected or any(item not in valid_types for item in expected):
+            errors.append(f"{path}: schema declares an unsupported or invalid type")
+            return errors
         if not any(type_matches(value, item) for item in expected):
             return [f"{path}: expected one of types {expected}"]
-    elif expected and not type_matches(value, expected):
-        return [f"{path}: expected {expected}"]
+    elif expected is not None:
+        if expected not in valid_types:
+            errors.append(f"{path}: schema declares an unsupported or invalid type {expected!r}")
+            return errors
+        if not type_matches(value, expected):
+            return [f"{path}: expected {expected}"]
     if "const" in schema and value != schema["const"]:
         errors.append(f"{path}: must equal {schema['const']!r}")
     if "enum" in schema and value not in schema["enum"]:
@@ -67,6 +75,8 @@ def validate_instance(value: Any, schema: dict[str, Any], path: str = "$") -> li
             errors.append(f"{path}: shorter than minLength")
         if "pattern" in schema and not re.search(schema["pattern"], value):
             errors.append(f"{path}: does not match required pattern")
+        if schema.get("format") not in (None, "date-time"):
+            errors.append(f"{path}: unsupported schema format {schema.get('format')!r}")
         if schema.get("format") == "date-time":
             try:
                 parsed = dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
