@@ -83,16 +83,16 @@ def validate_handoff(data: Any) -> list[str]:
         errors.append("constraints.mode is invalid")
     if isinstance(role, str) and role in READ_ONLY_ROLES and (write_scope or mode != "read-only"):
         errors.append(f"{role} handoffs must be read-only with an empty write_scope")
-    if role in WRITE_ROLES and write_scope and mode != "scoped-write":
+    if isinstance(role, str) and role in WRITE_ROLES and write_scope and mode != "scoped-write":
         errors.append(f"{role} with write_scope must use scoped-write mode")
-    if role in TEST_ONLY_ROLES and any(not _is_test_path(path) for path in write_scope):
+    if isinstance(role, str) and role in TEST_ONLY_ROLES and any(not _is_test_path(path) for path in write_scope):
         errors.append("test_engineer write_scope may contain test files, fixtures, or evaluation cases only")
     if status == "approved":
         if not isinstance(approval.get("approval_reference"), str) or not approval["approval_reference"].strip():
             errors.append("approved handoff requires approval_reference")
         if not _covers(approved_scope, write_scope):
             errors.append("approved_scope must cover every requested write path")
-    elif write_scope and role in WRITE_ROLES:
+    elif write_scope and isinstance(role, str) and role in WRITE_ROLES:
         # A proposed handoff may be pending, but it must not be treated as executable.
         if status == "not-required":
             errors.append("implementer write_scope cannot be marked not-required")
@@ -125,9 +125,9 @@ def validate_result(result: Any, handoff: dict[str, Any]) -> list[str]:
     if not isinstance(approval, dict):
         approval = {}
     if changed_files:
-        if role not in WRITE_ROLES:
+        if not isinstance(role, str) or role not in WRITE_ROLES:
             errors.append("only approved write roles may return changed files under current role policy")
-        if role in TEST_ONLY_ROLES and any(not _is_test_path(path) for path in changed_files):
+        if isinstance(role, str) and role in TEST_ONLY_ROLES and any(not _is_test_path(path) for path in changed_files):
             errors.append("test_engineer changed_files must remain inside test/fixture/evaluation paths")
         if approval.get("status") != "approved":
             errors.append("changed files require an approved handoff")
@@ -203,7 +203,7 @@ def validate_task_graph(data: Any) -> list[str]:
         if write_scope:
             if not isinstance(owner, str) or owner not in WRITE_ROLES:
                 errors.append(f"owner {owner} is not authorized for write tasks")
-            if owner in TEST_ONLY_ROLES and any(not _is_test_path(path) for path in write_scope):
+            if isinstance(owner, str) and owner in TEST_ONLY_ROLES and any(not _is_test_path(path) for path in write_scope):
                 errors.append(f"test_engineer task {tid} may write test/fixture/evaluation paths only")
             if task.get("approval_status") != "approved":
                 errors.append(f"write task {tid} requires approval_status=approved")
