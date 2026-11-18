@@ -1,6 +1,6 @@
 # Phase 8 — Agent Capability Audit
 
-**Status:** Initial audit complete; role contracts and delegation schemas are next.  
+**Status:** Existing-role audit complete; typed handoff/task contracts are implemented; dedicated test-engineer role added with test-only scope checks.  
 **Date:** 2026-11-18  
 **Inputs:** [Phase 6 final synthesis](phase-6-final-synthesis.md), [workflow registry](../workflows/registry.md), [agent handoff](../templates/agent-handoff.md), [agent validation](agent-validation.md)
 
@@ -15,6 +15,7 @@ The repository currently defines five executable Codex custom agents and five hu
 | `implementer` | `.codex/agents/implementer.toml` | `agents/implementer.md` | Approved implementation and scoped tests | Approved write scope only |
 | `reviewer` | `.codex/agents/reviewer.toml` | `agents/reviewer.md` | Independent correctness, regression, maintainability, and test review | No writes |
 | `security_auditor` | `.codex/agents/security_auditor.toml` | `agents/security.md` | Defensive application security and trust-boundary review | No writes |
+| `test_engineer` | `.codex/agents/test_engineer.toml` | `agents/test_engineer.md` | Test strategy, fixtures, test harnesses, coverage, and safe test execution | Approved test/fixture/evaluation paths only |
 
 All five native files currently contain the required `name`, `description`, and `developer_instructions` fields. Each TOML name matches its filename. The five role briefs describe the same five responsibilities.
 
@@ -79,7 +80,7 @@ The registry's permission profiles and Phase 7 operation metadata remain the sou
 
 | Candidate | Decision | Rationale |
 |---|---|---|
-| `test_engineer` | **Recommended for Phase 8** | Distinct test strategy, fixture design, test-only implementation, test execution, flakiness and coverage analysis. Must own test paths separately from application-code implementation. |
+| `test_engineer` | **Added in Phase 8** | Distinct test strategy, fixture design, test-only implementation, test execution, flakiness and coverage analysis. Must own test paths separately from application-code implementation. |
 | `docs_researcher` | Defer | Useful for external framework/API documentation, but first confirm an approved documentation MCP/search tool is available in the target Codex runtime. |
 | `designer` | Defer | Requires a defined design-system/Figma workflow and tool availability; no evidence that a generic role would improve current toolkit workflows yet. |
 | `database_specialist` | Defer | Current security auditor and database/backend workflow cover defensive review; add only if repeatable database implementation tasks justify a separate owner. |
@@ -95,25 +96,23 @@ If added:
 - Implementer owns application code. When a dedicated test engineer is assigned, the handoff must name the test-file owner to prevent overlapping writes.
 - Reviewer remains independent and does not modify tests or implementation.
 
-The test engineer must not be added until the handoff/result schema and task ownership validator can express its boundaries.
+The test engineer was added only after the handoff/result schema and task ownership validator could express test-only write boundaries.
 
 ## 6. Current gaps
 
-1. Handoff is a Markdown template only; there is no machine-validated handoff/result schema.
-2. Task dependencies and cycles are not represented in a validated DAG.
-3. Write-scope overlap is described in prose but not deterministically checked.
-4. The five role configs do not express a typed tool-access profile.
-5. Per-agent capability reductions have not been tested in a real Codex session.
-6. Existing agent evaluation cases cover important behaviors, but Phase 8 needs explicit tests for role ownership, dependency cycles, write-scope conflicts, context minimization, and reviewer independence.
+1. Role and write-scope rules remain procedural; they do not create independent OS sandboxing.
+2. Per-agent capability reductions have not been tested in a real Codex session.
+3. Existing evaluation cases still need trusted-session execution for behavioral sign-off.
+4. The task graph validator checks declared write overlap and dependencies, but actual concurrent agent behavior remains unverified.
 
 ## 7. Phase 8 work sequence
 
-1. Freeze the existing five-role inventory and ownership boundaries.
-2. Define JSON Schemas for handoffs, agent results, and task graphs.
-3. Implement a deterministic validator for role IDs, approval scope, result evidence, DAG cycles, and parallel write ownership.
-4. Add the test-engineer role only after its task/file ownership can be validated.
-5. Update workflow routing and handoff templates without duplicating existing skills.
-6. Add evaluation cases for role fit, context boundaries, conflicts, failure recovery, and write-scope enforcement.
+1. Freeze the existing five-role inventory and ownership boundaries. **Complete.**
+2. Define JSON Schemas for handoffs, agent results, and task graphs. **Complete.**
+3. Implement deterministic checks for approval scope, result evidence, DAG cycles, and parallel write ownership. **Complete.**
+4. Add test_engineer with test-only scope checks. **Complete.**
+5. Update workflow routing and handoff templates. **In progress.**
+6. Add evaluation cases for role fit, context boundaries, conflicts, failure recovery, and write-scope enforcement. **In progress.**
 7. Run CI; leave actual subagent behavior as NOT_RUN until a trusted Codex session is available.
 
 ## 8. Explicit non-goals

@@ -14,8 +14,8 @@ This file is the routing index for detailed procedures. Linked workflow files re
 
 | Category | Typical signals | Primary workflow | Relevant skills | Optional specialist |
 |---|---|---|---|---|
-| Bug | Existing behavior is broken, inconsistent, or regressed | [Bug Investigation and Fix](bug-fix.md) | `systematic-debugging` → `risk-aware-tdd` → `verification-gate` (skip diagnosis only when root cause is already established with evidence) | `repo_explorer`, then `implementer` and `reviewer` as needed |
-| Feature | New user-facing or system capability | [Feature Delivery](feature-delivery.md) | `requirements-clarification`, `implementation-planning`, `change-impact-analysis`, `verification-gate` | `planner`, `implementer`, `reviewer` |
+| Bug | Existing behavior is broken, inconsistent, or regressed | [Bug Investigation and Fix](bug-fix.md) | `systematic-debugging` → `risk-aware-tdd` → `verification-gate` (skip diagnosis only when root cause is already established with evidence) | `repo_explorer`, `implementer`, `test_engineer` for a distinct test task, and `reviewer` as needed |
+| Feature | New user-facing or system capability | [Feature Delivery](feature-delivery.md) | `requirements-clarification`, `implementation-planning`, `change-impact-analysis`, `verification-gate` | `planner`, `implementer`, `test_engineer` for independent test ownership, `reviewer` |
 | Database/backend | Schema, persistence, API, authorization, RLS, migrations, data integrity | [Database and Backend Change](database-backend-change.md) | `change-impact-analysis`, `security-review`, `risk-aware-tdd`, `verification-gate` | `repo_explorer`, `security_auditor`, `reviewer` |
 | Security | Threat modeling, vulnerability assessment, access control, tenant isolation | [Security Audit](security-audit.md) | `security-review`, `change-impact-analysis` | `security_auditor`, with `reviewer` for independent review |
 | Research | Compare technologies, investigate architecture, answer a decision question | [Technical Research and Decision](technical-research.md) | `documentation-and-decisions`, `clear-technical-communication` | `repo_explorer`, `planner` |
@@ -97,6 +97,7 @@ Parallelize independent read-only investigations or disjoint tasks with non-over
 | `implementer` | User-approved plan is ready | Scoped code/docs/tests | No scope expansion or unapproved side effects |
 | `reviewer` | Independent quality review is useful/required | Read-only findings and recommendation | No implementation |
 | `security_auditor` | Trust boundaries, auth, data exposure, security controls | Defensive read-only assessment | No exploitative actions |
+| `test_engineer` | Test strategy, fixtures, harnesses, coverage, flaky tests, safe test execution | Test files/fixtures/evaluation cases only, within approved write scope | No production-code edits or live/prod data
 
 Codex remains the primary coordinator and is accountable for the final result. Agent definitions do not create isolation or override parent sandbox/tool permissions.
 

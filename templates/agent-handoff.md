@@ -30,7 +30,7 @@ Use this contract whenever Codex delegates a non-trivial task. Keep the handoff 
 
 ## Schema contract
 
-The structured form must validate against `schemas/agent-handoff.schema.json`. Use the matching `handoff_id` in the agent result. A pending or denied approval is not permission to write. Read-only roles must have an empty `write_scope`.
+The structured form must validate against `schemas/agent-handoff.schema.json`. Use the matching `handoff_id` in the agent result. A pending or denied approval is not permission to write. Read-only roles must have an empty `write_scope`. `test_engineer` may write only test files, fixtures, or evaluation cases; `implementer` owns production implementation paths.
 
 ## Required response from the agent
 

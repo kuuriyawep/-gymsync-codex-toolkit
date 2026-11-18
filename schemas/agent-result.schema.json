@@ -33,7 +33,8 @@
         "planner",
         "implementer",
         "reviewer",
-        "security_auditor"
+        "security_auditor",
+        "test_engineer"
       ]
     },
     "outcome": {

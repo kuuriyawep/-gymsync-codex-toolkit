@@ -40,6 +40,7 @@ Use adaptive routing for non-trivial engineering work: Explore → Clarify → T
 - Implementer: changes only within approved plan and scope.
 - Reviewer: independent correctness, regression, maintainability, and security review.
 - Security: threat modeling and security findings; no exploitative actions.
+- Test engineer: owns approved test files, fixtures, evaluation cases, and safe test execution; no production implementation edits.
 
 ## Skills
 Use a skill when its description matches the task. Read its complete SKILL.md before applying it. Skills provide procedures; this file defines repository-wide rules.

@@ -102,6 +102,16 @@ class HandoffContractTests(unittest.TestCase):
         data["recipient"] = []
         self.assertTrue(any("recipient must name" in e for e in validator.validate_handoff(data)))
 
+    def test_test_engineer_test_scope_is_valid(self):
+        self.assertEqual(
+            validator.validate_handoff(handoff("test_engineer", ["tests/test_auth.py"], "approved")),
+            []
+        )
+
+    def test_test_engineer_cannot_receive_production_write_scope(self):
+        errors = validator.validate_handoff(handoff("test_engineer", ["src/auth.py"], "approved"))
+        self.assertTrue(any("test_engineer write_scope" in e for e in errors))
+
     def test_approved_write_scope_must_cover_requested_paths(self):
         data = handoff("implementer", ["src/main.py"], "approved")
         data["approval"]["approved_scope"] = ["src/other.py"]
@@ -128,6 +138,13 @@ class AgentResultTests(unittest.TestCase):
         data = result()
         del data["summary"]
         self.assertTrue(any("summary" in e for e in validator.validate_result(data, handoff())))
+
+    def test_test_engineer_cannot_change_production_files(self):
+        errors = validator.validate_result(
+            result("test_engineer", ["src/auth.py"]),
+            handoff("test_engineer", ["tests/test_auth.py"], "approved")
+        )
+        self.assertTrue(any("test_engineer changed_files" in e for e in errors))
 
     def test_malformed_changed_files_is_rejected_without_crashing(self):
         data = result()
@@ -167,6 +184,14 @@ class TaskGraphTests(unittest.TestCase):
             task("edit-two", "implementer", writes=["src/shared/types.ts"], deps=["edit-one"], approved=True)
         ])
         self.assertEqual(validator.validate_task_graph(data), [])
+
+    def test_test_engineer_can_own_approved_test_write(self):
+        data = graph([task("add-tests", "test_engineer", writes=["tests/test_auth.py"], approved=True)])
+        self.assertEqual(validator.validate_task_graph(data), [])
+
+    def test_test_engineer_cannot_own_production_write(self):
+        data = graph([task("edit-auth", "test_engineer", writes=["src/auth.py"], approved=True)])
+        self.assertTrue(any("test_engineer task" in e for e in validator.validate_task_graph(data)))
 
     def test_write_task_requires_user_approval(self):
         data = graph([task("edit-one", "implementer", writes=["src/main.py"])])

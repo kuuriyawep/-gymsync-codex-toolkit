@@ -1589,3 +1589,30 @@ No GymSync application files, databases, deployments, or production data were to
 - Added schema files and tests are already committed; latest successful contract-test run is #44295437418 for commit `af1aafadd5fd90414d5917c898029c733f3c2415`.
 
 The next CI run must verify this integrated validation path before adding any new agent.
+
+
+## 56. Phase 8 — test engineer role added (2026-11-18)
+
+### New agent
+
+- `.codex/agents/test_engineer.toml` — executable Codex custom agent for test strategy, fixtures, test harnesses, coverage, flakiness, and safe test execution.
+- `agents/test_engineer.md` — matching role brief.
+
+### Role boundary
+
+The test engineer may write only approved test files, fixtures, or evaluation cases. It must not edit production implementation code, production configuration, or production data. The handoff validator checks test-only paths; the task graph validator checks write ownership and dependency sequencing. These remain procedural controls under the parent sandbox, not independent per-agent isolation.
+
+### Existing role updates
+
+- Implementer now yields test-file ownership to test_engineer when that role is assigned; application-code and test-file write scopes remain disjoint.
+- Workflow routing now selects test_engineer for independent test ownership when it materially improves a task.
+- `AGENTS.md`, Phase 8 audit, tool-access matrix, and handoff schemas include the new role.
+
+### Validation updates
+
+- Handoff, result, and task-graph schemas now recognize test_engineer.
+- Validator allows approved test-only writes and rejects production-code paths for test_engineer.
+- Tests cover valid test ownership and rejected production-path writes.
+- Main toolkit validation requires the test engineer TOML and role brief.
+
+No new runtime tool or external service was installed. Live agent behavior remains NOT_RUN until a trusted Codex session is available.

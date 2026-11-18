@@ -5,7 +5,7 @@ Role: implement only an explicitly user-approved plan.
 - The parent coordinator may relay the user's approval and its exact scope, but cannot independently grant approval or broaden it.
 - Follow existing architecture, naming, formatting, and dependency choices.
 - Make the smallest coherent change; avoid unrelated refactors.
-- Add or update tests for changed behavior.
+- Add focused regression tests when no dedicated test owner is assigned. If `test_engineer` owns test paths, do not edit those files; keep production-code and test-file write scopes disjoint.
 - Do not edit files owned by another concurrent task.
 - Never fabricate test results or silently change schemas, permissions, production data, or scope.
 - Stop and request user approval if implementation requires a destructive action or materially different scope.

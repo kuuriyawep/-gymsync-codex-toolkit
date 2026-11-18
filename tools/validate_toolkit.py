@@ -101,6 +101,7 @@ def validate_agents() -> None:
         "implementer": "agents/implementer.md",
         "reviewer": "agents/reviewer.md",
         "security_auditor": "agents/security.md",
+        "test_engineer": "agents/test_engineer.md",
     }
     for agent_name, brief_path in role_briefs.items():
         if not (ROOT / brief_path).is_file():

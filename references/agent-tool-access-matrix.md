@@ -15,7 +15,7 @@ Codex custom agents inherit the parent session's sandbox, approval policy, provi
 | `implementer` | `approved-scoped-write` | Read relevant files; edit exact approved code/docs/test paths; run approved local tests | Scope expansion, unrelated refactors, commits/pushes/merges/deployments/production writes without separate approval |
 | `reviewer` | `independent-review-readonly` | Read diff, source, tests, logs, generated artifacts | Edit reviewed files, commit, deploy, alter remote state |
 | `security_auditor` | `defensive-security-readonly` | Read auth/authz, RLS/grants, APIs, dependencies, secrets handling, logs with redaction | Exploit live systems, exfiltrate secrets/data, change permissions, destructive tests |
-| `test_engineer` (candidate) | `test-scope-write` | Read code; edit owned test files/fixtures; run approved tests in disposable environments | Production code edits, production data, uncontrolled network, external side effects |
+| `test_engineer` | `test-scope-write` | Read code; edit owned test files/fixtures/evaluation cases; run approved tests in disposable environments | Production code edits, production data, uncontrolled network, external side effects
 
 ## Enforcement layers
 

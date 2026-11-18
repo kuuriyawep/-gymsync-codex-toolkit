@@ -12,7 +12,9 @@ SCHEMA_DIR = ROOT / "schemas"
 sys.path.insert(0, str(ROOT / "tools"))
 from evaluate_toolkit import validate_instance  # noqa: E402
 READ_ONLY_ROLES = {"repo_explorer", "planner", "reviewer", "security_auditor"}
-WRITE_ROLES = {"implementer"}
+WRITE_ROLES = {"implementer", "test_engineer"}
+TEST_ONLY_ROLES = {"test_engineer"}
+TEST_PATH_PARTS = {"tests", "test", "__tests__", "spec", "evals", "fixtures", "testing", "testdata"}
 ROLES = READ_ONLY_ROLES | WRITE_ROLES
 SCHEMA_FILES = ("agent-handoff.schema.json", "agent-result.schema.json", "agent-task-graph.schema.json")
 TASK_GRAPH_EXAMPLE = ROOT / "templates" / "agent-task-graph.json"
@@ -29,6 +31,16 @@ def _schema_errors(value: Any, filename: str) -> list[str]:
 
 def _strings(value: Any, *, nonempty: bool = False) -> bool:
     return isinstance(value, list) and (not nonempty or bool(value)) and all(isinstance(item, str) and item.strip() for item in value)
+
+
+def _is_test_path(path: Any) -> bool:
+    if not isinstance(path, str) or not path.strip() or path.startswith("/") or "\\" in path:
+        return False
+    parts = [part for part in path.split("/") if part]
+    if not parts or any(part in {".", ".."} for part in parts):
+        return False
+    filename = parts[-1].lower()
+    return any(part in TEST_PATH_PARTS for part in parts) or filename.startswith("test_") or filename.endswith("_test.py") or ".test." in filename or ".spec." in filename
 
 
 def _covers(approved: list[str], requested: list[str]) -> bool:
@@ -71,14 +83,16 @@ def validate_handoff(data: Any) -> list[str]:
         errors.append("constraints.mode is invalid")
     if isinstance(role, str) and role in READ_ONLY_ROLES and (write_scope or mode != "read-only"):
         errors.append(f"{role} handoffs must be read-only with an empty write_scope")
-    if role == "implementer" and write_scope and mode != "scoped-write":
-        errors.append("implementer with write_scope must use scoped-write mode")
+    if role in WRITE_ROLES and write_scope and mode != "scoped-write":
+        errors.append(f"{role} with write_scope must use scoped-write mode")
+    if role in TEST_ONLY_ROLES and any(not _is_test_path(path) for path in write_scope):
+        errors.append("test_engineer write_scope may contain test files, fixtures, or evaluation cases only")
     if status == "approved":
         if not isinstance(approval.get("approval_reference"), str) or not approval["approval_reference"].strip():
             errors.append("approved handoff requires approval_reference")
         if not _covers(approved_scope, write_scope):
             errors.append("approved_scope must cover every requested write path")
-    elif write_scope and role == "implementer":
+    elif write_scope and role in WRITE_ROLES:
         # A proposed handoff may be pending, but it must not be treated as executable.
         if status == "not-required":
             errors.append("implementer write_scope cannot be marked not-required")
@@ -111,8 +125,10 @@ def validate_result(result: Any, handoff: dict[str, Any]) -> list[str]:
     if not isinstance(approval, dict):
         approval = {}
     if changed_files:
-        if role != "implementer":
-            errors.append("only implementer may return changed files under current role policy")
+        if role not in WRITE_ROLES:
+            errors.append("only approved write roles may return changed files under current role policy")
+        if role in TEST_ONLY_ROLES and any(not _is_test_path(path) for path in changed_files):
+            errors.append("test_engineer changed_files must remain inside test/fixture/evaluation paths")
         if approval.get("status") != "approved":
             errors.append("changed files require an approved handoff")
         if not isinstance(allowed_writes, list) or not _covers(allowed_writes, changed_files):
@@ -187,6 +203,8 @@ def validate_task_graph(data: Any) -> list[str]:
         if write_scope:
             if not isinstance(owner, str) or owner not in WRITE_ROLES:
                 errors.append(f"owner {owner} is not authorized for write tasks")
+            if owner in TEST_ONLY_ROLES and any(not _is_test_path(path) for path in write_scope):
+                errors.append(f"test_engineer task {tid} may write test/fixture/evaluation paths only")
             if task.get("approval_status") != "approved":
                 errors.append(f"write task {tid} requires approval_status=approved")
             approved_scope = task.get("approved_scope", [])
