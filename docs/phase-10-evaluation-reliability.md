@@ -13,14 +13,14 @@ Phase 10 improves the evaluation system already in the repository. It must not d
 | Native Codex skills | 13 |
 | Portable skill mirrors | 13 |
 | Native/portable pairs | 13 |
-| Evaluation case specifications | 54 |
+| Evaluation case specifications | 55 |
 | Rubric files | 7 (4 Markdown, 3 structured JSON) |
 | Static skill scorecards | 13 (one per native skill; model-assisted static reviews) |
 | Evaluation result/report artifacts tracked in Git | 0 |
 | Phase 9 workflow-ledger unit tests | 31 |
 | Latest verified CI run | #44303295207 — 127 unit tests and all 10 quality-gate steps passed |
 
-The 54 cases are authored specifications, not completed behavioral evaluations. The absence of committed run records is not evidence of a pass; it means no historical run record is currently tracked in the repository. CI creates and validates a deterministic smoke-test result during the run, but that result is not a trusted Codex behavioral evaluation.
+The 55 cases are authored specifications, not completed behavioral evaluations. The absence of committed run records is not evidence of a pass; it means no historical run record is currently tracked in the repository. CI creates and validates a deterministic smoke-test result during the run, but that result is not a trusted Codex behavioral evaluation.
 
 ## 3. Existing evaluation architecture
 
