@@ -1,6 +1,6 @@
 # Phase 7 — Tool Ecosystem & Integration
 
-**Status:** STARTED — architecture and contract design  
+**Status:** IN PROGRESS — initial registry contract, deny-by-default manifest, permission matrix, validator, and unit tests authored; latest CI pending  
 **Inputs:** [Phase 6 synthesis](phase-6-final-synthesis.md), [source audit index](../audits/source-reviews/README.md), [source adoption map](source-adoption-map.md)
 
 ## Objective
@@ -72,6 +72,8 @@ Detailed evidence is in `audits/source-reviews/`.
 - Registry manifest: initialized empty, deny-by-default.
 - Permission matrix: authored.
 - Threat model: documented.
+- Deterministic validator: authored in `tools/validate_tool_registry.py` and wired into `tools/validate_toolkit.py`.
+- Unit tests: added in `tests/test_tool_registry.py` for empty registry, valid declaration, duplicate IDs, raw credentials, runtime evidence, destructive approval, malformed risk types, and secret-path traversal.
 - Real adapters: NOT_IMPLEMENTED.
 - Credentials: NOT_CONFIGURED.
 - Runtime integration: NOT_RUN.
@@ -93,4 +95,4 @@ Phase 7 cannot close until:
 
 ## Next work
 
-Implement the deterministic registry validator and tests. Add adapter-specific contracts only for providers the user selected and the current Codex environment can expose.
+Inspect CI for the latest main commit. After it passes, review exact host-exposed integrations and choose one adapter only when its provider, transport, permissions, and runtime availability are evidenced. Keep the registry empty until a real adapter is selected and configured.
