@@ -1722,3 +1722,30 @@ Implement the deterministic workflow ledger and tests for state transitions, has
 - Documentation now states the hash chain is tamper-evident, not digitally signed, and includes the task transition table.
 - Added tests for Git-worktree exclusion and insecure directory permissions.
 - CI for this hardening commit is pending.
+
+
+## 65. Phase 9 closeout; Phase 10 handoff (2026-11-18)
+
+### Phase 9 status
+
+**IMPLEMENTATION COMPLETE — repository CI verified.**
+
+- Append-only event ledger and hash-chain.
+- Snapshot replay, verification, resume, and explicit recovery.
+- Workflow/task state transitions, approvals, dependency and overlapping-write gates.
+- Retry, timeout, cancellation, evidence, validation/review, and completion gates.
+- Private local store outside Git worktrees.
+- Native/portable workflow skill parity and workflow-brief template integration.
+- 117 unit tests passed; all 10 substantive CI steps passed.
+
+Latest verified run: [#44297943897](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/44297943897), commit `6f4069dc65314bf4057e7b545d9d1958b22f67d5`.
+
+### Deferred
+
+Live Codex end-to-end behavior, agent scheduling, actual approval enforcement, and concurrent-agent recovery remain NOT_RUN until Phase 11.
+
+### Current phase
+
+**Phase 10 — Evaluation & Reliability.**
+
+First action: inventory all 13 skills, 42 evaluation cases, 7 rubrics, current run records, and Phase 7–9 contract tests. Score static quality and map gaps without duplicating existing coverage.

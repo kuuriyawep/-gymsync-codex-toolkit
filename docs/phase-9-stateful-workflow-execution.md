@@ -1,6 +1,6 @@
 # Phase 9 — Stateful Workflow Execution
 
-**Status:** IMPLEMENTATION IN PROGRESS — append-only ledger, hash-chain, state gates, and initial tests implemented; CI hardening ongoing.  
+**Status:** IMPLEMENTATION COMPLETE — local append-only ledger, hash-chain, state/approval/task gates, explicit recovery, and deterministic tests are implemented. Latest CI passed 117 tests; live Codex behavior remains deferred to Phase 11.  
 **Date:** 2026-11-18  
 **Inputs:** [Workflow orchestration skill](../.agents/skills/workflow-orchestration/SKILL.md), [Workflow brief](../templates/workflow-brief.md), [Agent task graph schema](../schemas/agent-task-graph.schema.json), [Phase 8 handoff/result contracts](../docs/phase-8-agent-capability-audit.md)
 
@@ -165,9 +165,9 @@ python tools/workflow_ledger.py resume --store "$STORE" --workflow-id toolkit-ph
 2. Add event and snapshot schemas. **Complete.**
 3. Implement deterministic ledger with append, replay, hash-chain verification, idempotency, atomic snapshot update, and explicit recovery. **Complete in initial implementation.**
 4. Add task/approval/checkpoint operations and completion gates. **Complete in initial implementation.**
-5. Add tests for legal/illegal transitions, duplicate keys, hash corruption, snapshot rebuild, interruption, retries, cancellation, private-store boundaries, and no false completion. **Initial deterministic suite implemented; expand edge-case coverage as needed.**
+5. Add tests for legal/illegal transitions, duplicate keys, hash corruption, snapshot rebuild, interruption, retries, cancellation, private-store boundaries, and no false completion. **Initial deterministic suite complete (117 tests across toolkit); broader evaluation continues in Phase 10.**
 6. Integrate ledger validation and commands into the workflow-orchestration skill and templates. **Complete.**
-7. Run full CI. Keep real Codex end-to-end workflow execution NOT_RUN until Phase 11.
+7. Run full CI. **Complete:** all 10 substantive quality-gate steps passed. Real Codex end-to-end workflow execution remains NOT_RUN until Phase 11.
 
 ## 11. Non-goals
 
@@ -176,3 +176,26 @@ python tools/workflow_ledger.py resume --store "$STORE" --workflow-id toolkit-ph
 - No database/cloud persistence.
 - No automatic tool execution or external side effects.
 - No replacement for `PROJECT_STATE.md` or Project Intelligence.
+
+
+## 12. Phase 9 closeout
+
+Phase 9 implementation is complete at the repository level.
+
+- Append-only event log and hash-chain verification.
+- Rebuildable atomic snapshot and explicit recovery.
+- Unique idempotency keys and stale-snapshot protection.
+- Workflow/task state transitions, dependency gates, scoped approvals, and completion gates.
+- Retry limits, non-idempotent retry approval, timeout, and two-stage cancellation.
+- Private local store outside Git worktrees; restrictive POSIX permissions.
+- Resume verifies state and does not execute pending work.
+- Main toolkit validation includes workflow schema checks.
+- Native/portable workflow skill and workflow brief template are synchronized.
+
+<badge>CI verified</badge> GitHub Actions [run #44297943897](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/44297943897) passed all 10 substantive steps for commit `6f4069dc65314bf4057e7b545d9d1958b22f67d5`; 117 unit tests passed.
+
+This is deterministic code/contract validation, not live Codex workflow execution or a proof of behavior under concurrent real agents. Phase 11 owns that runtime validation.
+
+## 13. Next phase — Phase 10: Evaluation & Reliability
+
+Audit the 13 canonical skills, all current evaluation cases and rubrics, and the new Phase 7–9 contracts. Remove duplicates, identify missing cases, score static skill quality with evidence, add recovery/adversarial/permission/delegation cases, and measure context/output fidelity. Keep behavioral execution clearly marked NOT_RUN until Phase 11.

@@ -150,7 +150,7 @@ This is the reconciled forward roadmap for the current 11-phase plan. It does no
 
 ### Phase 10 — Evaluation & Reliability
 - Score all 13 canonical skills using the established rubric.
-- Review all 41 existing evaluation cases for quality, duplication, gaps, and target correctness.
+- Review all 42 current evaluation cases for quality, duplication, gaps, and target correctness.
 - Add tool, permission, delegation, workflow, recovery, adversarial, and regression cases.
 - Measure context/output fidelity and performance.
 - Acceptance: repeatable deterministic results, scored static reviews, and clearly separated NOT_RUN behavioral tests.
@@ -225,3 +225,16 @@ Phase 8 has completed its design and deterministic-validation scope:
 - Phase 8 CI verified successfully at commit `123e337649076b3f155085d47809ca48861a29be`.
 
 The original inventory above is preserved as the Phase 6 baseline. Live Codex agent behavior remains NOT_RUN until Phase 11.
+
+
+## 14. Dated implementation update — Phase 9 (2026-11-18)
+
+Phase 9 — Stateful Workflow Execution — is implemented and passed deterministic repository CI:
+- Append-only local event log with SHA-256 hash chain.
+- Atomic rebuildable snapshot, idempotency, verify/resume/recover.
+- Workflow/task transitions, approval gates, dependency and write-overlap controls.
+- Bounded retries, timeout/cancellation handling, evidence-backed validation/review, and completion gates.
+- Private local store outside Git worktrees; no hosted database or autonomous executor.
+- 117 unit tests passed; all 10 substantive CI steps passed in run #44297943897 for commit `6f4069dc65314bf4057e7b545d9d1958b22f67d5`.
+
+The next phase is Phase 10 — Evaluation & Reliability. Current evaluation inventory is 42 cases, with behavioral execution reserved for Phase 11.

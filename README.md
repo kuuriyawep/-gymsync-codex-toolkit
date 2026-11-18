@@ -18,6 +18,7 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 - [Phase 7 Tool Ecosystem](docs/phase-7-tool-ecosystem.md) — typed registry, permission model, and adapter acceptance criteria.
 - [Phase 8 Agent Audit](docs/phase-8-agent-capability-audit.md) — agent inventory, ownership, runtime constraints, and test-engineer role.
 - [Phase 9 Stateful Workflow Execution](docs/phase-9-stateful-workflow-execution.md) — durable task ledger, state transitions, idempotency, recovery, and evidence model.
+- [Phase 10 Evaluation & Reliability](docs/phase-10-evaluation-reliability.md) — skill scoring, evaluation coverage, adversarial cases, and reliability evidence.
 - [Agent Tool Access Matrix](references/agent-tool-access-matrix.md) — proposed task-level role permissions and enforcement boundaries.
 - [Codex Runtime Discovery](docs/codex-runtime-discovery.md) — safe local preflight for configured MCP servers and plugins.
 - [MCP Adapter Contract](docs/mcp-adapter-contract.md) — MCP lifecycle, trust review, permissions, reliability, and verification gates.
