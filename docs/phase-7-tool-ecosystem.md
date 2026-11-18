@@ -101,7 +101,7 @@ Phase 7 design/contract acceptance criteria:
 8. No adapter is described as configured/verified without runtime evidence.
 9. Deterministic contract tests and the full latest-main CI pass.
 
-<badge color="success">Phase 7 design accepted</badge>
+**Phase 7 design accepted.**
 
 External installation approval is a separate gate, not a prerequisite for completing the architecture phase. No adapter is called functional until it has been executed in a trusted runtime. Graphify remains `planned` until the `project_path` scope issue is resolved, the user approves installation, and live evidence is captured.
 
