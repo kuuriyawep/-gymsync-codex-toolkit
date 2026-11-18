@@ -125,12 +125,9 @@ class WorkflowLedger:
         if not isinstance(workflow_id, str) or not WORKFLOW_ID_RE.fullmatch(workflow_id):
             raise LedgerError("workflow_id must be a lowercase slug (3-64 characters)")
         self.store = store.expanduser().resolve()
-        try:
-            self.store.relative_to(ROOT.resolve())
-        except ValueError:
-            pass
-        else:
-            raise LedgerError("workflow store must be outside the toolkit repository")
+        for parent in (self.store, *self.store.parents):
+            if (parent / ".git").exists():
+                raise LedgerError("workflow store must be outside all Git working trees")
         self.workflow_id = workflow_id
         self.directory = self.store / workflow_id
         self.events_path = self.directory / "events.jsonl"
@@ -139,7 +136,13 @@ class WorkflowLedger:
 
     @contextlib.contextmanager
     def lock(self) -> Iterator[None]:
+        self.store.mkdir(parents=True, exist_ok=True, mode=0o700)
         self.directory.mkdir(parents=True, exist_ok=True, mode=0o700)
+        if os.name != "nt":
+            import stat
+            for private_dir in (self.store, self.directory):
+                if stat.S_IMODE(private_dir.stat().st_mode) & 0o077:
+                    raise LedgerError(f"workflow store directory must be private (0700): {private_dir}")
         try:
             fd = os.open(self.lock_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
         except FileExistsError as exc:
