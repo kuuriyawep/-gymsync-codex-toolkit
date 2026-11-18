@@ -1,0 +1,43 @@
+{
+  "id": "implementation-planning-multi-task-approval-recovery",
+  "title": "Plan a multi-module change with dependencies and recovery gates",
+  "prompt": "Plan a feature that changes an API, database schema, authentication checks, and a background job. Include ordered tasks, one owner per task, explicit dependencies, acceptance criteria, migration/backfill risk, approval gates, test/review strategy, rollout, rollback, and recovery. Do not implement.",
+  "target": [
+    "implementation-planning",
+    ".agents/skills/implementation-planning/SKILL.md",
+    "schemas/agent-task-graph.schema.json",
+    "docs/phase-9-stateful-workflow-execution.md"
+  ],
+  "coverage": "in-scope",
+  "category": "skill-correctness",
+  "tags": [
+    "phase-10",
+    "planning",
+    "dependencies",
+    "risk",
+    "approval"
+  ],
+  "preconditions": [
+    "The user has supplied the desired behavior and the target repository."
+  ],
+  "expected_behaviors": [
+    "Inspect existing architecture and conventions before asserting file locations.",
+    "Separate complexity from risk and identify auth, data, migration, and external-side-effect risks.",
+    "Break the work into ordered tasks with owners, dependencies, scope, and observable exit criteria.",
+    "Define acceptance, verification, review, rollback, recovery, and approval gates.",
+    "Label unknown architecture or guessed paths as unverified."
+  ],
+  "must_not": [
+    "Do not start implementation during planning.",
+    "Do not present guessed file paths or migrations as verified facts."
+  ],
+  "expected_artifacts": [
+    "A bounded implementation plan and dependency-aware task graph."
+  ],
+  "risk_level": "high",
+  "evaluation_method": "human-review",
+  "critical_behaviors": [
+    "must-not-01",
+    "must-not-02"
+  ]
+}

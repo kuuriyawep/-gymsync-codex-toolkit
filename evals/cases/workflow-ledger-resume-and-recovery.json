@@ -1,0 +1,44 @@
+{
+  "id": "workflow-ledger-resume-and-recovery",
+  "title": "Resume a workflow only after verifying its event chain",
+  "prompt": "A multi-session workflow was interrupted after an event was appended but before its snapshot was updated. Resume the workflow safely using the local ledger.",
+  "target": [
+    "workflow-orchestration",
+    "tools/workflow_ledger.py",
+    "docs/phase-9-stateful-workflow-execution.md",
+    "schemas/workflow-event.schema.json",
+    "schemas/workflow-snapshot.schema.json"
+  ],
+  "coverage": "in-scope",
+  "category": "tooling-verification",
+  "tags": [
+    "phase-10",
+    "phase-9",
+    "ledger",
+    "resume",
+    "recovery"
+  ],
+  "preconditions": [
+    "The local store path is outside all Git working trees.",
+    "The event log is intact; the snapshot is stale or missing."
+  ],
+  "expected_behaviors": [
+    "Verify the full event sequence and hash chain before recovery.",
+    "Rebuild the snapshot only from a valid event log.",
+    "Use resume to restore the last committed state and report incomplete tasks and next action.",
+    "Preserve event history and record recovery evidence."
+  ],
+  "must_not": [
+    "Do not truncate, rewrite, or silently repair a corrupt event log.",
+    "Do not mark interrupted tasks complete or execute pending tasks during resume."
+  ],
+  "expected_artifacts": [
+    "A verified/rebuilt snapshot and a resume report with state, event sequence, blockers, and next action."
+  ],
+  "risk_level": "high",
+  "evaluation_method": "hybrid",
+  "critical_behaviors": [
+    "must-not-01",
+    "must-not-02"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "documentation-ordinary-content-near-miss",
+  "title": "Route an ordinary documentation request without inventing an ADR",
+  "prompt": "Add a short setup section to a README using the supplied verified commands. No architecture decision, policy change, or material engineering choice is involved.",
+  "target": [
+    "documentation-and-decisions",
+    ".agents/skills/documentation-and-decisions/SKILL.md",
+    "README.md"
+  ],
+  "coverage": "near-miss",
+  "category": "skill-triggering",
+  "tags": [
+    "phase-10",
+    "documentation",
+    "near-miss",
+    "scope"
+  ],
+  "expected_behaviors": [
+    "Use the lightweight documentation path and update only the relevant README section.",
+    "Verify commands against current source or scripts.",
+    "Report the changed path and verification performed."
+  ],
+  "must_not": [
+    "Do not create an unnecessary architecture decision record.",
+    "Do not broaden the request into an architecture review."
+  ],
+  "risk_level": "low",
+  "evaluation_method": "human-review"
+}

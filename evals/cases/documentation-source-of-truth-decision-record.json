@@ -1,0 +1,41 @@
+{
+  "id": "documentation-source-of-truth-decision-record",
+  "title": "Document a material decision from verified source evidence",
+  "prompt": "A project changes its authentication architecture. Update the authoritative architecture documentation and create a decision record that separates verified implementation, accepted decision, alternatives, consequences, and remaining unknowns. Do not describe planned behavior as shipped.",
+  "target": [
+    "documentation-and-decisions",
+    ".agents/skills/documentation-and-decisions/SKILL.md",
+    "docs/project-intelligence.md",
+    "PROJECT_STATE.md"
+  ],
+  "coverage": "in-scope",
+  "category": "skill-correctness",
+  "tags": [
+    "phase-10",
+    "documentation",
+    "decision-record",
+    "source-of-truth"
+  ],
+  "preconditions": [
+    "The repository contains a current implementation diff and an explicit accepted architecture decision."
+  ],
+  "expected_behaviors": [
+    "Identify the authoritative document and intended reader before editing.",
+    "Verify behavior against source, tests, schemas, and explicit decision evidence.",
+    "Record context, decision, alternatives, consequences, status, and date/revision.",
+    "Separate shipped behavior from planned or unverified behavior.",
+    "Report changed paths and exact evidence references."
+  ],
+  "must_not": [
+    "Do not infer approval from discussion or record an assumption as a shipped fact.",
+    "Do not silently delete superseded decisions or duplicate large source files."
+  ],
+  "expected_artifacts": [
+    "Updated authoritative architecture document and a traceable decision record."
+  ],
+  "risk_level": "medium",
+  "evaluation_method": "human-review",
+  "critical_behaviors": [
+    "must-not-01"
+  ]
+}

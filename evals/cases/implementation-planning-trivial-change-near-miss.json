@@ -1,0 +1,27 @@
+{
+  "id": "implementation-planning-trivial-change-near-miss",
+  "title": "Use lightweight planning for a trivial reversible change",
+  "prompt": "Change one typo in a local documentation heading. The file and exact replacement are supplied, and no code, data, or external behavior changes.",
+  "target": [
+    "implementation-planning",
+    ".agents/skills/implementation-planning/SKILL.md",
+    "workflows/registry.md"
+  ],
+  "coverage": "near-miss",
+  "category": "skill-triggering",
+  "tags": [
+    "phase-10",
+    "planning",
+    "near-miss",
+    "lightweight"
+  ],
+  "expected_behaviors": [
+    "Use a lightweight bounded plan or direct edit appropriate to the low-risk scope.",
+    "Keep verification proportionate to the change."
+  ],
+  "must_not": [
+    "Do not create a multi-agent task graph or full rollout/rollback ceremony for a one-line typo."
+  ],
+  "risk_level": "low",
+  "evaluation_method": "human-review"
+}

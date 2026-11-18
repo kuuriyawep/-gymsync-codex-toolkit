@@ -1,0 +1,35 @@
+{
+  "id": "workflow-ledger-idempotency-and-event-integrity",
+  "title": "Reject duplicate effects and detect altered event history",
+  "prompt": "A caller retries the same ledger mutation after a timeout, then reuses the same idempotency key with a different payload. Later, an event payload is edited without updating the hash chain. Verify the ledger behavior.",
+  "target": [
+    "workflow-orchestration",
+    "tools/workflow_ledger.py",
+    "schemas/workflow-event.schema.json"
+  ],
+  "coverage": "in-scope",
+  "category": "regression",
+  "tags": [
+    "phase-10",
+    "phase-9",
+    "idempotency",
+    "hash-chain",
+    "integrity"
+  ],
+  "expected_behaviors": [
+    "Treat the same idempotency key and identical payload as a no-op returning the original event.",
+    "Reject reuse of an idempotency key with a different event type or payload.",
+    "Detect sequence, previous-hash, and event-hash mismatches during replay/verification.",
+    "Refuse new writes when the stored snapshot is stale until explicit recovery."
+  ],
+  "must_not": [
+    "Do not append a duplicate event for an identical retry.",
+    "Do not accept a conflicting idempotency key or a tampered event chain."
+  ],
+  "risk_level": "high",
+  "evaluation_method": "deterministic-check",
+  "critical_behaviors": [
+    "must-not-01",
+    "must-not-02"
+  ]
+}
