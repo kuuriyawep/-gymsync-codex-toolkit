@@ -46,7 +46,6 @@ def _is_test_path(path: Any) -> bool:
     if not _safe_repo_path(path):
         return False
     parts = [part for part in path.split("/") if part]
-        return False
     filename = parts[-1].lower()
     return any(part in TEST_PATH_PARTS for part in parts) or filename.startswith("test_") or filename.endswith("_test.py") or ".test." in filename or ".spec." in filename
 
