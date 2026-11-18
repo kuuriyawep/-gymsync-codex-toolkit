@@ -99,6 +99,12 @@ class ToolRegistryTests(unittest.TestCase):
         errors = validator.validate_registry(self.registry(tool))
         self.assertTrue(any("write action cannot declare a read-only effect" in e for e in errors))
 
+    def test_missing_output_schema_is_rejected(self) -> None:
+        tool = self.valid_tool()
+        del tool["operations"][0]["output_schema"]
+        errors = validator.validate_registry(self.registry(tool))
+        self.assertTrue(any("missing properties" in e and "output_schema" in e for e in errors))
+
     def test_malformed_input_schema_is_rejected(self) -> None:
         tool = self.valid_tool()
         tool["operations"][0]["input_schema"] = {"type": "object", "required": ["missing"]}

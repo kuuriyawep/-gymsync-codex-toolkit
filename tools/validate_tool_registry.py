@@ -111,7 +111,7 @@ def validate_registry(data: Any) -> list[str]:
                 if not isinstance(op, dict):
                     errors.append(f"{q} must be an object")
                     continue
-                req = {"id", "description", "resource_scope", "action", "effect", "risk", "idempotent", "approval"}
+                req = {"id", "description", "resource_scope", "action", "effect", "risk", "idempotent", "approval", "input_schema", "output_schema"}
                 opt = set()
                 if set(op) - req - opt:
                     errors.append(f"{q} has unexpected properties: {sorted(set(op) - req - opt)}")

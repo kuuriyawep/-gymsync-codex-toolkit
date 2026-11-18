@@ -1473,3 +1473,10 @@ NOT INSTALLED. No package installation or Codex MCP configuration has been perfo
 Operation-level `input_schema` and `output_schema` are now required fields in the registry schema. The deterministic validator checks their structural object schema shape, property declarations, and required-property references. The Graphify candidate's eight operations already carry both schemas.
 
 Added a regression test proving malformed input-schema required properties are rejected. This is structural validation of the toolkit's supported schema subset; it is not a full Draft 2020-12 JSON Schema engine.
+
+
+## 51. Registry schema validation CI correction (2026-11-18)
+
+The first CI run after making input/output schemas mandatory found a validator implementation mismatch: the JSON Schema contract required both fields, but the per-operation validator's required-key set had not been updated. The validator now requires both fields at the instance level as well. Added a regression test for a missing output schema.
+
+CI failure was a genuine contract-validation defect, not a Graphify runtime issue. Re-run the full quality gates on the corrected commit before treating the registry schema work as passing.
