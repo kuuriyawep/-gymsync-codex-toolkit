@@ -1749,3 +1749,13 @@ Live Codex end-to-end behavior, agent scheduling, actual approval enforcement, a
 **Phase 10 — Evaluation & Reliability.**
 
 First action: inventory all 13 skills, 42 evaluation cases, 7 rubrics, current run records, and Phase 7–9 contract tests. Score static quality and map gaps without duplicating existing coverage.
+
+
+## 66. Phase 10 evaluation and reliability audit started (2026-11-18)
+
+- Confirmed inventory: 13 native skills, 13 portable mirrors, 42 evaluation cases, 7 rubric files (4 Markdown and 3 JSON), 31 Phase 9 ledger tests.
+- No evaluation result/report artifacts are currently tracked in Git. CI's deterministic smoke-test output is ephemeral and is not a behavioral evaluation.
+- Reviewed evaluation architecture, status semantics, rubric structure, skill-authoring coverage enforcement, result-record consistency checks, immutable output behavior, and current CI stages.
+- First-pass strengths and open gaps are documented in `docs/phase-10-evaluation-reliability.md`.
+- Static scoring of all 13 skills, complete case-to-skill mapping, comparison edge cases, schema-subset limitations, and output-path/failure handling audits remain open.
+- Do not claim Phase 10 complete until the exit criteria in the audit document are met.
