@@ -24,6 +24,7 @@ Workflow Orchestration Skill
     +---- relevant skills in .agents/skills/
     |
     +---- registry/tools.json + tool permission matrix ---- declared adapters and operation contracts
+    |             +---- tools/discover_codex_runtime.py ---- sanitized host preflight (not runtime authorization)
     |
     +---- optional .codex/agents/*.toml
     |             |
@@ -120,6 +121,7 @@ python -m unittest discover -s tests -v
 python tools/sync_skills.py --check
 python tools/validate_project_memory.py
 python tools/validate_tool_registry.py
+python tools/discover_codex_runtime.py
 python tools/validate_toolkit.py
 python tools/evaluate_toolkit.py --validate
 ```
@@ -128,4 +130,4 @@ These checks validate only what their implementations cover. For actual Codex di
 
 ## Out of scope
 
-The registry is declarative only; it does not install Graphify, connect MCP servers, add vector search, create a persistent workflow database, install n8n/CrewAI, configure WhatsApp/Twilio, add paid APIs, create autonomous agents outside Codex, deploy, or change GymSync application source.
+The registry is declarative only. The runtime discovery script only lists sanitized local Codex CLI configuration; it does not install or authenticate MCP servers, start services, or call tools. It does not install Graphify, add vector search, create a persistent workflow database, install n8n/CrewAI, configure WhatsApp/Twilio, add paid APIs, create autonomous agents outside Codex, deploy, or change GymSync application source.
