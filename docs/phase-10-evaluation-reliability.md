@@ -32,7 +32,31 @@ The 42 cases are authored specifications, not completed behavioral evaluations. 
 - Three structured JSON rubric contracts exist for behavioral, deterministic, and skill-quality; agent-coordination is Markdown-only.
 - CI currently runs unit tests, skill mirror parity, project-memory validation, toolkit validation, case/rubric validation, deterministic evaluation generation, and result validation.
 
-## 4. First-pass findings
+## 4. Skill inventory and initial review
+
+The 13 native skill artifacts inspected are:
+
+1. `change-impact-analysis`
+2. `clear-technical-communication`
+3. `code-review`
+4. `documentation-and-decisions`
+5. `implementation-planning`
+6. `project-intelligence`
+7. `requirements-clarification`
+8. `risk-aware-tdd`
+9. `security-review`
+10. `skill-authoring-and-evaluation`
+11. `systematic-debugging`
+12. `verification-gate`
+13. `workflow-orchestration`
+
+All 13 portable counterparts are present. Their content is maintained as native/portable pairs; CI checks synchronization. This pass inspected the native skill contracts and major section coverage. It is not yet the formal six-dimension scorecard: scores must be recorded per skill with case/evidence references, not inferred from file length or a quick read.
+
+### Coverage-enforcement discrepancy
+
+The skill-quality rubric describes evaluation coverage as part of the quality of a skill and the authoring skill describes a representative case set. However, the structured `coverage_requirements.target_skill` currently points specifically to `skill-authoring-and-evaluation`, and the validator applies the 3/2/1 minimums to that target. It does not prove that each of the other 12 skills has its own 3 in-scope, 2 near-miss, and 1 edge case. Treat this as a real coverage gap to resolve deliberately, not as a reason to duplicate 78 cases blindly. First map existing 42 cases to skills and taxonomy, then decide proportionate per-skill coverage requirements.
+
+## 5. First-pass findings
 
 ### Confirmed strengths
 
@@ -55,16 +79,16 @@ The 42 cases are authored specifications, not completed behavioral evaluations. 
 7. **Coverage mapping:** map the 42 cases to the 13 skills and evaluation taxonomy to identify true gaps and redundant scenarios before adding any case.
 8. **Cross-platform reliability:** current CI is Python 3.11 on Ubuntu; Windows, macOS, and additional Python versions are not certified.
 
-## 5. Phase 10 work plan
+## 6. Phase 10 work plan
 
-1. Complete a case-to-skill/taxonomy coverage matrix; identify overlap and missing behavior.
-2. Apply the static skill-quality rubric to each of the 13 native skills and record evidence-based scores. Verify portable mirrors separately through parity checks; do not score duplicate copies as separate skills.
+1. Complete a case-to-skill/taxonomy coverage matrix; identify overlap and missing behavior. **In progress.**
+2. Apply the static skill-quality rubric to each of the 13 native skills and record evidence-based scores. Verify portable mirrors separately through parity checks; do not score duplicate copies as separate skills. **Not yet scored.**
 3. Audit evaluator comparison, schema subset, output atomicity, path handling, and malformed-input behavior.
 4. Add only non-duplicative tests for confirmed defects or uncovered failure modes.
 5. Run the full CI pipeline on the exact final commit and review its logs.
 6. Produce a Phase 10 report with PASS/FAIL/NOT_RUN distinctions and a Phase 11 handoff.
 
-## 6. Explicit non-goals
+## 7. Explicit non-goals
 
 - Do not claim real Codex behavioral validation from static tests.
 - Do not launch autonomous agents or external schedulers.
@@ -73,6 +97,6 @@ The 42 cases are authored specifications, not completed behavioral evaluations. 
 - Do not overwrite historical evaluation records.
 - Do not claim full Draft 2020-12 compatibility.
 
-## 7. Exit criteria
+## 8. Exit criteria
 
 Phase 10 is complete only when the 13-skill static review is evidence-backed, case coverage and overlap are mapped, evaluator reliability gaps are either fixed or explicitly accepted, the exact-head CI passes, and all unexecuted live Codex scenarios remain clearly marked NOT_RUN for Phase 11.
