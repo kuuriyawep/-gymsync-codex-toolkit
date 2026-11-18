@@ -126,8 +126,9 @@ class WorkflowLedgerTests(unittest.TestCase):
         self.to_approval()
         self.ledger.transition("AWAITING_APPROVAL", idempotency_key="approval-denied-await")
         self.ledger.approval("denied", approval_reference="user-denied-01", idempotency_key="approval-denied-01")
+        self.ledger.transition("APPROVAL", idempotency_key="approval-denied-reenter")
         with self.assertRaises(LedgerError):
-            self.ledger.transition("APPROVAL", idempotency_key="approval-denied-reenter")
+            self.ledger.transition("EXECUTION", idempotency_key="approval-denied-execution")
 
     def test_task_timeout_marks_task_failed(self):
         self.ledger.add_task("inspect", "repo_explorer", "Inspect source", idempotency_key="timeout-task-add")
