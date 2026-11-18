@@ -10,7 +10,7 @@
 > This document is the project's central index and operating contract. Detailed procedures, source files, schemas, test cases, and reports remain authoritative for their specific subjects. Do not copy all technical detail into this file; link to the source of truth.
 
 **Document status:** ACTIVE — canonical project checkpoint and operating manual  
-**Last full audit:** 2026-11-16  
+**Last checkpoint/source-audit consolidation:** 2026-11-18  
 **Last full source-audit baseline:** `b8aafe780a181f0f49acaed3dc23791ed9146d7c`  
 **CI policy:** Always inspect the latest GitHub Actions run for the current HEAD; a prior commit's PASS does not automatically apply to a later commit.  
 **Repository:** `kuuriyawep/-gymsync-codex-toolkit`  
@@ -813,7 +813,7 @@ These are known outstanding checks, not completed work:
 6. Safe selective-adoption trial in a disposable target repository.
 7. Full Markdown link integrity audit.
 8. Review the 41 evaluation cases for quality, duplication, missing scenarios, and target correctness.
-9. Resolve Graphify status conflict.
+9. Archive all selected source reviews and reconcile their adoption mapping into the toolkit.
 10. Review repository license and branch-protection governance with the user.
 
 Do not mark any item complete until its evidence is recorded.
@@ -859,25 +859,26 @@ These are registered as conceptual influences. Exact file-level license review i
 
 Graphify is now recorded in docs/source-attribution.md as an optional external knowledge-graph capability, subject to exact version, license, security, and Codex-compatibility validation. It is not mandatory and does not replace durable project records. The canonical disposition is in docs/phase-6-final-synthesis.md.
 
-## 21. Later capability-source candidates
+## 21. Selected external source audit set and archive
 
-These repositories were raised for deeper investigation. Their earlier reviews were preliminary; do not treat the summaries below as final technical audits.
+The selected nine-source set is archived in [audits/source-reviews/README.md](audits/source-reviews/README.md). The detailed findings are stored in one report per source, and the deduplicated implementation mapping is in [docs/source-adoption-map.md](docs/source-adoption-map.md).
 
-| Candidate | Potential contribution | Preliminary priority | Audit status |
-|---|---|---:|---|
-| `vercel-labs/skills` / find-skills | Discover skills, add/list/check/use, track compatibility and content | P0 | Preliminary review only |
-| `anthropics/claude-plugins-official` | Plugin packaging, agents, skills, MCP configuration, hooks, commands | P0 | Preliminary review only |
-| `n8n-io/n8n` | Workflow automation, integrations, human approval, external services | P1 | Preliminary review only |
-| `nextlevelbuilder/ui-ux-pro-max-skill` | Design intelligence, UI/UX references, tokens, palettes, typography | P1 | Preliminary review only |
-| `Imbad0202/academic-research-skills` | Research planning, evidence verification, synthesis, agent workflows | P1 | Preliminary review only |
-| `zarazhangrui/frontend-slides` | Visual previews, HTML presentation workflows, design variants | P2 | Preliminary review only |
-| `router-for-me/CLIProxyAPI` | Provider abstraction, routing, API adapters, credential management | P2 | Preliminary review only |
+Selected sources:
+1. `affaan-m/everything-claude-code` (ECC) — prior partial review carried forward; selected security review, change-impact, verification-loop, and context/decision practices.
+2. `NousResearch/hermes-agent` — prior partial review carried forward; selected memory and skill-lifecycle practices.
+3. `anomalyco/opencode` — revision-pinned review; adapt typed tool contracts, permission boundaries, plugin lifecycle, lazy discovery, and child sessions.
+4. `Graphify-Labs/graphify` — revision-pinned review; optional external knowledge graph, not vendored and not mandatory.
+5. `obra/superpowers` — revision-pinned review; adopt selected verification/debugging/skill-TDD/review practices and adapt task-ledger/worktree patterns.
+6. `mattpocock/skills` — revision-pinned review; adopt selected review/handoff/ADR/test-seam patterns and adapt dependency-DAG/fresh-context work.
+7. `anthropics/skills` — revision-pinned review; adopt evaluation methodology and adapt MCP/design/browser patterns to Codex.
+8. `JuliusBrussee/caveman` — revision-pinned review; adapt bounded recoverable compression and fidelity-evaluation patterns only.
+9. `n8n-io/n8n` — revision-pinned review; adapt workflow/tool/evaluation architecture only; do not copy or install the n8n runtime.
 
-Additional candidate discovered during research:
-- `n8n-io/skills` — a separate skills/reference repository related to n8n. Not yet fully audited or approved for adoption.
+### Audit evidence qualification
 
-Graphify disposition (supersedes the earlier unresolved wording):
-- `Graphify-Labs/graphify` — ADOPT as an optional external knowledge-graph capability, subject to exact version, license, security, and Codex compatibility validation. Keep it separate from the toolkit's durable Markdown/Mnemoverse memory and source-of-truth records. No installation or integration is implied by this architecture decision.
+Seven later reviews preserve source revision identifiers and detailed source/documentation findings. ECC and Hermes are carried forward from earlier project work and are explicitly marked PARTIAL because the recovered checkpoint did not preserve exact revisions and complete file-level evidence. They were not re-audited, honoring the user's strict no-duplicate-work instruction. Do not describe those two records as full revision-pinned audits.
+
+The earlier candidate list (Vercel Skills, Claude Plugins Official, UI UX Pro Max, Academic Research Skills, Frontend Slides, CLIProxyAPI, and n8n skills) is not silently promoted into the selected nine-source set. Their audit/adoption status must be tracked separately if the user later selects them.
 
 ## 22. Preliminary source priority interpretation
 
@@ -1187,3 +1188,84 @@ Do not guess which target the user intended. Ask for the exact installation targ
 - GymSync app: untouched.
 
 **Single next action:** Inspect the final main HEAD and its GitHub Actions result; then ask which exact target the user wants installed before any installation action.
+
+
+---
+
+# PART XIV — SOURCE AUDIT ARCHIVE AND CONSOLIDATION (2026-11-18)
+
+## 40. User-authorized consolidation
+
+The user clarified that "install the completed work and audits" means consolidating the completed source-audit work and selected capability decisions into this existing toolkit repository, not installing Graphify or another unrelated package.
+
+### New audit artifacts
+
+Nine source review records were added under `audits/source-reviews/`:
+- `01-ecc.md`
+- `02-hermes-agent.md`
+- `03-opencode.md`
+- `04-graphify.md`
+- `05-superpowers.md`
+- `06-matt-pocock.md`
+- `07-anthropic-skills.md`
+- `08-caveman.md`
+- `09-n8n.md`
+- `README.md` — source audit index and evidence qualification.
+
+### Consolidation artifacts
+
+- `docs/source-adoption-map.md` — maps selected source capabilities to current toolkit owners, implementation gaps, non-adoption decisions, and future phases.
+- `docs/source-attribution.md` — links the audit archive and records audit completeness limitations.
+- `docs/phase-6-final-synthesis.md` — links the source archive and adoption map.
+- `README.md` — exposes the audit archive and adoption map.
+- `PROJECT_STATE.md` — records the selected nine-source set and current resume point.
+
+### Existing implementation reused; no duplicate imports
+
+The current toolkit already has 13 canonical skills and portable mirrors, five Codex agent definitions, seven workflow documents, 41 evaluation cases, seven rubrics, schemas, validators, tests, and CI.
+
+The source-adoption map identifies the existing owners for security review, change impact, debugging, TDD, code review, verification, decision capture, project intelligence, skill evaluation, workflow routing, agent handoffs, and approval rules. These components are reused rather than cloned from upstream sources.
+
+### Evidence and safety qualifications
+
+- Seven later source reviews have revision-pinned source/documentation findings.
+- ECC and Hermes are legacy/partial records because exact revisions and complete file-level evidence were not recovered; no repeat audit was performed.
+- Source code was not copied into the toolkit by this documentation consolidation.
+- No third-party package, plugin, Graphify, Caveman, OpenCode, Hermes, Superpowers, or n8n runtime was installed.
+- No GymSync application/database/deployment files were changed.
+- No Codex behavioral/runtime success is claimed.
+- License and dependency checks remain mandatory before any future code/package reuse.
+
+### Commits
+
+The following commits were returned by the GitHub contents API while adding the audit archive and adoption mapping:
+- ECC report: `332678f93c245af2805b3952edadd45f2cdb6564`
+- Hermes report: `b98dbfa8b149a3bfda7cd379b8a647484a7a60c3`
+- OpenCode report: `d579157a11c16f1851e77753fcb848542a4fc811`
+- Graphify report: `c8313766088edd9181e9ba41383fd58bab7dcece`
+- Superpowers report: `673804e09aab22aea6cbf1853b532ab658db9451`
+- Matt Pocock report: `d6ed93fcca2a7cb19f9460c9d14a6371bcfb8a2a`
+- Anthropic Skills report: `e84644c6b908b24c02c5ed819d2dc680858ec0c8`
+- Caveman report: `37dfc86fef791a66dfb17a8f191193cccf555672`
+- n8n report: `df63df2bad2f5725e0e726665e4786526213409d`
+- Audit index: `edfe0c148614d93cc6a0ee138aa7a44ed947496f`
+- Source adoption map: `d81dc1821d1184eeb6af15053b9074fb5041312c`
+- README: `81d57d8a720996cb033f24d0580c4cc78d5f6af2`
+- Source attribution: `0d1ff199012880a5ec0084816be15fa76f060907`
+- Phase 6 synthesis: `34afda045b5f5db0064a01a0f9b6e8be850abda9`
+
+This list is an audit trail of sequential content updates; latest `main` HEAD must be checked separately.
+
+## 41. Current status and resume point
+
+- Source audit archive: recorded for all nine selected repositories.
+- ECC/Hermes evidence: PARTIAL legacy records; not re-audited.
+- Seven later source reports: revision-pinned source/documentation reviews recorded.
+- Source-to-toolkit adoption map: documented and linked.
+- Existing skill/agent/workflow/evaluation foundations: inventoried and mapped; no duplicate source bundles imported.
+- External package installation: NOT DONE; not implied by "install the work".
+- Phase 6 synthesis and audit consolidation: documentation work complete; final repository CI/validation for latest HEAD must still be inspected.
+- Phase 7: next phase, not started in this consolidation.
+- GymSync application: untouched.
+
+**Single next action:** Run/inspect the toolkit's current quality gates on the latest main HEAD. If they pass, close the documentation consolidation and begin Phase 7 — Tool Ecosystem & Integration — using the source-adoption map as the implementation backlog.
