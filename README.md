@@ -17,6 +17,7 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 - [External Source Audit Index](audits/source-reviews/README.md) — nine selected repository reviews and their evidence status.
 - [Phase 7 Tool Ecosystem](docs/phase-7-tool-ecosystem.md) — typed registry, permission model, and adapter acceptance criteria.
 - [Phase 8 Agent Audit](docs/phase-8-agent-capability-audit.md) — agent inventory, ownership, runtime constraints, and test-engineer role.
+- [Phase 9 Stateful Workflow Execution](docs/phase-9-stateful-workflow-execution.md) — durable task ledger, state transitions, idempotency, recovery, and evidence model.
 - [Agent Tool Access Matrix](references/agent-tool-access-matrix.md) — proposed task-level role permissions and enforcement boundaries.
 - [Codex Runtime Discovery](docs/codex-runtime-discovery.md) — safe local preflight for configured MCP servers and plugins.
 - [MCP Adapter Contract](docs/mcp-adapter-contract.md) — MCP lifecycle, trust review, permissions, reliability, and verification gates.
@@ -52,6 +53,7 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 - `schemas/tool-registry.schema.json` — typed tool registry contract with operation-level resource/action/effect and input/output schema validation.
 - `schemas/runtime-capability-snapshot.schema.json` — sanitized host-discovery evidence contract.
 - `schemas/agent-handoff.schema.json`, `agent-result.schema.json`, and `agent-task-graph.schema.json` — typed delegation and dependency contracts.
+- `schemas/workflow-event.schema.json` and `workflow-snapshot.schema.json` — durable workflow ledger contracts.
 - `evals/` — taxonomy, cases, rubrics, run records, reports, and acceptance checks.
 - `learning/inbox/` — proposed lessons awaiting review.
 - `learning/approved/` — curated lessons approved for reuse.

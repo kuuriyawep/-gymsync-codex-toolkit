@@ -1658,3 +1658,37 @@ Real Codex agent execution, inherited sandbox/approval behavior, capability feat
 **Phase 9 — Stateful Workflow Execution.**
 
 Next task: design the workflow state machine, durable task ledger/checkpoints, event evidence model, retries, resume, cancellation, timeouts, idempotency, and recovery tests. Preserve Codex as the only coordinator. Do not change GymSync.
+
+
+## 60. Phase 9 — Stateful Workflow Execution started (2026-11-18)
+
+### Existing capability audit
+
+- `.agents/skills/workflow-orchestration/SKILL.md` defines session-only primary states and handoff guidance.
+- `templates/workflow-brief.md` is a manual session checkpoint.
+- `PROJECT_STATE.md` is the durable project-level checkpoint.
+- `templates/project-memory/current-state.md` and `tools/validate_project_memory.py` support evidence-backed project memory.
+- Phase 8 task graph schemas validate dependencies and write ownership but do not persist runtime task events.
+
+These are complementary existing components; Phase 9 must not duplicate or replace them.
+
+### Phase 9 design artifact
+
+- `docs/phase-9-stateful-workflow-execution.md` — explicit state machine, task states, event ledger, snapshot, idempotency, approval gates, recovery, retention, and implementation sequence.
+- `schemas/workflow-event.schema.json` — append-only event contract with hash-chain fields.
+- `schemas/workflow-snapshot.schema.json` — rebuildable workflow/task state projection.
+- README links updated.
+
+### Key decisions
+
+- Codex remains the only coordinator and single writer.
+- Event log is source of truth; snapshot is rebuildable.
+- Local private store only; no cloud database or service.
+- Every mutation requires an idempotency key.
+- Raw tool output and secrets are not stored.
+- Completion requires all tasks complete, validation passed, and required review passed.
+- Interrupted, failed, blocked, timed-out, or cancelled work cannot be reported as complete.
+
+### Active task
+
+Implement the deterministic workflow ledger and tests for state transitions, hash-chain integrity, idempotency, snapshot recovery, approval gates, retries, cancellation, and no false completion. Actual Codex workflow behavior remains reserved for Phase 11.
