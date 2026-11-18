@@ -1379,3 +1379,27 @@ Commands use argument arrays (no shell), a 15-second timeout, and sanitized outp
 ### Evidence boundary
 
 This is implementation plus mocked unit-test coverage. It is NOT a live runtime test. The user must run the utility on the actual Codex host and inspect `/mcp` in the active session. No provider adapter is registered or installed yet.
+
+
+## 46. Phase 7 — MCP adapter governance contract (2026-11-18)
+
+### Added files
+
+- `docs/mcp-adapter-contract.md` — lifecycle from candidate through reviewed/configured/session-loaded/verified/monitored/disabled; provider identity, transports, tool schema review, resource/action/effect mapping, permissions, reliability, verification, and incident response.
+- `templates/mcp-adapter-review.md` — structured per-server review and explicit approval record.
+
+### Design decisions
+
+- Codex is an MCP client for external servers; do not build on the removed `codex mcp-server` host command.
+- Supported connection types for this design are STDIO and Streamable HTTP.
+- Configured server entries are not proof of live connectivity or callable tools.
+- Tool descriptions, instructions, annotations, schemas, and outputs from a remote server are untrusted data.
+- MCP annotations are hints, not authorization.
+- Start with one read-only workflow and a narrow tool allowlist.
+- Tool-definition changes trigger re-review.
+- Never automatically retry non-idempotent or destructive actions.
+- No MCP server has been installed, authenticated, started, or called by this change.
+
+### Current Phase 7 deliverables
+
+Registry and permission contract, safe host preflight, snapshot schema, mocked tests, MCP adapter lifecycle contract, and review template are now in the repository. Live runtime discovery and the first actual provider selection remain outstanding.

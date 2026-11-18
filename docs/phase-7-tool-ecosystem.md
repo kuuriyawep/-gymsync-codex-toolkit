@@ -1,6 +1,6 @@
 # Phase 7 — Tool Ecosystem & Integration
 
-**Status:** IN PROGRESS — registry foundation and sanitized Codex host-discovery utility authored. CI verification for the latest commits is pending.  
+**Status:** IN PROGRESS — registry foundation, sanitized Codex host-discovery utility, and MCP adapter review contract authored. Live host verification remains pending.  
 **Inputs:** [Phase 6 synthesis](phase-6-final-synthesis.md), [source audit index](../audits/source-reviews/README.md), [source adoption map](source-adoption-map.md)
 
 ## Objective
@@ -18,6 +18,7 @@ Create one safe, typed, Codex-first inventory for tools that Codex may use. The 
 | Credential references | Runtime/secret manager | Reference secrets without storing values |
 | Verification evidence | Tests and immutable evaluation records | Prove configured behavior |
 | Runtime discovery | `tools/discover_codex_runtime.py` + snapshot schema | Report local Codex CLI, configured MCP server names, and installed plugin names without exposing config values |
+| Adapter governance | `docs/mcp-adapter-contract.md` + review template | Enforce provider identity, transport, authentication, data-egress, per-tool review, lifecycle, and verification gates |
 
 Codex remains the primary coordinator. No external runtime is introduced.
 
@@ -78,6 +79,8 @@ Detailed evidence is in `audits/source-reviews/`.
 - Unit tests: added in `tests/test_tool_registry.py` for empty registry, valid declaration, duplicate IDs, raw credentials, runtime evidence, destructive approval, malformed risk types, and secret-path traversal.
 - Runtime discovery: `tools/discover_codex_runtime.py` performs read-only CLI/MCP/plugin preflight, emits sanitized JSON, uses no shell, applies timeouts, and has mocked tests in `tests/test_runtime_discovery.py`.
 - Runtime snapshot schema: `schemas/runtime-capability-snapshot.schema.json`.
+- MCP adapter lifecycle and security contract: `docs/mcp-adapter-contract.md`.
+- Per-server evidence template: `templates/mcp-adapter-review.md`.
 - Real adapters: NOT_IMPLEMENTED.
 - Credentials: NOT_CONFIGURED.
 - Runtime integration: NOT_RUN — utility must be run on the user's actual Codex host.
@@ -100,4 +103,4 @@ Phase 7 cannot close until:
 
 ## Next work
 
-Run `python tools/discover_codex_runtime.py` on the actual Codex host, then inspect `/mcp` in the active session. Select one high-value read-only provider only after its server, tools, authentication, scopes, and data egress have been reviewed. Keep the registry empty until the user deliberately configures an adapter and runtime evidence exists.
+Run `python tools/discover_codex_runtime.py` on the actual Codex host, then inspect `/mcp` in the active session. Select one high-value read-only provider only after its server, tools, authentication, scopes, and data egress have been reviewed using the adapter review template. Keep the registry empty until the user deliberately configures an adapter and runtime evidence exists.

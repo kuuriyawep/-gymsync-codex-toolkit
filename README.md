@@ -17,6 +17,7 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 - [External Source Audit Index](audits/source-reviews/README.md) — nine selected repository reviews and their evidence status.
 - [Phase 7 Tool Ecosystem](docs/phase-7-tool-ecosystem.md) — typed registry, permission model, and adapter acceptance criteria.
 - [Codex Runtime Discovery](docs/codex-runtime-discovery.md) — safe local preflight for configured MCP servers and plugins.
+- [MCP Adapter Contract](docs/mcp-adapter-contract.md) — lifecycle, trust review, permissions, reliability, and verification gates.
 - [Source-to-Toolkit Adoption Map](docs/source-adoption-map.md) — deduplicated mapping from audit findings to existing components and future phases.
 
 ## Adaptive delivery loop
@@ -41,6 +42,7 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 - `templates/workflow-brief.md` — session-oriented workflow checkpoint.
 - `templates/agent-handoff.md` — required contract for bounded specialist assignments.
 - `templates/agent-review-report.md` — structured independent review and conflict report.
+- `templates/mcp-adapter-review.md` — repeatable review record for each proposed MCP server.
 - `references/` — permission/approval, tool permission matrix, and source-adaptation policies.
 - `registry/tools.json` — deny-by-default declarative tool inventory; empty until real adapters are configured and evidenced.
 - `schemas/tool-registry.schema.json` — typed tool registry contract.

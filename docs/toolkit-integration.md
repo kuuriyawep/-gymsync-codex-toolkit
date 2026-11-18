@@ -25,6 +25,8 @@ Workflow Orchestration Skill
     |
     +---- registry/tools.json + tool permission matrix ---- declared adapters and operation contracts
     |             +---- tools/discover_codex_runtime.py ---- sanitized host preflight (not runtime authorization)
+    |             +---- docs/mcp-adapter-contract.md ---- trust, lifecycle, and adapter verification gates
+    |             +---- templates/mcp-adapter-review.md ---- per-server review evidence
     |
     +---- optional .codex/agents/*.toml
     |             |
