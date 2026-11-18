@@ -15,6 +15,7 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 - [Phase 8 Skill Quality Audit](docs/phase-8-skill-audit.md) — 13-skill audit and remediation summary.
 - [Phase 8 Completion Report](docs/phase-8-completion-report.md) — static remediation, deterministic validation, and deferred Codex runtime tests.
 - [External Source Audit Index](audits/source-reviews/README.md) — nine selected repository reviews and their evidence status.
+- [Phase 7 Tool Ecosystem](docs/phase-7-tool-ecosystem.md) — typed registry, permission model, and adapter acceptance criteria.
 - [Source-to-Toolkit Adoption Map](docs/source-adoption-map.md) — deduplicated mapping from audit findings to existing components and future phases.
 
 ## Adaptive delivery loop
@@ -39,7 +40,9 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 - `templates/workflow-brief.md` — session-oriented workflow checkpoint.
 - `templates/agent-handoff.md` — required contract for bounded specialist assignments.
 - `templates/agent-review-report.md` — structured independent review and conflict report.
-- `references/` — permission/approval and source-adaptation policies.
+- `references/` — permission/approval, tool permission matrix, and source-adaptation policies.
+- `registry/tools.json` — deny-by-default declarative tool inventory; empty until real adapters are configured and evidenced.
+- `schemas/tool-registry.schema.json` — typed tool registry contract.
 - `evals/` — taxonomy, cases, rubrics, run records, reports, and acceptance checks.
 - `learning/inbox/` — proposed lessons awaiting review.
 - `learning/approved/` — curated lessons approved for reuse.
@@ -102,7 +105,8 @@ See [toolkit acceptance checks](evals/acceptance-checks.md). The evaluation syst
 
 Dependency-free maintenance utilities under `tools/`:
 
-- `python tools/validate_toolkit.py` checks skill metadata, native/portable skill parity, agent TOML, workflow sections, evaluation schemas, all evaluation cases, and the skill-quality rubric's Markdown/JSON alignment plus declared trigger-coverage minimums.
+- `python tools/validate_tool_registry.py
+python tools/validate_toolkit.py` checks skill metadata, native/portable skill parity, agent TOML, workflow sections, evaluation schemas, all evaluation cases, and the skill-quality rubric's Markdown/JSON alignment plus declared trigger-coverage minimums.
 - `python tools/sync_skills.py` previews differences between native skills and the portable mirror.
 - `python tools/sync_skills.py --check` exits non-zero when the mirror is out of sync.
 - `python tools/sync_skills.py --write` copies native skill files into the portable mirror. The native `.agents/skills/` tree is the source of truth.
