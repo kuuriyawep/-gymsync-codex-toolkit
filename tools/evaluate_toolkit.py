@@ -114,6 +114,11 @@ def validate_instance(value: Any, schema: dict[str, Any], path: str = "$") -> li
     return errors
 
 
+def normalize_case_prompt(prompt: str) -> str:
+    """Normalize whitespace and case for exact-duplicate prompt detection."""
+    return " ".join(prompt.split()).casefold()
+
+
 def case_files() -> list[Path]:
     return sorted(CASE_DIR.glob("*.json")) if CASE_DIR.is_dir() else []
 
@@ -125,6 +130,7 @@ def inspect_cases() -> tuple[list[dict[str, Any]], list[str]]:
         return [], ["Missing schema: schemas/evaluation-case.schema.json"]
     schema = load_json(CASE_SCHEMA)
     seen: set[str] = set()
+    seen_prompts: dict[str, str] = {}
     for path in case_files():
         try:
             case = load_json(path)
@@ -160,6 +166,16 @@ def inspect_cases() -> tuple[list[dict[str, Any]], list[str]]:
             for criterion_id in critical_ids:
                 if criterion_id not in allowed_critical_ids:
                     issues.append(f"{path.relative_to(ROOT)}: critical_behaviors references unknown criterion {criterion_id!r}")
+        prompt = case.get("prompt")
+        if isinstance(prompt, str):
+            normalized_prompt = normalize_case_prompt(prompt)
+            previous_prompt_case = seen_prompts.get(normalized_prompt)
+            if previous_prompt_case:
+                issues.append(
+                    f"{path.relative_to(ROOT)}: exact duplicate prompt also appears in {previous_prompt_case}"
+                )
+            else:
+                seen_prompts[normalized_prompt] = str(path.relative_to(ROOT))
         case_id = case.get("id")
         if isinstance(case_id, str):
             if case_id in seen:

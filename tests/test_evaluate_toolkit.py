@@ -34,6 +34,20 @@ class TypeMatchingTests(unittest.TestCase):
         self.assertTrue(any("unsupported or invalid type" in item for item in errors))
 
 
+class CasePromptNormalizationTests(unittest.TestCase):
+    def test_prompt_normalization_detects_case_and_whitespace_duplicates(self) -> None:
+        self.assertEqual(
+            evaluator.normalize_case_prompt("  Check   the workflow\n safely "),
+            evaluator.normalize_case_prompt("check the workflow safely"),
+        )
+
+    def test_distinct_prompts_remain_distinct(self) -> None:
+        self.assertNotEqual(
+            evaluator.normalize_case_prompt("Check workflow approval"),
+            evaluator.normalize_case_prompt("Check workflow recovery"),
+        )
+
+
 class SchemaValidationTests(unittest.TestCase):
     def test_required_and_additional_properties_are_checked(self) -> None:
         schema = {

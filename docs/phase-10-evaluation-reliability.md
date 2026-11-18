@@ -1,6 +1,6 @@
 # Phase 10 — Evaluation & Reliability
 
-**Status:** CLOSEOUT CANDIDATE — static review, case mapping, evaluator hardening, and final CI verification are the remaining closeout gates.
+**Status:** COMPLETE — static review, case mapping, evaluator hardening, exact-duplicate prompt checks, and final CI verification passed. Live Codex behavioral validation remains explicitly deferred to Phase 11.
 
 ## 1. Scope and audit rules
 
@@ -147,6 +147,6 @@ The 55-case inventory was reviewed by explicit `target`, taxonomy `category`, `c
 
 Cases targeting workflows, agents, schemas, and tools without naming a native skill remain cross-cutting system scenarios. They are not silently attributed to every skill. This mapping records a deliberate Phase 11 coverage backlog rather than asserting every skill has a 3/2/1 behavioral suite. The 3/2/1 validator remains scoped to skill-authoring-and-evaluation; a blanket quota was not introduced because it would create redundant cases.
 
-The evaluator was additionally hardened to reject unknown JSON Schema `type` values, invalid type unions, and unsupported string formats rather than treating unknown types as valid. The implemented validator remains a documented subset, not full Draft 2020-12.
+The evaluator was additionally hardened to reject unknown JSON Schema `type` values, invalid type unions, unsupported string formats, and exact duplicate prompts (case/whitespace-normalized) rather than treating unknown types as valid or allowing duplicate test inputs. The implemented validator remains a documented subset, not full Draft 2020-12.
 
-**Phase 10 boundary:** static scorecards are model-assisted and all runtime statuses remain `NOT_RUN`. Trusted Codex-session behavior, cross-platform CI, and the remaining per-skill behavioral coverage are Phase 11 work. Phase 10 may be closed only after the exact final commit passes CI and its logs are reviewed.
+**Phase 10 boundary:** static scorecards are model-assisted and all runtime statuses remain `NOT_RUN`. Trusted Codex-session behavior, cross-platform CI, and the remaining per-skill behavioral coverage are Phase 11 work. Phase 10 is closed for evaluation-framework construction and static reliability work. The exact closeout commit passed CI and its logs were reviewed. This does not claim runtime behavior has passed.
