@@ -1,6 +1,6 @@
 # Phase 7 — Tool Ecosystem & Integration
 
-**Status:** IN PROGRESS — initial registry contract, deny-by-default manifest, permission matrix, validator, and unit tests authored; latest CI pending  
+**Status:** IN PROGRESS — initial registry contract, deny-by-default manifest, permission matrix, validator, and unit tests authored. CI passed on baseline commit `b70e222a1d89ccf9e816bd3b6b7c1fbc22dd16e5` (run #44292786044); the next documentation commit still requires its own run.  
 **Inputs:** [Phase 6 synthesis](phase-6-final-synthesis.md), [source audit index](../audits/source-reviews/README.md), [source adoption map](source-adoption-map.md)
 
 ## Objective
