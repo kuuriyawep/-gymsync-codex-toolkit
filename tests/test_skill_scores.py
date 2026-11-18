@@ -70,6 +70,15 @@ class SkillScoreTests(unittest.TestCase):
         data["total"] = 11
         self.assertTrue(any("evaluation-coverage score must be 1" in e for e in module.validate_scorecard_data(data)))
 
+    def test_hyphenated_case_coverage_labels_are_counted(self):
+        data = self.valid_scorecard()
+        data["case_refs"] = ["documentation-source-of-truth-decision-record"]
+        data["case_count"] = 1
+        data["coverage_labels"] = {"in_scope": 1, "near_miss": 0, "edge": 0}
+        data["criteria"][-1]["evidence_refs"] = ["evals/cases/documentation-source-of-truth-decision-record.json"]
+        errors = module.validate_scorecard_data(data)
+        self.assertFalse(any("coverage_labels must match" in e for e in errors))
+
     def test_static_scorecard_cannot_claim_runtime_pass(self):
         data = self.valid_scorecard()
         data["runtime_status"] = "PASS"

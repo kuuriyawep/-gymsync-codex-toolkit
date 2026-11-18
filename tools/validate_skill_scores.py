@@ -89,8 +89,9 @@ def validate_scorecard_data(data: Any, *, check_case_files: bool = True) -> list
             if skill_id not in targets and skill_path not in targets:
                 errors.append(f"case {case_id} does not target skill {skill_id}")
             coverage = case.get("coverage")
-            if coverage in observed:
-                observed[coverage] += 1
+            coverage_key = {"in-scope": "in_scope", "near-miss": "near_miss", "edge": "edge"}.get(coverage, coverage)
+            if coverage_key in observed:
+                observed[coverage_key] += 1
     if data["coverage_labels"] != observed:
         errors.append(f"coverage_labels must match referenced cases: expected {observed}")
     if data["case_count"] == 0:
