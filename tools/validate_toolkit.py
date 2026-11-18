@@ -229,6 +229,9 @@ def validate_evaluation_framework() -> None:
         "schemas/evaluation-result.schema.json",
         "schemas/evaluation-rubric.schema.json",
         "tools/evaluate_toolkit.py",
+        "tools/discover_codex_runtime.py",
+        "schemas/runtime-capability-snapshot.schema.json",
+        "docs/codex-runtime-discovery.md",
         "templates/evaluation-report.md",
     )
     for relative in required_files:
@@ -238,6 +241,7 @@ def validate_evaluation_framework() -> None:
         "schemas/evaluation-case.schema.json",
         "schemas/evaluation-result.schema.json",
         "schemas/evaluation-rubric.schema.json",
+        "schemas/runtime-capability-snapshot.schema.json",
     ):
         path = ROOT / relative
         if path.is_file():
