@@ -16,6 +16,7 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 - [Phase 8 Completion Report](docs/phase-8-completion-report.md) — static remediation, deterministic validation, and deferred Codex runtime tests.
 - [External Source Audit Index](audits/source-reviews/README.md) — nine selected repository reviews and their evidence status.
 - [Phase 7 Tool Ecosystem](docs/phase-7-tool-ecosystem.md) — typed registry, permission model, and adapter acceptance criteria.
+- [Phase 8 Agent Audit](docs/phase-8-agent-capability-audit.md) — five-role inventory, ownership, runtime constraints, and candidate roles.
 - [Codex Runtime Discovery](docs/codex-runtime-discovery.md) — safe local preflight for configured MCP servers and plugins.
 - [MCP Adapter Contract](docs/mcp-adapter-contract.md) — MCP lifecycle, trust review, permissions, reliability, and verification gates.
 - [Non-MCP Adapter Contracts](docs/non-mcp-adapter-contracts.md) — API, CLI, browser, database, design, and test adapters.

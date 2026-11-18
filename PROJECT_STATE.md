@@ -1539,3 +1539,42 @@ This closes Phase 7 architecture/contract design only. It does not prove live Co
 **Phase 8 — Agent Capability Engineering.**
 
 Next task: inspect the five existing native Codex agents and their role briefs before adding or changing any role. No GymSync application repository, database, deployment, or production data is in scope.
+
+
+## 54. Phase 8 — initial agent capability audit (2026-11-18)
+
+### Existing five-agent audit
+
+Reviewed all five native TOML agents and matching role briefs:
+- `repo_explorer` / `agents/explore.md`
+- `planner` / `agents/planner.md`
+- `implementer` / `agents/implementer.md`
+- `reviewer` / `agents/reviewer.md`
+- `security_auditor` / `agents/security.md`
+
+All five native definitions have the required fields and their names match their filenames. The role briefs map to the same five owners. No duplicate native IDs or missing role briefs were found.
+
+### Important Codex runtime constraint
+
+Current official Codex documentation confirms custom agents inherit parent sandbox, approval, provider, and MCP servers; they cannot independently override those controls. Supported feature reductions exist, but no per-agent sandbox or MCP isolation is created. Role instructions are behavioral contracts, not hard security boundaries.
+
+Official source: https://learn.chatgpt.com/docs/agent-configuration/subagents
+
+### Decisions
+
+- Preserve the five existing roles and clarify ownership boundaries.
+- Keep Codex as the sole coordinator; do not create a manager agent.
+- Recommend a dedicated `test_engineer` only after handoff schemas and write ownership validation exist.
+- Defer docs researcher until an approved docs tool is available; defer designer and database specialist until repeatable workflows justify them.
+- Do not add roles or change existing agent TOML files in this initial audit step.
+
+### Added files
+
+- `docs/phase-8-agent-capability-audit.md` — existing role inventory, overlap resolution, Codex constraints, candidate role decisions, gaps, and Phase 8 sequence.
+- `references/agent-tool-access-matrix.md` — proposed role-to-tool task profiles and actual enforcement layers.
+
+### Active Phase 8 task
+
+Define JSON Schemas for handoffs, agent results, and dependency DAGs; implement deterministic checks for unique ownership, approval scope, read-only result integrity, dependency cycles, and overlapping parallel write scopes.
+
+No GymSync application files, databases, deployments, or production data were touched.
