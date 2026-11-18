@@ -1759,3 +1759,12 @@ First action: inventory all 13 skills, 42 evaluation cases, 7 rubrics, current r
 - First-pass strengths and open gaps are documented in `docs/phase-10-evaluation-reliability.md`.
 - Static scoring of all 13 skills, complete case-to-skill mapping, comparison edge cases, schema-subset limitations, and output-path/failure handling audits remain open.
 - Do not claim Phase 10 complete until the exit criteria in the audit document are met.
+
+
+## 67. Phase 10 skill inventory and coverage gap (2026-11-18)
+
+- Inspected the content of all 13 native skills: change-impact-analysis, clear-technical-communication, code-review, documentation-and-decisions, implementation-planning, project-intelligence, requirements-clarification, risk-aware-tdd, security-review, skill-authoring-and-evaluation, systematic-debugging, verification-gate, and workflow-orchestration.
+- Confirmed 13 portable counterparts are present; CI is responsible for byte-for-byte parity.
+- Identified a scope mismatch: the skill-quality rubric describes case coverage as a skill quality dimension, but the current structured coverage gate targets only `skill-authoring-and-evaluation`. It does not certify 3/2/1 evaluation coverage for all 13 skills.
+- Formal per-skill scores are intentionally not assigned yet; first map the existing 42 cases to their targets and taxonomy to avoid unsupported scores or duplicate cases.
+- Exact-head CI passed for Phase 10 kickoff commit `b189529c75f291bd30ecb1874446baa247e2fff6`, run [#44298384589](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/44298384589).
