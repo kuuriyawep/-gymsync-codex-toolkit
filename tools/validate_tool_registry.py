@@ -62,9 +62,9 @@ def validate_registry(data: Any) -> list[str]:
         for field in ("name", "description", "provider", "permission_profile"):
             if not isinstance(tool.get(field), str) or not tool[field].strip():
                 errors.append(f"{p}.{field} must be a non-empty string")
-        if tool.get("transport") not in TRANSPORTS:
+        if not isinstance(tool.get("transport"), str) or tool["transport"] not in TRANSPORTS:
             errors.append(f"{p}.transport is unsupported")
-        if tool.get("availability") not in AVAILABILITY:
+        if not isinstance(tool.get("availability"), str) or tool["availability"] not in AVAILABILITY:
             errors.append(f"{p}.availability is unsupported")
         caps = tool.get("capabilities")
         if not isinstance(caps, list) or not caps or any(not isinstance(x, str) or not x.strip() for x in caps):
@@ -97,12 +97,12 @@ def validate_registry(data: Any) -> list[str]:
                 if not isinstance(op.get("description"), str) or len(op["description"].strip()) < 5:
                     errors.append(f"{q}.description must contain at least 5 characters")
                 risk = op.get("risk")
-                if risk not in RISKS:
+                if not isinstance(risk, str) or risk not in RISKS:
                     errors.append(f"{q}.risk is unsupported")
                 if not isinstance(op.get("idempotent"), bool):
                     errors.append(f"{q}.idempotent must be boolean")
                 approval = op.get("approval")
-                if approval not in APPROVALS:
+                if not isinstance(approval, str) or approval not in APPROVALS:
                     errors.append(f"{q}.approval is unsupported")
                 if risk in {"destructive", "external"} and approval != "required":
                     errors.append(f"{q}: destructive/external operations must require approval")
@@ -129,7 +129,7 @@ def validate_registry(data: Any) -> list[str]:
         if not isinstance(ev, dict) or set(ev) - {"status", "references", "verified_at"} or not {"status", "references"} <= set(ev):
             errors.append(f"{p}.evidence must contain status and references only")
         else:
-            if ev.get("status") not in EVIDENCE:
+            if not isinstance(ev.get("status"), str) or ev["status"] not in EVIDENCE:
                 errors.append(f"{p}.evidence.status is unsupported")
             refs = ev.get("references")
             if not isinstance(refs, list) or any(not isinstance(x, str) or not x.strip() for x in refs):
@@ -145,7 +145,7 @@ def validate_files() -> list[str]:
     errors: list[str] = []
     try:
         schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
-        if schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema" or schema.get("type") != "object":
+        if not isinstance(schema, dict) or schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema" or schema.get("type") != "object":
             errors.append("tool registry schema must declare a Draft 2020-12 object root")
     except (OSError, json.JSONDecodeError) as exc:
         errors.append(f"cannot read valid tool registry schema: {exc}")
