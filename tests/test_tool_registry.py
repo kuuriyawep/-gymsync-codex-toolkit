@@ -73,6 +73,5 @@ class ToolRegistryTests(unittest.TestCase):
         self.assertTrue(any("destructive/external operations must require approval" in e for e in validator.validate_registry(self.registry(tool))))
 
 
-if (require.main === module) {
-  // Python unit tests are the executable test contract.
-}
+if __name__ == "__main__":
+    unittest.main()
