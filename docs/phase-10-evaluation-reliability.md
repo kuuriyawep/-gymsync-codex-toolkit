@@ -13,13 +13,14 @@ Phase 10 improves the evaluation system already in the repository. It must not d
 | Native Codex skills | 13 |
 | Portable skill mirrors | 13 |
 | Native/portable pairs | 13 |
-| Evaluation case specifications | 42 |
+| Evaluation case specifications | 54 |
 | Rubric files | 7 (4 Markdown, 3 structured JSON) |
+| Static skill scorecards | 13 (one per native skill; model-assisted static reviews) |
 | Evaluation result/report artifacts tracked in Git | 0 |
 | Phase 9 workflow-ledger unit tests | 31 |
 | Latest verified CI run | #44297943897 — 10 substantive quality-gate steps passed |
 
-The 42 cases are authored specifications, not completed behavioral evaluations. The absence of committed run records is not evidence of a pass; it means no historical run record is currently tracked in the repository. CI creates and validates a deterministic smoke-test result during the run, but that result is not a trusted Codex behavioral evaluation.
+The 54 cases are authored specifications, not completed behavioral evaluations. The absence of committed run records is not evidence of a pass; it means no historical run record is currently tracked in the repository. CI creates and validates a deterministic smoke-test result during the run, but that result is not a trusted Codex behavioral evaluation.
 
 ## 3. Existing evaluation architecture
 
@@ -50,11 +51,11 @@ The 13 native skill artifacts inspected are:
 12. `verification-gate`
 13. `workflow-orchestration`
 
-All 13 portable counterparts are present. Their content is maintained as native/portable pairs; CI checks synchronization. This pass inspected the native skill contracts and major section coverage. It is not yet the formal six-dimension scorecard: scores must be recorded per skill with case/evidence references, not inferred from file length or a quick read.
+All 13 portable counterparts are present. Their content is maintained as native/portable pairs; CI checks synchronization. A first-pass six-dimension static scorecard now exists for each of the 13 native skills under `evals/skill-scores/`. These are model-assisted document reviews, not independent human reviews or behavioral evaluations. They reference skill revision `f47bb2857d5fe33e390f02bf94c68ea3e3e488d5`; subsequent commits added scorecards and their validator without changing the reviewed skill files. Every scorecard keeps runtime status `NOT_RUN`. Their coverage evidence is uneven: some skills have only one or two direct cases, and only selected suites have formal coverage labels. The scores therefore describe static contract quality at the reviewed revision, not complete test coverage or runtime readiness.
 
 ### Coverage-enforcement discrepancy
 
-The skill-quality rubric describes evaluation coverage as part of the quality of a skill and the authoring skill describes a representative case set. However, the structured `coverage_requirements.target_skill` currently points specifically to `skill-authoring-and-evaluation`, and the validator applies the 3/2/1 minimums to that target. It does not prove that each of the other 12 skills has its own 3 in-scope, 2 near-miss, and 1 edge case. Treat this as a real coverage gap to resolve deliberately, not as a reason to duplicate 78 cases blindly. First map existing 42 cases to skills and taxonomy, then decide proportionate per-skill coverage requirements.
+The skill-quality rubric describes evaluation coverage as part of the quality of a skill and the authoring skill describes a representative case set. However, the structured `coverage_requirements.target_skill` currently points specifically to `skill-authoring-and-evaluation`, and the validator applies the 3/2/1 minimums to that target. It does not prove that each of the other 12 skills has its own 3 in-scope, 2 near-miss, and 1 edge case. Treat this as a real coverage gap to resolve deliberately, not as a reason to duplicate 78 cases blindly. First map existing 54 cases to skills and taxonomy, then decide proportionate per-skill coverage requirements.
 
 ## 5. First-pass findings
 
@@ -76,13 +77,13 @@ The skill-quality rubric describes evaluation coverage as part of the quality of
 4. **Regression comparison:** inspect comparison semantics for missing cases, changed criterion IDs, and status downgrades; ensure missing evidence never appears as improvement.
 5. **Schema validator limits:** the repository intentionally implements a subset of JSON Schema Draft 2020-12. Test that unsupported keywords cannot silently create false confidence, and keep the limitation visible.
 6. **Runner failure safety:** review interruption between JSON and Markdown creation, cleanup behavior, concurrent run IDs, symlink/path edge cases, and corrupted prior records.
-7. **Coverage mapping:** map the 42 cases to the 13 skills and evaluation taxonomy to identify true gaps and redundant scenarios before adding any case.
+7. **Coverage mapping:** map the 54 cases to the 13 skills and evaluation taxonomy to identify true gaps and redundant scenarios before adding any case.
 8. **Cross-platform reliability:** current CI is Python 3.11 on Ubuntu; Windows, macOS, and additional Python versions are not certified.
 
 ## 6. Phase 10 work plan
 
-1. Complete a case-to-skill/taxonomy coverage matrix; identify overlap and missing behavior. **In progress.**
-2. Apply the static skill-quality rubric to each of the 13 native skills and record evidence-based scores. Verify portable mirrors separately through parity checks; do not score duplicate copies as separate skills. **Not yet scored.**
+1. Complete a case-to-skill/taxonomy coverage matrix; identify overlap and missing behavior. **Inventory updated; complete case-to-skill/taxonomy mapping remains open.**
+2. Apply the static skill-quality rubric to each of the 13 native skills and record evidence-based scores. Verify portable mirrors separately through parity checks; do not score duplicate copies as separate skills. **First-pass scorecards recorded; independent review and coverage remediation remain open.**
 3. Audit evaluator comparison, schema subset, output atomicity, path handling, and malformed-input behavior.
 4. Add only non-duplicative tests for confirmed defects or uncovered failure modes.
 5. Run the full CI pipeline on the exact final commit and review its logs.
