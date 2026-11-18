@@ -1,6 +1,6 @@
 # Phase 9 — Stateful Workflow Execution
 
-**Status:** DESIGN IN PROGRESS  
+**Status:** IMPLEMENTATION IN PROGRESS — append-only ledger, hash-chain, state gates, and initial tests implemented; CI hardening ongoing.  
 **Date:** 2026-11-18  
 **Inputs:** [Workflow orchestration skill](../.agents/skills/workflow-orchestration/SKILL.md), [Workflow brief](../templates/workflow-brief.md), [Agent task graph schema](../schemas/agent-task-graph.schema.json), [Phase 8 handoff/result contracts](../docs/phase-8-agent-capability-audit.md)
 
@@ -90,7 +90,7 @@ Proposed local layout:
 - If the event chain is valid but the snapshot is stale/missing, rebuild it from events.
 - If the event chain is corrupt or has a sequence gap, stop and report BLOCKED; do not silently repair or truncate.
 
-The store must be outside Git tracking, e.g. a user-selected path under `~/.codex/workflow-state/`. Do not commit live workflow logs into this public repository. Store path is explicit/configurable; the tool must not silently create a cloud service or write to production.
+The store must be outside this toolkit repository and Git tracking, e.g. a user-selected path under `~/.codex/workflow-state/gymsync-codex-toolkit/`. The CLI requires an explicit `--store` path and rejects paths inside this repository. Do not commit live workflow logs into this public repository. The tool does not create a cloud service or write to production.
 
 ## 6. Event types
 
@@ -135,15 +135,28 @@ Events contain concise metadata and references. They do not store full terminal 
 - User controls retention and deletion of the local store.
 - The validator checks structural and hash-chain integrity, not the truth of evidence.
 
-## 9. Implementation sequence
+## 9. CLI usage
 
-1. Freeze state names and transition table.
-2. Add event and snapshot schemas.
-3. Implement deterministic ledger with append, replay, hash-chain verification, idempotency, atomic snapshot update, and explicit recovery.
-4. Add task/approval/checkpoint operations and completion gates.
-5. Add tests for every legal/illegal transition, duplicate keys, hash corruption, snapshot rebuild, interruption, retries, cancellation, and no false completion.
-6. Integrate ledger commands into the workflow-orchestration skill and templates.
-7. Run CI. Keep real Codex end-to-end workflow execution NOT_RUN until Phase 11.
+Choose a private local store outside the repository:
+
+```bash
+STORE="$HOME/.codex/workflow-state/gymsync-codex-toolkit"
+python tools/workflow_ledger.py create --store "$STORE" --workflow-id toolkit-phase9 --objective "Implement stateful workflow execution" --primary-workflow "toolkit-development" --scope docs/ --scope tools/ --acceptance "Ledger tests pass" --acceptance "CI passes" --idempotency-key create-phase9-0001
+python tools/workflow_ledger.py verify --store "$STORE" --workflow-id toolkit-phase9
+python tools/workflow_ledger.py resume --store "$STORE" --workflow-id toolkit-phase9
+```
+
+`resume` verifies the event log and snapshot, then returns the restored state. It does not launch agents or execute pending tasks. If the snapshot is missing/stale, use `recover` only after the event chain verifies.
+
+## 10. Implementation sequence
+
+1. Freeze state names and transition table. **Complete.**
+2. Add event and snapshot schemas. **Complete.**
+3. Implement deterministic ledger with append, replay, hash-chain verification, idempotency, atomic snapshot update, and explicit recovery. **Complete in initial implementation.**
+4. Add task/approval/checkpoint operations and completion gates. **Complete in initial implementation.**
+5. Add tests for legal/illegal transitions, duplicate keys, hash corruption, snapshot rebuild, interruption, retries, cancellation, and no false completion. **In progress; expand edge-case coverage.**
+6. Integrate ledger validation and commands into the workflow-orchestration skill and templates. **In progress.**
+7. Run full CI. Keep real Codex end-to-end workflow execution NOT_RUN until Phase 11.
 
 ## 10. Non-goals
 

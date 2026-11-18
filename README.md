@@ -54,6 +54,7 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 - `schemas/runtime-capability-snapshot.schema.json` — sanitized host-discovery evidence contract.
 - `schemas/agent-handoff.schema.json`, `agent-result.schema.json`, and `agent-task-graph.schema.json` — typed delegation and dependency contracts.
 - `schemas/workflow-event.schema.json` and `workflow-snapshot.schema.json` — durable workflow ledger contracts.
+- `tools/workflow_ledger.py` — local append-only workflow ledger CLI; it records state and never executes tasks.
 - `evals/` — taxonomy, cases, rubrics, run records, reports, and acceptance checks.
 - `learning/inbox/` — proposed lessons awaiting review.
 - `learning/approved/` — curated lessons approved for reuse.
@@ -117,7 +118,8 @@ See [toolkit acceptance checks](evals/acceptance-checks.md). The evaluation syst
 Dependency-free maintenance utilities under `tools/`:
 
 - `python tools/validate_tool_registry.py` checks the tool registry manifest.
-- `python tools/validate_agent_contracts.py` checks the handoff, result, and task-graph schema files.
+- `python tools/workflow_ledger.py --help
+python tools/validate_agent_contracts.py` checks the handoff, result, and task-graph schema files.
 - `python tools/validate_toolkit.py` checks skill metadata, native/portable skill parity, agent TOML, workflow sections, evaluation schemas, all evaluation cases, and the skill-quality rubric's Markdown/JSON alignment plus declared trigger-coverage minimums.
 - `python tools/sync_skills.py` previews differences between native skills and the portable mirror.
 - `python tools/sync_skills.py --check` exits non-zero when the mirror is out of sync.

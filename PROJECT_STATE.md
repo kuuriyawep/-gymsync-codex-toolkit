@@ -1692,3 +1692,14 @@ These are complementary existing components; Phase 9 must not duplicate or repla
 ### Active task
 
 Implement the deterministic workflow ledger and tests for state transitions, hash-chain integrity, idempotency, snapshot recovery, approval gates, retries, cancellation, and no false completion. Actual Codex workflow behavior remains reserved for Phase 11.
+
+
+## 62. Phase 9 resume, validation, and orchestration integration (2026-11-18)
+
+- Added verified `resume` operation; it checks the event chain and snapshot and explicitly does not execute tasks.
+- Added workflow schema self-validation and wired it into `tools/validate_toolkit.py`.
+- Added tests for resume, schema validity, approval denial, active-task completion blocking, task timeout state, and retry limits.
+- Added transitive dependency handling for sequential overlapping writes.
+- Added cross-platform guard around file descriptor permission handling.
+- Updated workflow-orchestration skill and workflow brief template with private-store and resume/recovery rules.
+- CI for these latest updates is pending; do not claim the latest integration passed until its exact-head run completes.

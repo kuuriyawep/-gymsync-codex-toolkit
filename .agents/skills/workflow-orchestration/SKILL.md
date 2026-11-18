@@ -47,3 +47,17 @@ For non-trivial tasks, leave a session-visible summary of:
 - Execution mode, owners, and handoffs.
 - Current state, completed work, and evidence.
 - Verification/review results, blockers, and unresolved issues.
+
+
+## Durable workflow ledger (Phase 9)
+
+Use the optional local ledger for multi-session, multi-step work where losing execution state would cause rework or unsafe repetition. Do not create a ledger for trivial one-turn tasks.
+
+- Codex is the single writer and coordinator. Agents return handoffs/results; they do not mutate ledger files.
+- Use an explicitly configured private store outside the repository, for example `$HOME/.codex/workflow-state/<project-slug>`. Never store runtime events inside a public Git repository.
+- Create one stable workflow ID. Every mutating command requires a unique idempotency key.
+- Record concise summaries, task states, approvals, and evidence references only. Never put secrets, raw tool output, full transcripts, or production records in the ledger.
+- Before resuming, run `verify` then `resume`. If the event chain is valid but the snapshot is missing/stale, run `recover`. If the event chain is corrupt, stop and mark the workflow BLOCKED; do not truncate or silently repair.
+- Do not mark a task complete without evidence references. Do not mark a workflow complete until all tasks are complete, validation passes, and required review passes.
+- Pending/denied approval blocks execution. Non-idempotent retries require an explicit approval reference. Timeout, cancellation, and interruption never imply success.
+- The ledger records state only. It does not spawn agents, execute commands, schedule retries, or perform external actions.
