@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gymsync-codex-toolkit:schema:runtime-capability-snapshot",
+  "title": "Codex Runtime Capability Snapshot",
+  "description": "Sanitized local preflight evidence. Does not prove MCP connectivity or authorize tools.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "discovery_kind",
+    "captured_at",
+    "codex_cli",
+    "mcp_servers",
+    "plugins",
+    "active_session_tool_inventory",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "discovery_kind": {
+      "const": "codex-host-preflight"
+    },
+    "captured_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "codex_cli": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "available",
+        "version",
+        "version_status"
+      ],
+      "properties": {
+        "available": {
+          "type": "boolean"
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "version_status": {
+          "enum": [
+            "not-run",
+            "success",
+            "unavailable",
+            "timeout",
+            "error"
+          ]
+        }
+      }
+    },
+    "mcp_servers": {
+      "$ref": "#/$defs/commandEvidence"
+    },
+    "plugins": {
+      "$ref": "#/$defs/commandEvidence"
+    },
+    "active_session_tool_inventory": {
+      "const": "not-captured"
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "commandEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "returncode",
+        "parse_status",
+        "configured_names",
+        "configured_count",
+        "stdout_sha256"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "not-run",
+            "success",
+            "unavailable",
+            "timeout",
+            "error"
+          ]
+        },
+        "returncode": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "parse_status": {
+          "enum": [
+            "not-run",
+            "parsed",
+            "unrecognized"
+          ]
+        },
+        "configured_names": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "configured_count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "stdout_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    }
+  }
+}
