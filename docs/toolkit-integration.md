@@ -23,6 +23,8 @@ Workflow Orchestration Skill
     |
     +---- relevant skills in .agents/skills/
     |
+    +---- registry/tools.json + tool permission matrix ---- declared adapters and operation contracts
+    |
     +---- optional .codex/agents/*.toml
     |             |
     |             +---- bounded handoff via templates/agent-handoff.md
@@ -117,6 +119,7 @@ Run the repository's checks from the root:
 python -m unittest discover -s tests -v
 python tools/sync_skills.py --check
 python tools/validate_project_memory.py
+python tools/validate_tool_registry.py
 python tools/validate_toolkit.py
 python tools/evaluate_toolkit.py --validate
 ```
@@ -125,4 +128,4 @@ These checks validate only what their implementations cover. For actual Codex di
 
 ## Out of scope
 
-This integration layer does not add Graphify, vector search, a persistent workflow database, n8n/CrewAI, WhatsApp/Twilio, paid APIs, autonomous agents outside Codex, automatic deployment, or changes to GymSync application source.
+The registry is declarative only; it does not install Graphify, connect MCP servers, add vector search, create a persistent workflow database, install n8n/CrewAI, configure WhatsApp/Twilio, add paid APIs, create autonomous agents outside Codex, deploy, or change GymSync application source.
