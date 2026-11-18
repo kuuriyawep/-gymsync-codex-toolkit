@@ -157,7 +157,7 @@ This is the reconciled forward roadmap for the current 11-phase plan. It does no
 
 ### Phase 11 — Real Codex Runtime Validation
 - Validate skill discovery and selection in a trusted Codex environment.
-- Execute the five specialist agents and verify actual delegation.
+- Execute all six specialist agents and verify actual delegation.
 - Verify permission and approval enforcement.
 - Run end-to-end workflows with evidence capture.
 - Test failure, interruption, recovery, and reporting.
@@ -174,6 +174,8 @@ This is the reconciled forward roadmap for the current 11-phase plan. It does no
 Do not implement downstream runtime behavior on assumptions that upstream contracts exist.
 
 ## 9. Existing implementation versus future target
+
+The following inventory records the baseline at Phase 6 synthesis time. Later phase changes are recorded in the dated implementation update below.
 
 The repository already contains 13 canonical skills and 13 portable mirrors, five native agent definitions and five role briefs, a workflow registry plus six detailed procedures, 41 evaluation cases, seven rubrics, schemas, validators, unit tests, and CI configuration.
 
@@ -211,3 +213,15 @@ Evidence qualification: seven later source reviews have revision-pinned source/d
 - No external source code is copied by this document.
 - No source package is installed by this document.
 - No CI or runtime result is claimed by this document until a current run is inspected.
+
+
+## 13. Dated implementation update — Phase 8 (2026-11-18)
+
+Phase 8 has completed its design and deterministic-validation scope:
+- Native agents and role briefs: six each (`repo_explorer`, `planner`, `implementer`, `reviewer`, `security_auditor`, `test_engineer`).
+- Handoff, result, and task-graph JSON Schemas plus deterministic validators.
+- Test-only write ownership for `test_engineer`; safe repository-relative path checks; DAG and overlapping-write validation.
+- One new Phase 8 evaluation case for test-engineer scope/ownership; the repository now contains 42 evaluation cases.
+- Phase 8 CI verified successfully at commit `123e337649076b3f155085d47809ca48861a29be`.
+
+The original inventory above is preserved as the Phase 6 baseline. Live Codex agent behavior remains NOT_RUN until Phase 11.

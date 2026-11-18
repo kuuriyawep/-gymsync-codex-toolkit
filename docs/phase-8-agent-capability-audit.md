@@ -1,6 +1,6 @@
 # Phase 8 — Agent Capability Audit
 
-**Status:** Existing-role audit complete; typed handoff/task contracts are implemented; dedicated test-engineer role added with test-only scope checks.  
+**Status:** DESIGN COMPLETE — six-agent role model, typed handoff/result/task contracts, test-only ownership, routing, and deterministic CI are complete. Actual Codex behavior remains NOT_RUN for Phase 11.  
 **Date:** 2026-11-18  
 **Inputs:** [Phase 6 final synthesis](phase-6-final-synthesis.md), [workflow registry](../workflows/registry.md), [agent handoff](../templates/agent-handoff.md), [agent validation](agent-validation.md)
 
@@ -98,22 +98,22 @@ If added:
 
 The test engineer was added only after the handoff/result schema and task ownership validator could express test-only write boundaries.
 
-## 6. Current gaps
+## 6. Deferred runtime validation (Phase 11)
 
 1. Role and write-scope rules remain procedural; they do not create independent OS sandboxing.
 2. Per-agent capability reductions have not been tested in a real Codex session.
-3. Existing evaluation cases still need trusted-session execution for behavioral sign-off.
+3. Agent evaluation cases still need trusted-session execution for behavioral sign-off.
 4. The task graph validator checks repository-relative safe write paths, declared write overlap, dependencies, and cycles, but actual concurrent agent behavior remains unverified.
 
 ## 7. Phase 8 work sequence
 
 1. Freeze the original five-role inventory and ownership boundaries. **Complete.**
 2. Define JSON Schemas for handoffs, agent results, and task graphs. **Complete.**
-3. Implement deterministic checks for approval scope, result evidence, DAG cycles, and parallel write ownership. **Complete.**
+3. Implement deterministic checks for approval scope, result evidence, safe paths, DAG cycles, and parallel write ownership. **Complete.**
 4. Add test_engineer with test-only scope checks. **Complete.**
 5. Update workflow routing and handoff templates. **Complete.**
-6. Add evaluation cases for role fit, context boundaries, conflicts, failure recovery, and write-scope enforcement. **Initial test-engineer case added; broader suite in progress.**
-7. Run CI; leave actual subagent behavior as NOT_RUN until a trusted Codex session is available.
+6. Add evaluation coverage for role fit, handoff approval, conflicts, failure recovery, and test-only write ownership. **Complete as repository cases; runtime execution deferred.**
+7. Run full CI and inspect all quality gates. **Complete.**
 
 ## 8. Explicit non-goals
 
@@ -122,3 +122,26 @@ The test engineer was added only after the handoff/result schema and task owners
 - Do not change GymSync application code, database, deployment, or production data.
 - Do not install MCP servers or external services as part of this static role audit.
 - Do not claim independent per-agent sandboxing.
+
+
+## 9. Phase 8 closeout
+
+Phase 8 architecture and deterministic contract work is complete.
+
+Delivered:
+- Six canonical agents with six executable TOML definitions and six role briefs.
+- Explicit responsibility boundaries and a single Codex coordinator.
+- Role-to-tool task profiles with the parent-inherited permission limitation stated accurately.
+- JSON Schemas for handoffs, agent results, and dependency graphs.
+- Validator for schema structure, approval scope, read-only result integrity, test-only writes, repository-relative paths, DAG cycles, and parallel write-scope overlap.
+- Test-engineer role with a distinct test/fixture/evaluation ownership boundary.
+- Workflow routing, handoff/result templates, task graph example, and Phase 8 evaluation case.
+- Main toolkit validation and CI verification.
+
+Latest verified CI: [run #44296291486](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/44296291486), commit `123e337649076b3f155085d47809ca48861a29be`, SUCCESS.
+
+This closes the design and deterministic-validation scope only. It does not prove independent agent sandboxing, live subagent behavior, approval enforcement, or concurrent execution. Those remain NOT_RUN and are reserved for Phase 11.
+
+## 10. Next phase — Phase 9: Stateful Workflow Execution
+
+Implement explicit workflow/task states, durable task ledger and checkpoints, legal state transitions, retry/resume/cancellation/timeout/idempotency/recovery rules, lifecycle event records, and evidence references. Separate concise summaries from raw tool-output retention. Acceptance requires state-transition tests, recovery tests, and no false completion after interrupted work.

@@ -1633,3 +1633,28 @@ No new runtime tool or external service was installed. Live agent behavior remai
 - Result validation rejects unsafe changed-file paths.
 - Added regression tests for test-engineer and implementer path traversal.
 - Reviewer instructions now focus on correctness, regressions, maintainability, and test quality; security indicators are escalated to the dedicated security_auditor.
+
+
+## 59. Phase 8 design closeout; Phase 9 handoff (2026-11-18)
+
+### Phase 8 status
+
+**DESIGN COMPLETE — deterministic repository validation passed.**
+
+- Six native Codex agents and six matching role briefs.
+- Test engineer added with test-only write ownership.
+- Reviewer/security-auditor boundaries clarified.
+- Typed handoff, result, and task graph schemas.
+- Deterministic validator for approval scope, result evidence, safe repository-relative paths, dependency cycles, and parallel write overlap.
+- Workflow registry, role access matrix, handoff/result templates, task graph example, and test-engineer evaluation case updated.
+- Full CI run [#44296291486](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/44296291486) passed for commit `123e337649076b3f155085d47809ca48861a29be`.
+
+### Deferred to Phase 11
+
+Real Codex agent execution, inherited sandbox/approval behavior, capability feature reductions, parallel scheduling behavior, and behavioral evaluation remain NOT_RUN. The role matrix and validator do not create independent agent sandboxes.
+
+### Current phase
+
+**Phase 9 — Stateful Workflow Execution.**
+
+Next task: design the workflow state machine, durable task ledger/checkpoints, event evidence model, retries, resume, cancellation, timeouts, idempotency, and recovery tests. Preserve Codex as the only coordinator. Do not change GymSync.
