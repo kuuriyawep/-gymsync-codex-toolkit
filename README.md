@@ -16,6 +16,7 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 - [Phase 8 Completion Report](docs/phase-8-completion-report.md) — static remediation, deterministic validation, and deferred Codex runtime tests.
 - [External Source Audit Index](audits/source-reviews/README.md) — nine selected repository reviews and their evidence status.
 - [Phase 7 Tool Ecosystem](docs/phase-7-tool-ecosystem.md) — typed registry, permission model, and adapter acceptance criteria.
+- [Codex Runtime Discovery](docs/codex-runtime-discovery.md) — safe local preflight for configured MCP servers and plugins.
 - [Source-to-Toolkit Adoption Map](docs/source-adoption-map.md) — deduplicated mapping from audit findings to existing components and future phases.
 
 ## Adaptive delivery loop
@@ -43,6 +44,7 @@ The [workflow registry](workflows/registry.md) maps task categories to the exist
 - `references/` — permission/approval, tool permission matrix, and source-adaptation policies.
 - `registry/tools.json` — deny-by-default declarative tool inventory; empty until real adapters are configured and evidenced.
 - `schemas/tool-registry.schema.json` — typed tool registry contract.
+- `schemas/runtime-capability-snapshot.schema.json` — sanitized host-discovery evidence contract.
 - `evals/` — taxonomy, cases, rubrics, run records, reports, and acceptance checks.
 - `learning/inbox/` — proposed lessons awaiting review.
 - `learning/approved/` — curated lessons approved for reuse.
@@ -105,8 +107,8 @@ See [toolkit acceptance checks](evals/acceptance-checks.md). The evaluation syst
 
 Dependency-free maintenance utilities under `tools/`:
 
-- `python tools/validate_tool_registry.py
-python tools/validate_toolkit.py` checks skill metadata, native/portable skill parity, agent TOML, workflow sections, evaluation schemas, all evaluation cases, and the skill-quality rubric's Markdown/JSON alignment plus declared trigger-coverage minimums.
+- `python tools/validate_tool_registry.py` checks the tool registry manifest.
+- `python tools/validate_toolkit.py` checks skill metadata, native/portable skill parity, agent TOML, workflow sections, evaluation schemas, all evaluation cases, and the skill-quality rubric's Markdown/JSON alignment plus declared trigger-coverage minimums.
 - `python tools/sync_skills.py` previews differences between native skills and the portable mirror.
 - `python tools/sync_skills.py --check` exits non-zero when the mirror is out of sync.
 - `python tools/sync_skills.py --write` copies native skill files into the portable mirror. The native `.agents/skills/` tree is the source of truth.
@@ -114,6 +116,7 @@ python tools/validate_toolkit.py` checks skill metadata, native/portable skill p
 - `python tools/evaluate_toolkit.py --validate` validates case files against the declared schema contract.
 - `python tools/evaluate_toolkit.py --run` runs deterministic toolkit integrity checks and creates an immutable evidence-ready run record and Markdown report; it does not launch Codex or grade model behavior.
 - `python tools/evaluate_toolkit.py --run --compare evals/results/<previous-run-id>.json` compares stable case/criterion outcomes with a prior run.
+- `python tools/discover_codex_runtime.py` performs a read-only Codex CLI/MCP/plugin preflight; it never installs, authenticates, starts, or calls tools.
 - `python tools/validate_project_memory.py` checks project-memory template structure, status labels, source markers, selected secret-like patterns, and dated-page freshness.
 
 Python 3.11+ is recommended for full TOML validation. The scripts use only the Python standard library. The evaluation runner implements the JSON Schema keywords used by this repository's schemas; it is not a general-purpose full Draft 2020-12 validator.
