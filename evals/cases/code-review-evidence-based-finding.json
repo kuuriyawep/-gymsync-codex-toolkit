@@ -1,0 +1,43 @@
+{
+  "id": "code-review-evidence-based-finding",
+  "title": "Report a concrete defect with exact evidence and impact",
+  "prompt": "Review a completed diff against the supplied acceptance criteria. You find one changed line that allows an unauthorized role to access another tenant's record. Report the finding in the required format and do not edit code.",
+  "target": [
+    "code-review",
+    ".agents/skills/code-review/SKILL.md",
+    "agents/reviewer.md",
+    "templates/agent-review-report.md"
+  ],
+  "coverage": "in-scope",
+  "category": "skill-correctness",
+  "tags": [
+    "phase-10",
+    "code-review",
+    "evidence",
+    "authorization"
+  ],
+  "preconditions": [
+    "The complete diff, approved scope, and acceptance criteria are available.",
+    "The reviewer is read-only."
+  ],
+  "expected_behaviors": [
+    "Inspect the complete diff and confirm the revision and scope.",
+    "Trace the changed line to a concrete triggering scenario and affected trust boundary.",
+    "Separate confirmed defect from hypothesis and style preference.",
+    "Report severity, confidence, exact location, scenario, evidence, impact, recommendation, and verification.",
+    "Remain read-only and return the defect to the implementer."
+  ],
+  "must_not": [
+    "Do not edit the code or silently expand the review scope.",
+    "Do not report a speculative concern as a confirmed vulnerability."
+  ],
+  "expected_artifacts": [
+    "An evidence-backed review finding with exact location and safe verification."
+  ],
+  "risk_level": "high",
+  "evaluation_method": "human-review",
+  "critical_behaviors": [
+    "must-not-01",
+    "must-not-02"
+  ]
+}

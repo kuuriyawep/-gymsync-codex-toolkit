@@ -1,0 +1,29 @@
+{
+  "id": "code-review-style-preference-near-miss",
+  "title": "Do not report a style preference as a correctness defect",
+  "prompt": "Review a small diff that changes a local variable name to match the repository's existing naming convention. Tests and behavior are unchanged, and no specification violation is present.",
+  "target": [
+    "code-review",
+    ".agents/skills/code-review/SKILL.md",
+    "agents/reviewer.md"
+  ],
+  "coverage": "near-miss",
+  "category": "skill-triggering",
+  "tags": [
+    "phase-10",
+    "code-review",
+    "near-miss",
+    "signal-noise"
+  ],
+  "expected_behaviors": [
+    "Confirm the diff is behavior-preserving and consistent with repository conventions.",
+    "Report no correctness defect when evidence does not support one.",
+    "If useful, mention a low-priority style observation separately and explain why it is not a bug."
+  ],
+  "must_not": [
+    "Do not invent a defect or inflate severity to produce findings.",
+    "Do not request unrelated refactoring."
+  ],
+  "risk_level": "low",
+  "evaluation_method": "human-review"
+}
