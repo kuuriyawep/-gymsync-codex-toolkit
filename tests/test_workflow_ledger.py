@@ -42,6 +42,17 @@ class WorkflowLedgerTests(unittest.TestCase):
         self.approve_workflow()
         self.ledger.transition("EXECUTION", idempotency_key="workflow-execution-01")
 
+    def test_create_is_idempotent_with_same_key_and_payload(self):
+        event = self.ledger.create(objective="Implement a bounded sample workflow.", primary_workflow="feature-delivery",
+            scope=["src/", "tests/"], acceptance_criteria=["Tests pass", "Review passes"],
+            approval_required=True, review_required=True, idempotency_key="create-sample-01")
+        self.assertEqual(event["seq"], 1)
+        self.assertEqual(self.ledger.show()["seq"], 1)
+
+    def test_store_inside_toolkit_repository_is_rejected(self):
+        with self.assertRaises(LedgerError):
+            WorkflowLedger(ROOT / ".codex" / "workflow-state", "invalid-store")
+
     def test_create_persists_event_and_snapshot(self):
         snapshot = self.ledger.show()
         self.assertEqual(snapshot["state"], "INTAKE")
@@ -75,7 +86,6 @@ class WorkflowLedgerTests(unittest.TestCase):
             self.ledger.checkpoint("Different state", "Other", idempotency_key="checkpoint-0002")
 
     def test_task_dependencies_and_task_approval_gate(self):
-        self.enter_execution()
         self.ledger.add_task("inspect", "repo_explorer", "Inspect source", read_scope=["src/"],
                              idempotency_key="task-inspect-001")
         self.ledger.add_task("implement", "implementer", "Implement source", read_scope=["src/"],
@@ -99,24 +109,23 @@ class WorkflowLedgerTests(unittest.TestCase):
             self.ledger.transition_task("inspect", "active", idempotency_key="task-outside-02")
 
     def test_task_completion_requires_evidence(self):
-        self.enter_execution()
         self.ledger.add_task("inspect", "repo_explorer", "Inspect source", idempotency_key="task-evidence-01")
+        self.enter_execution()
         self.ledger.transition_task("inspect", "active", idempotency_key="task-evidence-02")
         with self.assertRaises(LedgerError):
             self.ledger.transition_task("inspect", "completed", idempotency_key="task-evidence-03")
 
     def test_test_engineer_is_restricted_to_test_paths(self):
-        self.enter_execution()
         with self.assertRaises(LedgerError):
             self.ledger.add_task("bad-tests", "test_engineer", "Edit source", write_scope=["src/main.py"],
                                  idempotency_key="test-scope-bad-01")
         self.ledger.add_task("good-tests", "test_engineer", "Add tests", write_scope=["tests/test_main.py"],
                              approval_status="approved", approved_scope=["tests/test_main.py"],
                              approval_reference="user-approval-003", idempotency_key="test-scope-good-01")
+        self.enter_execution()
         self.assertEqual(module.WorkflowLedger.task(self.ledger.show(), "good-tests")["state"], "ready")
 
     def test_parallel_overlapping_write_scopes_are_rejected(self):
-        self.enter_execution()
         self.ledger.add_task("write-a", "implementer", "Edit shared module", write_scope=["src/shared.py"],
                              approval_status="approved", approved_scope=["src/shared.py"],
                              approval_reference="user-approval-004", idempotency_key="write-overlap-a")
@@ -126,7 +135,6 @@ class WorkflowLedgerTests(unittest.TestCase):
                                  approval_reference="user-approval-005", idempotency_key="write-overlap-b")
 
     def test_overlapping_writes_are_allowed_when_sequenced(self):
-        self.enter_execution()
         self.ledger.add_task("write-a", "implementer", "Edit shared module", write_scope=["src/shared.py"],
                              approval_status="approved", approved_scope=["src/shared.py"],
                              approval_reference="user-approval-006", idempotency_key="write-sequence-a")
@@ -155,7 +163,6 @@ class WorkflowLedgerTests(unittest.TestCase):
             self.ledger.record_validation("passed", [], idempotency_key="validation-no-evidence")
 
     def test_non_idempotent_retry_requires_manual_approval_reference(self):
-        self.enter_execution()
         self.ledger.add_task("publish", "implementer", "Publish artifact", write_scope=["dist/"],
             approval_status="approved", approved_scope=["dist/"], approval_reference="user-approval-008",
             idempotent=False, max_attempts=2, idempotency_key="publish-task-01")

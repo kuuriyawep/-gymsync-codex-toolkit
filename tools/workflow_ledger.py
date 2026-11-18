@@ -125,6 +125,12 @@ class WorkflowLedger:
         if not isinstance(workflow_id, str) or not WORKFLOW_ID_RE.fullmatch(workflow_id):
             raise LedgerError("workflow_id must be a lowercase slug (3-64 characters)")
         self.store = store.expanduser().resolve()
+        try:
+            self.store.relative_to(ROOT.resolve())
+        except ValueError:
+            pass
+        else:
+            raise LedgerError("workflow store must be outside the toolkit repository")
         self.workflow_id = workflow_id
         self.directory = self.store / workflow_id
         self.events_path = self.directory / "events.jsonl"
@@ -330,6 +336,8 @@ class WorkflowLedger:
             status = {"approval_requested": "pending", "approval_granted": "approved", "approval_denied": "denied"}[kind]
             task_id = p.get("task_id")
             target = self.task(snapshot, task_id) if task_id else snapshot
+            if status == "pending":
+                target["approved_scope"], target["approval_reference"] = [], None
             if status == "approved":
                 approved_scope, ref = p.get("approved_scope", []), p.get("approval_reference")
                 if not isinstance(ref, str) or not ref.strip():
@@ -491,8 +499,6 @@ class WorkflowLedger:
                acceptance_criteria: list[str], complexity: str = "moderate", risk: str = "low",
                approval_required: bool = False, review_required: bool = True,
                actor: str = "codex-coordinator", idempotency_key: str) -> dict[str, Any]:
-        if self.events_path.exists() and self.events_path.stat().st_size:
-            raise LedgerError("workflow already exists; use show or recover")
         if not scope or any(not safe_path(x) for x in scope):
             raise LedgerError("scope must contain safe repository-relative paths")
         if not acceptance_criteria:
