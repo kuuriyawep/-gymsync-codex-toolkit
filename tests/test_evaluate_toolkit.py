@@ -50,6 +50,11 @@ class SchemaValidationTests(unittest.TestCase):
         schema = {"type": "array", "uniqueItems": True}
         self.assertTrue(evaluator.validate_instance(["same", "same"], schema))
 
+    def test_unsupported_schema_keyword_fails_closed(self) -> None:
+        schema = {"type": "string", "maxLength": 5}
+        errors = evaluator.validate_instance("short", schema)
+        self.assertTrue(any("unsupported schema keyword" in item for item in errors))
+
 
 class OverallStatusTests(unittest.TestCase):
     def status(self, status: str, critical: bool = False) -> str:

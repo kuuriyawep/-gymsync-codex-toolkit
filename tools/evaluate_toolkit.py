@@ -24,6 +24,8 @@ RUBRIC_DIR = ROOT / "evals" / "rubrics"
 RUBRIC_SCHEMA = ROOT / "schemas" / "evaluation-rubric.schema.json"
 RESULT_SCHEMA = ROOT / "schemas" / "evaluation-result.schema.json"
 VALID_STATUSES = {"PASS", "FAIL", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"}
+SUPPORTED_SCHEMA_KEYS = {"type", "const", "enum", "minLength", "pattern", "format", "minimum", "minItems", "uniqueItems", "items", "required", "properties", "additionalProperties"}
+SCHEMA_ANNOTATION_KEYS = {"$schema", "$id", "title", "description", "default", "examples"}
 
 
 def load_json(path: Path) -> Any:
@@ -47,6 +49,9 @@ def type_matches(value: Any, expected: str) -> bool:
 def validate_instance(value: Any, schema: dict[str, Any], path: str = "$") -> list[str]:
     """Validate the JSON Schema keywords used by this repository's schemas."""
     errors: list[str] = []
+    unsupported = set(schema) - SUPPORTED_SCHEMA_KEYS - SCHEMA_ANNOTATION_KEYS
+    for keyword in sorted(unsupported):
+        errors.append(f"{path}: unsupported schema keyword {keyword!r}; validator does not implement it")
     expected = schema.get("type")
     if isinstance(expected, list):
         if not any(type_matches(value, item) for item in expected):
