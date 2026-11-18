@@ -48,8 +48,8 @@ Additional states:
 | VALIDATION | EXECUTION, REVIEW, BLOCKED, FAILED, CANCELLING |
 | REVIEW | EXECUTION, COMPLETION, BLOCKED, FAILED, CANCELLING |
 | NEEDS_CLARIFICATION | TRIAGE, BLOCKED, CANCELLED |
-| BLOCKED | DISCOVERY, PLANNING, APPROVAL, EXECUTION, CANCELLED |
-| FAILED | DISCOVERY, PLANNING, CANCELLED |
+| BLOCKED | DISCOVERY, PLANNING, APPROVAL, EXECUTION, CANCELLING |
+| FAILED | DISCOVERY, PLANNING, CANCELLING |
 | CANCELLING | CANCELLED, BLOCKED |
 | COMPLETION | Terminal |
 | CANCELLED | Terminal |
@@ -64,6 +64,16 @@ Transition gates:
 
 Task states:
 `pending → ready → active → completed`, with side states `blocked`, `failed`, and `cancelled`.
+
+| From | Allowed next states |
+|---|---|
+| pending | ready, blocked, cancelled |
+| ready | active, blocked, cancelled |
+| active | completed, blocked, failed, cancelled |
+| blocked | ready, cancelled |
+| failed | retry event to ready, or cancelled |
+| completed | Terminal |
+| cancelled | Terminal |
 
 - A task becomes ready only after all dependencies are completed.
 - A task may become active only when its approval and write-scope requirements are satisfied.
@@ -83,9 +93,10 @@ Proposed local layout:
     snapshot.json
 ```
 
-- `events.jsonl` is append-only and hash chained.
+- `events.jsonl` is append-only and hash chained. The chain is tamper-evident, not digitally signed; an actor with write access to the full store could recompute it.
 - Each event has sequence number, event ID, timestamp, actor, event type, idempotency key, previous hash, minimal payload, and event hash.
 - `snapshot.json` is an atomically replaced projection containing current state, tasks, approval status, checkpoint, sequence number, and last event hash.
+- POSIX store/workflow directories must be private (mode `0700`) and ledger/lock files are created with restrictive permissions. On Windows, filesystem ACLs remain authoritative.
 - On startup/resume, verify the event chain and compare the snapshot to a replayed projection.
 - If the event chain is valid but the snapshot is stale/missing, rebuild it from events.
 - If the event chain is corrupt or has a sequence gap, stop and report BLOCKED; do not silently repair or truncate.
@@ -154,7 +165,7 @@ python tools/workflow_ledger.py resume --store "$STORE" --workflow-id toolkit-ph
 2. Add event and snapshot schemas. **Complete.**
 3. Implement deterministic ledger with append, replay, hash-chain verification, idempotency, atomic snapshot update, and explicit recovery. **Complete in initial implementation.**
 4. Add task/approval/checkpoint operations and completion gates. **Complete in initial implementation.**
-5. Add tests for legal/illegal transitions, duplicate keys, hash corruption, snapshot rebuild, interruption, retries, cancellation, and no false completion. **In progress; expand edge-case coverage.**
+5. Add tests for legal/illegal transitions, duplicate keys, hash corruption, snapshot rebuild, interruption, retries, cancellation, private-store boundaries, and no false completion. **Initial deterministic suite implemented; expand edge-case coverage as needed.**
 6. Integrate ledger validation and commands into the workflow-orchestration skill and templates. **Complete.**
 7. Run full CI. Keep real Codex end-to-end workflow execution NOT_RUN until Phase 11.
 

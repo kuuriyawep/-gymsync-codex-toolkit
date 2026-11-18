@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -52,6 +53,19 @@ class WorkflowLedgerTests(unittest.TestCase):
     def test_store_inside_toolkit_repository_is_rejected(self):
         with self.assertRaises(LedgerError):
             WorkflowLedger(ROOT / ".codex" / "workflow-state", "invalid-store")
+
+    def test_store_inside_any_git_worktree_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            git_root = Path(directory)
+            (git_root / ".git").mkdir()
+            with self.assertRaises(LedgerError):
+                WorkflowLedger(git_root / "private-state", "git-store-test")
+
+    @unittest.skipIf(os.name == "nt", "POSIX directory mode bits are not portable to Windows ACLs")
+    def test_insecure_store_directory_permissions_are_rejected(self):
+        self.ledger.store.chmod(0o755)
+        with self.assertRaises(LedgerError):
+            self.ledger.checkpoint("Private", "Continue", idempotency_key="private-mode-test")
 
     def test_resume_verifies_state_without_executing_tasks(self):
         before = self.ledger.show()["seq"]

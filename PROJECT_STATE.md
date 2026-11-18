@@ -1713,3 +1713,12 @@ Implement the deterministic workflow ledger and tests for state transitions, has
 - Added durable ledger fields to `templates/workflow-brief.md`.
 - Corrected duplicate Phase 9 documentation section numbering.
 - Latest-head CI remains pending.
+
+
+## 64. Phase 9 private-store hardening (2026-11-18)
+
+- Ledger now rejects stores inside any Git working tree, not only inside the toolkit repository.
+- On POSIX, store and workflow directories must have private mode `0700`; ledger, snapshot, and lock files use restrictive permissions. Windows relies on filesystem ACLs.
+- Documentation now states the hash chain is tamper-evident, not digitally signed, and includes the task transition table.
+- Added tests for Git-worktree exclusion and insecure directory permissions.
+- CI for this hardening commit is pending.
