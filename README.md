@@ -17,7 +17,8 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 - [External Source Audit Index](audits/source-reviews/README.md) — nine selected repository reviews and their evidence status.
 - [Phase 7 Tool Ecosystem](docs/phase-7-tool-ecosystem.md) — typed registry, permission model, and adapter acceptance criteria.
 - [Codex Runtime Discovery](docs/codex-runtime-discovery.md) — safe local preflight for configured MCP servers and plugins.
-- [MCP Adapter Contract](docs/mcp-adapter-contract.md) — lifecycle, trust review, permissions, reliability, and verification gates.
+- [MCP Adapter Contract](docs/mcp-adapter-contract.md) — MCP lifecycle, trust review, permissions, reliability, and verification gates.
+- [Non-MCP Adapter Contracts](docs/non-mcp-adapter-contracts.md) — API, CLI, browser, database, design, and test adapters.
 - [Graphify v0.9.112 Review](docs/adapters/graphify-v0.9.112-review.md) — pinned optional adapter candidate and runtime blockers.
 - [Source-to-Toolkit Adoption Map](docs/source-adoption-map.md) — deduplicated mapping from audit findings to existing components and future phases.
 

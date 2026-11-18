@@ -1480,3 +1480,16 @@ Added a regression test proving malformed input-schema required properties are r
 The first CI run after making input/output schemas mandatory found a validator implementation mismatch: the JSON Schema contract required both fields, but the per-operation validator's required-key set had not been updated. The validator now requires both fields at the instance level as well. Added a regression test for a missing output schema.
 
 CI failure was a genuine contract-validation defect, not a Graphify runtime issue. Re-run the full quality gates on the corrected commit before treating the registry schema work as passing.
+
+
+## 52. Non-MCP adapter contracts (2026-11-18)
+
+Added `docs/non-mcp-adapter-contracts.md` to complete the Phase 7 adapter design coverage for:
+- HTTP APIs.
+- CLI executables.
+- Browser automation.
+- Databases.
+- Design/collaboration tools.
+- Test and verification runners.
+
+Each contract defines provider identity, resource boundaries, operation schemas, risk/effect/approval, credentials, timeouts, output bounds, retry/idempotency, untrusted-output handling, verification evidence, and disable/revocation rules. No new provider was installed or connected.

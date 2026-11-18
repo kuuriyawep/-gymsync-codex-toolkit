@@ -18,7 +18,7 @@ Create one safe, typed, Codex-first inventory for tools that Codex may use. The 
 | Credential references | Runtime/secret manager | Reference secrets without storing values |
 | Verification evidence | Tests and immutable evaluation records | Prove configured behavior |
 | Runtime discovery | `tools/discover_codex_runtime.py` + snapshot schema | Report local Codex CLI, configured MCP server names, and installed plugin names without exposing config values |
-| Adapter governance | `docs/mcp-adapter-contract.md` + review template | Enforce provider identity, transport, authentication, data-egress, per-tool review, lifecycle, and verification gates |
+| Adapter governance | `docs/mcp-adapter-contract.md`, `docs/non-mcp-adapter-contracts.md`, and review template | Enforce provider identity, transport, authentication, data-egress, per-operation review, lifecycle, and verification gates |
 
 Codex remains the primary coordinator. No external runtime is introduced.
 
@@ -80,6 +80,7 @@ Detailed evidence is in `audits/source-reviews/`.
 - Runtime discovery: `tools/discover_codex_runtime.py` performs read-only CLI/MCP/plugin preflight, emits sanitized JSON, uses no shell, applies timeouts, extracts names only, discards raw command output and has mocked tests in `tests/test_runtime_discovery.py`.
 - Runtime snapshot schema: `schemas/runtime-capability-snapshot.schema.json`.
 - MCP adapter lifecycle and security contract: `docs/mcp-adapter-contract.md`.
+- Non-MCP contracts for API, CLI, browser, database, design, and test adapters: `docs/non-mcp-adapter-contracts.md`.
 - Per-server evidence template: `templates/mcp-adapter-review.md`.
 - Real adapters: NOT_IMPLEMENTED.
 - Graphify: STATIC_REVIEWED / PLANNED only; not installed, configured, session-loaded, or runtime-verified.
