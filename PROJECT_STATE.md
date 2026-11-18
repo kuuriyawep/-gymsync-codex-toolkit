@@ -1269,3 +1269,56 @@ This list is an audit trail of sequential content updates; latest `main` HEAD mu
 - GymSync application: untouched.
 
 **Single next action:** Run/inspect the toolkit's current quality gates on the latest main HEAD. If they pass, close the documentation consolidation and begin Phase 7 — Tool Ecosystem & Integration — using the source-adoption map as the implementation backlog.
+
+
+---
+
+# PART XV — PHASE 7 TOOL ECOSYSTEM KICKOFF (2026-11-18)
+
+## 42. Phase 7 authorization and initial implementation
+
+The user directed that the completed source audit work be consolidated into the toolkit and that work then proceed to the next phase. Phase 7 — Tool Ecosystem & Integration — has started.
+
+### Files added
+
+- `schemas/tool-registry.schema.json` — Draft 2020-12 typed registry schema.
+- `registry/tools.json` — initial registry with no hypothetical tools and `default_policy: deny`.
+- `references/tool-permission-matrix.md` — role-level access, risk, resource/action/effect, approval, hard-deny, and credential-reference policy.
+- `docs/phase-7-tool-ecosystem.md` — architecture, source-informed design, threat model, current status, and acceptance criteria.
+- `tools/validate_tool_registry.py` — deterministic manifest validator; does not execute tools or connect providers.
+- `tests/test_tool_registry.py` — tests for valid/empty registry, duplicate IDs, raw credentials, runtime evidence, destructive approval, malformed risk values, and secret-path traversal.
+
+### Files updated
+
+- `tools/validate_toolkit.py` — invokes the tool registry validator as part of toolkit validation.
+- `README.md` — exposes the Phase 7 design, registry, schema, and validation command.
+- `docs/toolkit-integration.md` — connects the registry and permission matrix to the existing component map and health checks.
+- `docs/phase-7-tool-ecosystem.md` — records the implementation status and next action.
+
+### Safety decisions
+
+- Registry metadata does not grant permission.
+- Runtime exposure and platform sandbox/approval controls remain authoritative.
+- Default policy is deny.
+- Registry is intentionally empty until actual adapters are selected/configured and supported by evidence.
+- Raw credentials are rejected; only environment/secret references are permitted.
+- Destructive and external operations require approval.
+- No shell execution, MCP server, API, database, browser, Graphify, or external service has been installed or connected.
+
+### Validation status
+
+- GitHub Actions for the latest code-bearing commit before the final test update: run #44292691809 was in progress at the time of this checkpoint.
+- Latest main commit after the test update: `ecce6ac77bd6eb0e19c3fde56bf2ca65b11d2a18`.
+- Latest CI for that exact commit: run #44292713579 was pending at the time of inspection.
+- Do not claim Phase 7 tests or CI passed until the exact latest-head run completes and its job steps are inspected.
+- No local test execution is claimed.
+
+## 43. Current active task
+
+**Active phase:** Phase 7 — Tool Ecosystem & Integration.
+
+**Completed in this phase so far:** Initial registry schema, deny-by-default manifest, permission matrix, threat model, deterministic validator, tests, and documentation wiring.
+
+**Remaining:** Latest CI inspection; harden any failures; then select/configure a real adapter only after checking actual host availability and user-approved provider scope.
+
+**Single next action:** Inspect GitHub Actions run #44292713579 for commit `ecce6ac77bd6eb0e19c3fde56bf2ca65b11d2a18`; fix any failing step before adding adapters.
