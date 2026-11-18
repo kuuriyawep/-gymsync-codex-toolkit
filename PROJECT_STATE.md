@@ -857,7 +857,7 @@ The existing `docs/source-attribution.md` records these conceptual influences:
 
 These are registered as conceptual influences. Exact file-level license review is still required before verbatim reuse.
 
-Graphify is not included in the current attribution register; its status is unresolved as described in Finding H.
+Graphify is now recorded in docs/source-attribution.md as an optional external knowledge-graph capability, subject to exact version, license, security, and Codex-compatibility validation. It is not mandatory and does not replace durable project records. The canonical disposition is in docs/phase-6-final-synthesis.md.
 
 ## 21. Later capability-source candidates
 
@@ -876,8 +876,8 @@ These repositories were raised for deeper investigation. Their earlier reviews w
 Additional candidate discovered during research:
 - `n8n-io/skills` — a separate skills/reference repository related to n8n. Not yet fully audited or approved for adoption.
 
-Graphify candidate:
-- `Graphify-Labs/graphify` — important to the user's project/file knowledge-graph interest. The open question is whether to use it as a separate tool or adapt selected concepts into the toolkit. No installation or integration is approved.
+Graphify disposition (supersedes the earlier unresolved wording):
+- `Graphify-Labs/graphify` — ADOPT as an optional external knowledge-graph capability, subject to exact version, license, security, and Codex compatibility validation. Keep it separate from the toolkit's durable Markdown/Mnemoverse memory and source-of-truth records. No installation or integration is implied by this architecture decision.
 
 ## 22. Preliminary source priority interpretation
 
@@ -973,22 +973,17 @@ For every proposed next milestone:
 8. Obtain user agreement on the scope and order.
 9. Add it to the active roadmap only after agreement.
 
-## 27. Recommended ordering for future planning (proposal, not approval)
+## 27. Canonical forward roadmap
 
-This ordering is a recommendation to discuss after the user confirms the current audit; it is not permission to begin implementation:
+The former proposal in this section is superseded by the user-approved Phase 6 Final Synthesis. The canonical forward roadmap is now in [docs/phase-6-final-synthesis.md](docs/phase-6-final-synthesis.md):
 
-1. Close the current repository audit and reconcile all documentation/decision conflicts.
-2. Complete the detailed external-source audits and create a capability/adoption matrix.
-3. Define the target tool ecosystem architecture and permission model.
-4. Decide how Project Intelligence should evolve, including the Graphify question.
-5. Define future specialist agent capabilities and their actual tool access.
-6. Strengthen evaluation coverage for tools, integrations, agents, and workflows.
-7. Implement approved components incrementally with contract tests and evidence.
-8. Run trusted Codex behavioral validation when the environment is available.
-9. Perform a safe selective-adoption trial.
-10. Review governance, portability, and release readiness.
+1. Phase 7 — Tool Ecosystem & Integration.
+2. Phase 8 — Agent Capability Engineering.
+3. Phase 9 — Stateful Workflow Execution.
+4. Phase 10 — Evaluation & Reliability.
+5. Phase 11 — Real Codex Runtime Validation.
 
-Do not begin step 2 or later automatically if the user gives a different explicit next instruction.
+The detailed deliverables, dependencies, security gates, and acceptance criteria in that synthesis are authoritative for future planning. This roadmap does not imply implementation or installation.
 
 ---
 
@@ -1109,7 +1104,7 @@ Never promote ASSUMPTION or LIKELY to VERIFIED without new evidence.
 
 ## 35. Single next action
 
-**Next action:** Ask the user which already-recorded pending item they want to resume. Do not start external source audits, new phases, or architecture implementation until the user selects the next task.
+**Next action:** Begin Phase 7 — Tool Ecosystem & Integration — by inspecting current tool/integration-related files and defining the typed registry, adapter, permission, credential-reference, and evidence contracts. Do not install external packages or connect services until the target is explicitly identified, license/security checks are complete, and the required approval is recorded.
 
 ---
 
@@ -1131,3 +1126,64 @@ Never promote ASSUMPTION or LIKELY to VERIFIED without new evidence.
 - [Quality gates](https://github.com/kuuriyawep/-gymsync-codex-toolkit/blob/main/docs/quality-gates.md)
 - [Source attribution](https://github.com/kuuriyawep/-gymsync-codex-toolkit/blob/main/docs/source-attribution.md)
 - [Latest verified CI run at audit time](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/43918625052)
+
+---
+
+# PART XIII — PHASE 6 FINAL SYNTHESIS CLOSEOUT (2026-11-18)
+
+## 36. Canonical synthesis
+
+The completed architecture reconciliation is recorded in:
+- [Phase 6 — Capability & Architecture Final Synthesis](docs/phase-6-final-synthesis.md)
+- [Source Attribution and Adaptation Register](docs/source-attribution.md)
+
+The synthesis establishes:
+- One primary owner for each capability domain.
+- Source-by-source ADOPT / ADAPT / REJECT dispositions.
+- Cross-source overlap decisions to prevent duplicate skills, agents, registries, and workflow engines.
+- Security, provenance, licensing, and installation gates.
+- The canonical Phase 7–11 forward roadmap and acceptance criteria.
+
+The synthesis is the canonical forward architecture decision. It does not rewrite historical reports or convert prepared behavioral tests into passed tests.
+
+## 37. Phase 6 synthesis task record
+
+**Task:** Document and reconcile the Phase 6 Capability & Architecture Final Synthesis.
+
+**User authorization:** The user approved writing the synthesis document and reconciling the central checkpoint and source-attribution register.
+
+**Files changed:**
+- docs/phase-6-final-synthesis.md — new canonical synthesis.
+- docs/source-attribution.md — updated source dispositions, boundaries, and reuse rules.
+- PROJECT_STATE.md — updated Graphify disposition, canonical roadmap, and resume point.
+
+**Commits created by the GitHub contents API:**
+- Synthesis document: 12397b438c48170157f9849f36d298625ca9a879.
+- Source register: b280071b5729b63ca06cb1f21e5a1e8090cff952.
+- The PROJECT_STATE update commit is recorded after its write succeeds.
+
+**Checks:** Documentation write responses are recorded. Latest HEAD and CI for the final documentation state must be inspected before claiming repository-level validation. No local tests, Codex runtime tests, or behavioral tests are claimed here.
+
+**Not done:** No GymSync application changes, database changes, deployments, external packages, Graphify, n8n, or other integrations have been installed or connected by this documentation task.
+
+## 38. Installation request clarification
+
+The user also asked to install the work, but the installation target was not specified unambiguously. The possible targets are materially different:
+- Install Graphify as an optional repository knowledge-graph tool.
+- Install or configure the toolkit's Codex skills/agents in a Codex environment.
+- Install a different source package or integration.
+
+Do not guess which target the user intended. Ask for the exact installation target before installing anything. The source/license/security gates in the canonical synthesis remain mandatory.
+
+## 39. Current status and resume point
+
+- Phase 6 Final Synthesis content: documented.
+- Source attribution reconciliation: documented.
+- Central project checkpoint: updated in this commit sequence.
+- Repository-wide final validation: pending latest HEAD/CI inspection.
+- Phase 6 closeout: pending confirmation that the final documentation state passes the repository's applicable checks.
+- Phase 7: not started.
+- Installation: blocked pending clarification of the exact target.
+- GymSync app: untouched.
+
+**Single next action:** Inspect the final main HEAD and its GitHub Actions result; then ask which exact target the user wants installed before any installation action.
