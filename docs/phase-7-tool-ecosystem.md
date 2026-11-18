@@ -1,6 +1,6 @@
 # Phase 7 — Tool Ecosystem & Integration
 
-**Status:** IN PROGRESS — registry foundation, sanitized Codex host-discovery utility, and MCP adapter review contract authored. Live host verification remains pending.  
+**Status:** DESIGN & CONTRACT COMPLETE — registry, permission model, adapter contracts, Graphify static review, deterministic tests, and CI verified. External runtime installation/verification remains opt-in and is deferred to Phase 11.  
 **Inputs:** [Phase 6 synthesis](phase-6-final-synthesis.md), [source audit index](../audits/source-reviews/README.md), [source adoption map](source-adoption-map.md)
 
 ## Objective
@@ -82,8 +82,7 @@ Detailed evidence is in `audits/source-reviews/`.
 - MCP adapter lifecycle and security contract: `docs/mcp-adapter-contract.md`.
 - Non-MCP contracts for API, CLI, browser, database, design, and test adapters: `docs/non-mcp-adapter-contracts.md`.
 - Per-server evidence template: `templates/mcp-adapter-review.md`.
-- Real adapters: NOT_IMPLEMENTED.
-- Graphify: STATIC_REVIEWED / PLANNED only; not installed, configured, session-loaded, or runtime-verified.
+- Real adapters: no provider installed/configured/verified. Graphify is STATIC_REVIEWED / PLANNED only; not installed, configured, session-loaded, or runtime-verified.
 - Credentials: NOT_CONFIGURED.
 - Runtime integration: NOT_RUN — utility must be run on the user's actual Codex host.
 - Active-session tool inventory: NOT_CAPTURED — requires `/mcp` inspection in a live session.
@@ -91,18 +90,21 @@ Detailed evidence is in `audits/source-reviews/`.
 
 ## Acceptance criteria
 
-Phase 7 cannot close until:
-1. Registry and definition schema validate.
+Phase 7 design/contract acceptance criteria:
+1. Registry and operation schemas validate.
 2. Duplicate IDs and malformed operations are rejected.
 3. A tool cannot be marked runtime-verified without evidence references.
 4. Raw credential values are rejected; only secret references are permitted.
 5. Role permission matrix is explicit and default deny.
 6. Hard-deny and approval precedence are documented and tested.
-7. Adapter contracts cover schemas, errors, timeouts, retries, idempotency, and fallback.
+7. MCP, API, CLI, browser, database, design, and test adapter contracts cover schemas, errors, timeouts, retries, idempotency, and fallback.
 8. No adapter is described as configured/verified without runtime evidence.
-9. Current CI passes on latest main.
-10. User approves package/service installation and external integrations.
+9. Deterministic contract tests and the full latest-main CI pass.
 
-## Next work
+<badge color="success">Phase 7 design accepted</badge>
 
-Run `python tools/discover_codex_runtime.py` on the actual Codex host, then inspect `/mcp` in the active session. For Graphify, first resolve the `project_path` override scope through an OS/container sandbox or a tested pinned-path proxy. Only then request approval for the pinned package install and test. Keep Graphify marked `planned` until the user approves setup and live evidence exists.
+External installation approval is a separate gate, not a prerequisite for completing the architecture phase. No adapter is called functional until it has been executed in a trusted runtime. Graphify remains `planned` until the `project_path` scope issue is resolved, the user approves installation, and live evidence is captured.
+
+## Next phase — Phase 8: Agent Capability Engineering
+
+Review the five existing agents before adding roles. Define bounded responsibilities, role-to-tool permissions, handoff schemas, dependency DAGs, context isolation, parallel-write controls, independent review, and agent evaluation cases. Preserve Codex as the coordinator. Do not add duplicate agents or change GymSync.

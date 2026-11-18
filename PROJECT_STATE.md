@@ -1493,3 +1493,49 @@ Added `docs/non-mcp-adapter-contracts.md` to complete the Phase 7 adapter design
 - Test and verification runners.
 
 Each contract defines provider identity, resource boundaries, operation schemas, risk/effect/approval, credentials, timeouts, output bounds, retry/idempotency, untrusted-output handling, verification evidence, and disable/revocation rules. No new provider was installed or connected.
+
+
+## 53. Phase 7 design closeout and Phase 8 handoff (2026-11-18)
+
+### Phase 7 closeout
+
+Phase 7 design/contract acceptance criteria are complete:
+- Typed deny-by-default registry with unique IDs.
+- Operation-level resource scope, action, effect, risk, idempotency, approval, input schema, and output schema.
+- Structural schema/registry validation and negative tests.
+- Explicit role permission matrix and hard-deny/approval precedence.
+- Threat model and credential-reference boundary.
+- MCP lifecycle and per-server review contract.
+- API, CLI, browser, database, design, and test adapter contracts.
+- Safe Codex host-discovery utility and sanitized snapshot schema.
+- Graphify v0.9.112 pinned static review and planned candidate; no package installed.
+- No planned/configured adapter is misreported as runtime-verified.
+
+### Final CI evidence
+
+GitHub Actions run [#44294887222](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/44294887222) completed SUCCESS for commit `985052a22bf7135784f519105a3c67465ced6c6a`. All substantive quality-gate steps passed:
+- Unit tests.
+- Native/portable skill parity.
+- Project-memory validation.
+- Toolkit validation.
+- Evaluation-case validation.
+- Deterministic evaluation generation.
+- Generated evaluation result validation.
+
+The immediately preceding schema-validator commit also passed run [#44294805527](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/44294805527).
+
+This closes Phase 7 architecture/contract design only. It does not prove live Codex MCP connectivity or Graphify runtime behavior.
+
+### Deferred runtime work
+
+- Run `tools/discover_codex_runtime.py` on the actual Codex host.
+- Inspect the active session with `/mcp`.
+- Resolve Graphify's `project_path` override scope using an OS/container sandbox or tested pinned-path proxy.
+- Obtain explicit approval before installing Graphify or another provider.
+- Perform runtime proof-of-concept and capture evidence in Phase 11.
+
+### Current phase
+
+**Phase 8 — Agent Capability Engineering.**
+
+Next task: inspect the five existing native Codex agents and their role briefs before adding or changing any role. No GymSync application repository, database, deployment, or production data is in scope.
