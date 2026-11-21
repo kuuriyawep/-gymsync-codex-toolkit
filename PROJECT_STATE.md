@@ -1768,3 +1768,62 @@ First action: inventory all 13 skills, 42 evaluation cases, 7 rubrics, current r
 - Identified a scope mismatch: the skill-quality rubric describes case coverage as a skill quality dimension, but the current structured coverage gate targets only `skill-authoring-and-evaluation`. It does not certify 3/2/1 evaluation coverage for all 13 skills.
 - Formal per-skill scores are intentionally not assigned yet; first map the existing 42 cases to their targets and taxonomy to avoid unsupported scores or duplicate cases.
 - Exact-head CI passed for Phase 10 kickoff commit `b189529c75f291bd30ecb1874446baa247e2fff6`, run [#44298384589](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/44298384589).
+
+
+---
+
+# PART XVI — PHASE 11 KICKOFF & WORKSTREAM 11.1 BASELINE (2026-11-21)
+
+## 68. User-approved Phase 11 execution plan
+
+The user approved the Phase 11 roadmap with these decisions:
+- Runtime strategy: Codex-first.
+- Coverage: all toolkit capabilities.
+- Execution: sequential, gate-based workstreams.
+- Codex remains the primary orchestrator.
+- OpenCode is an optional limited fallback/comparison only; it is not equivalent proof of Codex behavior.
+
+The approved plan is recorded in `docs/phase-11-execution-plan.md`. It defines nine workstreams, deliverables, acceptance criteria, dependencies, evidence requirements, and exit gates.
+
+## 69. Workstream 11.1 — repository-side baseline
+
+**Status:** PARTIAL — repository baseline verified; actual user-host runtime evidence BLOCKED / awaiting fresh snapshot.
+
+**Baseline report:** `docs/phase-11-baseline.md`.
+
+### Verified repository facts at 2026-11-21
+
+- Repository: `kuuriyawep/-gymsync-codex-toolkit`.
+- Default branch: `main`; visibility remains Public by prior user decision.
+- Phase 11 plan commit: `d19a48c9080f269282990688d6cce57e3a1517cf`.
+- Baseline report commit: `3430789ab95cdc9f03f24c29e7c740ca8b443350`.
+- Latest inspected recursive tree was complete (not truncated).
+- Current inventory: 13 canonical skills and 13 portable mirrors; six native agent definitions and six matching role briefs; workflow, registry, adapter, evaluation, schema, test, and CI assets are present.
+- Exact-HEAD CI for the plan commit passed: run `#44944018499`; all substantive workflow steps succeeded. This is deterministic repository CI only.
+
+### Runtime boundary
+
+Reviewed `docs/codex-runtime-discovery.md`, `tools/discover_codex_runtime.py`, and `tests/test_runtime_discovery.py`.
+
+The utility is read-only and reports CLI version, configured MCP server names, and installed plugin names. It does not expose configuration values/secrets or prove active-session tool availability. The actual session inventory must be captured separately using `/mcp`.
+
+Prior user-reported Codex CLI and `/mcp` observations from 2026-11-18 are historical and must not be treated as current. This assistant cannot execute commands on the user's local Codex host or inspect their active Codex TUI session.
+
+### Outstanding 11.1 criteria
+
+- Fresh Codex CLI version and sanitized runtime discovery snapshot: BLOCKED / awaiting user-host evidence.
+- Current configured MCP/plugin inventory: BLOCKED / awaiting fresh snapshot.
+- Active Codex session `/mcp` inventory: BLOCKED / awaiting user-host evidence.
+- Model availability and safe representative tool invocation: NOT_RUN.
+
+No installation, authentication, runtime configuration, provider connection, or GymSync application change was performed.
+
+## 70. Current active task and single next action
+
+**Active phase:** Phase 11 — Real Runtime Integration & Full-System Validation.  
+**Active workstream:** 11.1 — Runtime & Environment Readiness.  
+**Status:** PARTIAL / BLOCKED on fresh user-host runtime evidence.
+
+**Single next action:** On the actual Codex host, run `python tools/discover_codex_runtime.py`, inspect `/mcp` in the active Codex TUI, and provide only the sanitized JSON plus non-sensitive CLI/model/server/tool names and connection statuses. Do not share tokens, config files, environment values, or raw authentication output.
+
+Do not begin 11.2 until the 11.1 exit gate is satisfied or the user explicitly accepts a documented runtime blocker.
