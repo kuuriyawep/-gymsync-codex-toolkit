@@ -1866,3 +1866,14 @@ Do not begin 11.2 until the 11.1 exit gate is satisfied or the user explicitly a
 - Runtime-dependent Phase 11 acceptance remains BLOCKED / NOT_RUN.
 
 **Next action:** Continue remaining repository-side hardening and inspect current CI workflow configuration; do not claim tests passed without execution evidence.
+
+
+## 74. Phase 11 deterministic CI pipeline added (2026-11-24)
+
+- Added `.github/workflows/ci.yml`, triggered on pushes to main, pull requests, and manual dispatch.
+- Pipeline uses Python 3.11 and runs: compileall for tools/tests; unittest discovery; `tools/validate_toolkit.py`; `tools/validate_project_memory.py`; and `tools/evaluate_toolkit.py --validate`.
+- Updated the consolidated Phase 11 report to describe the pipeline and clearly state that a configured pipeline is not a passing run.
+- First workflow execution has not been confirmed. The commit workflow-run lookup and combined status endpoint returned empty results at the time checked. CI = PENDING/UNKNOWN, not PASS.
+- No tests were executed locally by this audit. Runtime acceptance remains BLOCKED / NOT_RUN.
+
+**Next action:** Inspect the first completed CI run; fix deterministic failures with focused changes, then continue remaining Phase 11 static remediation.
