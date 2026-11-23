@@ -1827,3 +1827,15 @@ No installation, authentication, runtime configuration, provider connection, or 
 **Single next action:** On the actual Codex host, run `python tools/discover_codex_runtime.py`, inspect `/mcp` in the active Codex TUI, and provide only the sanitized JSON plus non-sensitive CLI/model/server/tool names and connection statuses. Do not share tokens, config files, environment values, or raw authentication output.
 
 Do not begin 11.2 until the 11.1 exit gate is satisfied or the user explicitly accepts a documented runtime blocker.
+
+
+## 71. Phase 11 consolidated repository-side audit closeout (2026-11-24)
+
+- Completed static/read-only audit coverage for all nine workstreams, 11.1–11.9.
+- Added `docs/phase-11-final-audit-report.md` with scope, evidence boundary, workstream dispositions, P0/P1/P2 findings, and the required trusted-runtime acceptance sequence.
+- Repository-side audit is complete; Phase 11 is **PARTIAL — NOT FULLY ACCEPTED** because current Codex runtime, live agent/skill/workflow/MCP behavior, runtime security enforcement, and end-to-end evidence remain BLOCKED or NOT_RUN.
+- The report does not claim that terminal tests or local validators were executed during this audit.
+- No GymSync application changes, installations, authentication, or production-data access occurred.
+- The previous active-workstream pointer to 11.1 is superseded by this consolidated status. Runtime acceptance remains an outstanding gate.
+
+**Current Phase 11 disposition:** Repository-side audit COMPLETE; runtime acceptance BLOCKED / NOT_RUN; overall PARTIAL.
