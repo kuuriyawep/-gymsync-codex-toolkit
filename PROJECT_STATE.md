@@ -1899,3 +1899,13 @@ Do not begin 11.2 until the 11.1 exit gate is satisfied or the user explicitly a
 - Current repository-side work remains focused on case-to-skill coverage mapping, scorecard freshness, and path/tool boundary review. Do not refresh historical scorecard target revisions without actually re-reviewing their corresponding skill content.
 
 **Current disposition:** deterministic quality gates PASS on db8cec7e; repository-side audit/remediation remains in progress; runtime acceptance BLOCKED / NOT_RUN; overall Phase 11 PARTIAL.
+
+
+## 77. Phase 11 first three repository-side work packages (2026-11-24)
+
+- Refreshed the 12 previously stale static skill scorecards against the current canonical skill content and repaired evidence anchors that pointed to non-existent headings. The project-intelligence scorecard had already been refreshed. This does not establish runtime behavior or independent human review.
+- Added `evals/skill-case-matrix.md` mapping all 55 evaluation cases to the 13 canonical skills. The matrix records cross-cutting mappings and identifies uneven coverage; it is a traceability index, not test execution.
+- Re-audited Graphify's registry boundary: all eight operation input schemas omit caller-controlled `project_path`; the validator rejects it; a regression test asserts the rejection. Graphify remains planned, not installed or runtime verified.
+- Updated the Phase 11 final audit report and README index.
+
+**Current disposition:** repository-side work packages 1–3 substantially complete; exact-head CI still queued for the latest commits; runtime acceptance remains BLOCKED / NOT_RUN; overall Phase 11 PARTIAL.
