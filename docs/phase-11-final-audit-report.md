@@ -152,3 +152,15 @@ Phase 11 may be marked PASS only when required applicable runtime scenarios have
 - Coverage is now explicitly mapped, but the 13 scorecards still have uneven case-label coverage; the matrix does not convert unlabeled or cross-cutting cases into formal rubric coverage. Any remaining label reconciliation is a static documentation task.
 
 **Disposition:** scorecard evidence anchors refreshed; 55/55 case-to-skill traceability mapped; Graphify caller-path boundary statically enforced. Runtime status for every skill and Graphify remains `NOT_RUN` / `NOT_VERIFIED`.
+
+
+## 11. Remaining work closed out for repository-side preparation
+
+- Added lexical path-boundary tests to `tests/test_workflow_ledger.py`. The helper rejects absolute paths, dot traversal, Windows drive paths, and backslashes; it is explicitly lexical and does not resolve symlinks. The ledger is a state/evidence utility, not an execution sandbox.
+- Reviewed the evaluation runner and behavioral/agent rubrics. They correctly distinguish authored case specs, deterministic artifact validation, static scorecards, and real Codex behavioral evidence.
+- Added `docs/phase-11-codex-runtime-acceptance.md` as the dedicated **CODEX-ONLY** handoff. It enumerates runtime preflight, 13 skill tests, six agents/seven scenarios, workflow, memory, MCP/tools, security/recovery, E2E acceptance, evidence requirements, and exit criteria.
+- The 55-case mapping is traceability-complete, but formal 3 in-scope / 2 near-miss / 1 edge coverage is not available for every skill. The handoff prohibits inventing labels and requires explicit BLOCKED / CASE DESIGN REQUIRED dispositions where cases are insufficient.
+
+**Repository-side preparation:** COMPLETE, pending final exact-HEAD CI.  
+**Codex-only runtime acceptance:** NOT_RUN / BLOCKED.  
+**Overall Phase 11:** PARTIAL — NOT FULLY ACCEPTED.
