@@ -1854,3 +1854,15 @@ Do not begin 11.2 until the 11.1 exit gate is satisfied or the user explicitly a
 - Runtime-dependent 11.1–11.9 acceptance remains BLOCKED / NOT_RUN pending a trusted Codex session.
 
 **Current disposition:** repository-side audit and selected static remediations COMPLETE; deterministic verification PENDING; runtime acceptance BLOCKED / NOT_RUN; overall Phase 11 PARTIAL.
+
+
+## 73. Phase 11 workflow approval hardening (2026-11-24)
+
+- Updated `tools/workflow_ledger.py`: a task with non-empty write_scope and approval_status=approved must now include a non-empty approval_reference, in addition to approved_scope covering write_scope.
+- Added `test_approved_write_task_requires_approval_reference` to `tests/test_workflow_ledger.py`.
+- This validates presence and scope metadata only; it does not cryptographically or independently prove user approval provenance. Runtime/caller enforcement remains required.
+- The earlier terminal-state guard and its regression assertions remain in place.
+- GitHub Actions run lookup and combined-status lookup for latest inspected commit returned empty arrays. CI status is UNKNOWN/NOT_RETRIEVED; tests have not been run by this audit.
+- Runtime-dependent Phase 11 acceptance remains BLOCKED / NOT_RUN.
+
+**Next action:** Continue remaining repository-side hardening and inspect current CI workflow configuration; do not claim tests passed without execution evidence.
