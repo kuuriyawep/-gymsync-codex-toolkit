@@ -69,7 +69,7 @@
   "runtime_status": "NOT_RUN",
   "case_count": 8,
   "coverage_labels": {
-    "in_scope": 3,
+    "in_scope": 5,
     "near_miss": 2,
     "edge": 1
   },
@@ -83,6 +83,8 @@
     "memory-task-resumption",
     "memory-unverified-claim"
   ],
-  "gaps": [],
-  "summary": "Static document review only. This score does not establish behavioral performance; runtime remains NOT_RUN."
+  "gaps": [
+    "Coverage taxonomy labels were completed for all eight cases; the static score remains tied to its historical target_revision and must be re-reviewed against the current skill before reuse."
+  ],
+  "summary": "Historical static document review only. Coverage metadata now labels all eight cases; this score remains tied to an older revision and does not establish current document quality or behavioral performance. Runtime remains NOT_RUN."
 }
