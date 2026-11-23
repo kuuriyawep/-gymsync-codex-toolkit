@@ -1839,3 +1839,18 @@ Do not begin 11.2 until the 11.1 exit gate is satisfied or the user explicitly a
 - The previous active-workstream pointer to 11.1 is superseded by this consolidated status. Runtime acceptance remains an outstanding gate.
 
 **Current Phase 11 disposition:** Repository-side audit COMPLETE; runtime acceptance BLOCKED / NOT_RUN; overall PARTIAL.
+
+
+## 72. Phase 11 repository remediation checkpoint (2026-11-24)
+
+- Added the consolidated audit report at `docs/phase-11-final-audit-report.md`; linked it and the Phase 11 plan/baseline from README.
+- Updated the execution plan to reflect the user's implementation authorization and the accepted 11.1 blocker disposition.
+- Reconciled the project-state active-workstream pointer: the repository-side audit spans 11.1–11.9; runtime acceptance remains blocked.
+- Added explicit `coverage` labels to the two previously unlabeled memory cases. Updated the project-intelligence scorecard's taxonomy counts to 5 in-scope, 2 near-miss, and 1 edge. Its historical target revision remains stale and the score still requires a fresh review.
+- Hardened `tools/workflow_ledger.py` so no event can be appended after terminal COMPLETION or CANCELLED state. Added regression assertions for late checkpoint attempts in both terminal states.
+- Changes are committed directly to `main`; no branch or PR was created.
+- Exact-head CI status for the latest repository commit has not been retrieved; the GitHub combined-status endpoint returned an empty statuses list. No local test execution is claimed.
+- Remaining P1 work includes approval provenance, real-path/symlink containment, permission-profile enforcement, Graphify path enforcement, secret scanning, scorecard revision refresh, and complete case-to-skill mapping.
+- Runtime-dependent 11.1–11.9 acceptance remains BLOCKED / NOT_RUN pending a trusted Codex session.
+
+**Current disposition:** repository-side audit and selected static remediations COMPLETE; deterministic verification PENDING; runtime acceptance BLOCKED / NOT_RUN; overall Phase 11 PARTIAL.
