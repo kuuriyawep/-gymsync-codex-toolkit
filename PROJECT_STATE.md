@@ -1877,3 +1877,14 @@ Do not begin 11.2 until the 11.1 exit gate is satisfied or the user explicitly a
 - No tests were executed locally by this audit. Runtime acceptance remains BLOCKED / NOT_RUN.
 
 **Next action:** Inspect the first completed CI run; fix deterministic failures with focused changes, then continue remaining Phase 11 static remediation.
+
+
+## 75. Phase 11 deterministic CI verified (2026-11-24)
+
+- Inspected the existing `.github/workflows/quality.yml` (Toolkit Quality Gates). It already provides the stronger deterministic pipeline; the duplicate `.github/workflows/ci.yml` added during this session was removed to avoid duplicate CI runs.
+- GitHub Actions run `45269054140` completed SUCCESS on exact HEAD `c3cf42d99c8cbdf8384a2a80e21f461ee51279a3`.
+- Reported successful steps: unit tests; native/portable skill parity; project-memory validation; toolkit validation; evaluation case validation; deterministic evaluation record generation; generated result validation.
+- This is evidence-backed deterministic repository PASS for that exact commit. It is not Codex runtime or behavioral PASS.
+- Consolidated Phase 11 report updated with the run evidence.
+
+**Current disposition:** deterministic repository quality gates PASS on commit c3cf42d; runtime acceptance remains BLOCKED / NOT_RUN; overall Phase 11 PARTIAL.
