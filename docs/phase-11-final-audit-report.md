@@ -142,3 +142,13 @@ Phase 11 may be marked PASS only when required applicable runtime scenarios have
 
 ---
 **Safety boundary:** No GymSync application changes. No credentials or secrets in Git. No claim of unexecuted tests or runtime behavior.
+
+
+## 10. Phase 11 repository-side follow-up — scorecards, case mapping, Graphify boundary
+
+- Added `evals/skill-case-matrix.md`, mapping all 55 evaluation specifications to the 13 canonical skills. The matrix is traceability evidence only; it does not claim behavioral execution.
+- Refreshed the 12 previously stale static scorecards against the skill content visible at snapshot `3126de6494165f337ea53308f8c08606f0ca80e1`. Corrected evidence anchors to actual section headings (including skills whose inputs are embedded in another section). The existing `project-intelligence` scorecard had already been refreshed separately. These remain model-assisted static reviews, not independent human reviews or runtime results.
+- Reviewed the Graphify registry candidate: all eight operation schemas omit caller-controlled `project_path`; the registry validator rejects reintroduction; a regression test covers the rejection. The adapter remains planned/uninstalled/unverified, and its configured-root behavior cannot be claimed proven without a real adapter invocation.
+- Coverage is now explicitly mapped, but the 13 scorecards still have uneven case-label coverage; the matrix does not convert unlabeled or cross-cutting cases into formal rubric coverage. Any remaining label reconciliation is a static documentation task.
+
+**Disposition:** scorecard evidence anchors refreshed; 55/55 case-to-skill traceability mapped; Graphify caller-path boundary statically enforced. Runtime status for every skill and Graphify remains `NOT_RUN` / `NOT_VERIFIED`.
