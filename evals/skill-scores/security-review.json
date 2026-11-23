@@ -2,9 +2,9 @@
   "schema_version": "1.0.0",
   "skill_id": "security-review",
   "skill_path": ".agents/skills/security-review/SKILL.md",
-  "target_revision": "f47bb2857d5fe33e390f02bf94c68ea3e3e488d5",
+  "target_revision": "3126de6494165f337ea53308f8c08606f0ca80e1",
   "reviewer": "Codex static review (model-assisted; not an independent human review)",
-  "reviewed_at": "2026-11-18T12:15:00Z",
+  "reviewed_at": "2026-11-24T00:00:00Z",
   "review_type": "static",
   "criteria": [
     {
@@ -20,7 +20,7 @@
       "score": 1,
       "rationale": "Assets, actors, trust boundaries, threat assumptions, and attack surfaces are specified in the first step rather than a separate input section.",
       "evidence_refs": [
-        ".agents/skills/security-review/SKILL.md#Inputs-and-prerequisites"
+        ".agents/skills/security-review/SKILL.md#Procedure"
       ]
     },
     {
@@ -36,7 +36,7 @@
       "score": 2,
       "rationale": "The finding format requires severity, confidence, asset, location, impact, remediation, verification, and uncertainty.",
       "evidence_refs": [
-        ".agents/skills/security-review/SKILL.md#Required-output"
+        ".agents/skills/security-review/SKILL.md#Required-finding-format"
       ]
     },
     {
@@ -44,7 +44,7 @@
       "score": 2,
       "rationale": "The skill is read-only by default and explicitly stops before live exploitation, exfiltration, permission changes, or destructive tests.",
       "evidence_refs": [
-        ".agents/skills/security-review/SKILL.md#Stop-conditions"
+        ".agents/skills/security-review/SKILL.md#Stop-conditions-and-safety-boundary"
       ]
     },
     {
