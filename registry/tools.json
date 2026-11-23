@@ -6,7 +6,7 @@
     {
       "id": "graphify-local",
       "name": "Graphify Local Knowledge Graph",
-      "description": "Optional local code and documentation relationship graph exposed through Graphify's MCP stdio server. Candidate only; not installed or runtime-verified.",
+      "description": "Optional local code and documentation relationship graph exposed through Graphify's MCP stdio server. Candidate only; not installed or runtime-verified. Adapter must bind every operation to the configured project root and must not accept caller-supplied project paths.",
       "provider": "Graphify Labs",
       "provider_version": "0.9.112",
       "transport": "mcp",
@@ -60,10 +60,6 @@
               },
               "demote_docs": {
                 "type": "boolean"
-              },
-              "project_path": {
-                "type": "string",
-                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
               }
             },
             "required": [
@@ -120,10 +116,6 @@
               },
               "node_id": {
                 "type": "string"
-              },
-              "project_path": {
-                "type": "string",
-                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
               }
             }
           },
@@ -181,10 +173,6 @@
               "max_chars": {
                 "type": "integer",
                 "minimum": 1
-              },
-              "project_path": {
-                "type": "string",
-                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
               }
             }
           },
@@ -245,10 +233,6 @@
               "token_budget": {
                 "type": "integer",
                 "minimum": 1
-              },
-              "project_path": {
-                "type": "string",
-                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
               }
             }
           },
@@ -304,10 +288,6 @@
               "token_budget": {
                 "type": "integer",
                 "minimum": 1
-              },
-              "project_path": {
-                "type": "string",
-                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
               }
             },
             "required": [
@@ -367,10 +347,6 @@
                 "type": "number",
                 "minimum": 0,
                 "maximum": 100
-              },
-              "project_path": {
-                "type": "string",
-                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
               }
             }
           },
@@ -418,12 +394,7 @@
           "approval": "none",
           "input_schema": {
             "type": "object",
-            "properties": {
-              "project_path": {
-                "type": "string",
-                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
-              }
-            }
+            "properties": {}
           },
           "output_schema": {
             "type": "object",
@@ -484,10 +455,6 @@
               },
               "undirected": {
                 "type": "boolean"
-              },
-              "project_path": {
-                "type": "string",
-                "description": "Optional project root with graphify-out/graph.json; do not change from the configured project root."
               }
             },
             "required": [
