@@ -20,6 +20,7 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 - [Phase 9 Stateful Workflow Execution](docs/phase-9-stateful-workflow-execution.md) — durable task ledger, state transitions, idempotency, recovery, and evidence model.
 - [Phase 10 Evaluation & Reliability](docs/phase-10-evaluation-reliability.md) — skill scoring, evaluation coverage, adversarial cases, and reliability evidence.
 - [Agent Tool Access Matrix](references/agent-tool-access-matrix.md) — proposed task-level role permissions and enforcement boundaries.
+- [Codex Runtime Acceptance Pack](docs/phase-11-codex-runtime-acceptance.md) — **CODEX-ONLY** checklist for all remaining live runtime tests and final acceptance.
 - [Phase 11 Execution Plan](docs/phase-11-execution-plan.md) — approved nine-workstream runtime-validation roadmap and current disposition.
 - [Skill Case Coverage Matrix](evals/skill-case-matrix.md) — all 55 evaluation cases mapped to the 13 canonical skills; static traceability only.
 - [Phase 11 Final Audit Report](docs/phase-11-final-audit-report.md) — consolidated static audit, blockers, remediation findings, and runtime acceptance sequence.
