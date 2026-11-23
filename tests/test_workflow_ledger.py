@@ -185,6 +185,12 @@ class WorkflowLedgerTests(unittest.TestCase):
         self.enter_execution()
         self.assertEqual(module.WorkflowLedger.task(self.ledger.show(), "good-tests")["state"], "ready")
 
+    def test_approved_write_task_requires_approval_reference(self):
+        with self.assertRaises(LedgerError):
+            self.ledger.add_task("missing-approval-ref", "implementer", "Write without provenance",
+                write_scope=["src/main.py"], approval_status="approved",
+                approved_scope=["src/main.py"], idempotency_key="missing-approval-ref-01")
+
     def test_parallel_overlapping_write_scopes_are_rejected(self):
         self.ledger.add_task("write-a", "implementer", "Edit shared module", write_scope=["src/shared.py"],
                              approval_status="approved", approved_scope=["src/shared.py"],
