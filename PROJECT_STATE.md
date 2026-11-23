@@ -1888,3 +1888,14 @@ Do not begin 11.2 until the 11.1 exit gate is satisfied or the user explicitly a
 - Consolidated Phase 11 report updated with the run evidence.
 
 **Current disposition:** deterministic repository quality gates PASS on commit c3cf42d; runtime acceptance remains BLOCKED / NOT_RUN; overall Phase 11 PARTIAL.
+
+
+## 76. Phase 11 exact-head quality-gate verification refreshed (2026-11-24)
+
+- Rechecked GitHub Actions run 45269149011 and its job steps. The existing Python 3.11 quality-gates job completed SUCCESS; all steps passed, including unit tests, native/portable skill parity, project-memory validation, toolkit validation, evaluation-case validation, deterministic evaluation record generation, and generated-result validation.
+- The run tested exact commit db8cec7e5bb1689d6db7a7bedd4049de75e2cc42. The consolidated Phase 11 report now points to this newer exact-head evidence; run 45269054140 on c3cf42d is retained as historical.
+- This is deterministic CI evidence only. It does not validate live Codex skill activation, delegation, runtime permissions, MCP calls, approval provenance, or end-to-end behavior.
+- Current source audit confirms AGENTS.md requires the complete PROJECT_STATE.md as the cross-session checkpoint, while project-intelligence retrieves only task-relevant memory pages after reading the checkpoint. These are complementary instructions; no change is needed.
+- Current repository-side work remains focused on case-to-skill coverage mapping, scorecard freshness, and path/tool boundary review. Do not refresh historical scorecard target revisions without actually re-reviewing their corresponding skill content.
+
+**Current disposition:** deterministic quality gates PASS on db8cec7e; repository-side audit/remediation remains in progress; runtime acceptance BLOCKED / NOT_RUN; overall Phase 11 PARTIAL.
