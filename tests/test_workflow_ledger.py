@@ -296,10 +296,6 @@ class WorkflowLedgerTests(unittest.TestCase):
             self.ledger.checkpoint("Checkpoint", "Next", idempotency_key="lock-test-01")
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class WorkflowPathValidationTests(unittest.TestCase):
     def test_safe_path_accepts_repository_relative_paths(self):
         for value in ("src/main.py", "tests/test_main.py", "docs/", "evals/cases/example.json"):
