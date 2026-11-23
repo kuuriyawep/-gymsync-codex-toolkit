@@ -1,13 +1,13 @@
 # Phase 11 — Real Runtime Integration & Full-System Validation
 
-**Status:** APPROVED PLAN — NOT STARTED  
+**Status:** IMPLEMENTATION AUTHORIZED — REPOSITORY-SIDE AUDIT COMPLETE; RUNTIME ACCEPTANCE PENDING  
 **Execution strategy:** Codex-first  
 **Coverage:** Full toolkit  
 **Execution model:** Sequential, gate-based  
 **Primary orchestrator:** Codex  
 **Repository:** kuuriyawep/-gymsync-codex-toolkit
 
-> This document authorizes planning only. It does not authorize implementation, dependency installation, runtime authentication, external side effects, commits beyond this plan file, or changes to the GymSync application.
+> Implementation is authorized by the user's 2026-11-24 instruction to complete Phase 11 in the existing toolkit repository. Work remains confined to this repository and the approved Phase 11 scope. No GymSync application changes, secret handling, or unapproved external side effects are authorized. Runtime-dependent criteria must remain BLOCKED or NOT_RUN until backed by trusted Codex evidence.
 
 ## 1. Purpose
 
@@ -449,3 +449,12 @@ Use existing templates, schemas, validators, and evaluation infrastructure where
 **Planning decision:** Approved for use as the Phase 11 execution roadmap.  
 **Execution state:** NOT STARTED.  
 **Implementation authorization:** NOT GRANTED by this document.
+
+
+## 10. Consolidated audit disposition (2026-11-24)
+
+The repository-side static audit of all nine workstreams is recorded in [Phase 11 Consolidated Final Audit Report](phase-11-final-audit-report.md).
+
+**Disposition:** Repository-side audit COMPLETE; runtime acceptance BLOCKED / NOT_RUN; overall Phase 11 PARTIAL. The documented 11.1 runtime blocker was accepted as a blocker disposition so repository-side review and closeout could proceed. This does not waive or pass runtime acceptance criteria.
+
+No local terminal tests or validators are claimed as executed by the consolidated audit. Exact-head CI evidence must be obtained from GitHub Actions after the resulting repository commits.
