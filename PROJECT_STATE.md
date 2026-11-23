@@ -1909,3 +1909,18 @@ Do not begin 11.2 until the 11.1 exit gate is satisfied or the user explicitly a
 - Updated the Phase 11 final audit report and README index.
 
 **Current disposition:** repository-side work packages 1–3 substantially complete; exact-head CI still queued for the latest commits; runtime acceptance remains BLOCKED / NOT_RUN; overall Phase 11 PARTIAL.
+
+
+## 78. Phase 11 repository-side closeout and Codex runtime handoff (2026-11-24)
+
+- Completed static audit of workflow ledger, evaluation runner, behavioral rubrics, agent-coordination rubric, tool registry, and memory validator boundaries.
+- Added regression tests for lexical path validation: accepted repository-relative paths; rejected absolute, traversal, Windows-drive, and backslash paths. Explicitly documented that `safe_path()` is lexical only and does not provide symlink containment or sandboxing.
+- Added `docs/phase-11-codex-runtime-acceptance.md` as the single **CODEX-ONLY** checklist for runtime preflight, repository intelligence, 13 skills, six agents/seven scenarios, workflow, memory, tools/MCP, security/recovery, E2E, and immutable evidence records.
+- Linked the runtime pack from README and the Phase 11 execution plan and final audit report.
+- The 55-case-to-13-skill traceability matrix is complete. Formal minimum coverage is still uneven; no coverage labels were fabricated. The runtime pack marks missing skill coverage as BLOCKED / CASE DESIGN REQUIRED.
+- Exact-head deterministic CI must be rechecked after the latest commits. No Codex runtime was available in this workstream, so no behavioral test is claimed.
+
+**Repository-side preparation:** COMPLETE pending exact-head CI.  
+**Codex-only runtime:** NOT_RUN / BLOCKED.  
+**Overall Phase 11:** PARTIAL — NOT FULLY ACCEPTED.  
+**Next action:** verify CI for the latest main commit; then execute the Codex-only pack when a trusted Codex session is available.
