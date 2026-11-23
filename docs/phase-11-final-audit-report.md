@@ -69,7 +69,7 @@ Historical CI and runtime observations are not presented as current results.
 ### P1 — Evidence integrity and enforcement
 3. Stale project state: PROJECT_STATE.md still identifies 11.1 as active and contains a “do not begin 11.2” instruction despite later documented workstreams. Reconcile it to the actual audit history and blocker disposition.
 4. Stale skill scorecards: all 13 point to an earlier revision than the inspected Phase 11 baseline. The project-intelligence scorecard also has headings that do not match the current skill; its old score must not be treated as current.
-5. Memory coverage mismatch: the memory scorecard claims a 3/2/1 taxonomy, while two of eight memory cases lack coverage labels.
+5. Memory coverage metadata mismatch — RESOLVED during repository-side closeout: the two previously unlabeled memory cases now carry explicit in-scope labels, and the scorecard metadata reflects 5 in-scope, 2 near-miss, and 1 edge across eight cases. The scorecard itself remains tied to an older target revision and still requires a fresh content review.
 6. Permission profiles are not a standalone authorization engine. Registry metadata and documentation must not be described as host-level enforcement.
 7. Graphify project-root boundary: its registry operation accepts a project path, while fixed-root enforcement is not proven by schema-level controls. Keep Graphify optional and unverified until containment is tested.
 8. Approval provenance: ledger approval metadata does not independently prove that approval came from the user; caller/runtime enforcement is required.
@@ -101,7 +101,7 @@ The six roles are repo_explorer, planner, implementer, reviewer, security_audito
 The ledger and contracts cover state transitions, dependencies, idempotency, retry, timeout, cancellation, checkpoints, validation/review gates, and recovery. Resume validates state and does not silently execute tasks. Static review identified terminal metadata mutation and approval-reference provenance as hardening areas. Runtime routing remains unverified.
 
 ### 11.6 — Memory & Knowledge
-The memory model distinguishes Verified, Assumption, Unknown, and Stale, and establishes source-authority precedence. The validator checks structure, status/date conventions, and selected secret patterns; it cannot establish factual truth. Targeted retrieval, stale detection, project isolation, and governance require runtime tests.
+The memory model distinguishes Verified, Assumption, Unknown, and Stale, and establishes source-authority precedence. The validator checks structure, status/date conventions, and selected secret patterns; it cannot establish factual truth. All eight memory evaluation cases now have explicit coverage labels (5 in-scope, 2 near-miss, 1 edge). Targeted retrieval, stale detection, project isolation, and governance still require runtime tests.
 
 ### 11.7 — Tool Registry & MCP
 The registry is deny-by-default and contains a planned Graphify candidate, not a verified adapter. Configured, discovered, connected, callable, and verified are distinct lifecycle states. No live Graphify or other external adapter invocation is claimed.
