@@ -169,6 +169,12 @@ def validate_registry(data: Any) -> list[str]:
                     errors.append(f"{p}.retry.max_attempts must be an integer from 1 to 5")
                 if not isinstance(retry.get("retryable_errors"), list) or any(not isinstance(x, str) for x in retry["retryable_errors"]):
                     errors.append(f"{p}.retry.retryable_errors must be an array of strings")
+        if tid == "graphify-local" and isinstance(ops, list):
+            for j, op in enumerate(ops):
+                schema = op.get("input_schema", {}) if isinstance(op, dict) else {}
+                props = schema.get("properties", {}) if isinstance(schema, dict) else {}
+                if "project_path" in props:
+                    errors.append(f"tools[{i}].operations[{j}]: graphify project_path is forbidden; adapter must use the configured project root")
         ev = tool.get("evidence")
         if not isinstance(ev, dict) or set(ev) - {"status", "references", "verified_at"} or not {"status", "references"} <= set(ev):
             errors.append(f"{p}.evidence must contain status and references only")
