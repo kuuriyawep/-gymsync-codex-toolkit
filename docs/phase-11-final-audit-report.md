@@ -26,7 +26,7 @@ Repository artifacts and static checks establish design/readiness, not runtime b
 
 ### Not performed / not claimed
 - No current Codex runtime session was available to this audit.
-- No local terminal test suite or Python validator was executed by this audit.
+- No local terminal test suite or Python validator was executed by this audit. The GitHub combined-status endpoint and commit-associated workflow-run lookup returned empty results for the latest inspected commit; CI is therefore UNKNOWN/NOT_RETRIEVED, not PASS.
 - No live skill, agent, workflow, memory, MCP, or end-to-end behavioral test was run.
 - No external service or package was installed or authenticated.
 - No GymSync application repository, database, deployment, or production data was accessed or changed.
@@ -72,7 +72,7 @@ Historical CI and runtime observations are not presented as current results.
 5. Memory coverage metadata mismatch — RESOLVED during repository-side closeout: the two previously unlabeled memory cases now carry explicit in-scope labels, and the scorecard metadata reflects 5 in-scope, 2 near-miss, and 1 edge across eight cases. The scorecard itself remains tied to an older target revision and still requires a fresh content review.
 6. Permission profiles are not a standalone authorization engine. Registry metadata and documentation must not be described as host-level enforcement.
 7. Graphify project-root boundary: its registry operation accepts a project path, while fixed-root enforcement is not proven by schema-level controls. Keep Graphify optional and unverified until containment is tested.
-8. Approval provenance: ledger approval metadata does not independently prove that approval came from the user; caller/runtime enforcement is required.
+8. Approval provenance — PARTIALLY HARDENED: an approved write task now requires a non-empty approval_reference, with a regression test. The ledger still cannot independently prove the reference originated from an actual user approval; caller/runtime enforcement remains required.
 9. Path containment: traversal checks exist, but real-path/symlink containment requires targeted tests before claiming filesystem isolation.
 10. Terminal workflow events — REPOSITORY FIX ADDED: the ledger now rejects all subsequent events after COMPLETION or CANCELLED, with regression assertions for late checkpoints. Exact-head CI is still required to verify the change.
 11. Secret detection: selected-pattern checks are not a comprehensive secret scanner.
@@ -98,7 +98,7 @@ The evaluation runner validates cases/schemas and repository integrity, and reco
 The six roles are repo_explorer, planner, implementer, reviewer, security_auditor, and test_engineer. Role instructions and handoff validators define procedural boundaries; they do not create independent OS/runtime security boundaries. Actual delegation and inherited permission behavior remain untested.
 
 ### 11.5 — Workflow Engine
-The ledger and contracts cover state transitions, dependencies, idempotency, retry, timeout, cancellation, checkpoints, validation/review gates, and recovery. Resume validates state and does not silently execute tasks. Repository remediation now rejects all events after terminal COMPLETION/CANCELLED states and adds regression assertions; CI verification is pending. Approval-reference provenance remains a hardening area. Runtime routing remains unverified.
+The ledger and contracts cover state transitions, dependencies, idempotency, retry, timeout, cancellation, checkpoints, validation/review gates, and recovery. Resume validates state and does not silently execute tasks. Repository remediation now rejects all events after terminal COMPLETION/CANCELLED states and adds regression assertions. A second hardening change requires approval_reference for approved write tasks. CI verification is pending. Approval-reference provenance remains a hardening area. Runtime routing remains unverified.
 
 ### 11.6 — Memory & Knowledge
 The memory model distinguishes Verified, Assumption, Unknown, and Stale, and establishes source-authority precedence. The validator checks structure, status/date conventions, and selected secret patterns; it cannot establish factual truth. All eight memory evaluation cases now have explicit coverage labels (5 in-scope, 2 near-miss, 1 edge). Targeted retrieval, stale detection, project isolation, and governance still require runtime tests.
