@@ -26,7 +26,8 @@ Repository artifacts and static checks establish design/readiness, not runtime b
 
 ### Not performed / not claimed
 - No current Codex runtime session was available to this audit.
-- No local terminal test suite or Python validator was executed by this audit. The GitHub combined-status endpoint and commit-associated workflow-run lookup returned empty results for the latest inspected commit; CI is therefore UNKNOWN/NOT_RETRIEVED, not PASS.
+- A deterministic GitHub Actions workflow was added at `.github/workflows/ci.yml` to compile Python sources, run unit tests, and execute the toolkit, project-memory, and evaluation validators. Its first run has not yet been observed.
+- No local terminal test suite or Python validator was executed by this audit. A GitHub Actions deterministic CI workflow has now been added, but the workflow-run lookup and combined-status endpoint returned empty results for the commit inspected immediately after creation. CI remains UNKNOWN/PENDING, not PASS.
 - No live skill, agent, workflow, memory, MCP, or end-to-end behavioral test was run.
 - No external service or package was installed or authenticated.
 - No GymSync application repository, database, deployment, or production data was accessed or changed.
@@ -112,7 +113,11 @@ Evaluation status semantics and evidence discipline are strong design features. 
 ### 11.9 — End-to-End
 Component contracts are linked, but integration is not proven merely by coexisting files. Final acceptance requires a trusted Codex session and sanitized evidence for every stage.
 
-## 7. Required final runtime acceptance sequence
+## 7. Deterministic CI configuration
+
+Added `.github/workflows/ci.yml` for pushes to `main`, pull requests, and manual dispatch. It uses Python 3.11 and runs compileall, `python -m unittest discover -s tests -v`, `python tools/validate_toolkit.py`, `python tools/validate_project_memory.py`, and `python tools/evaluate_toolkit.py --validate`. This is a configured verification pipeline, not a passing result; inspect the first completed run before accepting it.
+
+## 8. Required final runtime acceptance sequence
 
 When a trusted Codex session becomes available, use a dedicated safe test workspace:
 
@@ -127,7 +132,7 @@ When a trusted Codex session becomes available, use a dedicated safe test worksp
 9. Complete one bounded engineering task with explicit acceptance criteria, evidence, review, and final state.
 10. Generate an immutable evaluation record tied to the exact tested commit.
 
-## 8. Final acceptance rule
+## 9. Final acceptance rule
 
 Phase 11 may be marked PASS only when required applicable runtime scenarios have evidence tied to the tested commit, all 13 skills and six agents have explicit evidence-backed dispositions, security/approval boundaries are demonstrated, and the end-to-end scenario completes without unresolved critical failures.
 
