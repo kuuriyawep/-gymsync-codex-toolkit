@@ -458,3 +458,18 @@ The repository-side static audit of all nine workstreams is recorded in [Phase 1
 **Disposition:** Repository-side audit COMPLETE; runtime acceptance BLOCKED / NOT_RUN; overall Phase 11 PARTIAL. The documented 11.1 runtime blocker was accepted as a blocker disposition so repository-side review and closeout could proceed. This does not waive or pass runtime acceptance criteria.
 
 No local terminal tests or validators are claimed as executed by the consolidated audit. Exact-head CI evidence must be obtained from GitHub Actions after the resulting repository commits.
+
+
+## 11. Repository-side closeout and Codex-only handoff (2026-11-24)
+
+Repository-side preparation has been completed for the remaining Phase 11 work. See [Codex Runtime Acceptance Pack](phase-11-codex-runtime-acceptance.md), the single checklist for work that cannot be honestly completed without a trusted Codex runtime.
+
+- Workflow ledger review confirms that the ledger records state and does not execute tasks. Terminal-state immutability, approved-write approval-reference requirements, and scope coverage are present.
+- Added lexical path validation regression tests for normal repository-relative paths, absolute paths, traversal, Windows drive paths, and backslashes. `safe_path()` is intentionally lexical; it does not resolve filesystem targets and does not guarantee symlink containment. The ledger's scope metadata must not be described as a filesystem sandbox.
+- Evaluation runner documentation and behavioral/agent rubrics were reconciled with the runtime handoff. Authored cases and static checks remain separate from live behavioral results.
+- The runtime pack enumerates the exact Codex-only checks: runtime capture, repository intelligence, 13 skills, six agents/seven coordination scenarios, workflow, memory, tool/MCP, security/recovery, and one end-to-end task.
+- Skill case mapping is complete as a traceability map, but formal coverage minimums are not met/labeled for every skill. The runtime pack explicitly requires those gaps to be marked BLOCKED / CASE DESIGN REQUIRED rather than fabricated.
+
+**Repository-side closeout:** COMPLETE, subject to final exact-HEAD CI.  
+**Codex runtime acceptance:** NOT_RUN / BLOCKED until trusted Codex access and evidence exist.  
+**Overall Phase 11:** PARTIAL — NOT FULLY ACCEPTED.
