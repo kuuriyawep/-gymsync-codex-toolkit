@@ -74,7 +74,7 @@ Historical CI and runtime observations are not presented as current results.
 7. Graphify project-root boundary: its registry operation accepts a project path, while fixed-root enforcement is not proven by schema-level controls. Keep Graphify optional and unverified until containment is tested.
 8. Approval provenance: ledger approval metadata does not independently prove that approval came from the user; caller/runtime enforcement is required.
 9. Path containment: traversal checks exist, but real-path/symlink containment requires targeted tests before claiming filesystem isolation.
-10. Terminal workflow events: terminal states may still accept metadata events; state immutability should be explicit and tested.
+10. Terminal workflow events — REPOSITORY FIX ADDED: the ledger now rejects all subsequent events after COMPLETION or CANCELLED, with regression assertions for late checkpoints. Exact-head CI is still required to verify the change.
 11. Secret detection: selected-pattern checks are not a comprehensive secret scanner.
 
 ### P2 — Maintainability and adoption
@@ -98,7 +98,7 @@ The evaluation runner validates cases/schemas and repository integrity, and reco
 The six roles are repo_explorer, planner, implementer, reviewer, security_auditor, and test_engineer. Role instructions and handoff validators define procedural boundaries; they do not create independent OS/runtime security boundaries. Actual delegation and inherited permission behavior remain untested.
 
 ### 11.5 — Workflow Engine
-The ledger and contracts cover state transitions, dependencies, idempotency, retry, timeout, cancellation, checkpoints, validation/review gates, and recovery. Resume validates state and does not silently execute tasks. Static review identified terminal metadata mutation and approval-reference provenance as hardening areas. Runtime routing remains unverified.
+The ledger and contracts cover state transitions, dependencies, idempotency, retry, timeout, cancellation, checkpoints, validation/review gates, and recovery. Resume validates state and does not silently execute tasks. Repository remediation now rejects all events after terminal COMPLETION/CANCELLED states and adds regression assertions; CI verification is pending. Approval-reference provenance remains a hardening area. Runtime routing remains unverified.
 
 ### 11.6 — Memory & Knowledge
 The memory model distinguishes Verified, Assumption, Unknown, and Stale, and establishes source-authority precedence. The validator checks structure, status/date conventions, and selected secret patterns; it cannot establish factual truth. All eight memory evaluation cases now have explicit coverage labels (5 in-scope, 2 near-miss, 1 edge). Targeted retrieval, stale detection, project isolation, and governance still require runtime tests.
