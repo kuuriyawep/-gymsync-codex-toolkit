@@ -28,6 +28,16 @@ class ToolRegistryTests(unittest.TestCase):
         self.assertEqual(candidate["evidence"]["status"], "static-reviewed")
         self.assertNotEqual(candidate["availability"], "verified")
 
+    def test_graphify_rejects_caller_supplied_project_path(self) -> None:
+        import json
+        data = json.loads((ROOT / "registry" / "tools.json").read_text(encoding="utf-8"))
+        candidate = data["tools"][0]
+        candidate["operations"][0]["input_schema"]["properties"]["project_path"] = {
+            "type": "string"
+        }
+        errors = validator.validate_registry(data)
+        self.assertTrue(any("graphify project_path is forbidden" in e for e in errors))
+
     def valid_tool(self) -> dict:
         return {
             "id": "repo.read",
