@@ -215,6 +215,8 @@ class WorkflowLedgerTests(unittest.TestCase):
         self.ledger.record_review("passed", ["review:report-1"], idempotency_key="review-pass-01")
         self.ledger.transition("COMPLETION", idempotency_key="complete-01")
         self.assertEqual(self.ledger.show()["state"], "COMPLETION")
+        with self.assertRaises(LedgerError):
+            self.ledger.checkpoint("Late checkpoint", "No further action", idempotency_key="terminal-checkpoint-01")
 
     def test_passed_validation_requires_evidence(self):
         self.enter_execution()
@@ -252,6 +254,8 @@ class WorkflowLedgerTests(unittest.TestCase):
         self.assertEqual(self.ledger.show()["state"], "CANCELLED")
         with self.assertRaises(LedgerError):
             self.ledger.transition("TRIAGE", idempotency_key="cancel-reopen-01")
+        with self.assertRaises(LedgerError):
+            self.ledger.checkpoint("Late checkpoint", "No further action", idempotency_key="cancel-terminal-checkpoint-01")
 
     def test_hash_chain_detects_tampering(self):
         lines = self.ledger.events_path.read_text(encoding="utf-8").splitlines()
