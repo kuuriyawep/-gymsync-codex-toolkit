@@ -314,8 +314,11 @@ class WorkflowLedger:
             approval_ref = p.get("approval_reference")
             if write_scope and snapshot["approval_status"] == "approved" and scope_covers(snapshot["approved_scope"], write_scope):
                 approval_status, approved_scope, approval_ref = "approved", snapshot["approved_scope"], snapshot["approval_reference"]
-            if write_scope and approval_status == "approved" and not scope_covers(approved_scope, write_scope):
-                raise LedgerError("task approved_scope must cover write_scope")
+            if write_scope and approval_status == "approved":
+                if not isinstance(approval_ref, str) or not approval_ref.strip():
+                    raise LedgerError("approved write task requires approval_reference")
+                if not scope_covers(approved_scope, write_scope):
+                    raise LedgerError("task approved_scope must cover write_scope")
             state = "pending" if deps or (write_scope and approval_status != "approved") else "ready"
             snapshot["tasks"].append({
                 "task_id": p["task_id"], "owner": p["owner"], "objective": p["task_objective"],
