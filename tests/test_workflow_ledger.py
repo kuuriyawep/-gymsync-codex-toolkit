@@ -298,3 +298,28 @@ class WorkflowLedgerTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class WorkflowPathValidationTests(unittest.TestCase):
+    def test_safe_path_accepts_repository_relative_paths(self):
+        for value in ("src/main.py", "tests/test_main.py", "docs/", "evals/cases/example.json"):
+            with self.subTest(value=value):
+                self.assertTrue(module.safe_path(value))
+
+    def test_safe_path_rejects_absolute_and_traversal_paths(self):
+        for value in ("/etc/passwd", "../outside.txt", "src/../../outside.txt", "./src/main.py"):
+            with self.subTest(value=value):
+                self.assertFalse(module.safe_path(value))
+
+    def test_safe_path_rejects_windows_and_backslash_paths(self):
+        for value in ("C:/Windows/system.ini", "..\\outside.txt", "src\\main.py"):
+            with self.subTest(value=value):
+                self.assertFalse(module.safe_path(value))
+
+    def test_safe_path_is_lexical_and_does_not_claim_symlink_containment(self):
+        # This helper validates path syntax only; it does not resolve filesystem targets.
+        self.assertTrue(module.safe_path("linked-dir/secret.txt"))
+
+
+if __name__ == "__main__":
+    unittest.main()
