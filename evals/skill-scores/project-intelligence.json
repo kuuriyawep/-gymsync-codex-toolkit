@@ -2,9 +2,9 @@
   "schema_version": "1.0.0",
   "skill_id": "project-intelligence",
   "skill_path": ".agents/skills/project-intelligence/SKILL.md",
-  "target_revision": "f47bb2857d5fe33e390f02bf94c68ea3e3e488d5",
+  "target_revision": "1e1569aaafdb16bfb65d48ce2dda9eb58be6fef9",
   "reviewer": "Codex static review (model-assisted; not an independent human review)",
-  "reviewed_at": "2026-11-18T12:15:00Z",
+  "reviewed_at": "2026-11-24T00:00:00Z",
   "review_type": "static",
   "criteria": [
     {
@@ -18,17 +18,18 @@
     {
       "id": "inputs-prerequisites",
       "score": 2,
-      "rationale": "Repository identity, instructions, project profile, current-state checkpoint, and relevant memory pages are explicit prerequisites.",
+      "rationale": "The workflow requires repository identity and root instructions, then project profile/current-state checkpoint and relevant memory pages; prerequisites are explicit across the When to use and Workflow sections.",
       "evidence_refs": [
-        ".agents/skills/project-intelligence/SKILL.md#Inputs-and-prerequisites"
+        ".agents/skills/project-intelligence/SKILL.md#When-to-use",
+        ".agents/skills/project-intelligence/SKILL.md#Workflow"
       ]
     },
     {
       "id": "procedure-executability",
       "score": 2,
-      "rationale": "The eight-step workflow is ordered and requires source verification, claim labels, checkpoint updates, and validation.",
+      "rationale": "The eight ordered workflow steps require source verification, claim-status labels, checkpoint updates, decision-history preservation, and memory validation.",
       "evidence_refs": [
-        ".agents/skills/project-intelligence/SKILL.md#Procedure"
+        ".agents/skills/project-intelligence/SKILL.md#Workflow"
       ]
     },
     {
@@ -44,6 +45,7 @@
       "score": 2,
       "rationale": "Evidence authority, project isolation, privacy, stale-memory handling, and stop conditions are explicit.",
       "evidence_refs": [
+        ".agents/skills/project-intelligence/SKILL.md#Evidence-and-safety",
         ".agents/skills/project-intelligence/SKILL.md#Stop-conditions"
       ]
     },
@@ -84,7 +86,7 @@
     "memory-unverified-claim"
   ],
   "gaps": [
-    "Coverage taxonomy labels were completed for all eight cases; the static score remains tied to its historical target_revision and must be re-reviewed against the current skill before reuse."
+    "Static content review refreshed against repository revision 1e1569aaafdb16bfb65d48ce2dda9eb58be6fef9. Eight targeted cases have explicit labels (5 in-scope, 2 near-miss, 1 edge). Live Codex retrieval behavior remains NOT_RUN."
   ],
-  "summary": "Historical static document review only. Coverage metadata now labels all eight cases; this score remains tied to an older revision and does not establish current document quality or behavioral performance. Runtime remains NOT_RUN."
+  "summary": "Static document review refreshed against the recorded repository revision. This score does not establish runtime skill triggering or behavioral performance; runtime remains NOT_RUN."
 }
