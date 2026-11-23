@@ -226,6 +226,9 @@ class WorkflowLedger:
     def apply(self, snapshot: dict[str, Any] | None, event: dict[str, Any]) -> dict[str, Any]:
         kind, p, stamp = event["event_type"], event["payload"], event["timestamp"]
 
+        if snapshot is not None and snapshot.get("state") in {"COMPLETION", "CANCELLED"}:
+            raise LedgerError("terminal workflow cannot accept additional events")
+
         if kind == "workflow_created":
             if snapshot is not None or event["seq"] != 1:
                 raise LedgerCorrupt("workflow_created must be the first event")
