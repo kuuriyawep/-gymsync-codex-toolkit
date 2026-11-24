@@ -23,13 +23,13 @@
 
 ## QUICK START / CURRENT STATE
 
-- **Current active work:** Phase 11, Package 4 — Knowledge & Documentation (P1-04, P2-04, P2-05, P2-06); work is in progress on `phase-11-package-4-knowledge-documentation`.
-- **Branch base:** `main` at `f83d1c5cbf9d823fa0b4fdadc7d855a99217e011` (Package 3 merge). The `main` branch is not being edited by Package 4.
-- **Completed and merged:** Package 1 — Evaluation Trust; Package 2 — Repository Integrity; Package 3 — Security Hygiene. See PRs #9–#11 and their merged commits in the repository history for Package 1–3 completion evidence.
-- **Package 4 scope only:** reconcile the project checkpoint and startup retrieval path; refresh evaluation matrix snapshot metadata; correct Phase 11 report contradictions; label the Phase 10 inventory as historical. Do not broaden scope.
+- **Current active work:** Phase 11, Package 5 — CI Evidence (P2-03); implementation is in progress on `phase-11-package-5-ci-evidence`.
+- **Branch base:** `main` at `fd1915eb2a0ff41ba5a45a0064369157f81135fe` (Package 4 squash merge). The `main` branch is not being edited by Package 5.
+- **Completed and merged:** Packages 1–4 — Evaluation Trust, Repository Integrity, Security Hygiene, and Knowledge & Documentation. See PRs #9–#12 and their merge commits in repository history.
+- **Package 5 scope only:** retain each deterministic CI evaluation JSON record and Markdown report as a uniquely named GitHub Actions artifact; document the retrieval and retention behavior. Do not broaden scope.
 - **Hard boundaries:** toolkit repository only; no GymSync changes; no installs or external integrations; no merge to `main` without explicit user approval.
-- **Verification status:** Package 4 quality workflow passed on PR head `a0b233d8359c47828ca86643a41337a27d0b010e` (run `45386287145`) and the subsequent checkpoint/report head `498181fa2f3c77d04826c383168ca12156effae7` (run `45386435195`). These are deterministic repository CI results only. Check PR #12 for the latest exact-head result; do not infer runtime behavior.
-- **Next action:** review PR #12 and explicitly approve or decline merge; do not merge without that approval.
+- **Verification status:** implementation is pending exact-head CI and artifact-presence verification. Existing CI PASS results are tied to their respective earlier revisions and do not prove Package 5.
+- **Next action:** finish Package 5, verify its PR-head artifact, then request review/merge approval.
 
 ---
 
