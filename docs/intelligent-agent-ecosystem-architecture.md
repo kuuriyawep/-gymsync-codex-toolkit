@@ -186,6 +186,8 @@ The current repository audit records 13 native skills and portable mirrors, six 
 
 Current six roles: `repo_explorer`, `planner`, `implementer`, `reviewer`, `security_auditor`, and `test_engineer`. Do not replace these merely to match labels such as Research, Frontend, Backend, QA, or Security. Map capabilities and identify whether an existing role can safely own each responsibility before proposing a new agent.
 
+**WS1 detailed role map:** See [Agent Intelligence Core — Role Mapping and Contract](agent-intelligence-standard.md), which maps all six current agents to the nine-capability standard and records deliberate specialist gaps without adding duplicate agents.
+
 ## 16. Seven gated implementation workstreams
 
 Workstreams are sequentially gated. Each must have a defined scope, file-level change plan, acceptance criteria, dependency check, and evidence record before being marked complete.
