@@ -63,4 +63,18 @@ Evidence references should be repository-relative paths, transcript identifiers,
 - Run record and report files are created with exclusive-create semantics; an existing artifact is never overwritten, including when two runs race for the same ID.
 - Custom `--output` paths must resolve inside the repository. Paths outside the repository are rejected.
 
+### GitHub Actions artifact retention
+
+The `Toolkit Quality Gates` workflow uploads each generated deterministic CI run record
+(`evals/results/ci-<run-id>-<attempt>.json`) together with its human-readable report
+(`evals/reports/ci-<run-id>-<attempt>.md`) as one GitHub Actions artifact.
+Artifact names include both the workflow run ID and attempt number, so reruns remain
+separate and prior evidence is not overwritten. Artifacts are retained for 30 days.
+The upload step runs even when an earlier step fails; if generation did not produce
+both files, the workflow emits a warning rather than masking the original failure.
+
+Download artifacts from the relevant GitHub Actions run's **Artifacts** section.
+These files represent deterministic repository checks only; behavioral criteria remain
+`NOT_RUN` until evaluated from a trusted Codex session.
+
 Phase 6 adds seven agent-coordination behavioral scenarios. Use `evals/rubrics/agent-coordination.md` and `docs/agent-validation.md`. These remain NOT_RUN until exercised in a trusted Codex session.
