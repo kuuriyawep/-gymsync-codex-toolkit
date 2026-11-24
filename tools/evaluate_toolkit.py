@@ -150,6 +150,10 @@ def inspect_cases() -> tuple[list[dict[str, Any]], list[str]]:
                 # Existing cases use both semantic target IDs and repository-relative paths.
                 path_like = target.startswith(".") or "/" in target or Path(target).suffix in {".md", ".py", ".json", ".toml"}
                 if not path_like:
+                    if not semantic_target_exists(target):
+                        issues.append(
+                            f"{path.relative_to(ROOT)}: unknown semantic target ID: {target}"
+                        )
                     continue
                 target_path = (ROOT / target).resolve()
                 if ROOT.resolve() not in target_path.parents and target_path != ROOT.resolve():
@@ -230,12 +234,51 @@ def overall_status(criteria: list[dict[str, Any]]) -> str:
         return "FAIL"
     if any(c["status"] == "BLOCKED" for c in criteria):
         return "BLOCKED"
+    # A critical criterion cannot be waived as NOT_APPLICABLE and still yield PASS.
+    if any(c["critical"] and c["status"] == "NOT_APPLICABLE" for c in criteria):
+        return "PARTIAL"
     applicable = [c for c in criteria if c["status"] != "NOT_APPLICABLE"]
     if not applicable or any(c["status"] == "NOT_RUN" for c in applicable):
         return "NOT_RUN"
     if any(c["status"] != "PASS" for c in applicable):
         return "PARTIAL"
     return "PASS"
+
+
+def semantic_target_exists(target: str) -> bool:
+    """Return whether a non-path target names a registered skill, agent, or workflow."""
+    skill_roots = (ROOT / ".agents" / "skills", ROOT / "skills")
+    skills = {
+        item.name
+        for base in skill_roots if base.is_dir()
+        for item in base.iterdir() if item.is_dir()
+    }
+    workflow_dir = ROOT / "workflows"
+    workflows = {
+        item.stem for item in workflow_dir.glob("*.md")
+        if item.stem != "registry"
+    } if workflow_dir.is_dir() else set()
+    agent_roots = (ROOT / ".codex" / "agents", ROOT / "agents")
+    agents = {
+        item.stem
+        for base in agent_roots if base.is_dir()
+        for item in base.iterdir()
+        if item.is_file() and item.suffix in {".toml", ".md"}
+    }
+    return target in skills or target in workflows or target in agents
+
+
+def known_case_ids() -> set[str]:
+    """Read IDs from the canonical evaluation case files."""
+    known: set[str] = set()
+    for path in case_files():
+        try:
+            case = load_json(path)
+        except (OSError, UnicodeError, json.JSONDecodeError):
+            continue
+        if isinstance(case, dict) and isinstance(case.get("id"), str):
+            known.add(case["id"])
+    return known
 
 
 def validate_result_record(record: Any) -> list[str]:
@@ -247,10 +290,15 @@ def validate_result_record(record: Any) -> list[str]:
         return errors
 
     seen_cases: set[str] = set()
+    valid_case_ids = known_case_ids()
     all_criteria: list[dict[str, Any]] = []
     counts = {key: 0 for key in ("pass", "fail", "blocked", "not_run", "not_applicable")}
     for case_index, case in enumerate(record["case_results"]):
         case_id = case["case_id"]
+        if case_id != "__toolkit__" and case_id not in valid_case_ids:
+            errors.append(
+                f"$.case_results[{case_index}].case_id: unknown evaluation case ID {case_id!r}"
+            )
         if case_id in seen_cases:
             errors.append(f"$.case_results[{case_index}]: duplicate case_id {case_id!r}")
         seen_cases.add(case_id)
@@ -262,6 +310,13 @@ def validate_result_record(record: Any) -> list[str]:
                     f"$.case_results[{case_index}]: duplicate criterion_id {criterion_id!r}"
                 )
             criterion_ids.add(criterion_id)
+            if criterion["status"] == "PASS":
+                evidence = criterion["evidence"]
+                if not evidence or any(not item.strip() for item in evidence):
+                    errors.append(
+                        f"$.case_results[{case_index}].criteria: PASS criterion "
+                        f"{criterion_id!r} requires non-empty evidence"
+                    )
             all_criteria.append(criterion)
             counts[criterion["status"].lower()] += 1
         expected_case_status = overall_status(case["criteria"])
