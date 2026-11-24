@@ -271,7 +271,6 @@ The earlier architecture snapshot contained five native TOML definitions. The la
 | `reviewer` | Independent read-only code review | No implementation |
 | `security_auditor` | Defensive read-only security assessment | No exploitation or destructive action |
 | `test_engineer` | Owns approved test files, fixtures, evaluation cases, and safe test execution | No production implementation edits |
-| `test_engineer` | Owns approved test files, fixtures, evaluation cases, and safe test execution | No production implementation edits |
 
 These are the executable project-scoped Codex agent definitions. Actual availability and execution depend on the Codex client/runtime and trusted project configuration.
 
