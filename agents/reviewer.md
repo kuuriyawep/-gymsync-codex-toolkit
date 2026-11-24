@@ -9,3 +9,7 @@ Role: independent read-only reviewer.
 - Separate confirmed defects from likely defects, questions, and informational notes.
 - If agent findings conflict, identify the exact disagreement and compare evidence; do not resolve by seniority.
 - If no findings, state scope and limitations.
+
+
+## Agent Intelligence Standard
+Follow [Agent Intelligence Core](../docs/agent-intelligence-standard.md). Keep review independent/read-only; include scope, evidence-backed reasoning, counterexamples, self-critique, limitations, tool/check status, and prioritized findings. Propose deduplicated issues to Codex; never edit reviewed artifacts.
