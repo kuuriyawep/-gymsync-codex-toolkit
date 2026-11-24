@@ -25,7 +25,7 @@
 
 - **Current active work:** Phase 11, Package 4 — Knowledge & Documentation (P1-04, P2-04, P2-05, P2-06); work is in progress on `phase-11-package-4-knowledge-documentation`.
 - **Branch base:** `main` at `f83d1c5cbf9d823fa0b4fdadc7d855a99217e011` (Package 3 merge). The `main` branch is not being edited by Package 4.
-- **Completed and merged:** Package 1 — Evaluation Trust; Package 2 — Repository Integrity; Package 3 — Security Hygiene. See sections 80–82 for original completion evidence and PRs #9–#11.
+- **Completed and merged:** Package 1 — Evaluation Trust; Package 2 — Repository Integrity; Package 3 — Security Hygiene. See PRs #9–#11 and their merged commits in the repository history for Package 1–3 completion evidence.
 - **Package 4 scope only:** reconcile the project checkpoint and startup retrieval path; refresh evaluation matrix snapshot metadata; correct Phase 11 report contradictions; label the Phase 10 inventory as historical. Do not broaden scope.
 - **Hard boundaries:** toolkit repository only; no GymSync changes; no installs or external integrations; no merge to `main` without explicit user approval.
 - **Verification status:** Package 4 tests and CI have not yet been run. Do not infer PASS from earlier package CI.
@@ -270,6 +270,7 @@ The earlier architecture snapshot contained five native TOML definitions. The la
 | `implementer` | Implement explicitly user-approved scope | No scope expansion or unapproved side effects |
 | `reviewer` | Independent read-only code review | No implementation |
 | `security_auditor` | Defensive read-only security assessment | No exploitation or destructive action |
+| `test_engineer` | Owns approved test files, fixtures, evaluation cases, and safe test execution | No production implementation edits |
 
 These are the executable project-scoped Codex agent definitions. Actual availability and execution depend on the Codex client/runtime and trusted project configuration.
 
@@ -277,7 +278,7 @@ These are the executable project-scoped Codex agent definitions. Actual availabi
 
 ### 9.6 `agents/` — readable role briefs
 
-There are five Markdown role briefs corresponding to the five native agent definitions.
+There are six Markdown role briefs corresponding to the six native agent definitions.
 
 **Purpose:** Human-readable role documentation and portable reference prompts.
 
@@ -1956,10 +1957,11 @@ Do not begin 11.2 until the 11.1 exit gate is satisfied or the user explicitly a
 - `AGENTS.md`: startup now reads the Quick Start and uses task-relevant source retrieval instead of requiring the entire historical state file every session.
 - `evals/skill-case-matrix.md`: snapshot target updated to the verified Package 4 base; comparison basis documented.
 - `docs/phase-10-evaluation-reliability.md`: inventory section explicitly marked historical; later counts are called out.
-- `PROJECT_STATE.md`: this checkpoint update and historical-state reconciliation are in progress; the Phase 11 final report still requires its contradiction pass.
+- `PROJECT_STATE.md`: Quick Start and historical-state reconciliation are updated.
+- `docs/phase-11-final-audit-report.md`: baseline findings now have explicit later dispositions in section 12.
 
 **Verification:** no Package 4 tests or CI have run yet. Earlier Package 1–3 CI results do not certify this branch.
 
 **Safety and approval:** no GymSync files, application code, database, or production data are in scope. No installation or external integration is authorized. Do not merge this branch to `main` until the user explicitly approves after reviewing the final diff and CI evidence.
 
-**Single next action:** complete the Phase 11 report reconciliation, then run the exact-branch quality gates and review the final changed-file list.
+**Single next action:** inspect the complete Package 4 diff for scope and factual consistency, then run the exact-branch quality gates.
