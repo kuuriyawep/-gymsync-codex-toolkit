@@ -305,6 +305,10 @@ def validate_result_record(record: Any) -> list[str]:
     counts = {key: 0 for key in ("pass", "fail", "blocked", "not_run", "not_applicable")}
     for case_index, case in enumerate(record["case_results"]):
         case_id = case["case_id"]
+        if not case_id.strip():
+            errors.append(
+                f"$.case_results[{case_index}].case_id: must not be whitespace-only"
+            )
         if case_id != "__toolkit__" and case_id not in valid_case_ids:
             errors.append(
                 f"$.case_results[{case_index}].case_id: unknown evaluation case ID {case_id!r}"
@@ -315,6 +319,10 @@ def validate_result_record(record: Any) -> list[str]:
         criterion_ids: set[str] = set()
         for criterion in case["criteria"]:
             criterion_id = criterion["criterion_id"]
+            if not criterion_id.strip():
+                errors.append(
+                    f"$.case_results[{case_index}].criteria: criterion_id must not be whitespace-only"
+                )
             if criterion_id in criterion_ids:
                 errors.append(
                     f"$.case_results[{case_index}]: duplicate criterion_id {criterion_id!r}"
