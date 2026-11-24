@@ -10,31 +10,30 @@
 > This document is the project's central index and operating contract. Detailed procedures, source files, schemas, test cases, and reports remain authoritative for their specific subjects. Do not copy all technical detail into this file; link to the source of truth.
 
 **Document status:** ACTIVE — canonical project checkpoint and operating manual  
-**Last checkpoint/source-audit consolidation:** 2026-11-24 (Phase 11 Packages 1–5 merged; repository file classification and graph architecture audit)  
-**Last full source-audit baseline:** `b8aafe780a181f0f49acaed3dc23791ed9146d7c`  
-**CI policy:** Always inspect the latest GitHub Actions run for the current HEAD; a prior commit's PASS does not automatically apply to a later commit.  
+**Last architecture decision:** 2026-11-25 — user-approved GymSync Intelligent Agent Ecosystem specification  
+**Canonical architecture:** [Intelligent Agent Ecosystem Architecture](docs/intelligent-agent-ecosystem-architecture.md)  
 **Repository:** `kuuriyawep/-gymsync-codex-toolkit`  
 **Default branch:** `main`  
-**Repository visibility:** Public (user-selected; do not change without explicit instruction)  
-**Project owner / decision authority:** User  
+**Repository visibility:** Private (verified 2026-11-25; do not change without explicit instruction)  
+**Project owner / final decision authority:** User  
 **Primary coordinator:** Codex  
-**Toolkit runtime status:** Static repository checks pass; Codex behavioral/runtime validation is still pending  
-**Document maintenance rule:** Update this file after every meaningful phase transition, completed audit, approved architecture decision, or handoff.
+**Toolkit runtime status:** Repository-side artifacts exist; live Codex runtime is unavailable to the user, so behavioral/runtime acceptance remains BLOCKED / NOT_RUN  
+**CI policy:** Inspect GitHub Actions for the exact current HEAD; prior PASS results do not transfer to later commits.  
+**Document maintenance rule:** Update after each meaningful workstream transition, approved decision, completed audit, or handoff.
 
 ## QUICK START / CURRENT STATE
 
-- **Current active work:** Step 11 — Final Architecture Integration & Implementation Readiness. The read-only integration audit is complete; this checkpoint records its findings. No new runtime capability is claimed.
-- **Last inspected main baseline:** `b2f66b960c08f003ba0b3033d000459c3b1552a5` (2026-11-24; repository-intelligence and file-loading architecture, PR #14).
-- **Latest verified main CI at that baseline:** GitHub Actions run [45456774700](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/45456774700), conclusion SUCCESS on the exact baseline SHA. This result does not apply automatically to later commits.
-- **Repository visibility:** Private (verified from GitHub repository metadata on 2026-11-25). Do not change visibility without explicit instruction.
-- **Existing toolkit inventory:** 13 native skills and 13 portable mirrors; six native agents and six role briefs; 55 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. Counts describe repository artifacts, not completed behavioral evaluations.
-- **Architecture integration:** Steps 2–10 map to existing foundations. See `docs/toolkit-integration.md` and the Step 11 integration findings recorded in Part IV below. Do not create duplicate routers, task engines, registries, handoff schemas, memory systems, or evaluation runners.
-- **Canonical-source rules:** `.agents/skills/` is canonical and `skills/` is its maintained portable mirror. `.codex/agents/*.toml` and `agents/*.md` serve different consumers. Existing workflow, task graph, tool registry, evaluation, and repository-intelligence contracts remain authoritative for their domains.
-- **Graphify status:** Optional candidate/provider only; not installed and not runtime-verified. The universal provider-neutral intelligence layer is separate from each target repository's own graph/configuration. No GymSync graph or GymSync source changes are included.
-- **Known implementation gaps:** WhatsApp/n8n communication gateway is design-only; actual Codex agent delegation and runtime permission enforcement are not verified; orchestration code is a repository-side workflow ledger/contracts, not proof of a live execution engine; Graphify adapter invocation and root isolation remain unverified.
-- **Runtime acceptance:** Codex behavioral, tool-permission, MCP, agent-delegation, and end-to-end acceptance remain NOT_RUN / BLOCKED until a trusted Codex runtime session is available. Static repository CI does not prove model behavior.
-- **Hard boundaries:** toolkit repository only; no GymSync application/database/deployment changes; no installs, Graphify runtime, n8n, WhatsApp/Twilio, external integrations, or unapproved external side effects.
-- **Next action:** use the consolidated integration findings to select one bounded repository-side implementation workstream, or perform the dedicated Codex-only runtime acceptance when a trusted Codex session becomes available. Do not restart completed Phase 11 packages or duplicate existing components.
+- **Primary roadmap:** The seven gated workstreams in `docs/intelligent-agent-ecosystem-architecture.md`. This is the approved target architecture and supersedes the earlier Phase 11 readiness audit as the active development roadmap.
+- **Current active workstream:** WS1 — Agent Intelligence Core. First task: map all six existing agent definitions/briefs to the nine-capability Agent Intelligence Standard and identify precise contract/skill extensions without creating duplicate infrastructure.
+- **Architecture decisions:** HIGH event-driven autonomy; bidirectional WhatsApp; proactive proposals triaged by Codex; Codex remains central coordinator; user retains final authority. Full constraints and protocols are in the canonical architecture document.
+- **Existing toolkit inventory:** 13 native skills and 13 portable mirrors; six native agents and six role briefs; 55 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. These counts describe repository artifacts, not completed behavioral evaluations.
+- **Preservation rule:** Extend existing workflows, handoff/task-graph schemas, tool registry, memory templates, repository-intelligence layer, and evaluation runner. Do not create parallel routers, task engines, handoff contracts, memory stores, or evaluation systems.
+- **Current agent roles:** `repo_explorer`, `planner`, `implementer`, `reviewer`, `security_auditor`, and `test_engineer`. Preserve role boundaries; map capability ownership before proposing additional roles.
+- **Runtime limitation:** User does not currently have a Codex runtime for live behavioral tests. Continue repository-side design, static implementation, and GitHub CI. Never ask the user to run Codex CLI commands or claim runtime behavior passed without evidence.
+- **Integration status:** WhatsApp/Twilio/n8n, Graphify runtime, persistent background execution, and live permission enforcement are not verified or installed. Do not start the n8n trial, install tools, or integrate external services without separate explicit approval.
+- **Phase 11 status:** Historical repository-side audit/closeout material remains available. Runtime acceptance remains BLOCKED / NOT_RUN; Phase 11 is not a substitute for the seven-workstream roadmap.
+- **Hard boundary:** Toolkit repository only. No GymSync application, database, production, deployment, or external-service changes.
+- **Immediate next action:** complete WS1 role-to-capability mapping and implement only the smallest necessary extensions to existing agent/skill contracts; run available static checks and record exact evidence.
 
 
 # PART I — WHY THIS PROJECT EXISTS
