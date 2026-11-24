@@ -197,6 +197,10 @@ JSON record and its Markdown report as a single GitHub Actions artifact.
 - The artifact is deterministic repository evidence only. It does not prove Codex
   runtime behavior; behavioral criteria remain `NOT_RUN` / `BLOCKED`.
 
-**Package 5 verification:** pending exact-head GitHub Actions execution and artifact
-presence verification. Do not mark P2-03 complete until the artifact is confirmed
-on the final PR-head run.
+**Package 5 verification:** GitHub Actions run `45397915775` completed SUCCESS
+on PR-head commit `3ae51733b52ae7ee5cf6508a7431072e27da6626`. All 12 substantive
+quality steps passed, including the new upload step. Artifact
+`toolkit-evaluation-45397915775-1` was confirmed present (6,225 bytes), with SHA-256
+digest `b1dadb224cb2b35e3498e9a99a45a1b218d4110b100cd8787cf25623d1a15d59` and expiry
+`2026-12-24T12:53:41Z`. This verifies artifact creation and retention metadata for
+that exact PR-head run; it does not certify Codex runtime behavior.
