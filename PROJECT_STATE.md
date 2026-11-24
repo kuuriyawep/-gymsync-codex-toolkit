@@ -23,19 +23,19 @@
 
 ## QUICK START / CURRENT STATE
 
-- **Current active work:** Repository File Classification, Canonical Source Audit, and Universal Repository Intelligence architecture documentation. Work is being prepared on branch `repo-intelligence-file-architecture`; do not treat it as merged until its PR is verified on `main`.
-- **Current main baseline:** `526df0235e18b2c1701cfa4eae525ac0d9c21bae` (Phase 11 Package 5 merge).
-- **Completed and merged:** Phase 11 Packages 1–5 — Evaluation Trust, Repository Integrity, Security Hygiene, Knowledge & Documentation, and CI Evidence. PRs #9–#13 are merged.
-- **Repository inventory:** 225 files, approximately 1.02 MB at the audit baseline. A focused dependency/canonical-source audit was completed. The new classification, historical index, and graph architecture documents define targeted loading; no files have been moved or deleted.
-- **Canonical-source rules:** `.agents/skills/` is canonical and `skills/` is its maintained portable mirror. `.codex/agents/*.toml` and `agents/*.md` serve different consumers. `workflows/registry.md` routes to authoritative workflow procedures. Do not remove these purposeful pairs.
-- **Graphify status:** Reviewed candidate only; not installed and not runtime-verified. The approved direction is a universal provider-neutral intelligence layer with a separate graph/configuration inside each target repository. GymSync is the first intended target, but no GymSync graph/configuration or source changes are included in this toolkit task.
-- **Outstanding branch review:** Phase 11 package branches are historical branches whose changes were merged by PRs #9–#13. Older feature branches are stale/diverged; their relevant Phase 6/skill-quality artifacts were checked and are present on `main`. `toolkit-full-test` contains an isolated verification workflow only; it is not a missing toolkit runtime feature and should remain separate unless a later CI decision adopts it.
-- **Hard boundaries:** toolkit repository only; no GymSync changes; no installs, Graphify runtime, external integrations, or deployment.
-- **Verification status:** deterministic repository CI is available; Codex behavioral/runtime acceptance remains **NOT_RUN / BLOCKED** until a trusted Codex session is available. Static CI does not prove model behavior.
-- **Navigation policy:** read this Quick Start section and `AGENTS.md` at session start. Use `docs/repository-file-classification.md` for load levels, `docs/repository-intelligence-architecture.md` for graph design, and `docs/historical-archive-index.md` for phase history. Do not read the full 117 KB state/history file for routine tasks.
-- **Next action:** finish the canonical-source/branch review, run exact-head CI for the documentation change, then merge its PR and verify `main`.
+- **Current active work:** Step 11 — Final Architecture Integration & Implementation Readiness. The read-only integration audit is complete; this checkpoint records its findings. No new runtime capability is claimed.
+- **Last inspected main baseline:** `b2f66b960c08f003ba0b3033d000459c3b1552a5` (2026-11-24; repository-intelligence and file-loading architecture, PR #14).
+- **Latest verified main CI at that baseline:** GitHub Actions run [45456774700](https://github.com/kuuriyawep/-gymsync-codex-toolkit/actions/runs/45456774700), conclusion SUCCESS on the exact baseline SHA. This result does not apply automatically to later commits.
+- **Repository visibility:** Private (verified from GitHub repository metadata on 2026-11-25). Do not change visibility without explicit instruction.
+- **Existing toolkit inventory:** 13 native skills and 13 portable mirrors; six native agents and six role briefs; 55 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. Counts describe repository artifacts, not completed behavioral evaluations.
+- **Architecture integration:** Steps 2–10 map to existing foundations. See `docs/toolkit-integration.md` and the Step 11 integration findings recorded in Part IV below. Do not create duplicate routers, task engines, registries, handoff schemas, memory systems, or evaluation runners.
+- **Canonical-source rules:** `.agents/skills/` is canonical and `skills/` is its maintained portable mirror. `.codex/agents/*.toml` and `agents/*.md` serve different consumers. Existing workflow, task graph, tool registry, evaluation, and repository-intelligence contracts remain authoritative for their domains.
+- **Graphify status:** Optional candidate/provider only; not installed and not runtime-verified. The universal provider-neutral intelligence layer is separate from each target repository's own graph/configuration. No GymSync graph or GymSync source changes are included.
+- **Known implementation gaps:** WhatsApp/n8n communication gateway is design-only; actual Codex agent delegation and runtime permission enforcement are not verified; orchestration code is a repository-side workflow ledger/contracts, not proof of a live execution engine; Graphify adapter invocation and root isolation remain unverified.
+- **Runtime acceptance:** Codex behavioral, tool-permission, MCP, agent-delegation, and end-to-end acceptance remain NOT_RUN / BLOCKED until a trusted Codex runtime session is available. Static repository CI does not prove model behavior.
+- **Hard boundaries:** toolkit repository only; no GymSync application/database/deployment changes; no installs, Graphify runtime, n8n, WhatsApp/Twilio, external integrations, or unapproved external side effects.
+- **Next action:** use the consolidated integration findings to select one bounded repository-side implementation workstream, or perform the dedicated Codex-only runtime acceptance when a trusted Codex session becomes available. Do not restart completed Phase 11 packages or duplicate existing components.
 
----
 
 # PART I — WHY THIS PROJECT EXISTS
 
@@ -1969,3 +1969,112 @@ Do not begin 11.2 until the 11.1 exit gate is satisfied or the user explicitly a
 **Safety and approval:** no GymSync files, application code, database, or production data are in scope. No installation or external integration is authorized. Do not merge this branch to `main` until the user explicitly approves after reviewing the final diff and CI evidence.
 
 **Single next action:** await the user's review and explicit merge decision; keep PR #12 open and unmerged until approval.
+
+
+---
+
+# PART IV — STEP 11 ARCHITECTURE INTEGRATION & READINESS AUDIT
+
+**Audit date:** 2026-11-25  
+**Audit type:** Read-only repository and architecture integration review  
+**Inspected main baseline:** `b2f66b960c08f003ba0b3033d000459c3b1552a5`  
+**Latest CI inspected:** run `45456774700`, SUCCESS on that exact baseline  
+**Scope:** Steps 2–10 architecture specifications mapped against existing toolkit sources. No GymSync repository or application was accessed or changed.
+
+## 14. Step-to-repository mapping
+
+| Architecture step | Existing repository foundation | Disposition |
+|---|---|---|
+| 2 — Adaptive routing | Workflow orchestration skill, workflow registry, agent definitions | Existing foundation; adaptive behavior still requires runtime evidence |
+| 3 — Agent collaboration | Six agent definitions, handoff template/schema, task graph, coordination evaluations | Contracts and scenarios exist; live delegation not verified |
+| 4 — Autonomy and initiative | Approval policy, agent boundaries, workflow gates | Policy foundation exists; proactive runtime behavior not verified |
+| 5 — Communication | Communication concepts and workflow reporting | External bidirectional gateway remains design-only |
+| 6 — Task orchestration | Workflow ledger, state/event contracts, dependency and recovery logic | Repository-side orchestration foundation exists; Codex execution is not proven |
+| 7 — Memory and knowledge | Project-memory templates, maintenance guidance, repository-intelligence architecture | Retrieval discipline and graph-provider design exist; live retrieval and Graphify are unverified |
+| 8 — Evaluation and reliability | Evaluation cases, rubrics, scorecards, runner, deterministic CI | Evaluation infrastructure exists; behavioral scoring requires trusted Codex evidence |
+| 9 — Tooling and execution | Tool registry, schemas, permission references, runtime discovery utility | Declarative contracts exist; host-level enforcement and sandbox isolation are not proven |
+| 10 — Documentation and governance | Project state, decision-record template, integration map, quality workflow | Documentation and governance foundations exist; release governance is not a complete autonomous release system |
+
+## 15. Existing sources of truth — avoid duplicate implementation
+
+- `AGENTS.md`: repository-wide operating contract and approval boundaries.
+- `workflows/registry.md`: primary workflow selection and routing.
+- `schemas/agent-handoff.schema.json` and existing handoff template: handoff contract.
+- `schemas/agent-task-graph.schema.json`: task/dependency graph contract.
+- `tools/workflow_ledger.py`: repository-side workflow state, event and recovery utility.
+- `registry/tools.json` and the existing tool permission matrix: declarative tool inventory and operation policy.
+- `evals/`, existing rubrics and `tools/evaluate_toolkit.py`: evaluation case and deterministic evaluation system.
+- `docs/repository-intelligence-architecture.md`: provider-neutral repository graph architecture and Graphify adoption boundary.
+- `docs/toolkit-integration.md`: component integration map, authority, lifecycle and health checks.
+- `templates/decision-record.md`: existing decision-record structure.
+
+New work must extend these sources where justified. Do not create a second router, workflow ledger, tool registry, handoff contract, memory authority, evaluation runner, or graph architecture without an evidence-backed gap and an explicit design decision.
+
+## 16. Cross-component dependency order
+
+1. Establish current project state and source authority.
+2. Classify the task and select the existing workflow.
+3. Build a bounded task plan with ownership, dependencies and acceptance criteria.
+4. Retrieve relevant project knowledge and verify it against current source.
+5. Select existing agents and tools within the parent task's permissions.
+6. Execute in the host runtime; repository schemas and policies do not themselves enforce host permissions.
+7. Collect diffs, logs, test results and other reproducible evidence.
+8. Perform independent review and applicable security checks.
+9. Evaluate results against acceptance criteria and regression suites.
+10. Update documentation, decision records and the canonical project checkpoint.
+
+Communication is an optional reporting/approval transport around this lifecycle; it must not become a second orchestrator or bypass Codex/user authority.
+
+## 17. Readiness and unresolved gaps
+
+| Area | Repository-side status | Runtime status |
+|---|---|---|
+| Agent definitions and role boundaries | Present | Actual delegation NOT_RUN |
+| Collaboration and handoff contracts | Present | Handoff behavior NOT_RUN |
+| Workflow ledger and dependency contracts | Present | Live orchestration NOT_RUN |
+| Project memory and graph design | Present | Retrieval/Graphify NOT_VERIFIED |
+| Evaluation cases and deterministic runner | Present | Behavioral evaluation NOT_RUN |
+| Tool registry and permission policy | Present | Host enforcement NOT_VERIFIED |
+| WhatsApp/n8n communication | Design/backlog only | NOT_RUN |
+| Release and governance documentation | Foundation present | Full release lifecycle NOT_VERIFIED |
+
+Critical distinctions:
+- A declarative tool permission is not a sandbox or host authorization boundary.
+- A workflow ledger is not by itself an agent execution runtime.
+- An evaluation case specification is not an executed evaluation.
+- A static scorecard is not proof of Codex behavior.
+- A Graphify registry candidate is not a connected or verified Graphify adapter.
+- A documentation/release checklist is not evidence that a release was built, approved or published.
+
+## 18. Branch, pull request and CI disposition
+
+- Main baseline inspected: `b2f66b960c08f003ba0b3033d000459c3b1552a5`.
+- Latest main CI inspected: run `45456774700`, SUCCESS on that exact SHA.
+- PR #8 (`toolkit-full-test`) was observed as an open, divergent verification-only proposal in the audit context. Its workflow duplicates neither a missing toolkit capability nor an approved replacement for the existing `.github/workflows/quality.yml`; do not merge it without a fresh comparison and a separate CI decision.
+- No branches were deleted, no PRs merged, and no repository settings changed during this audit.
+
+## 19. Step 11 acceptance disposition
+
+| ID | Criterion | Status |
+|---|---|---|
+| INT-01 | Verify main baseline | PASS |
+| INT-02 | Inventory existing architecture foundations | PASS |
+| INT-03 | Map Steps 2–10 to repository sources | PASS |
+| INT-04 | Identify duplicate-system risks | PASS |
+| INT-05 | Map cross-component dependencies | PASS |
+| INT-06 | Identify runtime and integration gaps | PASS |
+| INT-07 | Inspect relevant branch/PR state | PASS — snapshot only; refresh before any action |
+| INT-08 | Inspect latest main CI for audited baseline | PASS |
+| INT-09 | Reconcile canonical project checkpoint | COMPLETED BY THIS UPDATE; new commit CI still pending |
+| INT-10 | Approve a specific implementation workstream | NOT_GRANTED by this audit |
+| INT-11 | Complete trusted Codex runtime acceptance | BLOCKED / NOT_RUN |
+
+## 20. Final Step 11 disposition
+
+**Repository-side architecture integration audit: COMPLETE.**  
+**Checkpoint reconciliation: UPDATED in this document.**  
+**Runtime acceptance: BLOCKED / NOT_RUN.**  
+**Implementation of new runtime capabilities: NOT_STARTED.**
+
+The next implementation task must be selected as a bounded workstream from the gaps above and must extend existing source-of-truth components. The audit does not authorize GymSync changes, installations, external integrations, permission changes, deployments, or broad refactors.
+
