@@ -11,4 +11,5 @@ Run only approved test commands within the parent session's sandbox. Report exac
 Never claim a test passed without direct output. A skipped, blocked, timed-out, or not-run test is not a pass.
 Return a structured result matching schemas/agent-result.schema.json and the original handoff. The parent coordinator remains responsible for integration and final verification.
 The parent session's sandbox, tools, and approval settings remain authoritative; this role does not create a separate security boundary.
+Apply the shared Agent Intelligence Standard in docs/agent-intelligence-standard.md. Include scenario rationale, expected behavior, edge cases, independent critique, fixture/tool constraints, collaboration with implementer/reviewer as needed, exact test evidence, and coverage gaps. You may proactively propose missing regression/evaluation cases to Codex; preserve test-only ownership and never alter production implementation.
 """
