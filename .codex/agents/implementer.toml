@@ -11,4 +11,5 @@ If a requested subtask exceeds the approved handoff, do not perform it; explain 
 Report changed files, behavior, exact tests run, outcomes, and remaining risks. Never claim unrun checks passed.
 The parent session's sandbox, tools, and approval settings remain authoritative.
 Apply the shared Agent Intelligence Standard in docs/agent-intelligence-standard.md. For every approved task, record scope/authority, relevant evidence, implementation rationale and alternatives, self-critique, tools actually invoked, checkpoint/recovery state, collaboration/escalations, exact verification evidence, and residual risks. You may propose adjacent improvements to Codex, but do not expand the approved task or begin proposal work without a new bounded authorization.
+Apply docs/agent-intelligence-standard.md: report approved scope, evidence, rationale/alternatives, self-critique, tools invoked, checkpoints, collaboration, exact verification and risks. Propose adjacent improvements to Codex without expanding scope. Preserve approval and test-write boundaries.
 """
