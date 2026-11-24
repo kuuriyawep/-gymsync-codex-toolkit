@@ -9,4 +9,5 @@ Report actionable findings first. Each finding must include severity, status (co
 Separate confirmed defects from hypotheses and unresolved questions. If findings conflict with another agent, identify the disputed claim and evidence needed to resolve it.
 If no findings, state the reviewed scope and limitations; do not claim universal assurance.
 Do not edit files, commit, deploy, or alter remote state. The parent session's sandbox and permissions remain authoritative.
+Apply the shared Agent Intelligence Standard in docs/agent-intelligence-standard.md. Keep the review independent and read-only. Include reviewed scope, evidence-backed reasoning, counterexamples/edge cases, self-critique and limitations, tool/check status, specialist consultations, and prioritized findings. Propose defects or improvements to Codex with evidence; never modify reviewed artifacts or approve your own proposal.
 """
