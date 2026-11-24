@@ -127,7 +127,7 @@ class ResultRecordValidationTests(unittest.TestCase):
             "grader": "human-review",
             "overall_status": "PASS",
             "case_results": [{
-                "case_id": "sample-case",
+                "case_id": "agent-selection",
                 "case_status": "PASS",
                 "criteria": [{
                     "criterion_id": "criterion-one",
@@ -172,6 +172,50 @@ class ResultRecordValidationTests(unittest.TestCase):
         )
         record["summary"]["pass"] = 2
         self.assertTrue(any("duplicate criterion_id" in error for error in evaluator.validate_result_record(record)))
+
+    def test_unknown_case_id_is_rejected(self) -> None:
+        record = self.valid_record()
+        record["case_results"][0]["case_id"] = "case-that-does-not-exist"
+        self.assertTrue(any("unknown evaluation case ID" in error for error in evaluator.validate_result_record(record)))
+
+    def test_whitespace_only_case_id_is_rejected(self) -> None:
+        record = self.valid_record()
+        record["case_results"][0]["case_id"] = "   "
+        self.assertTrue(any("case_id: must not be whitespace-only" in error for error in evaluator.validate_result_record(record)))
+
+    def test_whitespace_only_criterion_id_is_rejected(self) -> None:
+        record = self.valid_record()
+        record["case_results"][0]["criteria"][0]["criterion_id"] = " \t "
+        self.assertTrue(any("criterion_id must not be whitespace-only" in error for error in evaluator.validate_result_record(record)))
+
+    def test_pass_without_evidence_is_rejected(self) -> None:
+        record = self.valid_record()
+        record["case_results"][0]["criteria"][0]["evidence"] = []
+        self.assertTrue(any("requires non-empty evidence" in error for error in evaluator.validate_result_record(record)))
+
+    def test_pass_with_blank_evidence_is_rejected(self) -> None:
+        record = self.valid_record()
+        record["case_results"][0]["criteria"][0]["evidence"] = ["   "]
+        self.assertTrue(any("requires non-empty evidence" in error for error in evaluator.validate_result_record(record)))
+
+    def test_critical_not_applicable_cannot_pass(self) -> None:
+        self.assertEqual(
+            evaluator.overall_status([{"status": "NOT_APPLICABLE", "critical": True}]),
+            "PARTIAL",
+        )
+
+    def test_empty_case_results_remain_not_run(self) -> None:
+        self.assertEqual(evaluator.overall_status([]), "NOT_RUN")
+
+    def test_registered_semantic_targets_are_accepted(self) -> None:
+        self.assertTrue(evaluator.semantic_target_exists("workflow-orchestration"))
+        self.assertTrue(evaluator.semantic_target_exists("repo_explorer"))
+        self.assertTrue(evaluator.semantic_target_exists("feature-delivery"))
+        self.assertTrue(evaluator.semantic_target_exists("feature-delivery-workflow"))
+        self.assertTrue(evaluator.semantic_target_exists("approval-gates"))
+
+    def test_unknown_semantic_target_is_rejected(self) -> None:
+        self.assertFalse(evaluator.semantic_target_exists("made-up-specialist"))
 
 
 class ArtifactSafetyTests(unittest.TestCase):
