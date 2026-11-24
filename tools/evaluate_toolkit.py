@@ -258,6 +258,10 @@ def semantic_target_exists(target: str) -> bool:
         item.stem for item in workflow_dir.glob("*.md")
         if item.stem != "registry"
     } if workflow_dir.is_dir() else set()
+    # Preserve the explicit semantic aliases already used by evaluation cases.
+    workflow_aliases = {f"{workflow_id}-workflow" for workflow_id in workflows}
+    # Approval gates are a documented cross-workflow policy in workflows/registry.md.
+    documented_policy_ids = {"approval-gates"}
     agent_roots = (ROOT / ".codex" / "agents", ROOT / "agents")
     agents = {
         item.stem
@@ -265,7 +269,13 @@ def semantic_target_exists(target: str) -> bool:
         for item in base.iterdir()
         if item.is_file() and item.suffix in {".toml", ".md"}
     }
-    return target in skills or target in workflows or target in agents
+    return (
+        target in skills
+        or target in workflows
+        or target in workflow_aliases
+        or target in documented_policy_ids
+        or target in agents
+    )
 
 
 def known_case_ids() -> set[str]:
