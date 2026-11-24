@@ -78,7 +78,8 @@
         ],
         "properties": {
           "case_id": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "case_status": {
             "type": "string",
@@ -104,7 +105,8 @@
               ],
               "properties": {
                 "criterion_id": {
-                  "type": "string"
+                  "type": "string",
+                  "minLength": 1
                 },
                 "status": {
                   "type": "string",
@@ -126,8 +128,10 @@
                 "evidence": {
                   "type": "array",
                   "items": {
-                    "type": "string"
-                  }
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": "PASS criteria require at least one non-empty evidence item; non-PASS statuses may have an empty evidence array."
                 }
               }
             }
