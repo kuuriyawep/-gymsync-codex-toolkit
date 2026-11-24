@@ -6,7 +6,9 @@
 
 Phase 10 improves the evaluation system already in the repository. It must not duplicate existing cases, rubrics, validators, or tests. Static repository checks and behavioral Codex evaluation are separate evidence classes. No behavioral PASS may be recorded without a real trusted Codex session and reviewable evidence.
 
-## 2. Repository inventory (2026-11-18)
+## 2. Historical repository inventory snapshot (2026-11-18)
+
+> **Historical record — not the current repository inventory.** These counts describe the Phase 10 snapshot only. Later Phase 11 records supersede them where the repository evolved (for example, the evaluation case inventory increased from 41 to 55, and the native agent inventory increased from five to six). Do not use this table as a present-day inventory.
 
 | Asset | Inventory |
 |---|---:|
