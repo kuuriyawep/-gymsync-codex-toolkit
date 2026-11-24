@@ -179,3 +179,24 @@ The following updates supersede the corresponding stale findings in the original
 - **P2-06 / Phase 10 inventory — addressed:** the 2026-11-18 inventory is explicitly labeled historical and must not be used as the current repository inventory.
 
 **Package 4 verification status:** GitHub Actions run `45386287145` completed SUCCESS on PR-head commit `a0b233d8359c47828ca86643a41337a27d0b010e`. The subsequent checkpoint/report head `498181fa2f3c77d04826c383168ca12156effae7` also passed all quality gates in run `45386435195`. These are deterministic repository CI results only; consult PR #12 for the latest exact-head status. Runtime acceptance remains BLOCKED / NOT_RUN; overall Phase 11 remains PARTIAL.
+
+
+## 13. Package 5 — CI evidence artifact retention
+
+**P2-03 disposition:** addressed in Package 5 by extending the existing
+`.github/workflows/quality.yml` pipeline to upload the deterministic evaluation
+JSON record and its Markdown report as a single GitHub Actions artifact.
+
+- Artifact identity includes both `github.run_id` and `github.run_attempt`, keeping
+  reruns distinct and avoiding replacement of prior evidence.
+- Artifact retention is 30 days.
+- The upload step uses `if: always()` so evidence generated before a later validation
+  failure can still be retained. If generation did not create the expected files,
+  `if-no-files-found: warn` avoids hiding the original job failure.
+- The upload action is pinned to an immutable commit SHA.
+- The artifact is deterministic repository evidence only. It does not prove Codex
+  runtime behavior; behavioral criteria remain `NOT_RUN` / `BLOCKED`.
+
+**Package 5 verification:** pending exact-head GitHub Actions execution and artifact
+presence verification. Do not mark P2-03 complete until the artifact is confirmed
+on the final PR-head run.
