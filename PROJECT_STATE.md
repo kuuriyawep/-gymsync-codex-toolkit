@@ -33,7 +33,8 @@
 - **Integration status:** WhatsApp/Twilio/n8n, Graphify runtime, persistent background execution, and live permission enforcement are not verified or installed. Do not start the n8n trial, install tools, or integrate external services without separate explicit approval.
 - **Phase 11 status:** Historical repository-side audit/closeout material remains available. Runtime acceptance remains BLOCKED / NOT_RUN; Phase 11 is not a substitute for the seven-workstream roadmap.
 - **Hard boundary:** Toolkit repository only. No GymSync application, database, production, deployment, or external-service changes.
-- **Immediate next action:** complete WS1 role-to-capability mapping and implement only the smallest necessary extensions to existing agent/skill contracts; run available static checks and record exact evidence.
+- **WS1 progress:** canonical architecture and role mapping are recorded in `docs/intelligent-agent-ecosystem-architecture.md` and `docs/agent-intelligence-standard.md`. All six native agent definitions and role briefs were inspected and mapped; this is design/static review, not runtime validation.
+- **Immediate next action:** align the six existing agent definitions and role briefs to the common intelligence/reporting contract with minimal, role-specific edits; then run available static checks and record exact evidence.
 
 
 # PART I — WHY THIS PROJECT EXISTS
