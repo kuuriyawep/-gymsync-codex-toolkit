@@ -3,14 +3,14 @@
 
 > **MANDATORY — READ THIS FILE BEFORE ANY WORK.**
 >
-> This is the central control document for the GymSync Codex Toolkit repository. Every new ChatGPT/Codex session, every continuation after a context reset, and every meaningful handoff must begin by reading this file in full, then reading `AGENTS.md`. No project work may begin until the active task, current status, constraints, and next action are understood.
+> This is the central control document for the GymSync Codex Toolkit repository. Every new ChatGPT/Codex session, continuation after a context reset, and meaningful handoff must begin with the **Quick Start / Current State** section below, then read `AGENTS.md`. Retrieve only the linked source files relevant to the active task; read the full history only for broad audits or when explicitly required. No project work may begin until the active task, constraints, and next action are understood.
 >
 > If this file is missing, inaccessible, contradictory, or materially stale, stop. Reconstruct the state from current repository evidence and explicit user decisions before doing any implementation or making a new plan.
 >
 > This document is the project's central index and operating contract. Detailed procedures, source files, schemas, test cases, and reports remain authoritative for their specific subjects. Do not copy all technical detail into this file; link to the source of truth.
 
 **Document status:** ACTIVE — canonical project checkpoint and operating manual  
-**Last checkpoint/source-audit consolidation:** 2026-11-18  
+**Last checkpoint/source-audit consolidation:** 2026-11-24 (Phase 11 repository-side audit and Package 4 checkpoint; see sections 71–79)  
 **Last full source-audit baseline:** `b8aafe780a181f0f49acaed3dc23791ed9146d7c`  
 **CI policy:** Always inspect the latest GitHub Actions run for the current HEAD; a prior commit's PASS does not automatically apply to a later commit.  
 **Repository:** `kuuriyawep/-gymsync-codex-toolkit`  
@@ -20,6 +20,16 @@
 **Primary coordinator:** Codex  
 **Toolkit runtime status:** Static repository checks pass; Codex behavioral/runtime validation is still pending  
 **Document maintenance rule:** Update this file after every meaningful phase transition, completed audit, approved architecture decision, or handoff.
+
+## QUICK START / CURRENT STATE
+
+- **Current active work:** Phase 11, Package 4 — Knowledge & Documentation (P1-04, P2-04, P2-05, P2-06); work is in progress on `phase-11-package-4-knowledge-documentation`.
+- **Branch base:** `main` at `f83d1c5cbf9d823fa0b4fdadc7d855a99217e011` (Package 3 merge). The `main` branch is not being edited by Package 4.
+- **Completed and merged:** Package 1 — Evaluation Trust; Package 2 — Repository Integrity; Package 3 — Security Hygiene. See sections 80–82 for original completion evidence and PRs #9–#11.
+- **Package 4 scope only:** reconcile the project checkpoint and startup retrieval path; refresh evaluation matrix snapshot metadata; correct Phase 11 report contradictions; label the Phase 10 inventory as historical. Do not broaden scope.
+- **Hard boundaries:** toolkit repository only; no GymSync changes; no installs or external integrations; no merge to `main` without explicit user approval.
+- **Verification status:** Package 4 tests and CI have not yet been run. Do not infer PASS from earlier package CI.
+- **Next action:** finish the scoped checkpoint/report reconciliation, inspect the diff, run the repository quality workflow, then request review/merge approval.
 
 ---
 
@@ -251,7 +261,7 @@ The latest full tree audit found 13 canonical skill files and 13 portable mirror
 
 ### 9.5 `.codex/agents/` — executable Codex subagent definitions
 
-There are five native TOML definitions:
+The earlier architecture snapshot contained five native TOML definitions. The later Phase 11 inventory supersedes that count: six native definitions are present, including `test_engineer`. The six current roles are listed below:
 
 | Agent | Role | Permission boundary |
 |---|---|---|
@@ -331,7 +341,7 @@ Detailed reports are evidence records. They should not be rewritten merely to ma
 
 ### 9.10 `evals/` — evaluation system
 
-The current tree contains:
+The earlier inventory snapshot contained 41 evaluation case JSON files. The later Phase 11 audit supersedes this count: 55 evaluation case specifications are present. The following list records the earlier inventory baseline, not current counts:
 - 41 evaluation case JSON files.
 - 7 rubric files.
 - Taxonomy and evaluation instructions.
@@ -1818,7 +1828,11 @@ Prior user-reported Codex CLI and `/mcp` observations from 2026-11-18 are histor
 
 No installation, authentication, runtime configuration, provider connection, or GymSync application change was performed.
 
-## 70. Current active task and single next action
+## 70. Historical active-task pointer — superseded by the 2026-11-24 closeout
+
+> This section preserves an earlier checkpoint. Its 11.1 active-workstream pointer and instruction not to begin 11.2 are historical and are superseded by sections 71–79. The current task is Package 4, as recorded in section 79.
+
+## 70A. Historical active task and next action
 
 **Active phase:** Phase 11 — Real Runtime Integration & Full-System Validation.  
 **Active workstream:** 11.1 — Runtime & Environment Readiness.  
@@ -1924,3 +1938,28 @@ Do not begin 11.2 until the 11.1 exit gate is satisfied or the user explicitly a
 **Codex-only runtime:** NOT_RUN / BLOCKED.  
 **Overall Phase 11:** PARTIAL — NOT FULLY ACCEPTED.  
 **Next action:** verify CI for the latest main commit; then execute the Codex-only pack when a trusted Codex session is available.
+
+
+## 79. Phase 11 Package 4 — Knowledge & Documentation (2026-11-24)
+
+**Status:** IN PROGRESS — scoped work is on branch `phase-11-package-4-knowledge-documentation`; not merged.
+
+**Branch base:** `f83d1c5cbf9d823fa0b4fdadc7d855a99217e011` (verified `main` HEAD after Package 3 merge).
+
+**Approved scope:**
+- **P1-04 — Project checkpoint integrity:** replace the mandatory full-history startup read with a compact authoritative Quick Start and targeted source retrieval; preserve historical records while explicitly marking superseded pointers and inventory counts.
+- **P2-04 — Matrix metadata:** update the evaluation case-to-skill matrix snapshot to the verified baseline. The comparison from former snapshot `9f14fc7326665153a3629d86de079f7e07a45eec` to the Package 4 base found no canonical skill-file or evaluation-case-specification changes.
+- **P2-05 — Phase 11 report contradictions:** reconcile current dispositions with later repository-side work, without changing runtime blockers or claiming unrun tests.
+- **P2-06 — Phase 10 inventory:** label the 2026-11-18 inventory as a historical snapshot, not a current inventory.
+
+**Completed changes so far:**
+- `AGENTS.md`: startup now reads the Quick Start and uses task-relevant source retrieval instead of requiring the entire historical state file every session.
+- `evals/skill-case-matrix.md`: snapshot target updated to the verified Package 4 base; comparison basis documented.
+- `docs/phase-10-evaluation-reliability.md`: inventory section explicitly marked historical; later counts are called out.
+- `PROJECT_STATE.md`: this checkpoint update and historical-state reconciliation are in progress; the Phase 11 final report still requires its contradiction pass.
+
+**Verification:** no Package 4 tests or CI have run yet. Earlier Package 1–3 CI results do not certify this branch.
+
+**Safety and approval:** no GymSync files, application code, database, or production data are in scope. No installation or external integration is authorized. Do not merge this branch to `main` until the user explicitly approves after reviewing the final diff and CI evidence.
+
+**Single next action:** complete the Phase 11 report reconciliation, then run the exact-branch quality gates and review the final changed-file list.
