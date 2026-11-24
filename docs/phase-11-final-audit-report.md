@@ -5,6 +5,8 @@
 **Branch:** main  
 **Overall disposition:** REPOSITORY-SIDE AUDIT COMPLETE — RUNTIME ACCEPTANCE PENDING
 
+> **Report boundary:** This document preserves the 2026-11-24 audit baseline and its original findings. Later repository-side remediations are reconciled in section 12; the historical findings below must not be read as the current unresolved-work list.
+
 ## 1. Executive conclusion
 
 All nine Phase 11 workstreams (11.1–11.9) have received a static, read-only audit. The review covered repository architecture, 13 canonical skills and portable mirrors, six native agents and role briefs, workflow registry and ledger, memory contracts and validators, tool registry and adapter contracts, evaluation assets, security controls, and end-to-end integration design.
@@ -40,7 +42,7 @@ Historical CI and runtime observations are not presented as current results.
 |---|---|---|
 | 11.1 Runtime & Environment | Baseline and discovery utility reviewed; prior session inventory is historical | BLOCKED — no fresh trusted-host snapshot or successful representative invocation |
 | 11.2 Repository Intelligence | Architecture, ownership, source precedence, inventory, and stale-context risks reviewed | STATIC REVIEW COMPLETE; runtime scenarios NOT_RUN |
-| 11.3 Skill Compatibility | 13 skills, mirrors, scorecards, rubric, and evaluation architecture reviewed | PARTIAL — scorecards stale relative to inspected revision; behavioral invocation NOT_RUN |
+| 11.3 Skill Compatibility | 13 skills, mirrors, scorecards, rubric, and evaluation architecture reviewed; static scorecards were subsequently refreshed against the reviewed skill content | STATIC REVIEW COMPLETE; behavioral invocation NOT_RUN |
 | 11.4 Agent Delegation | Six agents, six role briefs, handoff contracts, task graph, and ownership rules reviewed | PARTIAL — live delegation and inherited-approval scenarios NOT_RUN |
 | 11.5 Workflow Engine | Registry, procedures, ledger transitions, dependencies, recovery, and tests reviewed | PARTIAL — actual task routing/execution NOT_RUN |
 | 11.6 Memory & Knowledge | Memory model, source authority, validator, templates, skill, and eight cases reviewed | PARTIAL — retrieval/freshness/isolation behavior NOT_RUN |
@@ -68,20 +70,20 @@ Historical CI and runtime observations are not presented as current results.
 2. No end-to-end execution evidence. A trusted Codex session must execute a bounded scenario covering discovery, skill selection, workflow routing, agent handoff, approved tool use, verification, and final reporting.
 
 ### P1 — Evidence integrity and enforcement
-3. Stale project state: PROJECT_STATE.md still identifies 11.1 as active and contains a “do not begin 11.2” instruction despite later documented workstreams. Reconcile it to the actual audit history and blocker disposition.
-4. Stale skill scorecards: all 13 point to an earlier revision than the inspected Phase 11 baseline. The project-intelligence scorecard also has headings that do not match the current skill; its old score must not be treated as current.
-5. Memory coverage metadata mismatch — RESOLVED during repository-side closeout: the two previously unlabeled memory cases now carry explicit in-scope labels, and the scorecard metadata reflects 5 in-scope, 2 near-miss, and 1 edge across eight cases. The scorecard itself remains tied to an older target revision and still requires a fresh content review.
+3. Stale project state: PROJECT_STATE.md still identified 11.1 as active and contained a “do not begin 11.2” instruction at the audit baseline. **RESOLVED in Package 4:** the historical pointer is explicitly superseded, the current active task is recorded, and startup now uses a compact Quick Start plus targeted source retrieval. The historical pointer is retained for audit traceability.
+4. Stale skill scorecards: this was an audit-baseline finding. **RESOLVED for static snapshot alignment before Package 4:** 12 scorecards were refreshed against snapshot `3126de6494165f337ea53308f8c08606f0ca80e1`; `project-intelligence` had already been refreshed separately. The comparison from former snapshot `9f14fc7326665153a3629d86de079f7e07a45eec` to Package 4 base `f83d1c5cbf9d823fa0b4fdadc7d855a99217e011` found no canonical skill-file changes. These remain model-assisted static reviews, not independent human reviews or runtime passes.
+5. Memory coverage metadata mismatch — RESOLVED during repository-side closeout: the two previously unlabeled memory cases now carry explicit in-scope labels, and the scorecard metadata reflects 5 in-scope, 2 near-miss, and 1 edge across eight cases. The scorecard's static content review was refreshed as part of the 12-scorecard refresh; runtime retrieval and isolation behavior remain NOT_RUN.
 6. Permission profiles are not a standalone authorization engine. Registry metadata and documentation must not be described as host-level enforcement.
 7. Graphify project-root boundary: its registry operation accepts a project path, while fixed-root enforcement is not proven by schema-level controls. Keep Graphify optional and unverified until containment is tested.
 8. Approval provenance — PARTIALLY HARDENED: an approved write task now requires a non-empty approval_reference, with a regression test. The ledger still cannot independently prove the reference originated from an actual user approval; caller/runtime enforcement remains required.
 9. Path containment: traversal checks exist, but real-path/symlink containment requires targeted tests before claiming filesystem isolation.
-10. Terminal workflow events — REPOSITORY FIX ADDED: the ledger now rejects all subsequent events after COMPLETION or CANCELLED, with regression assertions for late checkpoints. Exact-head CI is still required to verify the change.
-11. Secret detection: selected-pattern checks are not a comprehensive secret scanner.
+10. Terminal workflow events — REPOSITORY FIX ADDED and verified on the Package 3 PR head: the ledger rejects all subsequent events after COMPLETION or CANCELLED, with regression assertions. GitHub Actions run `45382965340` passed on PR-head commit `3771844fb8ef47c48f1a13699fcf39644ae2cc5b`; this is deterministic CI evidence for that PR head, not a Package 4 run.
+11. Secret detection: **repository-wide heuristic scanning was added in Package 3** and is included in the quality workflow. It detects selected provider patterns and high-entropy credential assignments, but it is not a comprehensive secret scanner; documented exclusions and pattern limitations remain.
 
 ### P2 — Maintainability and adoption
-12. Large project-state document vs targeted retrieval: align repository instructions and Project Intelligence guidance so context is loaded by relevance while preserving an authoritative index.
+12. Large project-state document vs targeted retrieval: **RESOLVED in Package 4** by making the Quick Start/current checkpoint the mandatory entry point and directing Codex to retrieve task-relevant source files instead of requiring the entire historical state file every session. The full history remains available for broad audits.
 13. Generic memory templates: templates exist, but a populated project-specific knowledge index is not evidenced.
-14. Case-to-skill mapping: map existing 55 evaluation cases to all 13 skills before adding cases; avoid duplicates.
+14. Case-to-skill mapping: **RESOLVED before Package 4** — all 55 existing evaluation cases are mapped to the 13 skills. Package 4 refreshes the matrix's snapshot metadata to the verified baseline; the matrix remains traceability evidence, not behavioral coverage.
 15. Governance and onboarding: the separate repository audit report records licensing and branch-protection concerns. Reassess before broad external adoption; these are not runtime test results.
 
 ## 6. Workstream technical notes
@@ -93,7 +95,7 @@ The discovery utility checks CLI presence/version and configured MCP/plugin name
 The inspected architecture includes 13 canonical skills and 13 portable mirrors, six native agents and six role briefs, 55 evaluation case specifications, seven rubrics, 13 skill scorecards, and repository schemas, workflows, tools, and tests. Case specifications are not completed behavioral evaluations. Memory templates are scaffolding, not evidence of populated factual memory.
 
 ### 11.3 — Skills and Evaluation
-The evaluation runner validates cases/schemas and repository integrity, and records behavioral criteria as NOT_RUN. It does not launch Codex or grade live behavior. The 13 scorecards are static/model-assisted artifacts, not runtime passes or independent human sign-off. Complete case-to-skill mapping and fresh scorecard revision alignment remain required.
+The evaluation runner validates cases/schemas and repository integrity, and records behavioral criteria as NOT_RUN. It does not launch Codex or grade live behavior. The 13 scorecards were refreshed as static/model-assisted artifacts against the reviewed skill snapshot; they are not runtime passes or independent human sign-off. The 55-case matrix provides traceability, while uneven formal coverage labels remain a separate limitation.
 
 ### 11.4 — Agents
 The six roles are repo_explorer, planner, implementer, reviewer, security_auditor, and test_engineer. Role instructions and handoff validators define procedural boundaries; they do not create independent OS/runtime security boundaries. Actual delegation and inherited permission behavior remain untested.
@@ -164,3 +166,16 @@ Phase 11 may be marked PASS only when required applicable runtime scenarios have
 **Repository-side preparation:** COMPLETE, pending final exact-HEAD CI.  
 **Codex-only runtime acceptance:** NOT_RUN / BLOCKED.  
 **Overall Phase 11:** PARTIAL — NOT FULLY ACCEPTED.
+
+
+## 12. Package 4 — checkpoint and documentation reconciliation (2026-11-24)
+
+The following updates supersede the corresponding stale findings in the original audit register:
+
+- **P1-04 / checkpoint integrity — addressed:** `PROJECT_STATE.md` now starts with an authoritative Quick Start containing the active task, branch base, hard constraints, verification status, and next action. The historical 11.1 pointer is explicitly superseded. Earlier inventory counts (five agents and 41 evaluation cases) are identified as historical; the later Phase 11 inventory records six native agents and 55 case specifications. Historical records are retained rather than deleted.
+- **Startup retrieval — addressed:** `AGENTS.md` no longer requires every session to read the entire long historical state file. It requires the Quick Start, then task-relevant source retrieval; full-history reading remains appropriate for broad audits.
+- **P2-04 / matrix metadata — addressed:** `evals/skill-case-matrix.md` now identifies Package 4 base `f83d1c5cbf9d823fa0b4fdadc7d855a99217e011` as its snapshot target. The comparison from former target `9f14fc7326665153a3629d86de079f7e07a45eec` found no canonical skill-file or evaluation-case-specification changes.
+- **P2-05 / report contradictions — addressed:** the original audit findings are explicitly identified as baseline findings and their later dispositions are recorded above. Static scorecard freshness, the case mapping, terminal workflow-event CI, and repository-wide secret scanning are no longer listed as unresolved baseline defects; their remaining limitations are stated.
+- **P2-06 / Phase 10 inventory — addressed:** the 2026-11-18 inventory is explicitly labeled historical and must not be used as the current repository inventory.
+
+**Package 4 verification status:** GitHub Actions run `45386287145` completed SUCCESS on PR-head commit `a0b233d8359c47828ca86643a41337a27d0b010e`. The subsequent checkpoint/report head `498181fa2f3c77d04826c383168ca12156effae7` also passed all quality gates in run `45386435195`. These are deterministic repository CI results only; consult PR #12 for the latest exact-head status. Runtime acceptance remains BLOCKED / NOT_RUN; overall Phase 11 remains PARTIAL.

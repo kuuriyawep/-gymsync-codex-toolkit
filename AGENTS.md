@@ -52,8 +52,9 @@ New lessons go to learning/inbox with evidence and provenance. Promote to learni
 Be concise but sufficiently detailed. Separate facts, assumptions, risks, and recommendations. Explain uncertainty plainly.
 
 ## Mandatory cross-session checkpoint
-- Before any work in this repository, read `PROJECT_STATE.md` in full. This is mandatory for every new session, including research-only sessions.
-- Treat it as the current cross-session task/status index; verify relevant claims against current source and the latest commit before acting.
-- If the checkpoint is missing, contradictory, or stale, stop and reconcile it before continuing.
-- At the end of meaningful work, update `PROJECT_STATE.md` with the actual progress, evidence, verification status, blockers, decisions, and one next action.
+- At the start of every new session, read the **Quick Start / Current State** section at the top of `PROJECT_STATE.md`, then read this `AGENTS.md` contract.
+- Use the latest checkpoint and its linked source-of-truth files to retrieve only the context relevant to the requested task. Read the entire state file only when the task requires a historical audit, a broad architecture review, or the user explicitly asks for it.
+- Treat the checkpoint as an index, not as proof: verify relevant claims against current source, Git state, and the latest applicable CI evidence before acting.
+- If the checkpoint is missing, contradictory, or materially stale, stop and reconcile it before continuing.
+- At the end of meaningful work, update `PROJECT_STATE.md` with actual progress, evidence, verification status, blockers, decisions, and one next action.
 - Do not start a new task or phase while the recorded active task remains unfinished unless the user explicitly redirects the work.
