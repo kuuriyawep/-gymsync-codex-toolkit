@@ -45,6 +45,13 @@ Use adaptive routing for non-trivial engineering work: Explore → Clarify → T
 ## Skills
 Use a skill when its description matches the task. Read its complete SKILL.md before applying it. Skills provide procedures; this file defines repository-wide rules.
 
+## Repository knowledge and file loading
+- Follow `docs/repository-file-classification.md` when deciding which toolkit files are canonical and which should be loaded on demand.
+- Do not read every skill, agent brief, template, evaluation, schema, or historical report by default. Load only the files relevant to the task.
+- For repository-graph or cross-repository navigation work, use `docs/repository-intelligence-architecture.md` as the design authority. Keep each target repository's graph, configuration, and project memory isolated in that target repository.
+- Use `docs/historical-archive-index.md` to retrieve phase reports and source-review history only when needed.
+- Graph output and project memory are navigation aids, not authorities. Verify consequential claims against current source, tests, schemas, and configuration.
+
 ## Learning
 New lessons go to learning/inbox with evidence and provenance. Promote to learning/approved only after review. Do not silently rewrite instructions or self-modify the toolkit.
 

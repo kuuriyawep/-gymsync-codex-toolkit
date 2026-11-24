@@ -6,30 +6,13 @@ A curated, Codex-first engineering toolkit: repository instructions, role-bounde
 
 ## Start here
 
-- [Toolkit Quickstart](docs/quickstart.md) — first-use sequence, adoption modes, safe task intake, and verification commands.
-- [Toolkit Integration Map](docs/toolkit-integration.md) — component architecture, authority order, lifecycle, and integration invariants.
-- [End-to-End Example](docs/end-to-end-example.md) — an illustrative request-to-completion workflow (not a runtime test).
-- [Selective Adoption Test](docs/selective-adoption-test.md) — non-destructive preflight, acceptance criteria, and rollback checklist.
-- [Installation in Codex](docs/installation.md) — how to adopt the skills and agents in a target project.
-- [Phase 7 Integration Evaluation](docs/phase-7-completion-report.md) — integration review results and remaining runtime verification.
-- [Phase 8 Skill Quality Audit](docs/phase-8-skill-audit.md) — 13-skill audit and remediation summary.
-- [Phase 8 Completion Report](docs/phase-8-completion-report.md) — static remediation, deterministic validation, and deferred Codex runtime tests.
-- [External Source Audit Index](audits/source-reviews/README.md) — nine selected repository reviews and their evidence status.
-- [Phase 7 Tool Ecosystem](docs/phase-7-tool-ecosystem.md) — typed registry, permission model, and adapter acceptance criteria.
-- [Phase 8 Agent Audit](docs/phase-8-agent-capability-audit.md) — agent inventory, ownership, runtime constraints, and test-engineer role.
-- [Phase 9 Stateful Workflow Execution](docs/phase-9-stateful-workflow-execution.md) — durable task ledger, state transitions, idempotency, recovery, and evidence model.
-- [Phase 10 Evaluation & Reliability](docs/phase-10-evaluation-reliability.md) — skill scoring, evaluation coverage, adversarial cases, and reliability evidence.
-- [Agent Tool Access Matrix](references/agent-tool-access-matrix.md) — proposed task-level role permissions and enforcement boundaries.
-- [Codex Runtime Acceptance Pack](docs/phase-11-codex-runtime-acceptance.md) — **CODEX-ONLY** checklist for all remaining live runtime tests and final acceptance.
-- [Phase 11 Execution Plan](docs/phase-11-execution-plan.md) — approved nine-workstream runtime-validation roadmap and current disposition.
-- [Skill Case Coverage Matrix](evals/skill-case-matrix.md) — all 55 evaluation cases mapped to the 13 canonical skills; static traceability only.
-- [Phase 11 Final Audit Report](docs/phase-11-final-audit-report.md) — consolidated static audit, blockers, remediation findings, and runtime acceptance sequence.
-- [Phase 11 Runtime Baseline](docs/phase-11-baseline.md) — sanitized repository/runtime readiness baseline and outstanding host evidence.
-- [Codex Runtime Discovery](docs/codex-runtime-discovery.md) — safe local preflight for configured MCP servers and plugins.
-- [MCP Adapter Contract](docs/mcp-adapter-contract.md) — MCP lifecycle, trust review, permissions, reliability, and verification gates.
-- [Non-MCP Adapter Contracts](docs/non-mcp-adapter-contracts.md) — API, CLI, browser, database, design, and test adapters.
-- [Graphify v0.9.112 Review](docs/adapters/graphify-v0.9.112-review.md) — pinned optional adapter candidate and runtime blockers.
-- [Source-to-Toolkit Adoption Map](docs/source-adoption-map.md) — deduplicated mapping from audit findings to existing components and future phases.
+1. [Toolkit Quickstart](docs/quickstart.md) — adopt the toolkit and start a task safely.
+2. [Codex Operating Contract](AGENTS.md) — authority, scope, workflow, verification, and approval rules.
+3. [Project State](PROJECT_STATE.md) — read only the Quick Start / Current State section at session start.
+4. [Repository File Classification](docs/repository-file-classification.md) — canonical sources and what to load for each task.
+5. [Workflow Registry](workflows/registry.md) — select the relevant procedure for non-trivial work.
+
+For repository intelligence or graph navigation work, consult the [Universal Repository Intelligence Architecture](docs/repository-intelligence-architecture.md). For historical implementation decisions and phase reports, use the [Historical Documentation Index](docs/historical-archive-index.md); do not load the full history for ordinary tasks.
 
 ## Adaptive delivery loop
 
