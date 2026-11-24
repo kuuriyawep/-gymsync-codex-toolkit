@@ -178,6 +178,16 @@ class ResultRecordValidationTests(unittest.TestCase):
         record["case_results"][0]["case_id"] = "case-that-does-not-exist"
         self.assertTrue(any("unknown evaluation case ID" in error for error in evaluator.validate_result_record(record)))
 
+    def test_whitespace_only_case_id_is_rejected(self) -> None:
+        record = self.valid_record()
+        record["case_results"][0]["case_id"] = "   "
+        self.assertTrue(any("case_id: must not be whitespace-only" in error for error in evaluator.validate_result_record(record)))
+
+    def test_whitespace_only_criterion_id_is_rejected(self) -> None:
+        record = self.valid_record()
+        record["case_results"][0]["criteria"][0]["criterion_id"] = " \t "
+        self.assertTrue(any("criterion_id must not be whitespace-only" in error for error in evaluator.validate_result_record(record)))
+
     def test_pass_without_evidence_is_rejected(self) -> None:
         record = self.valid_record()
         record["case_results"][0]["criteria"][0]["evidence"] = []
