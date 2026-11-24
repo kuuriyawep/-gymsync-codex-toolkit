@@ -28,7 +28,7 @@
 - **Completed and merged:** Package 1 — Evaluation Trust; Package 2 — Repository Integrity; Package 3 — Security Hygiene. See PRs #9–#11 and their merged commits in the repository history for Package 1–3 completion evidence.
 - **Package 4 scope only:** reconcile the project checkpoint and startup retrieval path; refresh evaluation matrix snapshot metadata; correct Phase 11 report contradictions; label the Phase 10 inventory as historical. Do not broaden scope.
 - **Hard boundaries:** toolkit repository only; no GymSync changes; no installs or external integrations; no merge to `main` without explicit user approval.
-- **Verification status:** Package 4 quality workflow passed on PR head `a0b233d8359c47828ca86643a41337a27d0b010e` (run `45386287145`); deterministic CI only. A final checkpoint-only update is being added and must receive its own CI run.
+- **Verification status:** Package 4 quality workflow passed on PR head `a0b233d8359c47828ca86643a41337a27d0b010e` (run `45386287145`) and the subsequent checkpoint/report head `498181fa2f3c77d04826c383168ca12156effae7` (run `45386435195`). These are deterministic repository CI results only. Check PR #12 for the latest exact-head result; do not infer runtime behavior.
 - **Next action:** verify CI on the final PR head, then review PR #12 and explicitly approve or decline merge.
 
 ---
