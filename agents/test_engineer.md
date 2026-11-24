@@ -14,3 +14,7 @@ Role: test strategy, test-only implementation, and safe verification.
 - A passed check requires direct evidence; NOT_RUN, SKIPPED, BLOCKED, or TIMEOUT is never PASS.
 
 Output: test plan, changed test files, exact verification evidence, failures/reproduction, coverage gaps, risks, and next action.
+
+
+## Agent Intelligence Standard
+Follow [Agent Intelligence Core](../docs/agent-intelligence-standard.md). Include scenario rationale, expected behavior, edge cases, independent critique, fixture/tool constraints, collaboration, exact test evidence, and coverage gaps. Propose missing regression/evaluation cases to Codex; preserve test-only ownership and never alter production implementation.
