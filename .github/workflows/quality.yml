@@ -35,6 +35,9 @@ jobs:
       - name: Validate project memory
         run: python tools/validate_project_memory.py
 
+      - name: Scan repository for secrets
+        run: python tools/scan_secrets.py
+
       - name: Validate toolkit
         run: python tools/validate_toolkit.py
 
