@@ -51,7 +51,7 @@ class SecretScannerTests(unittest.TestCase):
             (root / "image.bin").write_bytes(b"\x00AKIA1234567890ABCDEF")
             git_dir = root / ".git"
             git_dir.mkdir()
-            (git_dir / "config").write_text("AKIA1234567890ABCDEF", encoding="utf-8")
+            (git_dir / "config").write_text("AKIA" + "1234567890ABCDEF", encoding="utf-8")
 
             self.assertEqual(scan_secrets.scan_repository(root), [])
 
