@@ -63,7 +63,7 @@ class RepositoryIntegrityTests(unittest.TestCase):
         mirror = self.root / "skills" / skill_name
         native.mkdir(parents=True)
         mirror.mkdir(parents=True)
-        empty_body = f"---\\nname: {skill_name}\\ndescription: Test skill\\n---\\n   \\n"
+        empty_body = f"---\nname: {skill_name}\ndescription: Test skill\n---\n   \n"
         (native / "SKILL.md").write_text(empty_body, encoding="utf-8")
         (mirror / "SKILL.md").write_text(empty_body, encoding="utf-8")
 
