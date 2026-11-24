@@ -10,7 +10,7 @@
 > This document is the project's central index and operating contract. Detailed procedures, source files, schemas, test cases, and reports remain authoritative for their specific subjects. Do not copy all technical detail into this file; link to the source of truth.
 
 **Document status:** ACTIVE — canonical project checkpoint and operating manual  
-**Last checkpoint/source-audit consolidation:** 2026-11-24 (Phase 11 repository-side audit and Package 4 checkpoint; see sections 71–79)  
+**Last checkpoint/source-audit consolidation:** 2026-11-24 (Phase 11 Packages 1–5 merged; repository file classification and graph architecture audit)  
 **Last full source-audit baseline:** `b8aafe780a181f0f49acaed3dc23791ed9146d7c`  
 **CI policy:** Always inspect the latest GitHub Actions run for the current HEAD; a prior commit's PASS does not automatically apply to a later commit.  
 **Repository:** `kuuriyawep/-gymsync-codex-toolkit`  
@@ -23,13 +23,17 @@
 
 ## QUICK START / CURRENT STATE
 
-- **Current active work:** Phase 11, Package 5 — CI Evidence (P2-03); implementation is in progress on `phase-11-package-5-ci-evidence`.
-- **Branch base:** `main` at `fd1915eb2a0ff41ba5a45a0064369157f81135fe` (Package 4 squash merge). The `main` branch is not being edited by Package 5.
-- **Completed and merged:** Packages 1–4 — Evaluation Trust, Repository Integrity, Security Hygiene, and Knowledge & Documentation. See PRs #9–#12 and their merge commits in repository history.
-- **Package 5 scope only:** retain each deterministic CI evaluation JSON record and Markdown report as a uniquely named GitHub Actions artifact; document the retrieval and retention behavior. Do not broaden scope.
-- **Hard boundaries:** toolkit repository only; no GymSync changes; no installs or external integrations; no merge to `main` without explicit user approval.
-- **Verification status:** PR-head commit `3ae51733b52ae7ee5cf6508a7431072e27da6626` passed GitHub Actions run `45397915775`; all 12 substantive steps passed and artifact `toolkit-evaluation-45397915775-1` was confirmed present (30-day retention). This is deterministic repository evidence only, not Codex runtime acceptance.
-- **Next action:** finish Package 5, verify its PR-head artifact, then request review/merge approval.
+- **Current active work:** Repository File Classification, Canonical Source Audit, and Universal Repository Intelligence architecture documentation. Work is being prepared on branch `repo-intelligence-file-architecture`; do not treat it as merged until its PR is verified on `main`.
+- **Current main baseline:** `526df0235e18b2c1701cfa4eae525ac0d9c21bae` (Phase 11 Package 5 merge).
+- **Completed and merged:** Phase 11 Packages 1–5 — Evaluation Trust, Repository Integrity, Security Hygiene, Knowledge & Documentation, and CI Evidence. PRs #9–#13 are merged.
+- **Repository inventory:** 225 files, approximately 1.02 MB at the audit baseline. A focused dependency/canonical-source audit was completed. The new classification, historical index, and graph architecture documents define targeted loading; no files have been moved or deleted.
+- **Canonical-source rules:** `.agents/skills/` is canonical and `skills/` is its maintained portable mirror. `.codex/agents/*.toml` and `agents/*.md` serve different consumers. `workflows/registry.md` routes to authoritative workflow procedures. Do not remove these purposeful pairs.
+- **Graphify status:** Reviewed candidate only; not installed and not runtime-verified. The approved direction is a universal provider-neutral intelligence layer with a separate graph/configuration inside each target repository. GymSync is the first intended target, but no GymSync graph/configuration or source changes are included in this toolkit task.
+- **Outstanding branch review:** Phase 11 package branches are historical branches whose changes were merged by PRs #9–#13. Older feature branches are stale/diverged; their relevant Phase 6/skill-quality artifacts were checked and are present on `main`. `toolkit-full-test` contains an isolated verification workflow only; it is not a missing toolkit runtime feature and should remain separate unless a later CI decision adopts it.
+- **Hard boundaries:** toolkit repository only; no GymSync changes; no installs, Graphify runtime, external integrations, or deployment.
+- **Verification status:** deterministic repository CI is available; Codex behavioral/runtime acceptance remains **NOT_RUN / BLOCKED** until a trusted Codex session is available. Static CI does not prove model behavior.
+- **Navigation policy:** read this Quick Start section and `AGENTS.md` at session start. Use `docs/repository-file-classification.md` for load levels, `docs/repository-intelligence-architecture.md` for graph design, and `docs/historical-archive-index.md` for phase history. Do not read the full 117 KB state/history file for routine tasks.
+- **Next action:** finish the canonical-source/branch review, run exact-head CI for the documentation change, then merge its PR and verify `main`.
 
 ---
 
