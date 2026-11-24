@@ -4,6 +4,10 @@
 
 This document explains how the toolkit's existing components fit together. It is an integration guide, not a new runtime or orchestration framework. Codex remains the primary coordinator and execution host.
 
+**Canonical target architecture:** [GymSync Intelligent Agent Ecosystem](intelligent-agent-ecosystem-architecture.md). That approved specification defines the nine-capability Agent Intelligence Standard, event-driven lifecycle, proposal engine, collaboration, WhatsApp gateway, memory, specialist tools, risk governance, evaluation, and seven gated workstreams. This file maps the existing repository components into that architecture; it does not establish a competing design.
+
+**Active roadmap:** WS1–WS7 in the canonical specification. Phase 11 documents are retained as historical audit and runtime-acceptance records, not as the primary implementation roadmap. The user currently has no Codex runtime for live behavioral testing, so distinguish repository-side static evidence from runtime acceptance.
+
 For a worked illustrative lifecycle, see the [end-to-end example](end-to-end-example.md).
 
 ## Component architecture
