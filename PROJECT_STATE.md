@@ -24,7 +24,7 @@
 ## QUICK START / CURRENT STATE
 
 - **Primary roadmap:** The seven gated workstreams in `docs/intelligent-agent-ecosystem-architecture.md`. This is the approved target architecture and supersedes the earlier Phase 11 readiness audit as the active development roadmap.
-- **Current active workstream:** WS1 — Agent Intelligence Core. First task: map all six existing agent definitions/briefs to the nine-capability Agent Intelligence Standard and identify precise contract/skill extensions without creating duplicate infrastructure.
+- **Current active workstream:** WS1 — Agent Intelligence Core. Role mapping is complete; current task is reconciling existing handoff/result schemas and evaluation coverage with the common report contract, without creating duplicate infrastructure.
 - **Architecture decisions:** HIGH event-driven autonomy; bidirectional WhatsApp; proactive proposals triaged by Codex; Codex remains central coordinator; user retains final authority. Full constraints and protocols are in the canonical architecture document.
 - **Existing toolkit inventory:** 13 native skills and 13 portable mirrors; six native agents and six role briefs; 55 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. These counts describe repository artifacts, not completed behavioral evaluations.
 - **Preservation rule:** Extend existing workflows, handoff/task-graph schemas, tool registry, memory templates, repository-intelligence layer, and evaluation runner. Do not create parallel routers, task engines, handoff contracts, memory stores, or evaluation systems.
@@ -33,8 +33,9 @@
 - **Integration status:** WhatsApp/Twilio/n8n, Graphify runtime, persistent background execution, and live permission enforcement are not verified or installed. Do not start the n8n trial, install tools, or integrate external services without separate explicit approval.
 - **Phase 11 status:** Historical repository-side audit/closeout material remains available. Runtime acceptance remains BLOCKED / NOT_RUN; Phase 11 is not a substitute for the seven-workstream roadmap.
 - **Hard boundary:** Toolkit repository only. No GymSync application, database, production, deployment, or external-service changes.
-- **WS1 progress:** canonical architecture and role mapping are recorded in `docs/intelligent-agent-ecosystem-architecture.md` and `docs/agent-intelligence-standard.md`. All six native agent definitions and role briefs were inspected and mapped; this is design/static review, not runtime validation.
-- **Immediate next action:** align the six existing agent definitions and role briefs to the common intelligence/reporting contract with minimal, role-specific edits; then run available static checks and record exact evidence.
+- **WS1 progress:** canonical architecture and role mapping are recorded in `docs/intelligent-agent-ecosystem-architecture.md` and `docs/agent-intelligence-standard.md`. All six native agent TOML definitions and six Markdown role briefs now reference the common intelligence contract and role-specific reporting/proposal behavior. Existing read/write and approval boundaries are preserved. This is repository-side instruction alignment, not runtime validation.
+- **WS1 remaining gate:** reconcile existing handoff/result schemas and evaluation cases against the common agent report; verify portable mirrors and quality checks. Runtime behavior remains BLOCKED / NOT_RUN without a Codex runtime.
+- **Immediate next action:** inspect and align existing handoff/result schemas with the common report fields, then run the repository quality workflow.
 
 
 # PART I — WHY THIS PROJECT EXISTS
