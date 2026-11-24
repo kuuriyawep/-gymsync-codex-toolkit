@@ -29,7 +29,7 @@
 - **Package 4 scope only:** reconcile the project checkpoint and startup retrieval path; refresh evaluation matrix snapshot metadata; correct Phase 11 report contradictions; label the Phase 10 inventory as historical. Do not broaden scope.
 - **Hard boundaries:** toolkit repository only; no GymSync changes; no installs or external integrations; no merge to `main` without explicit user approval.
 - **Verification status:** Package 4 tests and CI have not yet been run. Do not infer PASS from earlier package CI.
-- **Next action:** finish the scoped checkpoint/report reconciliation, inspect the diff, run the repository quality workflow, then request review/merge approval.
+- **Next action:** inspect the complete five-file diff for scope and factual consistency, open a PR to trigger the quality workflow, then review CI evidence before requesting merge approval.
 
 ---
 
@@ -270,6 +270,7 @@ The earlier architecture snapshot contained five native TOML definitions. The la
 | `implementer` | Implement explicitly user-approved scope | No scope expansion or unapproved side effects |
 | `reviewer` | Independent read-only code review | No implementation |
 | `security_auditor` | Defensive read-only security assessment | No exploitation or destructive action |
+| `test_engineer` | Owns approved test files, fixtures, evaluation cases, and safe test execution | No production implementation edits |
 | `test_engineer` | Owns approved test files, fixtures, evaluation cases, and safe test execution | No production implementation edits |
 
 These are the executable project-scoped Codex agent definitions. Actual availability and execution depend on the Codex client/runtime and trusted project configuration.
@@ -1958,7 +1959,7 @@ Do not begin 11.2 until the 11.1 exit gate is satisfied or the user explicitly a
 - `evals/skill-case-matrix.md`: snapshot target updated to the verified Package 4 base; comparison basis documented.
 - `docs/phase-10-evaluation-reliability.md`: inventory section explicitly marked historical; later counts are called out.
 - `PROJECT_STATE.md`: Quick Start and historical-state reconciliation are updated.
-- `docs/phase-11-final-audit-report.md`: baseline findings now have explicit later dispositions in section 12.
+- `docs/phase-11-final-audit-report.md`: baseline findings now have explicit later dispositions in section 12; verification remains pending.
 
 **Verification:** no Package 4 tests or CI have run yet. Earlier Package 1–3 CI results do not certify this branch.
 
