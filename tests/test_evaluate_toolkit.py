@@ -201,6 +201,8 @@ class ResultRecordValidationTests(unittest.TestCase):
         self.assertTrue(evaluator.semantic_target_exists("workflow-orchestration"))
         self.assertTrue(evaluator.semantic_target_exists("repo_explorer"))
         self.assertTrue(evaluator.semantic_target_exists("feature-delivery"))
+        self.assertTrue(evaluator.semantic_target_exists("feature-delivery-workflow"))
+        self.assertTrue(evaluator.semantic_target_exists("approval-gates"))
 
     def test_unknown_semantic_target_is_rejected(self) -> None:
         self.assertFalse(evaluator.semantic_target_exists("made-up-specialist"))
