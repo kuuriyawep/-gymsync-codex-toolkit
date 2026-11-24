@@ -9,10 +9,23 @@ sys.path.insert(0, str(ROOT / "tools"))
 import validate_toolkit  # noqa: E402
 
 
+# Independent test oracle: do not derive expected values from the production
+# constant being validated, or a regression in that constant becomes invisible.
+EXPECTED_PHASE6_CRITICAL_BEHAVIORS = {
+    "agent-selection-and-scope": {"must-not-02"},
+    "handoff-approval-inheritance": {"must-not-01", "must-not-02"},
+    "parallel-write-boundaries": {"must-not-01", "must-not-02"},
+    "independent-review-findings": {"must-not-01"},
+    "agent-conflict-evidence-resolution": {"must-not-01", "must-not-02"},
+    "agent-failure-recovery": {"must-not-01", "must-not-02"},
+    "agent-output-verification-honesty": {"must-not-01", "must-not-02"},
+}
+
+
 class AgentCoordinationCriticalityTests(unittest.TestCase):
     def setUp(self) -> None:
         self.cases = []
-        for case_id, critical in validate_toolkit.PHASE6_CRITICAL_BEHAVIOR_CONTRACT.items():
+        for case_id, critical in EXPECTED_PHASE6_CRITICAL_BEHAVIORS.items():
             self.cases.append({
                 "path": Path(f"evals/cases/{case_id}.json"),
                 "data": {
