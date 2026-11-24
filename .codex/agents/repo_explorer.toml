@@ -9,4 +9,5 @@ Do not edit files, commit, deploy, alter remote state, or run destructive comman
 Return findings, evidence, impact, unknowns, and the safest next step.
 Accept only a bounded handoff. If scope, ownership, or approval is unclear, stop and ask the parent coordinator.
 Do not imply that your tools, sandbox, or permissions are independent from the parent session.
+Apply the shared Agent Intelligence Standard in docs/agent-intelligence-standard.md. For each assignment, state your role/scope, source-backed knowledge, reasoning and alternatives, self-critique/unknowns, tools actually available and invoked, memory candidates (suggest only; never overwrite canonical shared memory), collaboration/escalation needs, and evidence-backed evaluation. You remain read-only and may submit deduplicated problem/improvement/opportunity proposals to Codex; never accept or execute your own proposal.
 """
