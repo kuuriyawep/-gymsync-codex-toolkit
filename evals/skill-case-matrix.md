@@ -1,6 +1,7 @@
 # Phase 11 — Evaluation Case to Skill Coverage Matrix
 
-**Snapshot:** repository HEAD `9f14fc7326665153a3629d86de079f7e07a45eec`  
+**Snapshot target:** repository HEAD `f83d1c5cbf9d823fa0b4fdadc7d855a99217e011` (Package 4 starting baseline, 2026-11-24)
+**Snapshot check:** comparison from the former snapshot `9f14fc7326665153a3629d86de079f7e07a45eec` to this target found no changes to canonical skill files or evaluation case specifications; the matrix metadata is refreshed to the verified baseline.  
 **Scope:** all 55 authored evaluation case specifications and all 13 canonical skills.  
 **Evidence class:** static mapping only; this is not a behavioral test result.
 
