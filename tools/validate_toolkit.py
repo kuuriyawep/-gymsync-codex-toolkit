@@ -177,7 +177,7 @@ def validate_workflows() -> None:
         if workflow_heading not in content:
             fail(f"{path.relative_to(ROOT)}: missing section '## Workflow' (or '## Audit workflow')")
         else:
-            workflow_body = content.split(workflow_heading, 1)[1].split("\\n## ", 1)[0].strip()
+            workflow_body = content.split(workflow_heading, 1)[1].split("\n## ", 1)[0].strip()
             if not workflow_body:
                 fail(f"{path.relative_to(ROOT)}: workflow section must contain executable steps")
         for heading in required:
