@@ -28,7 +28,7 @@
 - **Completed and merged:** Packages 1–4 — Evaluation Trust, Repository Integrity, Security Hygiene, and Knowledge & Documentation. See PRs #9–#12 and their merge commits in repository history.
 - **Package 5 scope only:** retain each deterministic CI evaluation JSON record and Markdown report as a uniquely named GitHub Actions artifact; document the retrieval and retention behavior. Do not broaden scope.
 - **Hard boundaries:** toolkit repository only; no GymSync changes; no installs or external integrations; no merge to `main` without explicit user approval.
-- **Verification status:** implementation is pending exact-head CI and artifact-presence verification. Existing CI PASS results are tied to their respective earlier revisions and do not prove Package 5.
+- **Verification status:** PR-head commit `3ae51733b52ae7ee5cf6508a7431072e27da6626` passed GitHub Actions run `45397915775`; all 12 substantive steps passed and artifact `toolkit-evaluation-45397915775-1` was confirmed present (30-day retention). This is deterministic repository evidence only, not Codex runtime acceptance.
 - **Next action:** finish Package 5, verify its PR-head artifact, then request review/merge approval.
 
 ---
