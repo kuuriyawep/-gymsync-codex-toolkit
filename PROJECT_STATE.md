@@ -28,8 +28,8 @@
 - **Completed and merged:** Package 1 — Evaluation Trust; Package 2 — Repository Integrity; Package 3 — Security Hygiene. See PRs #9–#11 and their merged commits in the repository history for Package 1–3 completion evidence.
 - **Package 4 scope only:** reconcile the project checkpoint and startup retrieval path; refresh evaluation matrix snapshot metadata; correct Phase 11 report contradictions; label the Phase 10 inventory as historical. Do not broaden scope.
 - **Hard boundaries:** toolkit repository only; no GymSync changes; no installs or external integrations; no merge to `main` without explicit user approval.
-- **Verification status:** Package 4 tests and CI have not yet been run. Do not infer PASS from earlier package CI.
-- **Next action:** inspect the complete five-file diff for scope and factual consistency, open a PR to trigger the quality workflow, then review CI evidence before requesting merge approval.
+- **Verification status:** Package 4 quality workflow passed on PR head `a0b233d8359c47828ca86643a41337a27d0b010e` (run `45386287145`); deterministic CI only. A final checkpoint-only update is being added and must receive its own CI run.
+- **Next action:** verify CI on the final PR head, then review PR #12 and explicitly approve or decline merge.
 
 ---
 
@@ -1960,8 +1960,8 @@ Do not begin 11.2 until the 11.1 exit gate is satisfied or the user explicitly a
 - `PROJECT_STATE.md`: Quick Start and historical-state reconciliation are updated.
 - `docs/phase-11-final-audit-report.md`: baseline findings now have explicit later dispositions in section 12; verification remains pending.
 
-**Verification:** no Package 4 tests or CI have run yet. Earlier Package 1–3 CI results do not certify this branch.
+**Verification:** GitHub Actions run `45386287145` completed SUCCESS on PR-head commit `a0b233d8359c47828ca86643a41337a27d0b010e`; the unit-test and all other quality-gate steps passed. This is deterministic repository CI, not Codex runtime acceptance. The final checkpoint update requires a new exact-head run.
 
 **Safety and approval:** no GymSync files, application code, database, or production data are in scope. No installation or external integration is authorized. Do not merge this branch to `main` until the user explicitly approves after reviewing the final diff and CI evidence.
 
-**Single next action:** inspect the complete Package 4 diff for scope and factual consistency, then run the exact-branch quality gates.
+**Single next action:** verify the quality workflow on the final PR head, then wait for the user's merge decision.
