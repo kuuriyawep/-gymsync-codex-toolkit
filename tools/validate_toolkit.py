@@ -22,6 +22,34 @@ import validate_skill_scores as skill_score_validator  # noqa: E402
 ERRORS: list[str] = []
 WARNINGS: list[str] = []
 
+# Canonical assets that must exist even if both the native and portable copies
+# are accidentally deleted. Keep this manifest aligned with workflows/registry.md.
+REQUIRED_SKILLS = (
+    "change-impact-analysis",
+    "clear-technical-communication",
+    "code-review",
+    "documentation-and-decisions",
+    "implementation-planning",
+    "project-intelligence",
+    "requirements-clarification",
+    "risk-aware-tdd",
+    "security-review",
+    "skill-authoring-and-evaluation",
+    "systematic-debugging",
+    "verification-gate",
+    "workflow-orchestration",
+)
+
+REQUIRED_WORKFLOW_FILES = (
+    "registry.md",
+    "bug-fix.md",
+    "feature-delivery.md",
+    "database-backend-change.md",
+    "security-audit.md",
+    "technical-research.md",
+    "release-readiness.md",
+)
+
 
 def fail(message: str) -> None:
     ERRORS.append(message)
@@ -64,6 +92,11 @@ def validate_skills() -> None:
         return
     native_names = {p.name for p in native_root.iterdir() if p.is_dir()}
     mirror_names = {p.name for p in mirror_root.iterdir() if p.is_dir()} if mirror_root.is_dir() else set()
+    for name in REQUIRED_SKILLS:
+        if name not in native_names:
+            fail(f".agents/skills/{name}/SKILL.md: required canonical skill is missing")
+        if name not in mirror_names:
+            fail(f"skills/{name}/SKILL.md: required portable skill mirror is missing")
     for name in sorted(native_names - mirror_names):
         fail(f"skills/{name} portable mirror is missing")
     for name in sorted(mirror_names - native_names):
@@ -74,7 +107,9 @@ def validate_skills() -> None:
         if not native.is_file():
             fail(f"{native.relative_to(ROOT)} is missing")
             continue
-        _, metadata = parse_frontmatter(native)
+        body, metadata = parse_frontmatter(native)
+        if not body.strip():
+            fail(f"{native.relative_to(ROOT)}: skill body must be non-empty")
         if not metadata.get("name"):
             fail(f"{native.relative_to(ROOT)}: metadata name is required")
         if not metadata.get("description"):
@@ -128,11 +163,23 @@ def validate_agents() -> None:
 
 def validate_workflows() -> None:
     directory = ROOT / "workflows"
+    if not directory.is_dir():
+        fail("workflows directory is missing")
+        return
+    for filename in REQUIRED_WORKFLOW_FILES:
+        if not (directory / filename).is_file():
+            fail(f"workflows/{filename}: required workflow asset is missing")
+
     required = ("## Stop conditions", "## Required output")
     for path in sorted(directory.glob("*.md")):
         content = read_text(path)
-        if "## Workflow" not in content and "## Audit workflow" not in content:
+        workflow_heading = "## Workflow" if "## Workflow" in content else "## Audit workflow"
+        if workflow_heading not in content:
             fail(f"{path.relative_to(ROOT)}: missing section '## Workflow' (or '## Audit workflow')")
+        else:
+            workflow_body = content.split(workflow_heading, 1)[1].split("\\n## ", 1)[0].strip()
+            if not workflow_body:
+                fail(f"{path.relative_to(ROOT)}: workflow section must contain executable steps")
         for heading in required:
             if heading not in content:
                 fail(f"{path.relative_to(ROOT)}: missing section '{heading}'")
