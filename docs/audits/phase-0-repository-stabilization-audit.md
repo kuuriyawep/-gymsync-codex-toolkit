@@ -219,3 +219,25 @@ These samples support a superseded classification, but do not prove every file o
 | Phase 0 closure | NOT READY |
 
 **No repository mutation was performed during this follow-up.** This addendum records the corrected evidence and explicitly prevents the earlier preliminary branch classifications from being treated as deletion authorization.
+
+
+## 11. Branch-by-branch deep review — first branch
+
+Reviewed first: `feat/phase-6-agent-validation-v1`.
+
+### Compare evidence
+- Compare against `main`: status `diverged`.
+- Ahead: 12 commits; behind: 323 commits.
+- Compare lists 11 changed paths: README, agent-validation documentation, eval README, seven Phase 6 evaluation cases, and the agent-coordination rubric.
+- The seven case files and two documentation files exist on both refs, but their Git blob SHAs differ. They are not byte-identical.
+
+### Content reconciliation
+- `main/docs/agent-validation.md` is more developed: it explicitly enumerates the seven Phase 6 case files and documents a later Phase 8 test-engineer scope/ownership scenario. The branch version has only the generic case glob statement.
+- `main/evals/rubrics/agent-coordination.md` includes additional explicit critical violations and grading cautions absent from the branch version.
+- The sampled `agent-selection-and-scope.json` differs in behavior identifiers and prohibited-behavior entries; the main version is not a byte-for-byte copy of the branch version.
+- The main versions should remain authoritative. Do not merge the branch wholesale or overwrite main files with its older versions.
+
+### Disposition
+Classify as **superseded historical branch — preserve pending final archive/deletion review**. This branch is not needed as an implementation source for WS1 based on the reviewed content. Its 12 unique commits and differing case/rubric variants remain historical evidence and must not be discarded until the complete branch-only commit/file inventory is checked.
+
+No branch deletion, PR action, main change, or repository setting change was performed.
