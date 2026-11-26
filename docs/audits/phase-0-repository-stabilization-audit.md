@@ -241,3 +241,25 @@ Reviewed first: `feat/phase-6-agent-validation-v1`.
 Classify as **superseded historical branch — preserve pending final archive/deletion review**. This branch is not needed as an implementation source for WS1 based on the reviewed content. Its 12 unique commits and differing case/rubric variants remain historical evidence and must not be discarded until the complete branch-only commit/file inventory is checked.
 
 No branch deletion, PR action, main change, or repository setting change was performed.
+
+
+## 12. Branch-by-branch deep review — second branch
+
+Reviewed: `feat/workflow-engine-v1`.
+
+### Compare evidence
+- Compare against `main`: status `diverged`.
+- Ahead: 12 commits; behind: 426 commits.
+- Compare reports 11 changed paths: workflow-orchestration native/portable skill, AGENTS.md, README, acceptance checks, three routing/approval evaluation cases, workflow brief template, toolkit validator, and workflow registry.
+
+### Content reconciliation
+- The workflow-orchestration skill exists in both refs, but the main version is a later, substantially revised 64-line contract; the branch version is an older 179-line procedure. Main explicitly references the current workflows and separates routing from detailed procedures.
+- The workflow registry exists in both refs. Main is more developed (163 lines versus 120) and includes additional task categories, relevant skill/agent selection, and role boundaries.
+- The workflow brief template is nearly identical; main adds an evidence-reference field.
+- The sampled adaptive-routing evaluation case exists in both refs but the main version contains additional metadata/tags and more explicit evaluation structure.
+- The native and portable workflow skill files on the branch have the same older content hash; main's native and portable copies also share the same current content hash. Do not copy the branch version over main.
+
+### Disposition
+Classify as **superseded historical branch — preserve pending final archive/deletion review**. Main contains the evolved workflow-engine implementation. Do not merge the branch wholesale. Its distinct historical commits remain evidence until complete branch-only inventory and final retention decision.
+
+No branch deletion, PR action, main change, or repository setting change was performed.
