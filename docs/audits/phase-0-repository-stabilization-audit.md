@@ -136,3 +136,86 @@ Canonical operating references include `AGENTS.md`, `PROJECT_STATE.md`, `workflo
 
 ---
 **Audit artifact purpose:** establish a traceable repository-stabilization checkpoint without changing main or prematurely advancing to Phase 1.
+
+
+## 10. Follow-up verification — 2026-11-26
+
+This section supersedes any earlier wording in this report that treated every branch associated with a merged/closed PR as safely deletable. A fresh GitHub compare was run for all 14 non-main branches against the current `main` ref. File-level blob comparisons were then performed for representative changed files.
+
+### 10.1 PR #8 workflow comparison — verified
+
+PR #8 changes only `.github/workflows/full-toolkit-verification.yml` (84 added lines). Its checks add:
+- Python compileall for `tools` and `tests`.
+- Explicit tool-registry validation.
+- Explicit agent-contract validation.
+- A repository inventory summary.
+
+The current `.github/workflows/quality.yml` on main already performs:
+- Unit tests and native/portable skill parity.
+- Project-memory validation.
+- Secret scanning.
+- Toolkit and evaluation-case validation.
+- Deterministic evaluation generation, generated-result validation, and artifact upload.
+
+Important PR #8 gaps:
+- Its triggers are push to `toolkit-full-test` and `workflow_dispatch`; it does not run on `pull_request` targeting `main`.
+- It does not include the main workflow's secret scan or project-memory check as explicit steps.
+- It does not upload the deterministic evaluation record as a CI artifact.
+- Its head is 106 commits behind main and the workflow was authored against that older branch state.
+
+**Recommendation:** do not merge PR #8 as-is. Preserve its useful additional checks as candidates for integration into the existing `quality.yml`, after verifying whether `validate_toolkit.py` already subsumes the explicit registry/agent-contract validators. Keep PR #8 open pending the user's disposition; do not merge or close it in this audit.
+
+### 10.2 Branch compare results
+
+Fresh compare results against main:
+
+| Branch | Ahead | Behind | Compare status | Initial disposition |
+|---|---:|---:|---|---|
+| `feat/advanced-evaluation-system-v1` | 0 | 357 | behind | Stale candidate; no unique commits ahead |
+| `feat/graphify-adapter-foundation-v1` | 0 | 26 | behind | Stale candidate; no unique commits ahead |
+| `feat/phase-6-agent-validation-v1` | 12 | 323 | diverged | Historical/superseded; verify and preserve before deletion |
+| `feat/project-intelligence-memory-v1-verify` | 0 | 323 | behind | Stale candidate; no unique commits ahead |
+| `feat/project-intelligence-memory-v1` | 0 | 323 | behind | Stale candidate; no unique commits ahead |
+| `feat/workflow-engine-v1` | 12 | 426 | diverged | Historical/superseded; verify and preserve before deletion |
+| `phase-6-skill-quality-remediation` | 21 | 233 | diverged | Historical/superseded; representative blobs match main |
+| `phase-11-package-1-evaluation-trust` | 0 | 41 | behind | Stale candidate; no unique commits ahead |
+| `phase-11-package-2-repository-integrity` | 0 | 35 | behind | Stale candidate; no unique commits ahead |
+| `phase-11-package-3-security-hygiene` | 0 | 30 | behind | Stale candidate; no unique commits ahead |
+| `phase-11-package-4-knowledge-documentation` | 14 | 29 | diverged | Historical/superseded; contains obsolete project-state claims |
+| `phase-11-package-5-ci-evidence` | 6 | 28 | diverged | Historical/superseded; representative quality workflow blob matches main |
+| `repo-intelligence-file-architecture` | 6 | 27 | diverged | Historical/superseded; representative architecture file blob matches main |
+| `toolkit-full-test` | 1 | 106 | diverged | PR #8 head; retain pending PR disposition |
+
+### 10.3 Representative content reconciliation
+
+- The Phase 6 agent-validation branch contains older variants of `docs/agent-validation.md`, `evals/rubrics/agent-coordination.md`, and agent evaluation cases. Main has since expanded/strengthened the documentation and rubric. The branch's older files should not replace main.
+- The workflow-engine branch contains a substantially older workflow-orchestration skill and registry. Main has since evolved these files and includes additional task routing and role boundaries. Treat the branch as superseded, not as a source to merge wholesale.
+- The Phase 6 skill-quality branch's sampled evaluation case and rubric schema blobs match main exactly, despite historical ahead commits.
+- The Phase 11 Package 4 branch's `PROJECT_STATE.md` is obsolete: it still describes the repository as public and Package 4 as active, while main records private visibility and the later approved Intelligent Agent Ecosystem roadmap. Do not merge this branch.
+- The Phase 11 Package 5 branch's sampled `quality.yml` blob matches main exactly.
+- The repository-intelligence branch's sampled architecture document blob matches main exactly.
+
+These samples support a superseded classification, but do not prove every file on each branch is identical to main. A final deletion list must account for all unique branch-only content and preserve any useful historical evidence.
+
+### 10.4 Revised cleanup recommendation
+
+1. **Do not delete any branch yet.** The six branches with zero commits ahead are the strongest stale candidates, but deletion still requires approval.
+2. For diverged branches, retain the branch or create an archival reference until all branch-only files and meaningful historical changes have been reviewed.
+3. Do not merge any historical branch wholesale into main.
+4. Keep PR #8 open until the user chooses whether to integrate its additive checks into the current quality workflow or close it after preserving the useful ideas.
+5. Do not enable branch protection without an explicit settings-change decision. Prepare the ruleset proposal separately.
+
+### 10.5 Corrected Phase 0 status
+
+| Gate | Updated status |
+|---|---|
+| Repository identity, privacy, and main baseline | PASS — as previously verified; refresh exact HEAD/CI before any write |
+| PR #8 file-level workflow comparison | PASS — recommendation is no merge as-is |
+| Branch comparison for all 14 non-main branches | PASS — ahead/behind and changed-file stats captured |
+| Representative blob/content reconciliation | PARTIAL — sampled files reviewed; not every branch-only file |
+| Final keep/archive/delete proposal | PENDING |
+| User decision on PR #8 | PENDING |
+| Branch protection proposal and decision | PENDING |
+| Phase 0 closure | NOT READY |
+
+**No repository mutation was performed during this follow-up.** This addendum records the corrected evidence and explicitly prevents the earlier preliminary branch classifications from being treated as deletion authorization.
