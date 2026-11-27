@@ -99,11 +99,13 @@ Fail closed for unknown workers, invalid signatures/identity, expired events, co
 
 ## 8. Acceptance and verification boundary
 
-Repository-side acceptance requires:
-- JSON schemas parse and enforce required identity, expiry, scope, and lease fields.
-- Tests cover valid and invalid activation envelopes, duplicate/replay semantics, lease expiry/fencing, approval separation, and safe recovery rules.
-- Documentation explicitly distinguishes adapter contracts from live services.
+Repository-side contract acceptance requires:
+- JSON schemas parse and define required identity, expiry, scope, and lease fields.
+- Contract tests assert schema structure, bounded target/lease states, fencing-token and attempt constraints, and explicit governance/non-runtime statements.
+- Documentation distinguishes adapter contracts from live services.
 - Existing ledger behavior and schemas remain backward compatible.
+
+The following require a future executable runtime and are not proven by these schema/contract tests: validation of real event signatures and subscriptions, duplicate/replay handling, distributed lease acquisition/renewal/fencing, approval enforcement at tool invocation, and recovery from real worker crashes.
 
 Not demonstrated by repository tests:
 - Persistent monitoring or scheduled activation.
