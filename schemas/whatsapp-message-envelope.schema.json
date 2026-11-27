@@ -1,0 +1,300 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gymsync-codex-toolkit:schema:whatsapp-message-envelope",
+  "title": "WhatsApp Gateway Message Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "message_id",
+    "provider",
+    "provider_message_id",
+    "message_class",
+    "direction",
+    "sender",
+    "recipient",
+    "conversation_id",
+    "received_at",
+    "expires_at",
+    "idempotency_key",
+    "correlation_id",
+    "payload"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "message_id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 160
+    },
+    "provider": {
+      "enum": [
+        "twilio_whatsapp",
+        "other_approved_provider"
+      ]
+    },
+    "provider_message_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "message_class": {
+      "enum": [
+        "user_command",
+        "status_report",
+        "incident_alert",
+        "approval_request",
+        "approval_response",
+        "media_artifact"
+      ]
+    },
+    "direction": {
+      "enum": [
+        "inbound",
+        "outbound"
+      ]
+    },
+    "sender": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity_type",
+        "identity_ref"
+      ],
+      "properties": {
+        "identity_type": {
+          "enum": [
+            "verified_user",
+            "codex",
+            "agent",
+            "provider"
+          ]
+        },
+        "identity_ref": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 256
+        }
+      }
+    },
+    "recipient": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity_type",
+        "identity_ref"
+      ],
+      "properties": {
+        "identity_type": {
+          "enum": [
+            "verified_user",
+            "codex",
+            "agent",
+            "provider"
+          ]
+        },
+        "identity_ref": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 256
+        }
+      }
+    },
+    "conversation_id": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 256
+    },
+    "received_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 256
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 160
+    },
+    "text": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 12000
+    },
+    "payload": {
+      "type": "object"
+    },
+    "approval_request_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 160
+    },
+    "payload_digest": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "media": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "artifact_ref",
+          "content_type",
+          "size_bytes"
+        ],
+        "properties": {
+          "artifact_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "content_type": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 128
+          },
+          "size_bytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20971520
+          },
+          "sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "signature_reference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 512
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "message_class": {
+            "const": "approval_response"
+          }
+        },
+        "required": [
+          "message_class"
+        ]
+      },
+      "then": {
+        "properties": {
+          "direction": {
+            "const": "inbound"
+          },
+          "sender": {
+            "properties": {
+              "identity_type": {
+                "const": "verified_user"
+              }
+            }
+          },
+          "approval_request_id": {
+            "type": "string",
+            "minLength": 8
+          },
+          "payload_digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "approval_request_id",
+          "payload_digest"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "message_class": {
+            "const": "approval_request"
+          }
+        },
+        "required": [
+          "message_class"
+        ]
+      },
+      "then": {
+        "properties": {
+          "direction": {
+            "const": "outbound"
+          },
+          "sender": {
+            "properties": {
+              "identity_type": {
+                "const": "codex"
+              }
+            }
+          },
+          "approval_request_id": {
+            "type": "string",
+            "minLength": 8
+          },
+          "payload_digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "approval_request_id",
+          "payload_digest"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "message_class": {
+            "const": "user_command"
+          }
+        },
+        "required": [
+          "message_class"
+        ]
+      },
+      "then": {
+        "properties": {
+          "direction": {
+            "const": "inbound"
+          },
+          "sender": {
+            "properties": {
+              "identity_type": {
+                "const": "verified_user"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
