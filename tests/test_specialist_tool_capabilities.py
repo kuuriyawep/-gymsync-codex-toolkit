@@ -23,7 +23,14 @@ class SpecialistToolCapabilityTests(unittest.TestCase):
 
     def test_operations_require_scope_risk_effect_and_approval(self):
         operation = SCHEMA["properties"]["operations"]["items"]
-        self.assertTrue({"operation_id", "effect", "risk", "approval", "resource_scope", "idempotent"}.issubset(operation["required"]))
+        self.assertTrue({"operation_id", "effect", "risk", "approval", "resource_scope", "idempotent", "input_schema", "output_schema"}.issubset(operation["required"]))
+
+    def test_high_risk_operations_require_approval(self):
+        rules = SCHEMA["allOf"]
+        r4 = next(rule for rule in rules if rule["if"]["properties"].get("risk", {}).get("const") == "R4")
+        r3 = next(rule for rule in rules if rule["if"]["properties"].get("risk", {}).get("const") == "R3")
+        self.assertEqual(r4["then"]["properties"]["approval"]["const"], "user")
+        self.assertEqual(set(r3["then"]["properties"]["approval"]["enum"]), {"codex", "user"})
 
     def test_availability_cannot_be_claimed_without_matching_evidence_status(self):
         rules = SCHEMA["allOf"]
