@@ -24,7 +24,7 @@
 ## QUICK START / CURRENT STATE
 
 - **Primary roadmap:** The seven gated workstreams in `docs/intelligent-agent-ecosystem-architecture.md`. This is the approved target architecture and supersedes the earlier Phase 11 readiness audit as the active development roadmap.
-- **Current active workstream:** WS4 — Specialist Tool Intelligence. WS1 merged via PR #15; WS2 merged via PR #16 (`306698dbee9a1fed142dcdb7504a85a02479c6a8`); WS3 merged via PR #17 (`4490c47b57445d6d77d4bc2a809e33cba21e8203`). The independent QA/security audit may be supplied later and does not block starting or continuing work; assess and address its findings when received.
+- **Current active workstream:** WS5 — WhatsApp Communication. WS1 merged via PR #15; WS2 merged via PR #16 (`306698dbee9a1fed142dcdb7504a85a02479c6a8`); WS3 merged via PR #17 (`4490c47b57445d6d77d4bc2a809e33cba21e8203`); WS4 merged via PR #18 (merge commit `4b775c233cab28d145de3c919829ade10a5b37fd`). The independent QA/security audit may be supplied later and does not block starting or continuing work; assess and address its findings when received.
 - **Architecture decisions:** HIGH event-driven autonomy; bidirectional WhatsApp; proactive proposals triaged by Codex; Codex remains central coordinator; user retains final authority. Full constraints and protocols are in the canonical architecture document.
 - **Existing toolkit inventory:** 13 native skills and 13 portable mirrors (all content hashes match); six native agents and six role briefs; 62 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. These counts describe repository artifacts, not completed behavioral evaluations.
 - **Preservation rule:** Extend existing workflows, handoff/task-graph schemas, tool registry, memory templates, repository-intelligence layer, and evaluation runner. Do not create parallel routers, task engines, handoff contracts, memory stores, or evaluation systems.
@@ -35,9 +35,22 @@
 - **Hard boundary:** Toolkit repository only. No GymSync application, database, production, deployment, or external-service changes.
 - **WS1 progress:** canonical architecture and role mapping are recorded in `docs/intelligent-agent-ecosystem-architecture.md` and `docs/agent-intelligence-standard.md`. All six native agent TOML definitions and six Markdown role briefs now reference the common intelligence contract and role-specific reporting/proposal behavior. Existing read/write and approval boundaries are preserved. This is repository-side instruction alignment, not runtime validation.
 - **WS1 remaining gate:** confirm expanded and legacy result payloads both validate, review the complete PR diff, and verify exact-head CI. Runtime behavior remains BLOCKED / NOT_RUN without a Codex runtime.
-- **Immediate next action:** complete WS4 capability/tool contracts, tests, checkpoint update, exact-head CI, and independent review. Do not merge without explicit user approval. Audit findings supplied later must be assessed and addressed.
+- **Immediate next action:** complete WS5 WhatsApp gateway contracts, security tests, checkpoint update, exact-head CI, and independent review. Do not connect external services or merge without explicit user approval. Audit findings supplied later must be assessed and addressed.
 
 
+
+## WS4 merge and WS5 start checkpoint — 2026-11-28
+
+- Verified GitHub main HEAD `4b775c233cab28d145de3c919829ade10a5b37fd` is merge commit for PR #18 (WS4 Specialist Tool Intelligence). WS4 is merged.
+- WS4 source commit `68f9e2b91f023cb83d5edd4d5739f9373784af89` passed exact-head GitHub Actions run #358 (`46082990374`), all 12 quality-gate steps. Live specialist runtime capabilities remain NOT_RUN / BLOCKED where noted.
+- Started WS5 on branch `ws5/whatsapp-communication` from current main.
+- Added `docs/whatsapp-intelligence-gateway-contract.md`, `schemas/whatsapp-message-envelope.schema.json`, `schemas/whatsapp-approval-request.schema.json`, and `tests/test_whatsapp_gateway_contracts.py`.
+- WS5 contracts cover inbound user commands, outbound status/incident/media messages, exact-action approvals, verified identity, Codex-first routing, replay/deduplication, expiry, rate limits, redaction, safe attachments, delivery receipts, and fail-closed behavior.
+- Existing runtime event envelope, collaboration records, workflow ledger, and approval concepts remain canonical; no parallel router, ledger, or approval engine created.
+- No WhatsApp/Twilio/n8n integration, credentials, external message delivery, GymSync application changes, or permission changes performed.
+- Current WS5 branch HEAD before checkpoint reconciliation: `ead419cb5d13b9f83218de03cb5939edee5b7d2c`. Exact-head CI run #361 (`46083691714`) passed all 12 quality-gate steps after correcting one documentation/test wording mismatch found in initial run #360. PR #19 is open as Draft; static review and final checkpoint CI are pending.
+- External integration requires separate explicit user approval and trusted credentials/secret storage. Live webhook authentication, delivery, replay enforcement, media scanning, and interactive approval remain NOT_RUN / BLOCKED.
+- Next action: complete static review, update this checkpoint with final WS5 evidence, rerun exact-head CI, then mark PR #19 Ready for Review.
 
 ## WS3 merge and WS4 start checkpoint — 2026-11-28
 

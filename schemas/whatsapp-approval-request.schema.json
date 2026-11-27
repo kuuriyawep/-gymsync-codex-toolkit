@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gymsync-codex-toolkit:schema:whatsapp-approval-request",
+  "title": "WhatsApp Exact-Action Approval Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "approval_request_id",
+    "workflow_id",
+    "task_id",
+    "operation_id",
+    "action",
+    "target",
+    "risk",
+    "payload_digest",
+    "payload_version",
+    "impact_summary",
+    "issued_at",
+    "expires_at",
+    "nonce",
+    "issuer",
+    "evidence_refs"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "approval_request_id": {
+      "type": "string",
+      "pattern": "^APR-[A-Za-z0-9-]{8,120}$"
+    },
+    "workflow_id": {
+      "type": "string",
+      "minLength": 3
+    },
+    "task_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 160
+    },
+    "action": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 256
+    },
+    "target": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 512
+    },
+    "risk": {
+      "enum": [
+        "R3",
+        "R4"
+      ]
+    },
+    "payload_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "payload_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "impact_summary": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 2000
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "nonce": {
+      "type": "string",
+      "minLength": 16,
+      "maxLength": 256
+    },
+    "issuer": {
+      "const": "codex"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "consumed_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "decision": {
+      "enum": [
+        "approve",
+        "reject"
+      ]
+    }
+  },
+  "$comment": "Schema shape does not authenticate the user, validate the payload digest, enforce expiry, or atomically consume a nonce. A trusted adapter must enforce these controls."
+}
