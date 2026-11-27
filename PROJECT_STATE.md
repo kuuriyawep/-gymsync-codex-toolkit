@@ -24,7 +24,7 @@
 ## QUICK START / CURRENT STATE
 
 - **Primary roadmap:** The seven gated workstreams in `docs/intelligent-agent-ecosystem-architecture.md`. This is the approved target architecture and supersedes the earlier Phase 11 readiness audit as the active development roadmap.
-- **Current active workstream:** WS2 — Autonomous Runtime. WS1 was merged to main in PR #15 and closed. WS2 repository-side contract implementation and CI are complete on `ws2/autonomous-runtime`; PR #16 is Ready for Review. The user's independent QA/security audit report is pending and is required before any merge.
+- **Current active workstream:** WS3 — Agent Collaboration. WS1 merged via PR #15; WS2 merged via PR #16 (merge commit `306698dbee9a1fed142dcdb7504a85a02479c6a8`). The independent QA/security audit may be supplied later and does not block starting or continuing work; assess and address its findings when received.
 - **Architecture decisions:** HIGH event-driven autonomy; bidirectional WhatsApp; proactive proposals triaged by Codex; Codex remains central coordinator; user retains final authority. Full constraints and protocols are in the canonical architecture document.
 - **Existing toolkit inventory:** 13 native skills and 13 portable mirrors (all content hashes match); six native agents and six role briefs; 62 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. These counts describe repository artifacts, not completed behavioral evaluations.
 - **Preservation rule:** Extend existing workflows, handoff/task-graph schemas, tool registry, memory templates, repository-intelligence layer, and evaluation runner. Do not create parallel routers, task engines, handoff contracts, memory stores, or evaluation systems.
@@ -35,7 +35,7 @@
 - **Hard boundary:** Toolkit repository only. No GymSync application, database, production, deployment, or external-service changes.
 - **WS1 progress:** canonical architecture and role mapping are recorded in `docs/intelligent-agent-ecosystem-architecture.md` and `docs/agent-intelligence-standard.md`. All six native agent TOML definitions and six Markdown role briefs now reference the common intelligence contract and role-specific reporting/proposal behavior. Existing read/write and approval boundaries are preserved. This is repository-side instruction alignment, not runtime validation.
 - **WS1 remaining gate:** confirm expanded and legacy result payloads both validate, review the complete PR diff, and verify exact-head CI. Runtime behavior remains BLOCKED / NOT_RUN without a Codex runtime.
-- **Immediate next action:** await the user's formal independent QA/security audit report for PR #16; address any findings within approved scope, rerun exact-head CI, and obtain explicit user approval before merge. Do not start WS3 until WS2 closeout.
+- **Immediate next action:** complete WS3 collaboration contracts, tests, checkpoint update, exact-head CI, and independent review. Do not merge without explicit user approval. Audit findings supplied later must be assessed and addressed.
 
 
 
