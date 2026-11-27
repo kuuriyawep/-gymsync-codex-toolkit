@@ -49,7 +49,7 @@ This is a shared minimum contract, not a requirement that every agent independen
 
 ## 4. Required structured agent report
 
-All agent handoffs should converge on the existing agent-result/handoff contracts where possible. The common report content is:
+All agent handoffs should converge on the existing `schemas/agent-result.schema.json` and `templates/agent-result.md`. WS1 extends the existing result schema with optional structured fields for reasoning, self-critique, tools actually used, memory provenance/proposals, collaboration, initiative proposals, and evaluation. These are additive and preserve the existing required fields for compatibility. The common report content is:
 
 1. Task ID, agent ID/role, parent coordinator, and bounded assignment.
 2. Outcome: completed, partial, blocked, failed, or proposal-only.
