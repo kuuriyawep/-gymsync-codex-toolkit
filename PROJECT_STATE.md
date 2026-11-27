@@ -2107,9 +2107,11 @@ The next implementation task must be selected as a bounded workstream from the g
 - Added `docs/autonomous-runtime-contract.md` defining Monitoring -> Activated -> Working -> Reporting/Waiting and the future runtime adapter boundary. It explicitly states that no live runtime is implemented or claimed.
 - Added `schemas/runtime-event-envelope.schema.json` for source/event identity, event type, issued/expiry timestamps, idempotency, correlation, subscription, target, and untrusted payload.
 - Added `schemas/runtime-task-lease.schema.json` for worker/task ownership, fencing token, attempt, heartbeat, expiry, release/revocation state, and approval reference. Lease possession is explicitly not authorization.
-- Added `tests/test_autonomous_runtime_contracts.py` with structural and governance assertions. Exact-head GitHub Actions run #46074640622 passed all 12 quality-gate steps, including the complete unit-test suite. A subsequent documentation-only correction clarifies that distributed runtime semantics are not covered by these contract tests; a fresh exact-head CI run is required.
+- Added `tests/test_autonomous_runtime_contracts.py` with structural and governance assertions. Exact-head GitHub Actions run #46076542547 passed all 12 quality-gate steps after the final schema/test corrections, including the complete unit-test suite, skill parity, project-memory validation, secret scan, toolkit validation, evaluation validation, deterministic evaluation generation, and result validation.
 - Existing workflow ledger, event/snapshot schemas, task graph, approval gates, retry/timeout, checkpoint, and recovery remain the source of truth; no second task engine or ledger was introduced.
 - Not yet implemented/verified: persistent event monitoring, scheduler integration, distributed lease enforcement, live worker execution, host-enforced identity/permissions, or Codex behavioral autonomy.
 - Repository visibility remains unresolved: GitHub API reported Public on 2026-11-28 despite the user's Private intent. No settings were changed.
 - Draft PR #16 is open: https://github.com/kuuriyawep/-gymsync-codex-toolkit/pull/16. No merge or branch deletion has occurred.
-- Next action: verify fresh CI after the documentation correction, complete independent review if an independent reviewer is available, then report remaining limitations for user review. No merge without explicit approval.
+- Manual static review completed; no PR review threads/comments are present. An independent human/agent review has not been obtained, so PR #16 remains Draft.
+- Exact-head CI: PASS on commit `a660fbfbba3bb1d841fd041eff7f1ac85ee0f695`, run #46076542547.
+- Next action: obtain an independent review before marking PR ready. No merge without explicit user approval.
