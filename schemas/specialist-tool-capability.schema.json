@@ -58,7 +58,9 @@
           "risk",
           "approval",
           "resource_scope",
-          "idempotent"
+          "idempotent",
+          "input_schema",
+          "output_schema"
         ],
         "properties": {
           "operation_id": {
@@ -110,6 +112,14 @@
           },
           "output_schema_ref": {
             "type": "string"
+          },
+          "input_schema": {
+            "type": "object",
+            "description": "JSON Schema for the operation input; include its own $schema and required fields where applicable."
+          },
+          "output_schema": {
+            "type": "object",
+            "description": "JSON Schema for the operation output; include its own $schema and required fields where applicable."
           }
         }
       }
@@ -227,6 +237,47 @@
                 ]
               }
             }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "risk": {
+            "const": "R4"
+          }
+        },
+        "required": [
+          "risk"
+        ]
+      },
+      "then": {
+        "properties": {
+          "approval": {
+            "const": "user"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "risk": {
+            "const": "R3"
+          }
+        },
+        "required": [
+          "risk"
+        ]
+      },
+      "then": {
+        "properties": {
+          "approval": {
+            "enum": [
+              "codex",
+              "user"
+            ]
           }
         }
       }
