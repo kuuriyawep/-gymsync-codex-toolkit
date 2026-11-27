@@ -32,7 +32,8 @@ class MemoryKnowledgeContractTests(unittest.TestCase):
         self.assertIn("specialist_role", rule["then"]["properties"]["scope"]["required"])
 
     def test_proposals_cannot_be_confused_with_accepted_memory(self):
-        self.assertIn("decision", PROPOSAL["properties"])\n        self.assertIn("pending", PROPOSAL["properties"]["decision"]["enum"])
+        self.assertIn("decision", PROPOSAL["properties"])
+        self.assertIn("pending", PROPOSAL["properties"]["decision"]["enum"])
         self.assertIn("Codex must validate", PROPOSAL["$comment"])
         self.assertIn("proposal submission never mutates canonical memory", PROPOSAL["$comment"])
 
