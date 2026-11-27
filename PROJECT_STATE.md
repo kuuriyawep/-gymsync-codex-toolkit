@@ -24,7 +24,7 @@
 ## QUICK START / CURRENT STATE
 
 - **Primary roadmap:** The seven gated workstreams in `docs/intelligent-agent-ecosystem-architecture.md`. This is the approved target architecture and supersedes the earlier Phase 11 readiness audit as the active development roadmap.
-- **Current active workstream:** WS2 — Autonomous Runtime. WS1 was merged to main in PR #15 and closed. WS2 runtime adapter contracts, activation/lease schemas, and initial contract tests are being implemented on `ws2/autonomous-runtime`.
+- **Current active workstream:** WS2 — Autonomous Runtime. WS1 was merged to main in PR #15 and closed. WS2 repository-side contract implementation and CI are complete on `ws2/autonomous-runtime`; PR #16 is Ready for Review. The user's independent QA/security audit report is pending and is required before any merge.
 - **Architecture decisions:** HIGH event-driven autonomy; bidirectional WhatsApp; proactive proposals triaged by Codex; Codex remains central coordinator; user retains final authority. Full constraints and protocols are in the canonical architecture document.
 - **Existing toolkit inventory:** 13 native skills and 13 portable mirrors (all content hashes match); six native agents and six role briefs; 62 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. These counts describe repository artifacts, not completed behavioral evaluations.
 - **Preservation rule:** Extend existing workflows, handoff/task-graph schemas, tool registry, memory templates, repository-intelligence layer, and evaluation runner. Do not create parallel routers, task engines, handoff contracts, memory stores, or evaluation systems.
@@ -35,7 +35,7 @@
 - **Hard boundary:** Toolkit repository only. No GymSync application, database, production, deployment, or external-service changes.
 - **WS1 progress:** canonical architecture and role mapping are recorded in `docs/intelligent-agent-ecosystem-architecture.md` and `docs/agent-intelligence-standard.md`. All six native agent TOML definitions and six Markdown role briefs now reference the common intelligence contract and role-specific reporting/proposal behavior. Existing read/write and approval boundaries are preserved. This is repository-side instruction alignment, not runtime validation.
 - **WS1 remaining gate:** confirm expanded and legacy result payloads both validate, review the complete PR diff, and verify exact-head CI. Runtime behavior remains BLOCKED / NOT_RUN without a Codex runtime.
-- **Immediate next action:** finish WS2 contract integration, add regression tests, run exact-head CI, perform independent review, and open a PR. Do not merge without explicit user approval.
+- **Immediate next action:** await the user's formal independent QA/security audit report for PR #16; address any findings within approved scope, rerun exact-head CI, and obtain explicit user approval before merge. Do not start WS3 until WS2 closeout.
 
 
 
@@ -2111,7 +2111,8 @@ The next implementation task must be selected as a bounded workstream from the g
 - Existing workflow ledger, event/snapshot schemas, task graph, approval gates, retry/timeout, checkpoint, and recovery remain the source of truth; no second task engine or ledger was introduced.
 - Not yet implemented/verified: persistent event monitoring, scheduler integration, distributed lease enforcement, live worker execution, host-enforced identity/permissions, or Codex behavioral autonomy.
 - Repository visibility remains unresolved: GitHub API reported Public on 2026-11-28 despite the user's Private intent. No settings were changed.
-- Draft PR #16 is open: https://github.com/kuuriyawep/-gymsync-codex-toolkit/pull/16. No merge or branch deletion has occurred.
-- Manual static review completed; no PR review threads/comments are present. An independent human/agent review has not been obtained, so PR #16 remains Draft.
-- Exact-head CI: PASS on commit `a660fbfbba3bb1d841fd041eff7f1ac85ee0f695`, run #46076542547.
-- Next action: obtain an independent review before marking PR ready. No merge without explicit user approval.
+- PR #16 is open and Ready for Review: https://github.com/kuuriyawep/-gymsync-codex-toolkit/pull/16. Current head: `0d43683a68ba523efaa5e627d37ce68264a87dae`; base: `main`; 5 files changed, 414 additions, 3 deletions. No merge or branch deletion has occurred.
+- User (`kuuriyawep`) has confirmed they are the independent reviewer and that a formal, in-depth Independent QA & Security Audit is underway. The audit report must be received and assessed before any merge to `main`.
+- Manual static review completed; GitHub currently shows no submitted review records or inline review threads. This does not replace or claim completion of the user's external independent audit.
+- Exact-head GitHub Actions run #46076609942 (run number 350): SUCCESS; all 12 quality-gate steps passed on the current head.
+- Next action: wait for the formal audit report, address any substantiated findings within approved scope, rerun exact-head CI after changes, and obtain explicit user approval before merge. Do not start WS3 before WS2 closeout.
