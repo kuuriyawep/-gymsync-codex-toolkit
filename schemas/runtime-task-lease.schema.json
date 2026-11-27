@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gymsync-codex-toolkit:schema:runtime-task-lease",
+  "title": "Runtime Task Execution Lease",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "lease_id",
+    "workflow_id",
+    "task_id",
+    "worker_id",
+    "fencing_token",
+    "attempt",
+    "issued_at",
+    "expires_at",
+    "heartbeat_at",
+    "status"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "lease_id": {
+      "type": "string",
+      "minLength": 12,
+      "maxLength": 160
+    },
+    "workflow_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{2,63}$"
+    },
+    "task_id": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 128
+    },
+    "worker_id": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 128
+    },
+    "fencing_token": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "heartbeat_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "enum": [
+        "active",
+        "released",
+        "expired",
+        "revoked"
+      ]
+    },
+    "release_reason": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 512
+    },
+    "approval_reference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 256
+    }
+  },
+  "$comment": "Lease possession is not authorization. The host must verify worker identity, workflow/task readiness, dependencies, exact approval scope, expiry, and fencing token on every write. Non-idempotent work must be reconciled before retry after lease loss."
+}
