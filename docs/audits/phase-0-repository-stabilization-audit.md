@@ -263,3 +263,96 @@ Reviewed: `feat/workflow-engine-v1`.
 Classify as **superseded historical branch — preserve pending final archive/deletion review**. Main contains the evolved workflow-engine implementation. Do not merge the branch wholesale. Its distinct historical commits remain evidence until complete branch-only inventory and final retention decision.
 
 No branch deletion, PR action, main change, or repository setting change was performed.
+
+
+
+## 13. Remaining branch reconciliation — completed read-only pass
+
+A second pass compared the remaining non-main branches against `main` and inspected representative file contents. This completes the requested read-only reconciliation inventory; it does not authorize deletion.
+
+### 13.1 Skill-quality remediation branch
+
+Branch: `phase-6-skill-quality-remediation` — 21 ahead / 233 behind; 16 changed paths in the compare result.
+
+Verified identical blobs on main for:
+- `evals/cases/skill-authoring-boundary-and-overlap-audit.json`
+- `evals/rubrics/skill-quality.json`
+- `schemas/evaluation-rubric.schema.json`
+
+The compare still reports several modified/additional paths, including skill-authoring evaluation cases, native/portable skill copies, a test module, and validator changes. The three sampled core assets are already identical on main; this does not prove every branch-only path is identical. **Disposition:** preserve as historical/superseded pending archival review; do not merge wholesale or delete without full unique-content inventory.
+
+### 13.2 Phase 11 Packages 1–3
+
+- `phase-11-package-1-evaluation-trust`: 0 ahead / 41 behind.
+- `phase-11-package-2-repository-integrity`: 0 ahead / 35 behind.
+- `phase-11-package-3-security-hygiene`: 0 ahead / 30 behind.
+
+All three are behind-only against main, with no unique commits ahead in the compare result. **Disposition:** stale deletion candidates, but retain until the user explicitly approves cleanup.
+
+### 13.3 Phase 11 Package 4 — knowledge documentation
+
+Branch: `phase-11-package-4-knowledge-documentation` — 14 ahead / 29 behind; five changed paths.
+
+Compared `PROJECT_STATE.md` and `docs/phase-11-final-audit-report.md`; both have different blobs from main. The branch checkpoint is older and conflicts with later project-state decisions. Main remains authoritative. **Disposition:** preserve as historical evidence; do not merge or overwrite current canonical project state.
+
+### 13.4 Phase 11 Package 5 — CI evidence
+
+Branch: `phase-11-package-5-ci-evidence` — 6 ahead / 28 behind; four changed paths.
+
+Verified `.github/workflows/quality.yml` is byte-identical to main. The branch still has differing project-state and audit/evaluation documentation. **Disposition:** historical/superseded; no workflow recovery needed from the sampled file. Preserve pending final archive decision.
+
+### 13.5 Repository intelligence file architecture
+
+Branch: `repo-intelligence-file-architecture` — 6 ahead / 27 behind; six changed paths.
+
+Verified these main blobs are identical to the branch:
+- `docs/repository-intelligence-architecture.md`
+- `docs/repository-file-classification.md`
+
+These core architecture assets are already present on main. The branch also differs in README, AGENTS, and PROJECT_STATE. **Disposition:** architecture content sampled is already integrated; preserve branch pending historical review, do not merge wholesale.
+
+### 13.6 Zero-ahead stale branches
+
+The following branches compare as behind-only (zero ahead commits): 
+- `feat/advanced-evaluation-system-v1`
+- `feat/graphify-adapter-foundation-v1`
+- `feat/project-intelligence-memory-v1-verify`
+- `feat/project-intelligence-memory-v1`
+- `phase-11-package-1-evaluation-trust`
+- `phase-11-package-2-repository-integrity`
+- `phase-11-package-3-security-hygiene`
+
+These are the strongest cleanup candidates. They remain untouched because deletion is a separate repository mutation requiring explicit user approval.
+
+### 13.7 Consolidated branch disposition
+
+- **Keep active:** `main`, `ws1/agent-intelligence-core` (new WS1 implementation branch), `audit/phase-0-repository-stabilization` (audit evidence), and `toolkit-full-test` while PR #8 remains open.
+- **Preserve pending archive decision:** diverged historical branches with unique commit histories, including Phase 6 validation, workflow engine, skill-quality remediation, Phase 11 Packages 4–5, and repository-intelligence architecture.
+- **Stale deletion candidates, not deleted:** the seven zero-ahead branches listed above.
+- **PR #8:** keep open and unmerged. Its workflow should not be merged as-is; any useful checks can be reconsidered as additions to the current quality workflow after overlap validation.
+- **Branch protection:** main was reported unprotected. No settings change was made; a separate proposed ruleset and explicit approval are still required.
+
+### 13.8 Phase 0 closeout boundary
+
+The read-only branch and PR evidence-gathering pass is complete. Repository cleanup, PR #8 closure/merge, and branch-protection changes remain pending user decisions. No historical branch was deleted, no PR was merged/closed, and no repository setting was changed. This report therefore records **audit discovery complete; mutation/cleanup gate pending**, not full repository stabilization sign-off.
+
+---
+
+## 14. WS1 restart checkpoint — 2026-11-27
+
+At the user's direction, WS1 Agent Intelligence Core has resumed on the dedicated branch `ws1/agent-intelligence-core`, created from main baseline `6ae02e704e667c71cfed3c58cf66fefec0c9ec55`.
+
+The first bounded implementation slice extends the existing `schemas/agent-result.schema.json` additively with optional structured sections for:
+- reasoning and alternatives;
+- self-critique, uncertainty, missing evidence, counterexamples, and failure modes;
+- actual tool invocation status (separate from tool availability);
+- memory sources and provenance-backed proposed updates;
+- specialist collaboration status;
+- problem/improvement/opportunity proposals (proposal is not authorization);
+- evaluation criteria, status, evidence, and limitations.
+
+The existing required result fields and schema version remain unchanged for backward compatibility. `templates/agent-result.md` and `docs/agent-intelligence-standard.md` were aligned with the new optional report fields. A focused unit-test module was added to check the declared fields, optional/backward-compatible status, and template governance language.
+
+**Verification status:** GitHub content writes succeeded. JSON parsing and the new unit tests have not yet been executed in a local or CI runtime. Do not call this slice validated until the exact WS1 branch commit receives a successful quality workflow run. No Codex runtime behavior is claimed.
+
+**No GymSync application/database changes, external integrations, software installation, branch deletion, PR #8 action, or repository settings changes were performed.**
