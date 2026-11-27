@@ -8,6 +8,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = json.loads((ROOT / "schemas" / "agent-result.schema.json").read_text(encoding="utf-8"))
 TEMPLATE = (ROOT / "templates" / "agent-result.md").read_text(encoding="utf-8")
+AGENT_NAMES = (
+    "repo_explorer",
+    "planner",
+    "implementer",
+    "reviewer",
+    "security_auditor",
+    "test_engineer",
+)
 SPEC = importlib.util.spec_from_file_location(
     "validate_agent_contracts", ROOT / "tools" / "validate_agent_contracts.py"
 )
@@ -73,6 +81,31 @@ class AgentIntelligenceReportContractTests(unittest.TestCase):
 
     def test_legacy_result_still_passes_existing_contract_validator(self):
         self.assertEqual(validator.validate_result(legacy_result(), legacy_handoff()), [])
+
+    def test_native_agent_definitions_reference_standard_once(self):
+        for name in AGENT_NAMES:
+            path = ROOT / ".codex" / "agents" / f"{name}.toml"
+            source = path.read_text(encoding="utf-8")
+            with self.subTest(agent=name):
+                self.assertEqual(
+                    source.count("docs/agent-intelligence-standard.md"),
+                    1,
+                    "Each native agent must reference the common standard once.",
+                )
+
+    def test_role_briefs_reference_common_standard(self):
+        role_files = (
+            "explore.md",
+            "planner.md",
+            "implementer.md",
+            "reviewer.md",
+            "security.md",
+            "test_engineer.md",
+        )
+        for name in role_files:
+            source = (ROOT / "agents" / name).read_text(encoding="utf-8")
+            with self.subTest(role_brief=name):
+                self.assertIn("Agent Intelligence Core", source)
 
     def test_template_explains_evidence_and_governance_for_new_fields(self):
         for heading in (
