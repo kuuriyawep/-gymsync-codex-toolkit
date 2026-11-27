@@ -24,9 +24,9 @@
 ## QUICK START / CURRENT STATE
 
 - **Primary roadmap:** The seven gated workstreams in `docs/intelligent-agent-ecosystem-architecture.md`. This is the approved target architecture and supersedes the earlier Phase 11 readiness audit as the active development roadmap.
-- **Current active workstream:** WS1 — Agent Intelligence Core. Role mapping is complete; current task is reconciling existing handoff/result schemas and evaluation coverage with the common report contract, without creating duplicate infrastructure.
+- **Current active workstream:** WS1 — Agent Intelligence Core. Role mapping, optional result-schema extensions, seven capability-focused evaluation cases, and native/portable skill parity audit are complete. Current task is final schema-compatibility regression validation and full WS1 acceptance review.
 - **Architecture decisions:** HIGH event-driven autonomy; bidirectional WhatsApp; proactive proposals triaged by Codex; Codex remains central coordinator; user retains final authority. Full constraints and protocols are in the canonical architecture document.
-- **Existing toolkit inventory:** 13 native skills and 13 portable mirrors; six native agents and six role briefs; 55 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. These counts describe repository artifacts, not completed behavioral evaluations.
+- **Existing toolkit inventory:** 13 native skills and 13 portable mirrors (all content hashes match); six native agents and six role briefs; 62 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. These counts describe repository artifacts, not completed behavioral evaluations.
 - **Preservation rule:** Extend existing workflows, handoff/task-graph schemas, tool registry, memory templates, repository-intelligence layer, and evaluation runner. Do not create parallel routers, task engines, handoff contracts, memory stores, or evaluation systems.
 - **Current agent roles:** `repo_explorer`, `planner`, `implementer`, `reviewer`, `security_auditor`, and `test_engineer`. Preserve role boundaries; map capability ownership before proposing additional roles.
 - **Runtime limitation:** User does not currently have a Codex runtime for live behavioral tests. Continue repository-side design, static implementation, and GitHub CI. Never ask the user to run Codex CLI commands or claim runtime behavior passed without evidence.
@@ -34,9 +34,19 @@
 - **Phase 11 status:** Historical repository-side audit/closeout material remains available. Runtime acceptance remains BLOCKED / NOT_RUN; Phase 11 is not a substitute for the seven-workstream roadmap.
 - **Hard boundary:** Toolkit repository only. No GymSync application, database, production, deployment, or external-service changes.
 - **WS1 progress:** canonical architecture and role mapping are recorded in `docs/intelligent-agent-ecosystem-architecture.md` and `docs/agent-intelligence-standard.md`. All six native agent TOML definitions and six Markdown role briefs now reference the common intelligence contract and role-specific reporting/proposal behavior. Existing read/write and approval boundaries are preserved. This is repository-side instruction alignment, not runtime validation.
-- **WS1 remaining gate:** reconcile existing handoff/result schemas and evaluation cases against the common agent report; verify portable mirrors and quality checks. Runtime behavior remains BLOCKED / NOT_RUN without a Codex runtime.
-- **Immediate next action:** inspect and align existing handoff/result schemas with the common report fields, then run the repository quality workflow.
+- **WS1 remaining gate:** confirm expanded and legacy result payloads both validate, review the complete PR diff, and verify exact-head CI. Runtime behavior remains BLOCKED / NOT_RUN without a Codex runtime.
+- **Immediate next action:** complete the schema-compatibility regression tests, then perform the final WS1 acceptance checklist. Do not merge PR #15 without explicit user approval.
 
+
+
+## WS1 continuation checkpoint — 2026-11-28
+
+- Native/portable parity audit: 13 native skills and 13 portable mirrors; all 13 corresponding Git blob hashes match. No missing, extra, or divergent skill files.
+- Exact-head CI for commit `6e063c5e95c0cf1119296cc3c3d664e04c110999` passed all quality steps, including unit tests, native/portable parity, project-memory validation, secret scan, toolkit validation, evaluation-case validation, deterministic evaluation generation, and result validation.
+- Added regression coverage for the complete optional intelligence report payload and rejection of an invalid tool-invocation status. This change is on WS1 branch and requires a fresh exact-head CI result.
+- Legacy result compatibility remains explicitly tested through the existing `validate_result` contract.
+- Seven new behavioral evaluation specifications are present; they remain specifications, not runtime results.
+- No live Codex agent execution, background monitoring, WhatsApp integration, or runtime autonomy is claimed.
 
 # PART I — WHY THIS PROJECT EXISTS
 
