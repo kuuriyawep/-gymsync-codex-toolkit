@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gymsync-codex-toolkit:schema:runtime-event-envelope",
+  "title": "Runtime Event Activation Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "source_id",
+    "event_type",
+    "issued_at",
+    "expires_at",
+    "idempotency_key",
+    "correlation_id",
+    "subscription_id",
+    "target",
+    "payload"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]+$"
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 128
+    },
+    "event_type": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 128
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 200
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 160
+    },
+    "subscription_id": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 128
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "workflow",
+            "task",
+            "intake"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 128
+        }
+      }
+    },
+    "payload": {
+      "type": "object"
+    },
+    "signature_reference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 512
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "target": {
+            "properties": {
+              "kind": {
+                "const": "intake"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "target": {
+            "properties": {
+              "id": {
+                "const": "codex-intake"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$comment": "Authentication, subscription authorization, timestamp ordering, expiry, replay detection, and payload hash consistency must be enforced by the trusted adapter; JSON Schema alone cannot establish trust."
+}
