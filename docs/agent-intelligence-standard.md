@@ -92,8 +92,10 @@ WS1 can be marked complete only when:
 - Static schema/format/consistency checks pass for changed files.
 - Runtime behavior remains BLOCKED / NOT_RUN until a trusted Codex runtime is available.
 
-## 7. Current evidence and next implementation task
+## 7. Current evidence and remaining WS1 work
 
-The six current TOML definitions and six Markdown role briefs were inspected on the repository's default branch. The definitions already enforce meaningful boundaries: read-only explorer/planner/reviewer/security roles; approved-scope implementer; and test-only test_engineer. The next implementation should add a shared intelligence-standard reference and role-specific structured reporting/initiative expectations with minimal changes.
+The six native TOML definitions and six Markdown role briefs now reference this standard while preserving their role-specific permissions and write boundaries. The shared result schema and report template include optional structured sections for reasoning, self-critique, tools actually invoked, memory provenance/proposals, collaboration, initiative proposals, and evaluation. Seven WS1 behavioral evaluation cases cover these capabilities.
 
-No agent has been invoked in a Codex runtime during this review. No behavioral claim is made.
+Static repository quality gates passed on commit `bec42ab168f50093b769799f3a6c29b53b43327c`. A subsequent consistency review found duplicated intelligence-standard instructions in each native TOML definition; those duplicate lines have now been removed on the WS1 branch. The follow-up commit still requires its own CI result.
+
+Remaining WS1 work is to add regression coverage for agent-definition consistency, verify native/portable skill parity and schema compatibility, and review the full PR diff against the acceptance criteria. Runtime behavior remains BLOCKED / NOT_RUN until a trusted Codex runtime is available. No live agent invocation or autonomous behavior is claimed.
