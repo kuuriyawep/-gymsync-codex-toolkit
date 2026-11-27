@@ -14,7 +14,7 @@
 **Canonical architecture:** [Intelligent Agent Ecosystem Architecture](docs/intelligent-agent-ecosystem-architecture.md)  
 **Repository:** `kuuriyawep/-gymsync-codex-toolkit`  
 **Default branch:** `main`  
-**Repository visibility:** Private (verified 2026-11-25; do not change without explicit instruction)  
+**Repository visibility:** GitHub API reported Public on 2026-11-28, conflicting with the user's Private intent; unresolved. Do not change without explicit approval.  
 **Project owner / final decision authority:** User  
 **Primary coordinator:** Codex  
 **Toolkit runtime status:** Repository-side artifacts exist; live Codex runtime is unavailable to the user, so behavioral/runtime acceptance remains BLOCKED / NOT_RUN  
@@ -24,7 +24,7 @@
 ## QUICK START / CURRENT STATE
 
 - **Primary roadmap:** The seven gated workstreams in `docs/intelligent-agent-ecosystem-architecture.md`. This is the approved target architecture and supersedes the earlier Phase 11 readiness audit as the active development roadmap.
-- **Current active workstream:** WS1 — Agent Intelligence Core. Role mapping, optional result-schema extensions, seven capability-focused evaluation cases, and native/portable skill parity audit are complete. Current task is final schema-compatibility regression validation and full WS1 acceptance review.
+- **Current active workstream:** WS2 — Autonomous Runtime. WS1 was merged to main in PR #15 and closed. WS2 repository-side contract implementation and CI are complete on `ws2/autonomous-runtime`; PR #16 is Ready for Review. The user's independent QA/security audit report is pending and is required before any merge.
 - **Architecture decisions:** HIGH event-driven autonomy; bidirectional WhatsApp; proactive proposals triaged by Codex; Codex remains central coordinator; user retains final authority. Full constraints and protocols are in the canonical architecture document.
 - **Existing toolkit inventory:** 13 native skills and 13 portable mirrors (all content hashes match); six native agents and six role briefs; 62 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. These counts describe repository artifacts, not completed behavioral evaluations.
 - **Preservation rule:** Extend existing workflows, handoff/task-graph schemas, tool registry, memory templates, repository-intelligence layer, and evaluation runner. Do not create parallel routers, task engines, handoff contracts, memory stores, or evaluation systems.
@@ -35,7 +35,7 @@
 - **Hard boundary:** Toolkit repository only. No GymSync application, database, production, deployment, or external-service changes.
 - **WS1 progress:** canonical architecture and role mapping are recorded in `docs/intelligent-agent-ecosystem-architecture.md` and `docs/agent-intelligence-standard.md`. All six native agent TOML definitions and six Markdown role briefs now reference the common intelligence contract and role-specific reporting/proposal behavior. Existing read/write and approval boundaries are preserved. This is repository-side instruction alignment, not runtime validation.
 - **WS1 remaining gate:** confirm expanded and legacy result payloads both validate, review the complete PR diff, and verify exact-head CI. Runtime behavior remains BLOCKED / NOT_RUN without a Codex runtime.
-- **Immediate next action:** complete the schema-compatibility regression tests, then perform the final WS1 acceptance checklist. Do not merge PR #15 without explicit user approval.
+- **Immediate next action:** await the user's formal independent QA/security audit report for PR #16; address any findings within approved scope, rerun exact-head CI, and obtain explicit user approval before merge. Do not start WS3 until WS2 closeout.
 
 
 
@@ -2098,3 +2098,21 @@ The next implementation task must be selected as a bounded workstream from the g
 - Updated `templates/agent-result.md` and `docs/agent-intelligence-standard.md` to document the extended result contract and preserve governance (proposals are not authorization; memory updates are proposals, not silent writes).
 - Added `tests/test_agent_intelligence_report_contract.py` to check capability field declarations, optional-field compatibility, legacy result acceptance by the existing validator, and template requirements.
 - **Not yet verified:** no local test execution and no GitHub Actions run for this branch yet. CI and behavioral/runtime validation remain pending.
+
+
+## WS2 Autonomous Runtime — implementation checkpoint (2026-11-28)
+
+- User authorized the previously presented WS2 scope: lifecycle, event activation, task leases/ownership, bounded retries/timeouts/cancellation, recovery, adapter boundary, and tests.
+- Active branch: `ws2/autonomous-runtime`, based on the post-WS1 `main`.
+- Added `docs/autonomous-runtime-contract.md` defining Monitoring -> Activated -> Working -> Reporting/Waiting and the future runtime adapter boundary. It explicitly states that no live runtime is implemented or claimed.
+- Added `schemas/runtime-event-envelope.schema.json` for source/event identity, event type, issued/expiry timestamps, idempotency, correlation, subscription, target, and untrusted payload.
+- Added `schemas/runtime-task-lease.schema.json` for worker/task ownership, fencing token, attempt, heartbeat, expiry, release/revocation state, and approval reference. Lease possession is explicitly not authorization.
+- Added `tests/test_autonomous_runtime_contracts.py` with structural and governance assertions. Exact-head GitHub Actions run #46076542547 passed all 12 quality-gate steps after the final schema/test corrections, including the complete unit-test suite, skill parity, project-memory validation, secret scan, toolkit validation, evaluation validation, deterministic evaluation generation, and result validation.
+- Existing workflow ledger, event/snapshot schemas, task graph, approval gates, retry/timeout, checkpoint, and recovery remain the source of truth; no second task engine or ledger was introduced.
+- Not yet implemented/verified: persistent event monitoring, scheduler integration, distributed lease enforcement, live worker execution, host-enforced identity/permissions, or Codex behavioral autonomy.
+- Repository visibility remains unresolved: GitHub API reported Public on 2026-11-28 despite the user's Private intent. No settings were changed.
+- PR #16 is open and Ready for Review: https://github.com/kuuriyawep/-gymsync-codex-toolkit/pull/16. Current head: `0d43683a68ba523efaa5e627d37ce68264a87dae`; base: `main`; 5 files changed, 414 additions, 3 deletions. No merge or branch deletion has occurred.
+- User (`kuuriyawep`) has confirmed they are the independent reviewer and that a formal, in-depth Independent QA & Security Audit is underway. The audit report must be received and assessed before any merge to `main`.
+- Manual static review completed; GitHub currently shows no submitted review records or inline review threads. This does not replace or claim completion of the user's external independent audit.
+- Exact-head GitHub Actions run #46076609942 (run number 350): SUCCESS; all 12 quality-gate steps passed on the current head.
+- Next action: wait for the formal audit report, address any substantiated findings within approved scope, rerun exact-head CI after changes, and obtain explicit user approval before merge. Do not start WS3 before WS2 closeout.
