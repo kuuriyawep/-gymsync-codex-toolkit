@@ -2079,3 +2079,12 @@ Critical distinctions:
 
 The next implementation task must be selected as a bounded workstream from the gaps above and must extend existing source-of-truth components. The audit does not authorize GymSync changes, installations, external integrations, permission changes, deployments, or broad refactors.
 
+
+
+## WS1 implementation checkpoint — 2026-11-27
+
+- Active branch: `ws1/agent-intelligence-core`, based on main `6ae02e704e667c71cfed3c58cf66fefec0c9ec55`.
+- Extended `schemas/agent-result.schema.json` with optional, backward-compatible structured fields: reasoning, self-critique, actual tool-use status, memory sources/proposals, collaboration, initiative proposals, and evaluation evidence/status.
+- Updated `templates/agent-result.md` and `docs/agent-intelligence-standard.md` to document the extended result contract and preserve governance (proposals are not authorization; memory updates are proposals, not silent writes).
+- Added `tests/test_agent_intelligence_report_contract.py` to check capability field declarations, optional-field compatibility, legacy result acceptance by the existing validator, and template requirements.
+- **Not yet verified:** no local test execution and no GitHub Actions run for this branch yet. CI and behavioral/runtime validation remain pending.
