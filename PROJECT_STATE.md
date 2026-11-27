@@ -48,9 +48,9 @@
 - WS5 contracts cover inbound user commands, outbound status/incident/media messages, exact-action approvals, verified identity, Codex-first routing, replay/deduplication, expiry, rate limits, redaction, safe attachments, delivery receipts, and fail-closed behavior.
 - Existing runtime event envelope, collaboration records, workflow ledger, and approval concepts remain canonical; no parallel router, ledger, or approval engine created.
 - No WhatsApp/Twilio/n8n integration, credentials, external message delivery, GymSync application changes, or permission changes performed.
-- Current WS5 branch HEAD at initial implementation: `863acbe531e410e22fb49601a3d90b74d4d394e1`. Exact-head CI and review pending; no PR created yet.
+- Current WS5 branch HEAD before checkpoint reconciliation: `ead419cb5d13b9f83218de03cb5939edee5b7d2c`. Exact-head CI run #361 (`46083691714`) passed all 12 quality-gate steps after correcting one documentation/test wording mismatch found in initial run #360. PR #19 is open as Draft; static review and final checkpoint CI are pending.
 - External integration requires separate explicit user approval and trusted credentials/secret storage. Live webhook authentication, delivery, replay enforcement, media scanning, and interactive approval remain NOT_RUN / BLOCKED.
-- Next action: validate schema/test contracts, run exact-head CI, inspect results, and update checkpoint.
+- Next action: complete static review, update this checkpoint with final WS5 evidence, rerun exact-head CI, then mark PR #19 Ready for Review.
 
 ## WS3 merge and WS4 start checkpoint — 2026-11-28
 
