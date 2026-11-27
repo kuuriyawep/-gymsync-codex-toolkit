@@ -32,6 +32,42 @@ For each check:
 
 A passed check requires evidence references. Never claim an unrun check passed.
 
+## Reasoning
+- Problem frame:
+- Options considered:
+- Rationale:
+- Assumptions:
+
+## Self-critique
+- Uncertainties:
+- Missing evidence:
+- Counterexamples considered:
+- Failure modes:
+
+## Tools actually used
+For each tool, distinguish available-but-unused, invoked-successfully, invoked-failed, unavailable, and not-authorized. Include purpose and evidence reference; tool declarations do not prove invocation.
+
+## Memory
+- Sources consulted:
+- Proposed updates (content, provenance, reason):
+Do not silently write or overwrite canonical shared memory.
+
+## Collaboration
+- Agent consulted / requested:
+- Purpose:
+- Status: requested | received | declined | unavailable | not_needed
+- Evidence references:
+
+## Initiative proposals
+For each proposal: type (problem | improvement | opportunity), title, reason, evidence, expected benefit, risk, effort, and recommended triage status. Codex alone triages; proposal is not authorization.
+
+## Evaluation
+- Criteria assessed:
+- Status: pass | fail | blocked | not_run | not_applicable
+- Evidence references and rationale:
+- Overall status:
+- Limitations:
+
 ## Risks and unknowns
 - Remaining risks:
 - Unknowns:
