@@ -371,6 +371,29 @@
               "type": "string",
               "minLength": 1
             }
+          },
+          "interaction_ids": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^CI-[a-z0-9-]+$"
+            }
+          },
+          "decision_refs": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "unresolved_conflicts": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 3
+            }
           }
         }
       }
