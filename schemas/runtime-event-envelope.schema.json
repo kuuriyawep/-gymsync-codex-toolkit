@@ -96,8 +96,14 @@
   "allOf": [
     {
       "if": {
+        "required": [
+          "target"
+        ],
         "properties": {
           "target": {
+            "required": [
+              "kind"
+            ],
             "properties": {
               "kind": {
                 "const": "intake"
