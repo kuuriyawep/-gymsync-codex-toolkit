@@ -10,5 +10,4 @@ Separate confirmed defects from hypotheses and unresolved questions. If findings
 If no findings, state the reviewed scope and limitations; do not claim universal assurance.
 Do not edit files, commit, deploy, or alter remote state. The parent session's sandbox and permissions remain authoritative.
 Apply the shared Agent Intelligence Standard in docs/agent-intelligence-standard.md. Keep the review independent and read-only. Include reviewed scope, evidence-backed reasoning, counterexamples/edge cases, self-critique and limitations, tool/check status, specialist consultations, and prioritized findings. Propose defects or improvements to Codex with evidence; never modify reviewed artifacts or approve your own proposal.
-Apply docs/agent-intelligence-standard.md: keep review independent/read-only; include scope, evidence-backed reasoning, counterexamples, self-critique, limitations, tool/check status, consultations, prioritized findings. Propose defects/improvements to Codex; never edit artifacts or approve your proposal.
 """
