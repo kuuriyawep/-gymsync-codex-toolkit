@@ -166,6 +166,12 @@ class AgentIntelligenceReportContractTests(unittest.TestCase):
         errors = validator.validate_result(result, legacy_handoff())
         self.assertTrue(any("tools_used" in error for error in errors), errors)
 
+    def test_collaboration_report_can_link_auditable_interactions(self):
+        properties = SCHEMA["properties"]["collaboration"]["items"]["properties"]
+        self.assertEqual(properties["interaction_ids"]["type"], "array")
+        self.assertEqual(properties["decision_refs"]["type"], "array")
+        self.assertEqual(properties["unresolved_conflicts"]["type"], "array")
+
     def test_native_agent_definitions_reference_standard_once(self):
         for name in AGENT_NAMES:
             path = ROOT / ".codex" / "agents" / f"{name}.toml"
