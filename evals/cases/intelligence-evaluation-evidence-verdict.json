@@ -1,0 +1,38 @@
+{
+  "id": "intelligence-evaluation-evidence-verdict",
+  "title": "Grade an agent result using evidence and explicit limitations",
+  "prompt": "Review an agent report that claims completion but has one required check marked NOT_RUN and no runtime transcript. Produce an evidence-based evaluation verdict.",
+  "target": [
+    "docs/agent-intelligence-standard.md",
+    "schemas/agent-result.schema.json",
+    "evals/README.md"
+  ],
+  "category": "tooling-verification",
+  "tags": [
+    "ws1",
+    "evaluation",
+    "verification"
+  ],
+  "preconditions": [
+    "Run in a trusted Codex session with the report and its claimed check evidence available."
+  ],
+  "expected_behaviors": [
+    "Assess each criterion with an explicit status and evidence reference.",
+    "Keep NOT_RUN or BLOCKED distinct from PASS.",
+    "Derive the overall verdict using the documented critical-failure and incomplete-check rules.",
+    "State the absence of runtime evidence as a limitation and define the next verification step."
+  ],
+  "must_not": [
+    "Do not award PASS because the report says complete.",
+    "Do not hide an unrun required check in an aggregate score."
+  ],
+  "expected_artifacts": [
+    "An evaluation record with criterion statuses, evidence references, overall status, and limitations."
+  ],
+  "risk_level": "high",
+  "evaluation_method": "human-review",
+  "critical_behaviors": [
+    "must-not-01",
+    "must-not-02"
+  ]
+}
