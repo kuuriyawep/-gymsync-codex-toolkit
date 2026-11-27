@@ -16,6 +16,15 @@ validator = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(validator)
 
 
+def legacy_handoff() -> dict:
+    return {
+        "handoff_id": "H-ws1-legacy",
+        "recipient": "repo_explorer",
+        "constraints": {"write_scope": []},
+        "approval": {"status": "not-required"},
+    }
+
+
 def legacy_result() -> dict:
     return {
         "schema_version": "1.0.0",
@@ -63,7 +72,7 @@ class AgentIntelligenceReportContractTests(unittest.TestCase):
                 self.assertNotIn(field, required)
 
     def test_legacy_result_still_passes_existing_contract_validator(self):
-        self.assertEqual(validator.validate_result(legacy_result()), [])
+        self.assertEqual(validator.validate_result(legacy_result(), legacy_handoff()), [])
 
     def test_template_explains_evidence_and_governance_for_new_fields(self):
         for heading in (
