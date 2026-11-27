@@ -24,7 +24,7 @@
 ## QUICK START / CURRENT STATE
 
 - **Primary roadmap:** The seven gated workstreams in `docs/intelligent-agent-ecosystem-architecture.md`. This is the approved target architecture and supersedes the earlier Phase 11 readiness audit as the active development roadmap.
-- **Current active workstream:** WS3 — Agent Collaboration. WS1 merged via PR #15; WS2 merged via PR #16 (merge commit `306698dbee9a1fed142dcdb7504a85a02479c6a8`). The independent QA/security audit may be supplied later and does not block starting or continuing work; assess and address its findings when received.
+- **Current active workstream:** WS4 — Specialist Tool Intelligence. WS1 merged via PR #15; WS2 merged via PR #16 (`306698dbee9a1fed142dcdb7504a85a02479c6a8`); WS3 merged via PR #17 (`4490c47b57445d6d77d4bc2a809e33cba21e8203`). The independent QA/security audit may be supplied later and does not block starting or continuing work; assess and address its findings when received.
 - **Architecture decisions:** HIGH event-driven autonomy; bidirectional WhatsApp; proactive proposals triaged by Codex; Codex remains central coordinator; user retains final authority. Full constraints and protocols are in the canonical architecture document.
 - **Existing toolkit inventory:** 13 native skills and 13 portable mirrors (all content hashes match); six native agents and six role briefs; 62 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. These counts describe repository artifacts, not completed behavioral evaluations.
 - **Preservation rule:** Extend existing workflows, handoff/task-graph schemas, tool registry, memory templates, repository-intelligence layer, and evaluation runner. Do not create parallel routers, task engines, handoff contracts, memory stores, or evaluation systems.
@@ -35,9 +35,21 @@
 - **Hard boundary:** Toolkit repository only. No GymSync application, database, production, deployment, or external-service changes.
 - **WS1 progress:** canonical architecture and role mapping are recorded in `docs/intelligent-agent-ecosystem-architecture.md` and `docs/agent-intelligence-standard.md`. All six native agent TOML definitions and six Markdown role briefs now reference the common intelligence contract and role-specific reporting/proposal behavior. Existing read/write and approval boundaries are preserved. This is repository-side instruction alignment, not runtime validation.
 - **WS1 remaining gate:** confirm expanded and legacy result payloads both validate, review the complete PR diff, and verify exact-head CI. Runtime behavior remains BLOCKED / NOT_RUN without a Codex runtime.
-- **Immediate next action:** complete WS3 collaboration contracts, tests, checkpoint update, exact-head CI, and independent review. Do not merge without explicit user approval. Audit findings supplied later must be assessed and addressed.
+- **Immediate next action:** complete WS4 capability/tool contracts, tests, checkpoint update, exact-head CI, and independent review. Do not merge without explicit user approval. Audit findings supplied later must be assessed and addressed.
 
 
+
+## WS3 merge and WS4 start checkpoint — 2026-11-28
+
+- Verified GitHub main HEAD `4490c47b57445d6d77d4bc2a809e33cba21e8203` is merge commit for PR #17 (WS3 Agent Collaboration). WS3 is merged; it is not an open blocker.
+- WS3 source commit `004f649f4344b9e824997be457ffb896bcf84768` passed exact-head quality workflow run #353 (`46082284821`). Live multi-agent behavior remains NOT_RUN / BLOCKED.
+- Started WS4 on branch `ws4/specialist-tool-intelligence` from current main.
+- Added `docs/specialist-tool-capability-matrix.md`, `schemas/specialist-tool-capability.schema.json`, and `tests/test_specialist_tool_capabilities.py`.
+- WS4 maps frontend browser automation, backend scenario testing, QA automation, security monitoring, and research to the six existing roles; defines risk/permission profiles, tool operation contract, availability vocabulary, and evidence requirements.
+- Existing Graphify entry remains planned and not runtime-verified. No tool installation, external integration, GymSync application change, or permission change was performed.
+- Current WS4 branch HEAD: `9074e51816e09c52a5ddb3233b8f7db9f95ed01d`. The capability schema now requires operation input/output schemas and enforces R3/R4 approval constraints. PR #18 is Ready for Review; no Actions run or commit status has been reported for this exact head, so CI remains NOT_RUN/PENDING. Independent review is pending. No PR or merge created.
+- Repository `PROJECT_STATE.md` had stale WS3-active/WS2-history text despite WS3 being merged; this checkpoint reconciles the current active workstream and records the verified merge.
+- Next action: obtain an exact-head CI run for PR #18, review all results, address any findings, and update this checkpoint with evidence.
 
 ## WS1 continuation checkpoint — 2026-11-28
 

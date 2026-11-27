@@ -1,0 +1,286 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gymsync-codex-toolkit:schema:specialist-tool-capability",
+  "title": "Specialist Tool Capability Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "capability_id",
+    "primary_owner",
+    "supporting_roles",
+    "operations",
+    "risk_ceiling",
+    "availability",
+    "verification"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "capability_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*\\.[a-z][a-z0-9-]*$"
+    },
+    "primary_owner": {
+      "enum": [
+        "repo_explorer",
+        "planner",
+        "implementer",
+        "reviewer",
+        "security_auditor",
+        "test_engineer"
+      ]
+    },
+    "supporting_roles": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "repo_explorer",
+          "planner",
+          "implementer",
+          "reviewer",
+          "security_auditor",
+          "test_engineer"
+        ]
+      }
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operation_id",
+          "effect",
+          "risk",
+          "approval",
+          "resource_scope",
+          "idempotent",
+          "input_schema",
+          "output_schema"
+        ],
+        "properties": {
+          "operation_id": {
+            "type": "string",
+            "minLength": 2
+          },
+          "effect": {
+            "enum": [
+              "none",
+              "read",
+              "write",
+              "external"
+            ]
+          },
+          "risk": {
+            "enum": [
+              "R0",
+              "R1",
+              "R2",
+              "R3",
+              "R4"
+            ]
+          },
+          "approval": {
+            "enum": [
+              "none",
+              "codex",
+              "user"
+            ]
+          },
+          "resource_scope": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "idempotent": {
+            "type": "boolean"
+          },
+          "timeout_seconds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3600
+          },
+          "input_schema_ref": {
+            "type": "string"
+          },
+          "output_schema_ref": {
+            "type": "string"
+          },
+          "input_schema": {
+            "type": "object",
+            "description": "JSON Schema for the operation input; include its own $schema and required fields where applicable."
+          },
+          "output_schema": {
+            "type": "object",
+            "description": "JSON Schema for the operation output; include its own $schema and required fields where applicable."
+          }
+        }
+      }
+    },
+    "risk_ceiling": {
+      "enum": [
+        "R0",
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    "availability": {
+      "enum": [
+        "verified",
+        "session_available",
+        "partial",
+        "planned",
+        "blocked",
+        "unavailable"
+      ]
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "verified",
+            "partial",
+            "not_run",
+            "blocked"
+          ]
+        },
+        "environment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "verified_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "availability": {
+            "const": "verified"
+          }
+        },
+        "required": [
+          "availability"
+        ]
+      },
+      "then": {
+        "properties": {
+          "verification": {
+            "properties": {
+              "status": {
+                "const": "verified"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "availability": {
+            "enum": [
+              "planned",
+              "blocked",
+              "unavailable"
+            ]
+          }
+        },
+        "required": [
+          "availability"
+        ]
+      },
+      "then": {
+        "properties": {
+          "verification": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "not_run",
+                  "blocked"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "risk": {
+            "const": "R4"
+          }
+        },
+        "required": [
+          "risk"
+        ]
+      },
+      "then": {
+        "properties": {
+          "approval": {
+            "const": "user"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "risk": {
+            "const": "R3"
+          }
+        },
+        "required": [
+          "risk"
+        ]
+      },
+      "then": {
+        "properties": {
+          "approval": {
+            "enum": [
+              "codex",
+              "user"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
