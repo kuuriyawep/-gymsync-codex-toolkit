@@ -87,7 +87,7 @@ Do not persist full sensitive message bodies by default. Apply retention limits,
 | Unsafe attachment | Quarantine/reject; never forward |
 | Rate-limit abuse | Throttle, audit, and escalate when appropriate |
 
-Fail closed whenever identity, target, approval binding, payload integrity, or delivery state is uncertain.
+The gateway must fail closed whenever identity, target, approval binding, payload integrity, or delivery state is uncertain.
 
 ## 8. Test and acceptance boundary
 
