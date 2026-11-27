@@ -47,9 +47,9 @@
 - Added `docs/specialist-tool-capability-matrix.md`, `schemas/specialist-tool-capability.schema.json`, and `tests/test_specialist_tool_capabilities.py`.
 - WS4 maps frontend browser automation, backend scenario testing, QA automation, security monitoring, and research to the six existing roles; defines risk/permission profiles, tool operation contract, availability vocabulary, and evidence requirements.
 - Existing Graphify entry remains planned and not runtime-verified. No tool installation, external integration, GymSync application change, or permission change was performed.
-- Current WS4 branch checkpoint: `72cce1ebf754695be8512d3141d99c938802f182`. Exact-head CI and independent review are still pending. No PR or merge created.
+- Current WS4 branch HEAD: `9074e51816e09c52a5ddb3233b8f7db9f95ed01d`. The capability schema now requires operation input/output schemas and enforces R3/R4 approval constraints. PR #18 is Ready for Review; no Actions run or commit status has been reported for this exact head, so CI remains NOT_RUN/PENDING. Independent review is pending. No PR or merge created.
 - Repository `PROJECT_STATE.md` had stale WS3-active/WS2-history text despite WS3 being merged; this checkpoint reconciles the current active workstream and records the verified merge.
-- Next action: validate the new schema and tests, run exact-head GitHub quality gates, review findings, and update this checkpoint with evidence.
+- Next action: obtain an exact-head CI run for PR #18, review all results, address any findings, and update this checkpoint with evidence.
 
 ## WS1 continuation checkpoint — 2026-11-28
 
