@@ -33,8 +33,6 @@
 - **Integration status:** WhatsApp/Twilio/n8n, Graphify runtime, persistent background execution, and live permission enforcement are not verified or installed. Do not start the n8n trial, install tools, or integrate external services without separate explicit approval.
 - **Phase 11 status:** Historical repository-side audit/closeout material remains available. Runtime acceptance remains BLOCKED / NOT_RUN; Phase 11 is not a substitute for the seven-workstream roadmap.
 - **Hard boundary:** Toolkit repository only. No GymSync application, database, production, deployment, or external-service changes.
-- **WS1 progress:** canonical architecture and role mapping are recorded in `docs/intelligent-agent-ecosystem-architecture.md` and `docs/agent-intelligence-standard.md`. All six native agent TOML definitions and six Markdown role briefs now reference the common intelligence contract and role-specific reporting/proposal behavior. Existing read/write and approval boundaries are preserved. This is repository-side instruction alignment, not runtime validation.
-- **WS1 remaining gate:** confirm expanded and legacy result payloads both validate, review the complete PR diff, and verify exact-head CI. Runtime behavior remains BLOCKED / NOT_RUN without a Codex runtime.
 - **Immediate next action:** maintain an accurate post-WS7 checkpoint, then select the next bounded workstream from verified remaining gaps. Do not invent WS8 or begin new implementation until its scope and acceptance criteria are defined. Keep behavioral/runtime acceptance BLOCKED / NOT_RUN until a trusted Codex runtime is available.
 
 
