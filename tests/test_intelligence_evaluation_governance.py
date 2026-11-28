@@ -48,16 +48,23 @@ class IntelligenceEvaluationGovernanceTests(unittest.TestCase):
             self.assertTrue(case["expected_behaviors"])
             self.assertIn(case["risk_level"], {"low", "medium", "high", "critical"})
 
-    def test_backend_case_is_synthetic_and_covers_concurrency(self) -> None:
+    def test_backend_case_is_synthetic_and_covers_payment_invariants(self) -> None:
         case = json.loads(
             (CASE_DIR / "backend-payment-concurrency-synthetic-fixture.json").read_text(
                 encoding="utf-8"
             )
         )
-        text = " ".join(case["preconditions"] + case["expected_behaviors"] + case["must_not"]).lower()
+        expected = " ".join(case["expected_behaviors"]).lower()
+        prohibited = " ".join(case["must_not"]).lower()
+        combined = " ".join(case["preconditions"] + case["expected_behaviors"] + case["must_not"]).lower()
         for required in ("synthetic", "concurrent", "idempotency", "production"):
             with self.subTest(required=required):
-                self.assertIn(required, text)
+                self.assertIn(required, combined)
+        self.assertIn("already paid", expected)
+        self.assertIn("duplicate payment", expected)
+        self.assertIn("extra charge", prohibited)
+        self.assertIn("must-not-03", case["critical_behaviors"])
+        self.assertIn("must-not-04", case["critical_behaviors"])
 
     def test_untrusted_evidence_case_prohibits_self_grading(self) -> None:
         case = json.loads(
