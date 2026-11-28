@@ -1,0 +1,84 @@
+name: Full Toolkit Verification
+
+on:
+  push:
+    branches: [toolkit-full-test]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: toolkit-full-verification-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  full-verification:
+    name: Full deterministic toolkit verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout isolated test branch
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.11"
+
+      - name: Record test environment
+        run: |
+          python --version
+          git rev-parse HEAD
+          git status --short --branch
+
+      - name: Compile Python sources
+        run: python -m compileall -q tools tests
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Check native and portable skill parity
+        run: python tools/sync_skills.py --check
+
+      - name: Validate project memory templates
+        run: python tools/validate_project_memory.py
+
+      - name: Validate tool registry
+        run: python tools/validate_tool_registry.py
+
+      - name: Validate agent contracts
+        run: python tools/validate_agent_contracts.py
+
+      - name: Validate complete toolkit
+        run: python tools/validate_toolkit.py
+
+      - name: Validate evaluation cases
+        run: python tools/evaluate_toolkit.py --validate
+
+      - name: Generate deterministic evaluation evidence
+        run: |
+          python tools/evaluate_toolkit.py --run \
+            --run-id full-ci-${{ github.run_id }}-${{ github.run_attempt }} \
+            --revision ${{ github.sha }} \
+            --output evals/results/full-ci-${{ github.run_id }}-${{ github.run_attempt }}.json
+
+      - name: Validate generated evaluation evidence
+        run: |
+          python tools/evaluate_toolkit.py --validate-result \
+            evals/results/full-ci-${{ github.run_id }}-${{ github.run_attempt }}.json
+
+      - name: Summarize repository inventory
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          root = Path(".")
+          skills = sorted(p.parent.name for p in root.glob(".agents/skills/*/SKILL.md"))
+          agents = sorted(p.stem for p in root.glob(".codex/agents/*.toml"))
+          cases = sorted(p.name for p in root.glob("evals/cases/*.json"))
+          print(f"Codex skills: {len(skills)}")
+          print(f"Agent TOML definitions: {len(agents)}")
+          print(f"Evaluation case files: {len(cases)}")
+          print("Skills:", ", ".join(skills))
+          print("Agents:", ", ".join(agents))
+          PY
