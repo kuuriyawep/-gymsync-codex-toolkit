@@ -1,6 +1,6 @@
 # GymSync Intelligent Agent Ecosystem — Architecture Specification
 
-**Status:** USER-APPROVED TARGET ARCHITECTURE; WS1–WS7 repository-side workstreams merged; cross-cutting integration-readiness validation is in progress. Live runtime/behavioral acceptance remains BLOCKED / NOT_RUN.  
+**Status:** USER-APPROVED TARGET ARCHITECTURE; WS1–WS7 and cross-cutting Integration Readiness & End-to-End Validation are merged. PR #23 merge commit `e48c7349a73c4830b8d54a5d505e483907799798`; exact-head CI run #380 passed 12/12 repository quality gates. Live runtime/behavioral acceptance remains BLOCKED / NOT_RUN.  
 **Authority:** The user is the final decision authority. Codex is the single accountable orchestrator.  
 **Scope:** This specification governs the reusable Codex toolkit repository only. It does not authorize changes to the GymSync application, production systems, external services, or credentials.  
 **Architecture principle:** **Autonomy without losing governance.**
@@ -244,16 +244,16 @@ For each workstream:
 
 **Environment constraint:** The user does not currently have access to a Codex runtime for live behavioral testing. Continue repository-side architecture and static implementation where possible; do not ask the user to run Codex CLI commands or fabricate runtime results. External runtime services and the n8n trial must not be started without explicit authorization.
 
-## 20. Current execution order — post-WS7
+## 20. Current execution order — post-integration closeout (2026-11-28)
 
 1. WS1–WS7 are repository-side workstreams completed and merged. Do not restart them or set WS1 active again.
-2. Run the approved cross-cutting Integration Readiness & End-to-End Validation work on a dedicated branch. This is not WS8 and does not reopen the seven-workstream sequence.
-3. Harden confirmed schema edge cases; add deterministic cross-contract and integrated-scenario coverage by extending existing schemas, tests, evaluation cases, and workflow conventions.
-4. Reconcile this architecture and `PROJECT_STATE.md` with verified Git state and exact-head CI evidence.
+2. Cross-cutting Integration Readiness & End-to-End Validation is complete and merged through PR #23; this was not WS8.
+3. PR #23 merge commit is `e48c7349a73c4830b8d54a5d505e483907799798`; source head is `dae5f5a8f8424aec3406ea7cbe7d104fb392199e`; exact-head CI run #380 (`46095000958`) passed all 12 repository quality gates.
+4. The integrated scenario, memory-schema hardening, deterministic cross-contract tests, and documentation reconciliation are merged.
 5. Keep live agent behavior, runtime enforcement, persistent execution, Graphify, and WhatsApp delivery BLOCKED / NOT_RUN until a trusted runtime and separately authorized integrations are available.
-6. Submit a PR for review. Do not merge without explicit user approval.
+6. No implementation workstream is currently active. Perform a read-only remaining-gaps prioritization and submit a bounded proposal for user approval before starting any new work. Do not invent WS8.
 
 ---
 
 **Approval record:** The user explicitly approved the architecture decisions and seven-workstream roadmap in the conversation on 2026-11-25.  
-**Current implementation status:** Architecture specification authored; implementation workstreams are not yet complete.
+**Current implementation status (2026-11-28):** WS1–WS7 and cross-cutting Integration Readiness & End-to-End Validation are merged into main. Repository-side deterministic CI acceptance passed; live runtime/behavioral acceptance remains BLOCKED / NOT_RUN.
