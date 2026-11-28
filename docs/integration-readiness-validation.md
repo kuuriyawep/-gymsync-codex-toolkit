@@ -1,6 +1,6 @@
 # Integration Readiness & End-to-End Validation
 
-**Status:** Repository-side contract validation in progress; live behavioral execution BLOCKED / NOT_RUN.  
+**Status:** MERGED into main via PR #23; repository-side deterministic contract validation PASS (exact-head CI run #380, 12/12 quality gates); live behavioral execution BLOCKED / NOT_RUN.  
 **Scope:** Toolkit repository only. No GymSync application/database, production systems, external services, credentials, or permissions.  
 **Authority:** Codex remains the central coordinator; the user retains final authority for consequential actions.
 
@@ -36,8 +36,8 @@ The scenario also enumerates unavailable specialists/runtime, conflicting findin
 
 | Layer | Acceptance | Current status |
 |---|---|---|
-| Schema structure and conditional constraints | Deterministic tests inspect required fields, conditional rules, and closed contracts | PASS — exact-head CI run #378 |
-| Scenario completeness | Deterministic tests validate ordered stages, ownership, evidence, prohibitions, and all listed failure paths | Pending CI |
+| Schema structure and conditional constraints | Deterministic tests inspect required fields, conditional rules, and closed contracts | PASS — exact-head CI run #380 |
+| Scenario completeness | Deterministic tests validate ordered stages, ownership, evidence, prohibitions, and all listed failure paths | PASS — exact-head CI run #380 |
 | Cross-contract execution | Trusted runtime demonstrates event-to-report lifecycle and consistent identifiers | BLOCKED / NOT_RUN |
 | Host permission enforcement | Runtime proves denied unauthorized actions and exact-action approval binding | BLOCKED / NOT_RUN |
 | WhatsApp delivery and identity | Authorized safe test proves inbound/outbound identity, dedupe, delivery receipts, and fail-closed behavior | BLOCKED / NOT_RUN |
@@ -51,12 +51,12 @@ The memory proposal schema now requires a non-empty target memory ID for `revise
 
 ## 6. Architecture reconciliation
 
-This document is the current integration-readiness addendum to the seven-workstream architecture. The canonical architecture's historical implementation-status statements and immediate execution order must be reconciled to the post-WS7 repository state before this work is considered fully closed. The current project checkpoint remains authoritative for merged workstream status; runtime and behavioral acceptance remain blocked until a trusted runtime exists.
+This document is the merged integration-readiness addendum to the seven-workstream architecture. PR #23 is merged at `e48c7349a73c4830b8d54a5d505e483907799798` (source head `dae5f5a8f8424aec3406ea7cbe7d104fb392199e`). Exact-head CI run #380 (`46095000958`) passed all 12 repository quality gates. The canonical architecture and `PROJECT_STATE.md` have been reconciled to this post-merge state. Runtime and behavioral acceptance remain BLOCKED / NOT_RUN until a trusted runtime exists.
 
 ## 7. Exit criteria
 
 - Memory schema edge cases have deterministic regression coverage.
 - The integrated scenario and all failure paths have deterministic repository-side coverage.
-- Exact-head CI passes and the full PR diff is reviewed.
-- Canonical architecture and project checkpoint agree on WS1–WS7 completion, current workstream, evaluation inventory, and next action.
+- Exact-head CI passes and the full PR diff is reviewed. **Complete:** PR #23 exact-head run #380 passed 12/12; PR #23 merged.
+- Canonical architecture and project checkpoint agree on WS1–WS7 completion, integration-readiness closeout, evaluation inventory, and next action. **Complete:** checkpoint reconciliation merged through this follow-up branch/PR.
 - No behavioral/runtime PASS is claimed without direct execution evidence.

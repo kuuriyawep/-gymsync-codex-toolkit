@@ -24,7 +24,7 @@
 ## QUICK START / CURRENT STATE
 
 - **Primary roadmap:** The seven gated workstreams in `docs/intelligent-agent-ecosystem-architecture.md`. This is the approved target architecture and supersedes the earlier Phase 11 readiness audit as the active development roadmap.
-- **Current active workstream:** Cross-cutting Integration Readiness & End-to-End Validation (approved 2026-11-28; branch `integration-readiness/end-to-end-validation`). This is not WS8 and does not reopen WS1–WS7. WS1–WS7 remain merged; WS7 merge commit `51235d2d8fd91c5056a603c152513897a8c94800`, source head `fcf77b0978790afb76d41d656d599fe4f4690e3d`.
+- **Current active workstream:** None. WS1–WS7 and the cross-cutting Integration Readiness & End-to-End Validation are merged. PR #23 merge commit: `e48c7349a73c4830b8d54a5d505e483907799798`; source head: `dae5f5a8f8424aec3406ea7cbe7d104fb392199e`; exact-head CI run #380 (`46095000958`) passed all 12 repository quality gates. This cross-cutting closeout is not WS8.
 - **Architecture decisions:** HIGH event-driven autonomy; bidirectional WhatsApp; proactive proposals triaged by Codex; Codex remains central coordinator; user retains final authority. Full constraints and protocols are in the canonical architecture document.
 - **Existing toolkit inventory:** 13 native skills and 13 portable mirrors (all content hashes match); six native agents and six role briefs; 65 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. These counts describe repository artifacts, not completed behavioral evaluations.
 - **Preservation rule:** Extend existing workflows, handoff/task-graph schemas, tool registry, memory templates, repository-intelligence layer, and evaluation runner. Do not create parallel routers, task engines, handoff contracts, memory stores, or evaluation systems.
@@ -33,9 +33,22 @@
 - **Integration status:** WhatsApp/Twilio/n8n, Graphify runtime, persistent background execution, and live permission enforcement are not verified or installed. Do not start the n8n trial, install tools, or integrate external services without separate explicit approval.
 - **Phase 11 status:** Historical repository-side audit/closeout material remains available. Runtime acceptance remains BLOCKED / NOT_RUN; Phase 11 is not a substitute for the seven-workstream roadmap.
 - **Hard boundary:** Toolkit repository only. No GymSync application, database, production, deployment, or external-service changes.
-- **Immediate next action:** review PR #23 (`https://github.com/kuuriyawep/-gymsync-codex-toolkit/pull/23`) and its complete diff. Exact-head CI run #378 (`46094953102`) passed all 12 quality-gate steps on source commit `16fa87b368b8d6a2f0ab5362c8ce04638285bbaa`. Do not merge without explicit user approval. Keep behavioral/runtime acceptance BLOCKED / NOT_RUN until a trusted Codex runtime is available.
+- **Immediate next action:** perform a read-only remaining-gaps prioritization and propose the next bounded scope for user approval. Do not invent WS8 or begin implementation until the user approves a defined scope. Keep behavioral/runtime acceptance BLOCKED / NOT_RUN until a trusted Codex runtime is available.
 
 
+
+## PR #23 integration-readiness merge and checkpoint reconciliation — 2026-11-28
+
+- PR #23 (Integration Readiness & End-to-End Contract Validation) was explicitly approved and squash-merged into `main`.
+- Merge commit: `e48c7349a73c4830b8d54a5d505e483907799798`; source head: `dae5f5a8f8424aec3406ea7cbe7d104fb392199e`.
+- Exact-head GitHub Actions run #380 (`46095000958`) passed all 12 repository quality-gate steps on the PR source head. This is repository-side deterministic/static evidence, not a live runtime or behavioral pass.
+- Integrated scenario, cross-contract deterministic tests, memory-proposal schema hardening, and architecture/integration documentation are merged.
+- WS1–WS7 remain complete and merged. Integration readiness was a cross-cutting closeout, not WS8.
+- Live agent collaboration, persistent event execution, host permission enforcement, WhatsApp/Twilio/n8n delivery, Graphify runtime, and human behavioral acceptance remain BLOCKED / NOT_RUN or unverified.
+- Verified GitHub repository metadata on 2026-11-28 reports `visibility: public` and `private: false`. This conflicts with the user's stated private-repository intent. No visibility change was made; treat it as an unresolved security/configuration decision requiring explicit user approval.
+- Main branch HEAD was verified as the PR #23 merge commit above. No unmerged PR #23 work remains.
+- No GymSync application/database, production data, external services, dependencies, credentials, permissions, or repository settings were changed.
+- Current active workstream: none. Next action: conduct a read-only remaining-gaps prioritization and propose one bounded next scope for explicit user approval; do not label it WS8 or begin it without approval.
 
 ## WS7 merge and closeout checkpoint — 2026-11-28
 
