@@ -24,7 +24,7 @@
 ## QUICK START / CURRENT STATE
 
 - **Primary roadmap:** The seven gated workstreams in `docs/intelligent-agent-ecosystem-architecture.md`. This is the approved target architecture and supersedes the earlier Phase 11 readiness audit as the active development roadmap.
-- **Current active workstream:** WS7 — Intelligence Evaluation & Governance. WS1–WS6 are merged; WS6 merged via PR #20 (merge commit `c77512a231142bbfd8682704697089460cf85622`). The independent QA/security audit may be supplied later and does not block this workstream; assess its findings when received.
+- **Current active workstream:** None. WS1–WS7 are merged. WS7 merged via PR #21 (merge commit `51235d2d8fd91c5056a603c152513897a8c94800`; source head `fcf77b0978790afb76d41d656d599fe4f4690e3d`). The next implementation workstream has not been selected or started. The independent QA/security audit may be supplied later; it does not block selection or continuation of other approved work, and its findings must be assessed when received.
 - **Architecture decisions:** HIGH event-driven autonomy; bidirectional WhatsApp; proactive proposals triaged by Codex; Codex remains central coordinator; user retains final authority. Full constraints and protocols are in the canonical architecture document.
 - **Existing toolkit inventory:** 13 native skills and 13 portable mirrors (all content hashes match); six native agents and six role briefs; 65 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. These counts describe repository artifacts, not completed behavioral evaluations.
 - **Preservation rule:** Extend existing workflows, handoff/task-graph schemas, tool registry, memory templates, repository-intelligence layer, and evaluation runner. Do not create parallel routers, task engines, handoff contracts, memory stores, or evaluation systems.
@@ -33,11 +33,21 @@
 - **Integration status:** WhatsApp/Twilio/n8n, Graphify runtime, persistent background execution, and live permission enforcement are not verified or installed. Do not start the n8n trial, install tools, or integrate external services without separate explicit approval.
 - **Phase 11 status:** Historical repository-side audit/closeout material remains available. Runtime acceptance remains BLOCKED / NOT_RUN; Phase 11 is not a substitute for the seven-workstream roadmap.
 - **Hard boundary:** Toolkit repository only. No GymSync application, database, production, deployment, or external-service changes.
-- **WS1 progress:** canonical architecture and role mapping are recorded in `docs/intelligent-agent-ecosystem-architecture.md` and `docs/agent-intelligence-standard.md`. All six native agent TOML definitions and six Markdown role briefs now reference the common intelligence contract and role-specific reporting/proposal behavior. Existing read/write and approval boundaries are preserved. This is repository-side instruction alignment, not runtime validation.
-- **WS1 remaining gate:** confirm expanded and legacy result payloads both validate, review the complete PR diff, and verify exact-head CI. Runtime behavior remains BLOCKED / NOT_RUN without a Codex runtime.
-- **Immediate next action:** complete WS7 intelligence evaluation and governance contracts, add specialist/adversarial evaluation coverage, run exact-head CI, review the full diff, and report repository-side versus behavioral acceptance separately. Do not merge without explicit user approval. Audit findings supplied later must be assessed and addressed.
+- **Immediate next action:** maintain an accurate post-WS7 checkpoint, then select the next bounded workstream from verified remaining gaps. Do not invent WS8 or begin new implementation until its scope and acceptance criteria are defined. Keep behavioral/runtime acceptance BLOCKED / NOT_RUN until a trusted Codex runtime is available.
 
 
+
+## WS7 merge and closeout checkpoint — 2026-11-28
+
+- PR #21 (WS7 Intelligence Evaluation & Governance) is merged into `main`.
+- Merge commit: `51235d2d8fd91c5056a603c152513897a8c94800`.
+- Source head: `fcf77b0978790afb76d41d656d599fe4f4690e3d`.
+- Exact-head GitHub Actions run #371 (`46092296666`) passed all 12 repository quality-gate steps on the source head. Do not infer a separate merge-commit run from this result.
+- WS7 repository-side acceptance: PASS. The payment/concurrency evaluation case now explicitly covers debt settlement versus renewal, insufficient renewal, duplicate payment for already-paid members, concurrent duplicate charges/periods, atomicity/idempotency expectations, and critical-failure safeguards.
+- Static review of the complete PR diff was completed before merge; no review submissions or inline review threads were present.
+- Behavioral evaluations, live Codex agent behavior, persistent runtime, host-enforced permissions, WhatsApp/Twilio/n8n delivery, and Graphify runtime remain NOT_RUN / BLOCKED or unverified. Evaluation case specifications are not executed behavioral results.
+- No GymSync application/database, production data, external services, dependencies, credentials, permissions, or repository settings were changed.
+- WS1–WS7 are complete and merged. No WS8 has been approved or started. The next action is to select and scope the next workstream from the remaining verified gaps.
 
 ## WS6 merge and WS7 start checkpoint — 2026-11-28
 
