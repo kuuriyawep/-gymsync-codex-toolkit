@@ -37,6 +37,23 @@ class MemoryKnowledgeContractTests(unittest.TestCase):
         self.assertIn("Codex must validate", PROPOSAL["$comment"])
         self.assertIn("proposal submission never mutates canonical memory", PROPOSAL["$comment"].lower())
 
+    def test_memory_update_operations_require_a_nonempty_target(self):
+        rule = next(item for item in PROPOSAL["allOf"] if item.get("if", {}).get("properties", {}).get("operation"))
+        self.assertEqual(set(rule["if"]["properties"]["operation"]["enum"]), {"revise", "supersede", "mark_stale", "dispute"})
+        self.assertIn("target_memory_id", rule["then"]["required"])
+        self.assertEqual(rule["then"]["properties"]["target_memory_id"], {"type": "string", "minLength": 1})
+
+    def test_terminal_decisions_require_an_attributable_actor(self):
+        rule = PROPOSAL["allOf"][-1]
+        self.assertEqual(set(rule["if"]["properties"]["decision"]["enum"]), {"accepted", "rejected"})
+        self.assertEqual(rule["then"]["properties"]["decided_by"], {"type": "string", "minLength": 1})
+        self.assertEqual(rule["then"]["properties"]["decision_reason"], {"type": "string", "minLength": 1})
+
+    def test_specialist_role_is_exclusive_to_specialist_scope(self):
+        rule = PROPOSAL["allOf"][0]
+        self.assertIn("specialist_role", rule["then"]["required"])
+        self.assertEqual(rule["else"], {"not": {"required": ["specialist_role"]}})
+
     def test_graphify_remains_optional_planned_and_read_only(self):
         graph = next(x for x in TOOLS["tools"] if x["id"] == "graphify-local")
         self.assertEqual(graph["availability"], "planned")
