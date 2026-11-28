@@ -24,7 +24,7 @@
 ## QUICK START / CURRENT STATE
 
 - **Primary roadmap:** The seven gated workstreams in `docs/intelligent-agent-ecosystem-architecture.md`. This is the approved target architecture and supersedes the earlier Phase 11 readiness audit as the active development roadmap.
-- **Current active workstream:** WS5 — WhatsApp Communication. WS1 merged via PR #15; WS2 merged via PR #16 (`306698dbee9a1fed142dcdb7504a85a02479c6a8`); WS3 merged via PR #17 (`4490c47b57445d6d77d4bc2a809e33cba21e8203`); WS4 merged via PR #18 (merge commit `4b775c233cab28d145de3c919829ade10a5b37fd`). The independent QA/security audit may be supplied later and does not block starting or continuing work; assess and address its findings when received.
+- **Current active workstream:** WS6 — Memory & Knowledge. WS1–WS4 are merged; WS5 merged via PR #19 (merge commit `84c5a9222f8d15b662cf62d9c58dd69a3276119b`). The independent QA/security audit may be supplied later and does not block starting or continuing work; assess and address its findings when received.
 - **Architecture decisions:** HIGH event-driven autonomy; bidirectional WhatsApp; proactive proposals triaged by Codex; Codex remains central coordinator; user retains final authority. Full constraints and protocols are in the canonical architecture document.
 - **Existing toolkit inventory:** 13 native skills and 13 portable mirrors (all content hashes match); six native agents and six role briefs; 62 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. These counts describe repository artifacts, not completed behavioral evaluations.
 - **Preservation rule:** Extend existing workflows, handoff/task-graph schemas, tool registry, memory templates, repository-intelligence layer, and evaluation runner. Do not create parallel routers, task engines, handoff contracts, memory stores, or evaluation systems.
@@ -38,6 +38,18 @@
 - **Immediate next action:** complete WS5 WhatsApp gateway contracts, security tests, checkpoint update, exact-head CI, and independent review. Do not connect external services or merge without explicit user approval. Audit findings supplied later must be assessed and addressed.
 
 
+
+## WS5 merge and WS6 start checkpoint — 2026-11-28
+
+- Verified PR #19 (WS5 WhatsApp Communication) is merged. Merge commit: `84c5a9222f8d15b662cf62d9c58dd69a3276119b`; source head: `2f562eced61fc72d567c13cef43524742944b099`.
+- WS5 exact-head CI run #362 passed all 12 quality-gate steps. Live WhatsApp/Twilio/n8n connectivity, webhook authentication, actual delivery, replay enforcement, media scanning, and interactive approval remain NOT_RUN / BLOCKED.
+- Started WS6 on branch `ws6/memory-knowledge` from the WS5 merge commit.
+- Added `docs/memory-knowledge-governance.md`, `schemas/project-memory-record.schema.json`, `schemas/memory-update-proposal.schema.json`, and `tests/test_memory_knowledge_contracts.py`.
+- WS6 separates Shared Project Memory, Specialist Memory, Execution Memory, and the derived Repository Knowledge Graph. It defines provenance, freshness, conflict handling, scope isolation, proposal/promotion governance, and a read-only optional Graphify provider boundary.
+- Existing `PROJECT_STATE.md`, decision records, workflow ledger, repository-intelligence layer, and tool registry remain canonical; no parallel memory engine was introduced.
+- Graphify remains planned and not installed/connected. No dependencies, external services, GymSync application/database changes, or permissions were changed.
+- WS6 static tests and exact-head CI are pending. Runtime memory retrieval, specialist isolation, stale detection, and Graphify behavior remain NOT_RUN / BLOCKED.
+- Next action: complete WS6 schema/documentation review, run exact-head CI, address failures, and prepare PR for user review. Do not merge without explicit user approval.
 
 ## WS4 merge and WS5 start checkpoint — 2026-11-28
 

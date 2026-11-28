@@ -1,0 +1,285 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gymsync-codex-toolkit:schema:project-memory-record",
+  "title": "Governed Project Memory Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "memory_id",
+    "entry_type",
+    "claim",
+    "scope",
+    "owner",
+    "status",
+    "confidence",
+    "provenance",
+    "created_at",
+    "verified_at",
+    "sensitivity",
+    "review_policy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "memory_id": {
+      "type": "string",
+      "pattern": "^MEM-[A-Za-z0-9-]{8,120}$"
+    },
+    "entry_type": {
+      "enum": [
+        "fact",
+        "decision",
+        "constraint",
+        "architecture",
+        "checkpoint",
+        "learning",
+        "relationship"
+      ]
+    },
+    "claim": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 4000
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 80
+      },
+      "uniqueItems": true
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "project_id"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "shared_project",
+            "specialist",
+            "execution_reference"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "specialist_role": {
+          "enum": [
+            "repo_explorer",
+            "planner",
+            "implementer",
+            "reviewer",
+            "security_auditor",
+            "test_engineer"
+          ]
+        },
+        "workflow_id": {
+          "type": "string"
+        },
+        "access_label": {
+          "enum": [
+            "project",
+            "role_only",
+            "restricted"
+          ]
+        }
+      }
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "accepted",
+        "superseded",
+        "stale",
+        "disputed",
+        "rejected"
+      ]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "provenance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source_type",
+          "source_ref"
+        ],
+        "properties": {
+          "source_type": {
+            "enum": [
+              "repository_file",
+              "commit",
+              "decision_record",
+              "user_decision",
+              "execution_artifact",
+              "external_reference"
+            ]
+          },
+          "source_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "repository": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "commit_or_version": {
+            "type": "string"
+          },
+          "line_start": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "line_end": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "related_memory_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "supersedes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "verified_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "review_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "review_required"
+      ],
+      "properties": {
+        "review_required": {
+          "type": "boolean"
+        },
+        "review_by": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "expires_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "revalidate_on_commit_change": {
+          "type": "boolean"
+        }
+      }
+    },
+    "sensitivity": {
+      "enum": [
+        "public_project",
+        "internal_project",
+        "restricted",
+        "secret_prohibited"
+      ]
+    },
+    "rejection_reason": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "scope": {
+            "properties": {
+              "kind": {
+                "const": "specialist"
+              }
+            }
+          }
+        },
+        "required": [
+          "scope"
+        ]
+      },
+      "then": {
+        "properties": {
+          "scope": {
+            "required": [
+              "specialist_role"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "accepted"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "verified_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  ],
+  "$comment": "A schema-valid record is not evidence of truth or authorization. Secret and credential material is prohibited by policy."
+}

@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gymsync-codex-toolkit:schema:memory-update-proposal",
+  "title": "Memory Update Proposal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "proposal_id",
+    "proposer",
+    "operation",
+    "target_scope",
+    "candidate_claim",
+    "evidence_refs",
+    "confidence",
+    "reason",
+    "risk",
+    "created_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "proposal_id": {
+      "type": "string",
+      "pattern": "^MPR-[A-Za-z0-9-]{8,120}$"
+    },
+    "proposer": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "operation": {
+      "enum": [
+        "create",
+        "revise",
+        "supersede",
+        "mark_stale",
+        "dispute"
+      ]
+    },
+    "target_memory_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "target_scope": {
+      "enum": [
+        "shared_project",
+        "specialist",
+        "execution_reference"
+      ]
+    },
+    "specialist_role": {
+      "enum": [
+        "repo_explorer",
+        "planner",
+        "implementer",
+        "reviewer",
+        "security_auditor",
+        "test_engineer"
+      ]
+    },
+    "candidate_claim": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 4000
+    },
+    "evidence_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 2000
+    },
+    "contradiction_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sensitivity": {
+      "enum": [
+        "public_project",
+        "internal_project",
+        "restricted",
+        "secret_prohibited"
+      ]
+    },
+    "risk": {
+      "enum": [
+        "R0",
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "decision": {
+      "enum": [
+        "pending",
+        "accepted",
+        "rejected",
+        "needs_clarification",
+        "disputed"
+      ]
+    },
+    "decided_by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "decision_reason": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "target_scope": {
+            "const": "specialist"
+          }
+        },
+        "required": [
+          "target_scope"
+        ]
+      },
+      "then": {
+        "required": [
+          "specialist_role"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "enum": [
+              "accepted",
+              "rejected",
+              "needs_clarification",
+              "disputed"
+            ]
+          }
+        },
+        "required": [
+          "decision"
+        ]
+      },
+      "then": {
+        "required": [
+          "decided_by",
+          "decision_reason"
+        ]
+      }
+    }
+  ],
+  "$comment": "Proposal submission never mutates canonical memory. Codex must validate evidence, scope, sensitivity, duplication, and contradictions before deciding."
+}
