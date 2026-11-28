@@ -24,9 +24,9 @@
 ## QUICK START / CURRENT STATE
 
 - **Primary roadmap:** The seven gated workstreams in `docs/intelligent-agent-ecosystem-architecture.md`. This is the approved target architecture and supersedes the earlier Phase 11 readiness audit as the active development roadmap.
-- **Current active workstream:** WS6 — Memory & Knowledge. WS1–WS4 are merged; WS5 merged via PR #19 (merge commit `84c5a9222f8d15b662cf62d9c58dd69a3276119b`). The independent QA/security audit may be supplied later and does not block starting or continuing work; assess and address its findings when received.
+- **Current active workstream:** WS7 — Intelligence Evaluation & Governance. WS1–WS6 are merged; WS6 merged via PR #20 (merge commit `c77512a231142bbfd8682704697089460cf85622`). The independent QA/security audit may be supplied later and does not block this workstream; assess its findings when received.
 - **Architecture decisions:** HIGH event-driven autonomy; bidirectional WhatsApp; proactive proposals triaged by Codex; Codex remains central coordinator; user retains final authority. Full constraints and protocols are in the canonical architecture document.
-- **Existing toolkit inventory:** 13 native skills and 13 portable mirrors (all content hashes match); six native agents and six role briefs; 62 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. These counts describe repository artifacts, not completed behavioral evaluations.
+- **Existing toolkit inventory:** 13 native skills and 13 portable mirrors (all content hashes match); six native agents and six role briefs; 65 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. These counts describe repository artifacts, not completed behavioral evaluations.
 - **Preservation rule:** Extend existing workflows, handoff/task-graph schemas, tool registry, memory templates, repository-intelligence layer, and evaluation runner. Do not create parallel routers, task engines, handoff contracts, memory stores, or evaluation systems.
 - **Current agent roles:** `repo_explorer`, `planner`, `implementer`, `reviewer`, `security_auditor`, and `test_engineer`. Preserve role boundaries; map capability ownership before proposing additional roles.
 - **Runtime limitation:** User does not currently have a Codex runtime for live behavioral tests. Continue repository-side design, static implementation, and GitHub CI. Never ask the user to run Codex CLI commands or claim runtime behavior passed without evidence.
@@ -35,9 +35,21 @@
 - **Hard boundary:** Toolkit repository only. No GymSync application, database, production, deployment, or external-service changes.
 - **WS1 progress:** canonical architecture and role mapping are recorded in `docs/intelligent-agent-ecosystem-architecture.md` and `docs/agent-intelligence-standard.md`. All six native agent TOML definitions and six Markdown role briefs now reference the common intelligence contract and role-specific reporting/proposal behavior. Existing read/write and approval boundaries are preserved. This is repository-side instruction alignment, not runtime validation.
 - **WS1 remaining gate:** confirm expanded and legacy result payloads both validate, review the complete PR diff, and verify exact-head CI. Runtime behavior remains BLOCKED / NOT_RUN without a Codex runtime.
-- **Immediate next action:** complete WS5 WhatsApp gateway contracts, security tests, checkpoint update, exact-head CI, and independent review. Do not connect external services or merge without explicit user approval. Audit findings supplied later must be assessed and addressed.
+- **Immediate next action:** complete WS7 intelligence evaluation and governance contracts, add specialist/adversarial evaluation coverage, run exact-head CI, review the full diff, and report repository-side versus behavioral acceptance separately. Do not merge without explicit user approval. Audit findings supplied later must be assessed and addressed.
 
 
+
+## WS6 merge and WS7 start checkpoint — 2026-11-28
+
+- Verified PR #20 (WS6 Memory & Knowledge) is merged. Merge commit: `c77512a231142bbfd8682704697089460cf85622`; source head: `d8394700ccd13646be86f3c323b3cd6af9051705`.
+- WS6 exact-head CI run #367 (`46089502304`) completed successfully. Schema and governance review found no blocking issue for merge; potential schema-hardening refinements remain optional future improvements.
+- WS6 defines Shared Project Memory, Specialist Memory, Execution Memory, and a derived Repository Knowledge Graph. Codex governs canonical shared memory; Graphify remains optional, planned, read-only, and not installed or connected.
+- Started WS7 on branch `ws7/intelligence-evaluation-governance` from current main after WS6 merge.
+- Added `docs/intelligence-evaluation-governance.md` defining six evaluation dimensions, specialist evaluation matrix, initiative quality, evidence/verdict rules, anti-gaming, runtime-unavailable policy, and separate repository/behavioral/human acceptance gates.
+- Added three behavioral case specifications: initiative quality and duplicate suppression; backend payment/concurrency using synthetic fixtures only; and untrusted evidence/self-grading resistance.
+- Added `tests/test_intelligence_evaluation_governance.py` for the new governance contract and WS7 case coverage.
+- Current WS7 changes are repository-side artifacts only. No Codex runtime, live agents, external tools/services, Graphify, WhatsApp, GymSync application/database, or permissions were changed.
+- Next action: run exact-head CI, inspect all findings and the complete diff, correct any failures, then prepare PR for user review. Behavioral evaluations remain NOT_RUN / BLOCKED until a trusted Codex runtime is available.
 
 ## WS5 merge and WS6 start checkpoint — 2026-11-28
 
