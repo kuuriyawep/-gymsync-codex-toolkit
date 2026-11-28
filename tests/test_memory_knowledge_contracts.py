@@ -35,7 +35,7 @@ class MemoryKnowledgeContractTests(unittest.TestCase):
         self.assertIn("decision", PROPOSAL["properties"])
         self.assertIn("pending", PROPOSAL["properties"]["decision"]["enum"])
         self.assertIn("Codex must validate", PROPOSAL["$comment"])
-        self.assertIn("proposal submission never mutates canonical memory", PROPOSAL["$comment"])
+        self.assertIn("proposal submission never mutates canonical memory", PROPOSAL["$comment"].lower())
 
     def test_graphify_remains_optional_planned_and_read_only(self):
         graph = next(x for x in TOOLS["tools"] if x["id"] == "graphify-local")
