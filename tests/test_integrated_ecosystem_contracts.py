@@ -10,58 +10,54 @@ DOC = (ROOT / "docs" / "integration-readiness-validation.md").read_text(encoding
 
 
 class IntegratedEcosystemContractTests(unittest.TestCase):
-    def test_scenario_has_the_required_ordered_lifecycle(self):
-        stages = CASE["ordered_stages"]
-        self.assertEqual(
-            [stage["id"] for stage in stages],
-            [
-                "security_detection",
-                "codex_triage",
-                "backend_analysis",
-                "qa_independent_validation",
-                "codex_arbitration",
-                "approval_gate",
-                "authorized_report",
-            ],
-        )
-        self.assertEqual(stages[0]["owner"], "security_auditor")
-        self.assertEqual(stages[1]["owner"], "codex")
-        self.assertEqual(stages[3]["owner"], "test_engineer")
-        self.assertEqual(stages[5]["owner"], "user")
+    def test_case_uses_the_canonical_evaluation_contract(self):
+        self.assertEqual(CASE["id"], "integrated-security-backend-qa-approval-report")
+        for field in ("prompt", "target", "preconditions", "expected_behaviors", "must_not", "expected_artifacts", "risk_level", "evaluation_method"):
+            with self.subTest(field=field):
+                self.assertIn(field, CASE)
+                self.assertTrue(CASE[field])
 
-    def test_each_stage_declares_evidence_and_prohibited_actions(self):
-        for stage in CASE["ordered_stages"]:
-            with self.subTest(stage=stage["id"]):
-                self.assertTrue(stage["requires"])
-                self.assertTrue(stage["forbids"])
+    def test_scenario_covers_the_required_ordered_lifecycle(self):
+        behaviors = " ".join(CASE["expected_behaviors"]).lower()
+        ordered_concepts = [
+            "security specialist",
+            "codex validates",
+            "backend/implementer",
+            "qa/test_engineer",
+            "codex compares",
+            "r4 action requires user approval",
+            "whatsapp gateway",
+        ]
+        positions = [behaviors.index(concept) for concept in ordered_concepts]
+        self.assertEqual(positions, sorted(positions))
 
-    def test_scenario_covers_all_required_failure_paths(self):
-        self.assertEqual(
-            set(CASE["failure_paths"]),
-            {
-                "specialist_or_runtime_unavailable",
-                "conflicting_security_backend_or_qa_findings",
-                "messaging_delivery_failure",
-                "duplicate_event_or_replayed_message",
-                "false_positive_security_signal",
-                "unauthorized_action_attempt",
-                "partial_execution_and_checkpoint_recovery",
-                "codex_runtime_unavailable",
-            },
-        )
-
-    def test_scenario_is_synthetic_and_does_not_claim_live_execution(self):
-        self.assertFalse(CASE["preconditions"]["runtime_available"])
-        self.assertFalse(CASE["preconditions"]["production_access"])
-        self.assertFalse(CASE["preconditions"]["external_messaging_enabled"])
-        self.assertEqual(CASE["behavioral_status"], "BLOCKED")
-        self.assertEqual(CASE["live_execution_claim"], "NOT_CLAIMED")
-
-    def test_governance_invariants_are_explicit(self):
-        invariants = " ".join(CASE["invariants"]).lower()
-        for phrase in ("codex remains", "user remains", "no production", "no agent self-approval", "traceable"):
+    def test_all_required_failure_paths_are_covered(self):
+        behaviors = " ".join(CASE["expected_behaviors"]).lower()
+        for phrase in (
+            "specialist or runtime unavailable",
+            "conflicting security, backend, or qa findings",
+            "messaging delivery failure",
+            "duplicate event or replayed message",
+            "false-positive security signal",
+            "unauthorized action attempt",
+            "partial execution and checkpoint recovery",
+            "codex runtime unavailable",
+        ):
             with self.subTest(phrase=phrase):
-                self.assertIn(phrase, invariants)
+                self.assertIn(phrase, behaviors)
+
+    def test_prohibited_actions_and_truthful_blocked_status_are_explicit(self):
+        prohibited = " ".join(CASE["must_not"]).lower()
+        for phrase in ("production", "real external message", "self-approve", "user approval", "behavioral pass"):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, prohibited)
+
+    def test_evidence_and_traceability_are_required(self):
+        behaviors = " ".join(CASE["expected_behaviors"]).lower()
+        artifacts = " ".join(CASE["expected_artifacts"]).lower()
+        self.assertIn("evidence references", behaviors)
+        self.assertIn("traceable event, task, evidence, review, approval, and report references", behaviors)
+        self.assertIn("every stage", artifacts)
 
     def test_document_separates_repository_and_behavioral_acceptance(self):
         for phrase in ("BLOCKED / NOT_RUN", "cannot prove", "exact action", "failure paths", "architecture reconciliation"):
