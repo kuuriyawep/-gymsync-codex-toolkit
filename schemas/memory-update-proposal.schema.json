@@ -148,6 +148,41 @@
         "required": [
           "specialist_role"
         ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "specialist_role"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "enum": [
+              "revise",
+              "supersede",
+              "mark_stale",
+              "dispute"
+            ]
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "required": [
+          "target_memory_id"
+        ],
+        "properties": {
+          "target_memory_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
       }
     },
     {
@@ -172,7 +207,34 @@
           "decision_reason"
         ]
       }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "enum": [
+              "accepted",
+              "rejected"
+            ]
+          }
+        },
+        "required": [
+          "decision"
+        ]
+      },
+      "then": {
+        "properties": {
+          "decided_by": {
+            "type": "string",
+            "minLength": 1
+          },
+          "decision_reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
     }
   ],
-  "$comment": "Proposal submission never mutates canonical memory. Codex must validate evidence, scope, sensitivity, duplication, and contradictions before deciding."
+  "$comment": "Proposal submission never mutates canonical memory. Codex must validate evidence, scope, sensitivity, duplication, and contradictions before deciding. Non-create operations require a target memory. Terminal accepted/rejected decisions require an attributable decision maker."
 }

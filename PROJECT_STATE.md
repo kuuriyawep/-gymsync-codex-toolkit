@@ -24,7 +24,7 @@
 ## QUICK START / CURRENT STATE
 
 - **Primary roadmap:** The seven gated workstreams in `docs/intelligent-agent-ecosystem-architecture.md`. This is the approved target architecture and supersedes the earlier Phase 11 readiness audit as the active development roadmap.
-- **Current active workstream:** None. WS1–WS7 are merged. WS7 merged via PR #21 (merge commit `51235d2d8fd91c5056a603c152513897a8c94800`; source head `fcf77b0978790afb76d41d656d599fe4f4690e3d`). The next implementation workstream has not been selected or started. The independent QA/security audit may be supplied later; it does not block selection or continuation of other approved work, and its findings must be assessed when received.
+- **Current active workstream:** Cross-cutting Integration Readiness & End-to-End Validation (approved 2026-11-28; branch `integration-readiness/end-to-end-validation`). This is not WS8 and does not reopen WS1–WS7. WS1–WS7 remain merged; WS7 merge commit `51235d2d8fd91c5056a603c152513897a8c94800`, source head `fcf77b0978790afb76d41d656d599fe4f4690e3d`.
 - **Architecture decisions:** HIGH event-driven autonomy; bidirectional WhatsApp; proactive proposals triaged by Codex; Codex remains central coordinator; user retains final authority. Full constraints and protocols are in the canonical architecture document.
 - **Existing toolkit inventory:** 13 native skills and 13 portable mirrors (all content hashes match); six native agents and six role briefs; 65 evaluation case specifications; workflow ledger, schemas, tool registry, memory/repository-intelligence documentation, and deterministic quality workflow. These counts describe repository artifacts, not completed behavioral evaluations.
 - **Preservation rule:** Extend existing workflows, handoff/task-graph schemas, tool registry, memory templates, repository-intelligence layer, and evaluation runner. Do not create parallel routers, task engines, handoff contracts, memory stores, or evaluation systems.
@@ -33,7 +33,7 @@
 - **Integration status:** WhatsApp/Twilio/n8n, Graphify runtime, persistent background execution, and live permission enforcement are not verified or installed. Do not start the n8n trial, install tools, or integrate external services without separate explicit approval.
 - **Phase 11 status:** Historical repository-side audit/closeout material remains available. Runtime acceptance remains BLOCKED / NOT_RUN; Phase 11 is not a substitute for the seven-workstream roadmap.
 - **Hard boundary:** Toolkit repository only. No GymSync application, database, production, deployment, or external-service changes.
-- **Immediate next action:** maintain an accurate post-WS7 checkpoint, then select the next bounded workstream from verified remaining gaps. Do not invent WS8 or begin new implementation until its scope and acceptance criteria are defined. Keep behavioral/runtime acceptance BLOCKED / NOT_RUN until a trusted Codex runtime is available.
+- **Immediate next action:** review PR #23 (`https://github.com/kuuriyawep/-gymsync-codex-toolkit/pull/23`) and its complete diff. Exact-head CI run #378 (`46094953102`) passed all 12 quality-gate steps on source commit `16fa87b368b8d6a2f0ab5362c8ce04638285bbaa`. Do not merge without explicit user approval. Keep behavioral/runtime acceptance BLOCKED / NOT_RUN until a trusted Codex runtime is available.
 
 
 

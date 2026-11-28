@@ -1,6 +1,6 @@
 # GymSync Intelligent Agent Ecosystem — Architecture Specification
 
-**Status:** USER-APPROVED TARGET ARCHITECTURE; repository specification in progress  
+**Status:** USER-APPROVED TARGET ARCHITECTURE; WS1–WS7 repository-side workstreams merged; cross-cutting integration-readiness validation is in progress. Live runtime/behavioral acceptance remains BLOCKED / NOT_RUN.  
 **Authority:** The user is the final decision authority. Codex is the single accountable orchestrator.  
 **Scope:** This specification governs the reusable Codex toolkit repository only. It does not authorize changes to the GymSync application, production systems, external services, or credentials.  
 **Architecture principle:** **Autonomy without losing governance.**
@@ -168,7 +168,7 @@ Codex intelligence is distinct from infrastructure that persists between session
 
 ## 15. Existing toolkit mapping — preserve and extend
 
-The current repository audit records 13 native skills and portable mirrors, six agent definitions and role briefs, seven workflow files (including the registry), handoff/task-graph schemas, a workflow ledger, tool registry/permission references, project-memory templates, repository-intelligence architecture, and 55 evaluation case specifications. These are repository artifacts, not proof of live agent execution.
+The current repository audit records 13 native skills and portable mirrors, six agent definitions and role briefs, seven workflow files (including the registry), handoff/task-graph schemas, a workflow ledger, tool registry/permission references, project-memory templates, repository-intelligence architecture, and 65 evaluation case specifications. These are repository artifacts, not proof of live agent execution.
 
 | Existing component | Ecosystem responsibility | Integration direction |
 |---|---|---|
@@ -244,12 +244,14 @@ For each workstream:
 
 **Environment constraint:** The user does not currently have access to a Codex runtime for live behavioral testing. Continue repository-side architecture and static implementation where possible; do not ask the user to run Codex CLI commands or fabricate runtime results. External runtime services and the n8n trial must not be started without explicit authorization.
 
-## 20. Immediate execution order
+## 20. Current execution order — post-WS7
 
-1. Register this document as the canonical approved ecosystem architecture.
-2. Reconcile `PROJECT_STATE.md` and `docs/toolkit-integration.md` to point to this architecture and set WS1 as the active workstream; retain Phase 11 documents as historical/runtime acceptance material, not the primary roadmap.
-3. Execute WS1 by extending existing agent contracts/skills only after inspecting their exact current contents and mapping all six roles.
-4. Proceed through WS2–WS7 using the gates above.
+1. WS1–WS7 are repository-side workstreams completed and merged. Do not restart them or set WS1 active again.
+2. Run the approved cross-cutting Integration Readiness & End-to-End Validation work on a dedicated branch. This is not WS8 and does not reopen the seven-workstream sequence.
+3. Harden confirmed schema edge cases; add deterministic cross-contract and integrated-scenario coverage by extending existing schemas, tests, evaluation cases, and workflow conventions.
+4. Reconcile this architecture and `PROJECT_STATE.md` with verified Git state and exact-head CI evidence.
+5. Keep live agent behavior, runtime enforcement, persistent execution, Graphify, and WhatsApp delivery BLOCKED / NOT_RUN until a trusted runtime and separately authorized integrations are available.
+6. Submit a PR for review. Do not merge without explicit user approval.
 
 ---
 
