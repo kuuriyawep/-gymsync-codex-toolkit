@@ -9,7 +9,7 @@
     "docs/specialist-tool-capability-matrix.md",
     "schemas/memory-update-proposal.schema.json"
   ],
-  "category": "integrated-governance",
+  "category": "workflow-compliance",
   "tags": [
     "integration",
     "security",
