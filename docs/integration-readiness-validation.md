@@ -36,7 +36,7 @@ The scenario also enumerates unavailable specialists/runtime, conflicting findin
 
 | Layer | Acceptance | Current status |
 |---|---|---|
-| Schema structure and conditional constraints | Deterministic tests inspect required fields, conditional rules, and closed contracts | PASS — exact-head CI run #378 |
+| Schema structure and conditional constraints | Deterministic tests inspect required fields, conditional rules, and closed contracts | PASS — exact-head CI run #380 |
 | Scenario completeness | Deterministic tests validate ordered stages, ownership, evidence, prohibitions, and all listed failure paths | PASS — exact-head CI run #380 |
 | Cross-contract execution | Trusted runtime demonstrates event-to-report lifecycle and consistent identifiers | BLOCKED / NOT_RUN |
 | Host permission enforcement | Runtime proves denied unauthorized actions and exact-action approval binding | BLOCKED / NOT_RUN |
